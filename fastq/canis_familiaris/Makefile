@@ -36,4 +36,4 @@ canis_familiaris_broadd2.dna.toplevel.fa.gz:
 	rsync -avP "rsync://ftp.ensembl.org/ensembl/pub/release-67/fasta/canis_familiaris/dna/Canis_familiaris.BROADD2.67.dna_rm.toplevel.fa.gz" $@
 
 canis_familiaris_broadd2.80.gtf.gz: 
-	rsync -avP "rsync://ftp.ensembl.org/ensembl/pub/release-67/gtf/canis_familiaris/canis_familiaris.BROADD2.67.gtf.gz" $@
+	rsync -avP "rsync://ftp.ensembl.org/ensembl/pub/release-67/gtf/canis_familiaris/Canis_familiaris.BROADD2.67.gtf.gz" $@

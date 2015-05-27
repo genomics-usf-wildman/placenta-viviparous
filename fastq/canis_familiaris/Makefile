@@ -1,0 +1,39 @@
+#!/usr/bin/make -f
+
+# this is the env variable to tell us how many processors on this node
+# we get
+ifdef PBS_NUM_PPN
+CORES=$(PBS_NUM_PPN)
+else
+CORES=1
+endif
+
+genes.fpkm_tracking: canis_familiaris_placenta.sorted.bam
+	module load cufflinks/2.2.1; \
+	cufflinks -p $(CORES) -G gencode.v19.annotation.gtf $<
+
+canis_familiaris_placenta.sorted.bam: canis_familiaris_placenta.bam
+	samtools sort $< -o $@ -T temp
+
+canis_familiaris_placenta.bam: 101116_lane_8_1.fastq 101116_lane_8_2.fastq homo_sapiens_hg19_bt2.1.bt2
+	module load bowtie2/2.1.0; \
+	module load samtools/1.0; \
+	bowtie2 -p $(CORES) -x $(wordlist 3,3,$^) \
+		-1 $(wordlist 1,1,$^) -2 $(wordlist 2,2,$^) | \
+		samtools view -b -o $@ -;
+
+canis_familiaris_broadd2_bt2.1.bt2: hg19.fa
+	module load bowtie2/2.1.0; \
+	bowtie2-build $< canis_familiaris_broadd2_bt2
+
+canis_familiaris_broadd2.dna.toplevel.fa: canis_familiaris_broadd2.dna.toplevel.fa.gz
+	gzip -dc $< > $@
+
+canis_familiaris_broadd2.80.gtf: canis_familiaris_broadd2.80.gtf.gz
+	gzip -dc $< > $@
+
+canis_familiaris_broadd2.dna.toplevel.fa.gz:
+	rsync -avP "rsync://ftp.ensembl.org/ensembl/pub/release-67/fasta/canis_familiaris/dna/Canis_familiaris.BROADD2.67.dna_rm.toplevel.fa.gz" $@
+
+canis_familiaris_broadd2.80.gtf.gz: 
+	rsync -avP "rsync://ftp.ensembl.org/ensembl/pub/release-67/gtf/canis_familiaris/canis_familiaris.BROADD2.67.gtf.gz" $@

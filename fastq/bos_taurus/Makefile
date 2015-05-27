@@ -16,7 +16,7 @@ genes.fpkm_tracking: bos_taurus_placenta.sorted.bam
 bos_taurus_placenta.sorted.bam: bos_taurus_placenta.bam
 	samtools sort $< -o $@ -T temp
 
-bos_taurus_placenta.bam: 101116_lane_8_1.fastq 101116_lane_8_2.fastq \
+bos_taurus_placenta.bam: 091125_lane_6_1.fastq 091125_lane_6_2.fastq \
 	bos_taurus_umd3_bt2.1.bt2
 	module load bowtie2/2.1.0; \
 	module load samtools/1.0; \

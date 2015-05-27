@@ -18,7 +18,7 @@ canis_familiaris_placenta.sorted.bam: canis_familiaris_placenta.bam
 canis_familiaris_placenta.bam: 101116_lane_8_1.fastq 101116_lane_8_2.fastq canis_familiaris_broadd2_bt2.1.bt2
 	module load bowtie2/2.1.0; \
 	module load samtools/1.0; \
-	bowtie2 -p $(CORES) -x $(wordlist 3,3,$^) \
+	bowtie2 -p $(CORES) -x $(patsubst %.1.bt2,%,$(wordlist 3,3,$^)) \
 		-1 $(wordlist 1,1,$^) -2 $(wordlist 2,2,$^) | \
 		samtools view -b -o $@ -;
 

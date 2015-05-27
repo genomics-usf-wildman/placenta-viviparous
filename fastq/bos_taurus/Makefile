@@ -1,7 +1,30 @@
 #!/usr/bin/make -f
 
 
-bowtie_indexes: Bos_taurus.UMD3.1.dna.toplevel.fa
+# this is the env variable to tell us how many processors on this node
+# we get
+ifdef PBS_NUM_PPN
+CORES=$(PBS_NUM_PPN)
+else
+CORES=1
+endif
+
+genes.fpkm_tracking: bos_taurus_placenta.sorted.bam
+	module load cufflinks/2.2.1; \
+	cufflinks -p $(CORES) -G Bos_taurus.UMD3.1.80.gtf $<
+
+bos_taurus_placenta.sorted.bam: bos_taurus_placenta.bam
+	samtools sort $< -o $@ -T temp
+
+bos_taurus_placenta.bam: 101116_lane_8_1.fastq 101116_lane_8_2.fastq \
+	bos_taurus_umd3_bt2.1.bt2
+	module load bowtie2/2.1.0; \
+	module load samtools/1.0; \
+	bowtie2 -p $(CORES) -x $(patsubst %.1.bt2,%,$(wordlist 3,3,$^)) \
+		-1 $(wordlist 1,1,$^) -2 $(wordlist 2,2,$^) | \
+		samtools view -b -o $@ -;
+
+bos_taurus_umd3_bt2.1.bt2: Bos_taurus.UMD3.1.dna.toplevel.fa
 	module load bowtie2/2.1.0; \
 	bowtie2-build $< bos_taurus_umd3_bt2
 

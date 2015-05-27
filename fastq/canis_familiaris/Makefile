@@ -13,6 +13,7 @@ genes.fpkm_tracking: canis_familiaris_placenta.sorted.bam
 	cufflinks -p $(CORES) -G canis_familiaris_broadd2.67.gtf $<
 
 canis_familiaris_placenta.sorted.bam: canis_familiaris_placenta.bam
+	module load samtools/1.0; \
 	samtools sort $< -o $@ -T temp
 
 canis_familiaris_placenta.bam: 101116_lane_8_1.fastq 101116_lane_8_2.fastq canis_familiaris_broadd2_bt2.1.bt2

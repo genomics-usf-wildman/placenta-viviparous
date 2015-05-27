@@ -14,6 +14,7 @@ genes.fpkm_tracking: bos_taurus_placenta.sorted.bam
 	cufflinks -p $(CORES) -G Bos_taurus.UMD3.1.80.gtf $<
 
 bos_taurus_placenta.sorted.bam: bos_taurus_placenta.bam
+	module load samtools/1.0; \
 	samtools sort $< -o $@ -T temp
 
 bos_taurus_placenta.bam: 091125_lane_6_1.fastq 091125_lane_6_2.fastq \

@@ -8,9 +8,9 @@ else
 CORES=1
 endif
 
-genes.fpkm_tracking: canis_familiaris_placenta.sorted.bam
+genes.fpkm_tracking: canis_familiaris_placenta.sorted.bam canis_familiaris_broadd2.67.gtf
 	module load cufflinks/2.2.1; \
-	cufflinks -p $(CORES) -G canis_familiaris_broadd2.67.gtf $<
+	cufflinks -p $(CORES) -G $(wordlist 2,2,$^) $<
 
 canis_familiaris_placenta.sorted.bam: canis_familiaris_placenta.bam
 	module load samtools/1.0; \

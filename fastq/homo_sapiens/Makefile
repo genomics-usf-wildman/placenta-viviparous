@@ -8,9 +8,9 @@ else
 CORES=1
 endif
 
-genes.fpkm_tracking: homo_sapiens_placenta.sorted.bam
+genes.fpkm_tracking: homo_sapiens_placenta.sorted.bam gencode.v19.annotation.gtf
 	module load cufflinks/2.2.1; \
-	cufflinks -p $(CORES) -G gencode.v19.annotation.gtf $<
+	cufflinks -p $(CORES) -G $(wordlist 2,2,$^) $<
 
 homo_sapiens_placenta.sorted.bam: homo_sapiens_placenta.bam
 	samtools sort $< -o $@ -T temp

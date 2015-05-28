@@ -9,9 +9,9 @@ else
 CORES=1
 endif
 
-genes.fpkm_tracking: bos_taurus_placenta.sorted.bam
+genes.fpkm_tracking: bos_taurus_placenta.sorted.bam Bos_taurus.UMD3.1.80.gtf
 	module load cufflinks/2.2.1; \
-	cufflinks -p $(CORES) -G Bos_taurus.UMD3.1.80.gtf $<
+	cufflinks -p $(CORES) -G $(wordlist 2,2,$^) $<
 
 bos_taurus_placenta.sorted.bam: bos_taurus_placenta.bam
 	module load samtools/1.0; \

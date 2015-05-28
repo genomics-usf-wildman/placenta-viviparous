@@ -13,6 +13,7 @@ genes.fpkm_tracking: homo_sapiens_placenta.sorted.bam gencode.v19.annotation.gtf
 	cufflinks -p $(CORES) -G $(wordlist 2,2,$^) $<
 
 homo_sapiens_placenta.sorted.bam: homo_sapiens_placenta.bam
+	module load samtools/1.0; \
 	samtools sort $< -o $@ -T temp
 
 homo_sapiens_placenta.bam: 101116_lane_5_1.fastq 101116_lane_5_2.fastq homo_sapiens_hg19_bt2.1.bt2

@@ -1,0 +1,72 @@
+#!/usr/bin/make -f
+
+# this is the env variable to tell us how many processors on this node
+# we get
+ifdef PBS_NUM_PPN
+CORES=$(PBS_NUM_PPN)
+else
+CORES=8
+endif
+
+### module is how the biocluster loads specific versions; if we're not
+### running there, we'll assume the correct version is installed and
+### just echo what we're loading
+ifdef MODULEPATH
+MODULE=module
+else
+MODULE=echo
+endif
+
+genes.fpkm_tracking: $(SPECIES)_placenta.sorted.bam $(GTF)
+	$(MODULE) load cufflinks/2.2.1; \
+	cufflinks -p $(CORES) -G $(wordlist 2,2,$^) $<
+
+local/genes.fpkm_tracking: $(SPECIES)_placenta_local.sorted.bam $(GTF)
+	$(MODULE) load cufflinks/2.2.1; \
+	cufflinks -p $(CORES) -G $(wordlist 2,2,$^) $<
+
+$(SPECIES)_placenta.sorted.bam: $(SPECIES)_placenta.bam
+	$(MODULE) load samtools/1.0; \
+	samtools sort $< -o $@ -T temp
+
+$(SPECIES)_placenta_local.sorted.bam: $(SPECIES)_placenta_local.bam
+	$(MODULE) load samtools/1.0; \
+	samtools sort $< -o $@ -T temp
+
+$(SPECIES)_placenta.bam:  $(FASTQ_FILES) \
+	$(SPECIES)_bt2.1.bt2
+	$(MODULE) load bowtie2/2.1.0; \
+	$(MODULE) load samtools/1.0; \
+	bowtie2 -p $(CORES) -x $(patsubst %.1.bt2,%,$(wordlist 3,3,$^)) \
+		-1 $(wordlist 1,1,$^) -2 $(wordlist 2,2,$^) | \
+		samtools view -b -o $@ -;
+
+$(SPECIES)_placenta_local.bam: $(FASTQ_FILES) \
+	$(SPECIES)_bt2.1.bt2
+	$(MODULE) load bowtie2/2.1.0; \
+	$(MODULE) load samtools/1.0; \
+	bowtie2 -p $(CORES) -N 1 -L 15 -k 10 -x $(patsubst %.1.bt2,%,$(wordlist 3,3,$^)) \
+		-1 $(wordlist 1,1,$^) -2 $(wordlist 2,2,$^) | \
+		samtools view -b -o $@ -;
+
+bowtie_indexes: $(SPECIES)_bt2.1.bt2
+
+$(SPECIES)_bt2.1.bt2: $(FASTA)
+	$(MODULE) load bowtie2/2.1.0; \
+	bowtie2-build $< $(SPECIES)_bt2
+
+$(FASTA): $(FASTA).gz
+	gzip -dc $< > $@
+
+$(GTF): $(GTF).gz
+	gzip -dc $< > $@
+
+fasta: $(FASTA)
+
+gtf: $(GTF)
+
+$(FASTA).gz:
+	rsync -avP "rsync://ftp.ensembl.org/ensembl/pub/release-80/fasta/$(SPECIES)/dna/$(FASTA).gz" $@
+
+$(GTF).gz:
+	rsync -avP "rsync://ftp.ensembl.org/ensembl/pub/release-80/gtf/$(SPECIES)/$(GTF).gz" $@

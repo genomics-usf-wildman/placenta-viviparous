@@ -1,2 +1,10 @@
 *.txt
 combined_fpkm
+go_gene_association
+go-basic.obo
+gene_association.goa_human
+gene_association.goa_human.gz
+HOM_AllOrganism.rpt
+HOM_MouseHumanSequence.rpt
+oma-ensembl.txt.gz
+oma-groups.txt.gz

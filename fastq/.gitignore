@@ -1,0 +1,8 @@
+*.gtf
+*.gtf.gz
+*.fa
+*.fa.gz
+*.bt2
+*.bam
+*.fastq.gz
+*.fastq

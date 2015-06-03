@@ -2,7 +2,7 @@ library(data.table)
 library(reshape2)
 args <- commandArgs(trailingOnly=TRUE)
 
-fpkm.files <- args[-(1:2)]
+fpkm.files <- args[-(1:3)]
 
 output.file <- args[1]
 
@@ -48,19 +48,59 @@ setnames(homology.table,
            "macaque",
            "frog"
            ))
-setkey(homology.table,"mouse")
-mouse.human.homolog <- function(mouse.gene) {
-    return(homology.table[mouse==mouse.gene,human])
+human.homolog <- function(gene,species="mouse") {
+    return(homology.table[eval(parse(text=paste0(species,"==\"",gene,"\""))),
+                          human][1])
 }
 
 combined.fpkm <- rbindlist(reads,fill=TRUE)
+## CSHL1 is not the same as GH1; call GH1 in Pan an ortholog of CSHL1
+setnames(combined.fpkm,
+         "Human Name",
+         "human_name")
+
+oma.groups <- fread(args[3])
+oma.groups[,species:=gsub("\\d+","",oma_entry)]
+setkey(oma.groups,"ensembl")
+oma.groups.human <- oma.groups[species=="HUMAN"]
+
+oma.homolog <- function(ensembl.id){
+    combined.fpkm[tracking_id %in% oma.groups.human[group_num==oma.groups[ensembl.id,group_num],
+                                                    ensembl],
+                  gene_short_name][1]
+}
+
 combined.fpkm[gene_short_name=="GH1 (CSHL1)",gene_short_name:="CSHL1"]
-combined.fpkm[species=="Mouse","Human Name":=sapply(gene_short_name,mouse.human.homolog)]
-combined.fpkm[species=="Homo","Human Name":=gene_short_name]
+combined.fpkm[gene_short_name=="Q95MK7_PANTR",human_name:="CSHL1"]
+combined.fpkm[species=="Homo",human_name:=gene_short_name]
+combined.fpkm[human_name=="",human_name:=NA]
+combined.fpkm[human_name=="-",human_name:=NA]
+combined.fpkm[grepl(" ",human_name),
+              human_name:=NA]
+### Mouse
+combined.fpkm[species=="Mouse" & is.na(human_name),
+              human_name := sapply(gene_short_name,function(x){human.homolog(x,species="mouse")})]
+### Canis (dog)
+combined.fpkm[species=="Canis" & is.na(human_name),
+              human_name := sapply(gene_short_name,function(x){human.homolog(x,species="dog")})]
+### Cow (cattle)
+combined.fpkm[species=="Cow" & is.na(human_name),
+              human_name := sapply(gene_short_name,function(x){human.homolog(x,species="cattle")})]
+### Pan
+combined.fpkm[species=="Pan" & is.na(human_name),
+              human_name := sapply(gene_short_name,function(x){human.homolog(x,species="chimpanzee")})]
+
+combined.fpkm[is.na(human_name),
+              human_name := sapply(gene_id,oma.homolog)]
+
 combined.fpkm[,V15:=NULL]
 combined.fpkm[,V14:=NULL]
 
 
+
+### this shouldn't be required, but I've triggered some bug in the
+### data.table code
+combined.fpkm <- data.table(data.frame(combined.fpkm))
 
 save(file=output.file,combined.fpkm)
 

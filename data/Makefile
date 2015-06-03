@@ -34,7 +34,22 @@ HOM_MouseHumanSequence.rpt:
 HOM_AllOrganism.rpt:
 	wget -O $@ "ftp://ftp.informatics.jax.org/pub/reports/HOM_AllOrganism.rpt"
 
-combined_fpkm: combine_fpkm.R HOM_AllOrganism.rpt $(FPKM_FILES)
+oma-ensembl.txt.gz:
+	wget -O $@ "http://omabrowser.org/All/oma-ensembl.txt.gz"
+
+oma-groups.txt.gz:
+	wget -O $@ "http://omabrowser.org/All/oma-groups.txt.gz"
+
+oma-groups.txt: oma-groups.txt.gz
+	gzip -dc $^ > $@
+
+oma-ensembl.txt: oma-ensembl.txt.gz
+	gzip -dc $^ > $@
+
+oma-groups_long.txt: oma-group-to-long.pl oma-groups.txt oma-ensembl.txt
+	$(PERL) $^ > $@
+
+combined_fpkm: combine_fpkm.R HOM_AllOrganism.rpt oma-groups_long.txt $(FPKM_FILES)
 	$(R) $(ROPTS) -f $< --args $@ $(wordlist 2,$(words $^),$^)
 
 %.txt: %.xlsx

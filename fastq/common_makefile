@@ -17,13 +17,19 @@ else
 MODULE=echo
 endif
 
-genes.fpkm_tracking: $(SPECIES)_placenta.sorted.bam $(GTF)
+$(SPECIES)_genes.fpkm_tracking: $(SPECIES)_placenta.sorted.bam $(GTF)
 	$(MODULE) load cufflinks/2.2.1; \
 	cufflinks -p $(CORES) -G $(wordlist 2,2,$^) $<
+	for file in genes.fpkm_tracking isoforms.fpkm_tracking skipped.gtf transcripts.gtf; do \
+		mv $${file} $(SPECIES)_$${file}; \
+	done;
 
-local/genes.fpkm_tracking: $(SPECIES)_placenta_local.sorted.bam $(GTF)
+local/$(SPECIES)_genes.fpkm_tracking: $(SPECIES)_placenta_local.sorted.bam $(GTF)
 	$(MODULE) load cufflinks/2.2.1; \
-	cufflinks -p $(CORES) -G $(wordlist 2,2,$^) $<
+	cufflinks -o local -p $(CORES) -G $(wordlist 2,2,$^) $<
+	for file in genes.fpkm_tracking isoforms.fpkm_tracking skipped.gtf transcripts.gtf; do \
+		mv local/$${file} local/$(SPECIES)_$${file}; \
+	done;
 
 $(SPECIES)_placenta.sorted.bam: $(SPECIES)_placenta.bam
 	$(MODULE) load samtools/1.0; \

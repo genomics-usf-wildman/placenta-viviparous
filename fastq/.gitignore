@@ -6,3 +6,4 @@
 *.bam
 *.fastq.gz
 *.fastq
+*.fpkm_tracking

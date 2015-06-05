@@ -55,7 +55,7 @@ $(SPECIES)_placenta.bam:  $(FASTQ_FILES) \
 		-1 $(wordlist 1,1,$^) -2 $(wordlist 2,2,$^) | \
 		samtools view -b -o $@ -;
 
-local_alignment: $(SPECIES)_placenta.bam
+local_alignment: $(SPECIES)_placenta_local.bam
 
 $(SPECIES)_placenta_local.bam: $(FASTQ_FILES) \
 	$(ALIGNMENT_SPECIES)_bt2.1.bt2

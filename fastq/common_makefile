@@ -55,7 +55,9 @@ $(SPECIES)_placenta.bam:  $(FASTQ_FILES) \
 	$(MODULE) load bowtie2/2.1.0; \
 	$(MODULE) load samtools/1.0; \
 	bowtie2 -p $(CORES) -x $(patsubst %.1.bt2,%,$(wordlist 3,3,$^)) \
-		-1 $(wordlist 1,1,$^) -2 $(wordlist 2,2,$^) | \
+		$(if $(filter 2,$(words $(FASTQ_FILES))), \
+			-1 $(wordlist 1,1,$(FASTQ_FILES)) -2 $(wordlist 2,2,$(FASTQ_FILES)),\
+			$(FASTQ_FILES)) | \
 		samtools view -b -o $@ -;
 
 local_alignment: $(SPECIES)_placenta_local.bam
@@ -66,7 +68,9 @@ $(SPECIES)_placenta_local.bam: $(FASTQ_FILES) \
 	$(MODULE) load samtools/1.0; \
 	bowtie2 -p $(CORES) $(LOCAL_BOWTIE_OPTIONS) \
 		-x $(patsubst %.1.bt2,%,$(wordlist 3,3,$^)) \
-		-1 $(wordlist 1,1,$^) -2 $(wordlist 2,2,$^) | \
+		$(if $(filter 2,$(words $(FASTQ_FILES))), \
+			-1 $(wordlist 1,1,$(FASTQ_FILES)) -2 $(wordlist 2,2,$(FASTQ_FILES)),\
+			$(FASTQ_FILES)) | \
 		samtools view -b -o $@ -;
 
 bowtie_indexes: $(ALIGNMENT_SPECIES)_bt2.1.bt2

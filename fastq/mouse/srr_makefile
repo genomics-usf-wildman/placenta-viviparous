@@ -18,6 +18,8 @@ get_srr: $(SRR).sra
 $(SRR).sra:
 	rsync -avP "rsync://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByRun/sra/SRR/$(shell echo -n $(SRR)|sed 's/\(SRR[0-9][0-9][0-9]\).*/\1/')/$(SRR)/$(SRR).sra" $(SRR).sra;
 
+make_fastq: $(SRR)_1.fastq.gz
+
 $(SRR)_1.fastq.gz $(SRR)_2.fastq.gz: $(SRR).sra
 	$(MODULE) load sratoolkit/2.3.5-2; \
 	fastq-dump --split-3 --gzip $^;

@@ -17,6 +17,9 @@ else
 MODULE=echo
 endif
 
+BOWTIE_OPTIONS?=
+BOWTIE_INDEX_DIR?=
+LOCAL_BOWTIE_OPTIONS?= -N 1 -L 15 -k 10 --local
 ALIGNMENT_SPECIES?=$(SPECIES)
 
 call: $(SPECIES)_genes.fpkm_tracking
@@ -48,7 +51,7 @@ $(SPECIES)_placenta_local.sorted.bam: $(SPECIES)_placenta_local.bam
 alignment: $(SPECIES)_placenta.bam
 
 $(SPECIES)_placenta.bam:  $(FASTQ_FILES) \
-	$(ALIGNMENT_SPECIES)_bt2.1.bt2
+	$(BOWTIE_INDEX_DIR)$(ALIGNMENT_SPECIES)_bt2.1.bt2
 	$(MODULE) load bowtie2/2.1.0; \
 	$(MODULE) load samtools/1.0; \
 	bowtie2 -p $(CORES) -x $(patsubst %.1.bt2,%,$(wordlist 3,3,$^)) \
@@ -58,10 +61,11 @@ $(SPECIES)_placenta.bam:  $(FASTQ_FILES) \
 local_alignment: $(SPECIES)_placenta_local.bam
 
 $(SPECIES)_placenta_local.bam: $(FASTQ_FILES) \
-	$(ALIGNMENT_SPECIES)_bt2.1.bt2
+	$(BOWTIE_INDEX_DIR)$(ALIGNMENT_SPECIES)_bt2.1.bt2
 	$(MODULE) load bowtie2/2.1.0; \
 	$(MODULE) load samtools/1.0; \
-	bowtie2 -p $(CORES) -N 1 -L 15 -k 10 -x $(patsubst %.1.bt2,%,$(wordlist 3,3,$^)) \
+	bowtie2 -p $(CORES) $(LOCAL_BOWTIE_OPTIONS) \
+		-x $(patsubst %.1.bt2,%,$(wordlist 3,3,$^)) \
 		-1 $(wordlist 1,1,$^) -2 $(wordlist 2,2,$^) | \
 		samtools view -b -o $@ -;
 

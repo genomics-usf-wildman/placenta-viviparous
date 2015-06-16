@@ -83,6 +83,9 @@ gene.fpkms[species=="pan paniscus" & is.na(human_name),
               human_name := mcmapply(function(x){human.homolog(x,species="chimpanzee")},gene_short_name)]
 
 gene.fpkms[is.na(human_name),
+           human_name := mcmapply(ensembl.homolog,gene_id)]
+
+gene.fpkms[is.na(human_name),
               human_name := mcmapply(oma.homolog,gene_id)]
 
 ### this shouldn't be required, but I've triggered some bug in the

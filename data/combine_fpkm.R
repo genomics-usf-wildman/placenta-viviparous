@@ -50,6 +50,20 @@ oma.homolog <- function(ensembl.id){
                   gene_short_name][1]
 }
 
+### ensembl_orthologs
+load(args[5])
+
+orthologs.long <- melt(orthologs,id.vars="ensembl_gene_id")
+orthologs.long[,variable:=NULL]
+setkey(orthologs.long,"value")
+
+ensembl.homolog <- function(ensembl.id) {
+    hum.id <- orthologs.long[ensembl.id,ensembl_gene_id][1]
+    if (is.null(hum.id) || is.na(hum.id))
+        return(NA)
+    return(gene.fpkms[tracking_id==hum.id,gene_short_name][1])
+}
+
 gene.fpkms[species=="homo sapiens",human_name:=gene_short_name]
 gene.fpkms[human_name=="",human_name:=NA]
 gene.fpkms[human_name=="-",human_name:=NA]

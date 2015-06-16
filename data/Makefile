@@ -55,5 +55,8 @@ combined_fpkm: combine_fpkm.R HOM_AllOrganism.rpt oma-groups_long.txt fastq_fpkm
 homology_table: homology_table.R combined_fpkm
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
 
+ensembl_orthologs: ensembl_orthologs.R
+	$(R) $(ROPTS) -f $< --args $@
+
 %.txt: %.xlsx
 	$(SSCONVERT) --export-type Gnumeric_stf:stf_assistant -O 'separator="	" quote="" eol="unix"' $< $@

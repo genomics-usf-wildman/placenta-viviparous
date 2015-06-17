@@ -69,18 +69,18 @@ gene.fpkms[human_name=="",human_name:=NA]
 gene.fpkms[human_name=="-",human_name:=NA]
 gene.fpkms[grepl(" ",human_name),
               human_name:=NA]
-### Mouse
-gene.fpkms[species=="mus musculus" & is.na(human_name),
-           human_name := mcmapply(function(x){human.homolog(x,species="mouse")},gene_short_name)]
-### Canis (dog)
-gene.fpkms[species=="canis familiaris" & is.na(human_name),
-              human_name := mcmapply(function(x){human.homolog(x,species="dog")},gene_short_name)]
-### Cow (cattle)
-gene.fpkms[species=="bos taurus" & is.na(human_name),
-              human_name := mcmapply(function(x){human.homolog(x,species="cattle")},gene_short_name)]
-### pan paniscus
-gene.fpkms[species=="pan paniscus" & is.na(human_name),
-              human_name := mcmapply(function(x){human.homolog(x,species="chimpanzee")},gene_short_name)]
+### ### Mouse
+### gene.fpkms[species=="mus musculus" & is.na(human_name),
+###            human_name := mcmapply(function(x){human.homolog(x,species="mouse")},gene_short_name)]
+### ### Canis (dog)
+### gene.fpkms[species=="canis familiaris" & is.na(human_name),
+###               human_name := mcmapply(function(x){human.homolog(x,species="dog")},gene_short_name)]
+### ### Cow (cattle)
+### gene.fpkms[species=="bos taurus" & is.na(human_name),
+###               human_name := mcmapply(function(x){human.homolog(x,species="cattle")},gene_short_name)]
+### ### pan paniscus
+### gene.fpkms[species=="pan paniscus" & is.na(human_name),
+###               human_name := mcmapply(function(x){human.homolog(x,species="chimpanzee")},gene_short_name)]
 
 gene.fpkms[is.na(human_name),
            human_name := mcmapply(ensembl.homolog,gene_id)]

@@ -10,7 +10,7 @@ PERL?=perl
 FPKM_FILES=Supplemental_Table_2_Homo_NEW_UPDATED.txt $(patsubst %.xlsx,%.txt,$(filter-out $(wildcard *Homo*), $(wildcard *_fpkm.xlsx)))
 
 
-all: $(FPKM_FILES)
+all: combined_fpkm
 
 
 go_gene_association.txt: go_gene_association.pl go-basic.obo gene_association.goa_human

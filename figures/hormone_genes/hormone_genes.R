@@ -2,6 +2,7 @@ library(data.table)
 library(reshape2)
 library(ggplot2)
 library(grid)
+library(scales)
 
 args <- commandArgs(trailingOnly=TRUE)
 
@@ -30,26 +31,17 @@ gene.expression.nozero <- function(genes) {
     return(temp)
 }
 
-pushViewport(viewport(layout=grid.layout(ncol=1,nrow=3)))
-
 ### hormone genes
+hormone.genes <- c("CGA","CGB","CGB1","CGB2","CGB5","CGB8","CSH1","CSH2","CSHL1","CYP19A1",
+                   "GH2","GHRH","HSD3B1","NPPB","NPPC","PRL","RLN1")
 hormone.expression.nozero <-
     gene.expression.nozero(hormone.genes)
 
+
+
 hor.exp.long <- melt(log2(hormone.expression.nozero+1)[rev(1:nrow(hormone.expression.nozero)),])
 colnames(hor.exp.long)[1:3] <- c("gene","species","fpkm")
-print(ggplot(hor.exp.long, aes(y=gene, x=species))
-      + geom_tile(aes(fill = fpkm), colour = "white")
-      + scale_fill_gradient(low = "white", high = "steelblue")
-      + scale_x_discrete("", expand = c(0, 0))
-      + scale_y_discrete("", expand = c(0, 0))
-      + theme_grey(base_size = 9)
-      + theme(legend.position = "none",
-              axis.ticks = element_blank(), 
-              axis.text.x = element_text(angle = 330, hjust = 0)),
-      vp=viewport(layout.pos.col=1,layout.pos.row=1)
-      )
-
+hor.exp.long <- hor.exp.long[hor.exp.long$gene!="IGF2",]
 
 ### galectin genes
 galectin.genes <- unique(grep("^LGALS",combined.fpkm[,human_name],value=TRUE))
@@ -59,18 +51,8 @@ galectin.expression.nozero <-
 
 gal.exp.long <- melt(log2(galectin.expression.nozero+1)[rev(1:nrow(galectin.expression.nozero)),])
 colnames(gal.exp.long)[1:3] <- c("gene","species","fpkm")
-print(ggplot(gal.exp.long, aes(y=gene, x=species))
-      + geom_tile(aes(fill = fpkm), colour = "white")
-      + scale_fill_gradient(low = "white", high = "steelblue")
-      + scale_x_discrete("", expand = c(0, 0))
-      + scale_y_discrete("", expand = c(0, 0))
-      + theme_grey(base_size = 9)
-      + theme(legend.position = "none",
-              axis.ticks = element_blank(), 
-              axis.text.x = element_text(angle = 330, hjust = 0)),
-      vp=viewport(layout.pos.col=1,layout.pos.row=2)
-      )
 
+### IGF related genes
 
 igfrelated.genes <- unique(grep("^IGF",combined.fpkm[,human_name],value=TRUE))
 
@@ -79,19 +61,29 @@ igfrelated.expression.nozero <-
 
 igf.exp.long <- melt(log2(igfrelated.expression.nozero+1)[rev(1:nrow(igfrelated.expression.nozero)),])
 colnames(igf.exp.long)[1:3] <- c("gene","species","fpkm")
-print(ggplot(igf.exp.long, aes(y=gene, x=species))
+
+scalerange <- range(c(igf.exp.long$fpkm,gal.exp.long$fpkm,hor.exp.long$fpkm),na.rm=TRUE)
+gradientends <- scalerange + rep(c(0,100,200), each=2)
+colorends <- c("white", "red", "white", "green", "white", "blue")
+
+gal.exp.long$fpkm <- gal.exp.long$fpkm+100
+hor.exp.long$fpkm <- hor.exp.long$fpkm+200
+
+combined.long <-
+    rbind(igf.exp.long,
+          gal.exp.long,
+          hor.exp.long)
+
+print(ggplot(combined.long, aes(y=gene, x=species))
       + geom_tile(aes(fill = fpkm), colour = "white")
-      + scale_fill_gradient(low = "white", high = "steelblue")
+      + scale_fill_gradientn(colours = colorends, values = rescale(gradientends))
+#      + scale_fill_gradient(low = "white", high = "steelblue")
       + scale_x_discrete("", expand = c(0, 0))
       + scale_y_discrete("", expand = c(0, 0))
       + theme_grey(base_size = 9)
       + theme(legend.position = "none",
               axis.ticks = element_blank(), 
-              axis.text.x = element_text(angle = 330, hjust = 0)),
-      vp=viewport(layout.pos.col=1,layout.pos.row=3)
+              axis.text.x = element_text(angle = 330, hjust = 0))
       )
 
-
-popViewport(1)
-    
 dev.off()

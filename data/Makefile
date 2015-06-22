@@ -58,5 +58,11 @@ homology_table: homology_table.R combined_fpkm
 ensembl_orthologs: ensembl_orthologs.R
 	$(R) $(ROPTS) -f $< --args $@
 
+Compara.80.protein.nhx.emf.gz:
+	rsync -avP "rsync://ftp.ensembl.org/ensembl/pub/current_emf/ensembl-compara/homologies/$@" $@
+
+gene_trees: parse_tree.R Compara.80.protein.nhx.emf.gz
+	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
+
 %.txt: %.xlsx
 	$(SSCONVERT) --export-type Gnumeric_stf:stf_assistant -O 'separator="	" quote="" eol="unix"' $< $@

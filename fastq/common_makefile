@@ -24,7 +24,7 @@ ALIGNMENT_SPECIES?=$(SPECIES)
 
 call: $(SPECIES)_genes.fpkm_tracking
 
-$(SPECIES)_genes.fpkm_tracking: $(SPECIES)_placenta.sorted.bam $(GTF)
+$(SPECIES)_genes.fpkm_tracking: $(SPECIES)_tophat_placenta.sorted.bam $(GTF)
 	$(MODULE) load cufflinks/2.2.1; \
 	cufflinks -p $(CORES) -G $(wordlist 2,2,$^) $<
 	for file in genes.fpkm_tracking isoforms.fpkm_tracking skipped.gtf transcripts.gtf; do \
@@ -40,6 +40,11 @@ local/$(SPECIES)_genes.fpkm_tracking: $(SPECIES)_placenta_local.sorted.bam $(GTF
 		mv local/$${file} local/$(SPECIES)_$${file}; \
 	done;
 
+$(SPECIES)_tophat_placenta.sorted.bam: $(SPECIES)_tophat_placenta.bam
+	$(MODULE) load samtools/1.0; \
+	samtools sort $< -o $@ -T temp
+
+
 $(SPECIES)_placenta.sorted.bam: $(SPECIES)_placenta.bam
 	$(MODULE) load samtools/1.0; \
 	samtools sort $< -o $@ -T temp
@@ -48,7 +53,7 @@ $(SPECIES)_placenta_local.sorted.bam: $(SPECIES)_placenta_local.bam
 	$(MODULE) load samtools/1.0; \
 	samtools sort $< -o $@ -T temp
 
-alignment: $(SPECIES)_placenta.bam
+alignment: $(SPECIES)_tophat_placenta.bam
 
 $(SPECIES)_placenta.bam:  \
 	$(BOWTIE_INDEX_DIR)$(ALIGNMENT_SPECIES)_bt2.1.bt2 \
@@ -60,6 +65,18 @@ $(SPECIES)_placenta.bam:  \
 			-1 $(wordlist 1,1,$(FASTQ_FILES)) -2 $(wordlist 2,2,$(FASTQ_FILES)),\
 			-U $(FASTQ_FILES)) | \
 		samtools view -b -o $@ -;
+
+$(SPECIES)_tophat_placenta.bam: \
+	$(BOWTIE_INDEX_DIR)$(ALIGNMENT_SPECIES)_bt2.1.bt2 \
+	$(FASTQ_FILES)
+	$(MODULE) load tophat2/2.0.10; \
+	$(MODULE) load bowtie2/2.1.0; \
+	$(MODULE) load samtools/1.0; \
+		$(if $(filter 2,$(words $(FASTQ_FILES))), \
+			"$(wordlist 1,1,$(FASTQ_FILES)),$(wordlist 2,2,$(FASTQ_FILES))",\
+			$(FASTQ_FILES)) \
+		-o $(SPECIES)_tophat_placenta;
+	ln $(SPECIES)_tophat_placenta/accepted_hits.bam $@ -s
 
 local_alignment: $(SPECIES)_placenta_local.bam
 

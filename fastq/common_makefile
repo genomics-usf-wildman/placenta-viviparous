@@ -67,15 +67,13 @@ $(SPECIES)_placenta.bam:  \
 
 $(SPECIES)_tophat_placenta.bam: \
 	$(BOWTIE_INDEX_DIR)$(ALIGNMENT_SPECIES)_bt2.1.bt2 \
-	$(FASTQ_FILES) $(GTF)
+	$(FASTQ_FILES) $(GTF) $(BOWTIE_INDEX_DIR)$(ALIGNMENT_SPECIES)_bt2.fa
 	$(MODULE) load tophat2/2.0.10; \
 	tophat -G $(GTF) -p $(CORES) \
 		--transcriptome-index $(BOWTIE_INDEX_DIR)$(ALIGNMENT_SPECIES)_tophat_indexes \
+		-o $(SPECIES)_tophat_placenta
 		$(patsubst %.1.bt2,%,$(wordlist 1,1,$^)) \
-		$(if $(filter 2,$(words $(FASTQ_FILES))), \
-			$(wordlist 1,1,$(FASTQ_FILES))$(comma)$(wordlist 2,2,$(FASTQ_FILES)), \
-			$(FASTQ_FILES)) \
-		-o $(SPECIES)_tophat_placenta;
+		$(FASTQ_FILES);
 	ln $(SPECIES)_tophat_placenta/accepted_hits.bam $@ -s
 
 local_alignment: $(SPECIES)_placenta_local.bam
@@ -97,6 +95,10 @@ bowtie_indexes: $(ALIGNMENT_SPECIES)_bt2.1.bt2
 $(ALIGNMENT_SPECIES)_bt2.1.bt2: $(FASTA)
 	$(MODULE) load bowtie2/2.1.0; \
 	bowtie2-build $< $(ALIGNMENT_SPECIES)_bt2
+
+$(BOWTIE_INDEX_DIR)$(ALIGNMENT_SPECIES)_bt2.fa: $(FASTA)
+	rm $@
+	ln $< $@
 
 $(FASTA): $(FASTA).gz
 	gzip -dc $< > $@

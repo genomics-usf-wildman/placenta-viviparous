@@ -70,7 +70,7 @@ $(SPECIES)_tophat_placenta.bam: \
 	$(FASTQ_FILES) $(GTF)
 	$(MODULE) load tophat2/2.0.10; \
 	tophat -G $(GTF) -p $(CORES) \
-		--transcriptome-index $(BOWTIE_INDEX_DIR)/$(ALIGNMENT_SPECIES)_tophat_indexes \
+		--transcriptome-index $(BOWTIE_INDEX_DIR)$(ALIGNMENT_SPECIES)_tophat_indexes \
 		$(patsubst %.1.bt2,%,$(wordlist 1,1,$^)) \
 		$(if $(filter 2,$(words $(FASTQ_FILES))), \
 			$(wordlist 1,1,$(FASTQ_FILES))$(comma)$(wordlist 2,2,$(FASTQ_FILES)), \

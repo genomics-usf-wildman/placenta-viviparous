@@ -97,7 +97,7 @@ $(ALIGNMENT_SPECIES)_bt2.1.bt2: $(FASTA)
 	bowtie2-build $< $(ALIGNMENT_SPECIES)_bt2
 
 $(BOWTIE_INDEX_DIR)$(ALIGNMENT_SPECIES)_bt2.fa: $(FASTA)
-	rm $@
+	rm -f $@
 	ln $< $@
 
 $(FASTA): $(FASTA).gz

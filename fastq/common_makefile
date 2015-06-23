@@ -71,7 +71,7 @@ $(SPECIES)_tophat_placenta.bam: \
 	$(MODULE) load tophat2/2.0.10; \
 	tophat -G $(GTF) -p $(CORES) \
 		--transcriptome-index $(BOWTIE_INDEX_DIR)$(ALIGNMENT_SPECIES)_tophat_indexes \
-		-o $(SPECIES)_tophat_placenta
+		-o $(SPECIES)_tophat_placenta \
 		$(patsubst %.1.bt2,%,$(wordlist 1,1,$^)) \
 		$(FASTQ_FILES);
 	ln $(SPECIES)_tophat_placenta/accepted_hits.bam $@ -s

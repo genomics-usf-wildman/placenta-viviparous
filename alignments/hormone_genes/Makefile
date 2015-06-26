@@ -8,7 +8,9 @@ GENE_TREES=cga csh1 cyp19a1
 
 ALIGNMENTS=$(patsubst %,%_gene_tree_genes_promoter_only.aln,$(GENE_TREES))
 
-all: $(ALIGNMENTS) \
+FIGURES=$(patsubst %,%_gene_tree_promoter_alignment.pdf,$(GENE_TREES))
+
+all: $(ALIGNMENTS) $(FIGURES) \
 	$(patsubst %,%_gene_tree_genes.fasta,$(GENE_TREES))
 
 $(ALIGNMENTS): %.aln: %.fasta
@@ -32,5 +34,8 @@ cga_gene_tree_genes.txt: get_genes_in_tree.R ../../data/combined_fpkm ../../data
 cyp19a1_gene_tree_genes.txt: get_genes_in_tree.R ../../data/combined_fpkm ../../data/gene_trees
 	$(R) $(ROPTS) -f $< --args CYP19A1 $@ $(wordlist 2,$(words $^),$^)
 
-csh1_gene_tree_promoter_alignment.pdf: csh1_promoter_alignment.R csh1_gene_tree_genes_promoter_only.aln ../dotplots.R
+%_gene_tree_promoter_alignment.pdf: %_promoter_alignment.R %_gene_tree_genes_promoter_only.aln ../dotplots.R
+	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
+
+cyp19a1_gene_tree_promoter_alignment.pdf: cyp19a1_promoter_alignment.R cyp19a1_gene_tree_genes_promoter_only.aln ../dotplots.R
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@

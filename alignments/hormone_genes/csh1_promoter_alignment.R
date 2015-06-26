@@ -7,10 +7,10 @@ pdf(file=args[length(args)],
     width=10,
     height=10)
 dotplot.all(csh1.aln,
-            start=72000,
-            end=80000,
-            wsize=200,
-            wstep=200,
-            nmatch=200,
-            seq=c(4,5,6,7,8,9,10,11,12,13))
+            start=1,
+            end=6910,
+            wsize=100,
+            wstep=100,
+            nmatch=100,
+            seq=c(1,2,3,4,5,6,7,8,9,14))
 dev.off()

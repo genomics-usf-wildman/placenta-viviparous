@@ -1,0 +1,21 @@
+* Alignment Notes
+** CSH1 family
+*** Using [[http://meme-suite.org/opal-jobs/appCENTRIMO_4.10.11435595121967-550919451/centrimo.html#data_sec][Centrimo]]
+    1. saw HSF1, HSF2, and NKX2-3 motifs
+       1. However, HSF1 is not very highly expressed in humans
+       2. HSF2 is expressed even less
+       3. NKX2-3 is not expressed at all
+       4. NR2E1 is not expressed either
+
+|--------------+---------+---------+--------------+----------------|
+| ID           | E-value | p-value | Region Width | Region Matches |
+|--------------+---------+---------+--------------+----------------|
+| HSF1_DBD     |  8.5e-1 |  5.9e-4 |          679 |             11 |
+| HSF2_DBD     |  8.5e-1 |  5.9e-4 |          679 |             11 |
+| NKX2-3_DBD   |     8.6 |  6.0e-3 |          850 |             11 |
+| Nr2e1_DBD_1  |     9.8 |  6.8e-3 |         1091 |             12 |
+| NR2E1_full_1 |     9.8 |  6.8e-3 |         1091 |             12 |
+|--------------+---------+---------+--------------+----------------|
+
+*** Trying [[http://genome.lbl.gov/vista/mvista/submit.shtml][mVista]]
+    1. 

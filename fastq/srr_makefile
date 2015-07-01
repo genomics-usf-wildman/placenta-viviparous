@@ -1,0 +1,28 @@
+#!/usr/bin/make -f
+
+SHELL=/bin/bash
+
+SPECIES?=mus_musculus
+
+GTF?=../Mus_musculus.GRCm38.80.gtf
+FASTA?=../Mus_musculus.GRCm38.dna.toplevel.fa
+
+BOWTIE_INDEX_DIR?=../
+COMMON_MAKEFILE?=../../common_makefile
+
+include srr_num.mk
+
+FASTQ_FILES=$(SRR).fastq.gz
+
+get_srr: $(SRR).sra
+
+$(SRR).sra:
+	rsync -avP "rsync://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByRun/sra/SRR/$(shell echo -n $(SRR)|sed 's/\(SRR[0-9][0-9][0-9]\).*/\1/')/$(SRR)/$(SRR).sra" $(SRR).sra;
+
+make_fastq: $(SRR).fastq.gz
+
+$(SRR).fastq.gz: $(SRR).sra
+	$(MODULE) load sratoolkit/2.3.5-2; \
+	fastq-dump --split-3 --gzip $^;
+
+include $(COMMON_MAKEFILE)

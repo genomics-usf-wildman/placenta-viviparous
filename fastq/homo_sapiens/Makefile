@@ -18,6 +18,7 @@ GSE66622_sample_info.txt.gz:
 	wget -O $@ \
 		"ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE66nnn/GSE66622/suppl/GSE66622%5FSampleInfo%2Etxt%2Egz"
 
+## These are SRR from GSE6662 which are from caesarean sections
 SRRS=SRR1850945 \
 SRR1850946 \
 SRR1850951 \

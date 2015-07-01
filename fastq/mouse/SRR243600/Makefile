@@ -1,1 +1,1 @@
-../srr_makefile
+../../srr_makefile

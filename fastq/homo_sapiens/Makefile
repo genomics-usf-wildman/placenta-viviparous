@@ -53,9 +53,9 @@ make_srr_dirs:
 		(cd $$a; \
 			ln ../../srr_makefile Makefile -sf; \
 			echo "SRR=$$a" > srr_num.mk; \
-			echo "GTF=$(GTF)" >> srr_num.mk; \
+			echo "GTF=../$(GTF)" >> srr_num.mk; \
 			echo "SPECIES=$(SPECIES)" >> srr_num.mk; \
-			echo "FASTA=$(FASTA)" >> srr_num.mk; \
+			echo "FASTA=../$(FASTA)" >> srr_num.mk; \
 		); \
 	done;
 

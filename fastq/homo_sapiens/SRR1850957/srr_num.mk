@@ -1,4 +1,4 @@
 SRR=SRR1850957
-GTF=Homo_sapiens.GRCh38.80.gtf
+GTF=../Homo_sapiens.GRCh38.80.gtf
 SPECIES=homo_sapiens
-FASTA=Homo_sapiens.GRCh38.dna.toplevel.fa
+FASTA=../Homo_sapiens.GRCh38.dna.toplevel.fa

@@ -9,6 +9,8 @@ COMMON_MAKEFILE=../common_makefile
 # this is not an ensembl assembly
 NOTENSEMBL=1
 
+BOWTIE_INDEX_DIR=./
+
 include ../srr_makefile
 
 

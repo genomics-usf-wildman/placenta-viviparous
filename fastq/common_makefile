@@ -93,6 +93,7 @@ $(SPECIES)_placenta_local.bam: \
 trinity: $(SPECIES)_trinity.Trinity.fasta
 
 $(SPECIES)_trinity.Trinity.fasta: $(FASTQ_FILES)
+	$(MODULE) load samtools/1.0; \
 	$(MODULE) load trinityrnaseq-intel/r2014-07-17; \
 	Trinity --seqType fq \
 	$(if $(filter 2,$(words $(FASTQ_FILES))), \

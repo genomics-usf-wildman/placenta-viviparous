@@ -94,7 +94,7 @@ trinity: $(SPECIES)_trinity.Trinity.fasta
 
 $(SPECIES)_trinity.Trinity.fasta: $(FASTQ_FILES)
 	$(MODULE) load trinityrnaseq-intel/r2014-07-17; \
-	Trinity --seqtype fq \
+	Trinity --seqType fq \
 	$(if $(filter 2,$(words $(FASTQ_FILES))), \
 		--left $(wordlist 1,1,$(FASTQ_FILES)) --right $(wordlist 2,2,$(FASTQ_FILES)),\
 		--single $(FASTQ_FILES)) \

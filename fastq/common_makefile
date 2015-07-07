@@ -100,6 +100,8 @@ $(BOWTIE_INDEX_DIR)$(ALIGNMENT_SPECIES)_bt2.fa: $(FASTA)
 	rm -f $@
 	ln $< $@
 
+ifdef NOTENSEMBL
+else
 $(FASTA): $(FASTA).gz
 	gzip -dc $< > $@
 
@@ -117,3 +119,4 @@ $(FASTA).gz:
 
 $(GTF).gz:
 	rsync -avP "rsync://ftp.ensembl.org/ensembl/pub/release-80/gtf/$(ALIGNMENT_SPECIES)/$(GTF).gz" $@
+endif

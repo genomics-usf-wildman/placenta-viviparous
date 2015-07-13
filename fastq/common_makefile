@@ -115,7 +115,7 @@ $(SPECIES)_trinity_bt2.1.bt2: $(SPECIES)_trinity.Trinity.fasta
 	$(MODULE) load bowtie2/2.1.0; \
 	bowtie2-build $< $(SPECIES)_trinity_bt2
 
-TRINITYPATH?=/home/apps/trinityrnaseq/trinityrnaseq_r2014-07-17/
+TRINITY_PATH?=/home/apps/trinityrnaseq/trinityrnaseq_r2014-07-17/
 
 
 trinity_align: $(SPECIES)_trinity.Trinity.fasta

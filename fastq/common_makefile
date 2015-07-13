@@ -21,6 +21,12 @@ BOWTIE_OPTIONS?=
 BOWTIE_INDEX_DIR?=
 LOCAL_BOWTIE_OPTIONS?= -N 1 -L 15 -k 10 --local
 ALIGNMENT_SPECIES?=$(SPECIES)
+REMOTE_FILES=$(FASTA).gz $(GTF).gz
+ifdef USE_TRINITY
+PROTEIN_ALIGNMENT_SPECIES?=$(ALIGNMENT_SPECIES)
+PROTEIN_ALIGNMENT_FASTA?=$(patsubst %.dna.toplevel.fa,%.pep.all.fa,$(FASTA))
+REMOTE_FILES:=$(REMOTE_FILES) $(PROTEIN_ALIGNMENT_FASTA)
+endif
 
 # we need to use a comma in a rule below, so this handles that
 # escaping.
@@ -90,6 +96,7 @@ $(SPECIES)_placenta_local.bam: \
 			-U $(FASTQ_FILES)) | \
 		samtools view -b -o $@ -;
 
+ifdef USE_TRINITY
 trinity: $(SPECIES)_trinity.Trinity.fasta
 
 $(SPECIES)_trinity.Trinity.fasta: $(FASTQ_FILES)
@@ -99,7 +106,36 @@ $(SPECIES)_trinity.Trinity.fasta: $(FASTQ_FILES)
 	$(if $(filter 2,$(words $(FASTQ_FILES))), \
 		--left $(wordlist 1,1,$(FASTQ_FILES)) --right $(wordlist 2,2,$(FASTQ_FILES)),\
 		--single $(FASTQ_FILES)) \
-		--CPU $(CORES) --trimmomatic --output $(SPECIES)_trinity --JM 10G
+		--CPU $(CORES) --trimmomatic --output $(SPECIES)_trinity --JM 10G;
+	mv $(SPECIES)_trinity/Trinity.fasta $@
+
+$(SPECIES)_trinity.blast: $(SPECIES)_trinity.Trinity.fasta $(PROTEIN_ALIGNMENT_SPECIES)_prot.phr
+	$(MODULE) load blast+ ; \
+	blastx -db $(PROTEIN_ALIGNMENT_SPECIES)_prot \
+		-query $(SPECIES)_trinity.Trinity.fasta \
+		-out $@ \
+		-outfmt 6 \
+		-num_alignments 1 -best_hit_overhang 0.25 \
+		-num_threads $(CORES) -best_hit_score_edge 0.05 \
+		-evalue 1e-10
+
+$(PROTEIN_ALIGNMENT_FASTA).gz:
+	rsync -avP "rsync://ftp.ensembl.org/ensembl/pub/release-80/fasta/$(PROTEIN_ALIGNMENT_SPECIES)/pep/$(PROTEIN_ALIGNMENT_FASTA).gz" $@
+
+$(PROTEIN_ALIGNMENT_FASTA): $(PROTEIN_ALIGNMENT_FASTA).gz
+	gzip -dc $< > $@
+
+
+blastdb: $(PROTEIN_ALIGNMENT_SPECIES)_prot.phr
+
+$(PROTEIN_ALIGNMENT_SPECIES)_prot.phr: $(PROTEIN_ALIGNMENT_FASTA)
+	$(MODULE) load blast+ ; \
+	makeblastdb -dbtype prot -title $(PROTEIN_ALIGNMENT_SPECIES) \
+		-in $(PROTEIN_ALIGNMENT_FASTA) \
+		-out $(PROTEIN_ALIGNMENT_SPECIES)_prot;
+
+
+endif
 
 bowtie_indexes: $(ALIGNMENT_SPECIES)_bt2.1.bt2
 
@@ -119,7 +155,7 @@ $(FASTA): $(FASTA).gz
 $(GTF): $(GTF).gz
 	gzip -dc $< > $@
 
-remote_files: $(FASTA).gz $(GTF).gz
+remote_files: $(REMOTE_FILES)
 
 fasta: $(FASTA)
 

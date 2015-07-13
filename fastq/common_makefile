@@ -111,12 +111,15 @@ $(SPECIES)_trinity.Trinity.fasta: $(FASTQ_FILES)
 
 $(PROTEIN_ALIGNMENT_SPECIES)_diamond.dmnd: $(PROTEIN_ALIGNMENT_FASTA)
 	$(MODULE) load diamond/0.7.9 ; \
-	diamond makedb --in $(PROTEIN_ALIGNMENT_FASTA) --db $(PROTEIN_ALIGNMENT_SPECIES)_diamond;
+	diamond makedb --threads $(CORES) \
+		--in $(PROTEIN_ALIGNMENT_FASTA) \
+		--db $(PROTEIN_ALIGNMENT_SPECIES)_diamond;
 
 $(SPECIES)_trinity_diamond.daa: $(SPECIES)_trinity.Trinity.fasta \
 	$(PROTEIN_ALIGNMENT_SPECIES)_diamond.dmnd
 	$(MODULE) load diamond/0.7.9 ; \
 	diamond blastx --db $(PROTEIN_ALIGNMENT_SPECIES)_diamond \
+		--threads $(CORES) \
 		--query $(SPECIES)_trinity.Trinity.fasta \
         --daa $(SPECIES)_trinity_diamond
 
@@ -124,7 +127,7 @@ diamond: $(SPECIES)_trinity_diamond.txt
 
 $(SPECIES)_trinity_diamond.txt: $(SPECIES)_trinity_diamond.daa
 	$(MODULE) load diamond/0.7.9 ; \
-	diamond view --daa $< > $@
+	diamond view --threads $(CORES) --daa $< > $@
 
 $(PROTEIN_ALIGNMENT_FASTA).gz:
 	rsync -avP "rsync://ftp.ensembl.org/ensembl/pub/release-80/fasta/$(PROTEIN_ALIGNMENT_SPECIES)/pep/$(PROTEIN_ALIGNMENT_FASTA).gz" $@

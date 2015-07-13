@@ -9,6 +9,11 @@ COMMON_MAKEFILE=../common_makefile
 # this is not an ensembl assembly
 NOTENSEMBL=1
 
+# we need to use trinity to do the alignment
+USE_TRINITY=1
+PROTEIN_ALIGNMENT_SPECIES=mus_musculus
+PROTEIN_ALIGNMENT_FASTA=Mus_musculus.GRCm38.pep.all.fa
+
 BOWTIE_INDEX_DIR=./
 
 include ../srr_makefile

@@ -1,5 +1,7 @@
 #!/usr/bin/make -f
 
+SHELL=/bin/bash
+
 # this is the env variable to tell us how many processors on this node
 # we get
 ifdef PBS_NUM_PPN

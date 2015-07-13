@@ -111,6 +111,29 @@ $(SPECIES)_trinity.Trinity.fasta: $(FASTQ_FILES)
 		--CPU $(CORES) --trimmomatic --output $(SPECIES)_trinity --JM 10G;
 	mv $(SPECIES)_trinity/Trinity.fasta $@
 
+$(SPECIES)_trinity_bt2.1.bt2: $(SPECIES)_trinity.Trinity.fasta
+	$(MODULE) load bowtie2/2.1.0; \
+	bowtie2-build $< $(SPECIES)_trinity_bt2
+
+TRINITYPATH?=/home/apps/trinityrnaseq/trinityrnaseq_r2014-07-17/
+
+
+trinity_align: $(SPECIES)_trinity.Trinity.fasta
+	$(MODULE) load samtools/0.1.19; \
+	$(MODULE) load bowtie; \
+	$(MODULE) load trinityrnaseq/r2014-07-17; \
+	$(TRINITY_PATH)/util/align_and_estimate_abundance.pl \
+	--transcripts $(SPECIES)_trinity.Trinity.fasta \
+	$(if $(filter 2,$(words $(FASTQ_FILES))), \
+		--left $(wordlist 1,1,$(FASTQ_FILES)) --right $(wordlist 2,2,$(FASTQ_FILES)),\
+		--single $(FASTQ_FILES)) \
+		--seqType fq \
+		--est_method RSEM \
+		--aln_method bowtie \
+		--prep_reference \
+        --output_dir $(SPECIES)_trinity_align;
+
+
 $(PROTEIN_ALIGNMENT_SPECIES)_diamond.dmnd: $(PROTEIN_ALIGNMENT_FASTA)
 	$(MODULE) load diamond/0.7.9 ; \
 	diamond makedb --threads $(CORES) \

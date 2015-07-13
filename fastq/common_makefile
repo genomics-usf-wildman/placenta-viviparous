@@ -109,15 +109,22 @@ $(SPECIES)_trinity.Trinity.fasta: $(FASTQ_FILES)
 		--CPU $(CORES) --trimmomatic --output $(SPECIES)_trinity --JM 10G;
 	mv $(SPECIES)_trinity/Trinity.fasta $@
 
-$(SPECIES)_trinity.blast: $(SPECIES)_trinity.Trinity.fasta $(PROTEIN_ALIGNMENT_SPECIES)_prot.phr
-	$(MODULE) load blast+ ; \
-	blastx -db $(PROTEIN_ALIGNMENT_SPECIES)_prot \
-		-query $(SPECIES)_trinity.Trinity.fasta \
-		-out $@ \
-		-outfmt 6 \
-		-num_alignments 1 -best_hit_overhang 0.25 \
-		-num_threads $(CORES) -best_hit_score_edge 0.05 \
-		-evalue 1e-10
+$(PROTEIN_ALIGNMENT_SPECIES)_diamond.dmnd: $(PROTEIN_ALIGNMENT_FASTA)
+	$(MODULE) load diamond/0.7.9 ; \
+	diamond makedb --in $(PROTEIN_ALIGNMENT_FASTA) --db $(PROTEIN_ALIGNMENT_SPECIES)_diamond;
+
+$(SPECIES)_trinity_diamond.daa: $(SPECIES)_trinity.Trinity.fasta \
+	$(PROTEIN_ALIGNMENT_SPECIES)_diamond.dmnd
+	$(MODULE) load diamond/0.7.9 ; \
+	diamond blastx --db $(PROTEIN_ALIGNMENT_SPECIES)_diamond \
+		--query $(SPECIES)_trinity.Trinity.fasta \
+        --daa $(SPECIES)_trinity_diamond
+
+diamond: $(SPECIES)_trinity_diamond.txt
+
+$(SPECIES)_trinity_diamond.txt: $(SPECIES)_trinity_diamond.daa
+	$(MODULE) load diamond/0.7.9 ; \
+	diamond view --daa $< > $@
 
 $(PROTEIN_ALIGNMENT_FASTA).gz:
 	rsync -avP "rsync://ftp.ensembl.org/ensembl/pub/release-80/fasta/$(PROTEIN_ALIGNMENT_SPECIES)/pep/$(PROTEIN_ALIGNMENT_FASTA).gz" $@

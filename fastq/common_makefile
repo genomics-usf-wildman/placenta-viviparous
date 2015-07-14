@@ -118,7 +118,8 @@ $(SPECIES)_trinity_bt2.1.bt2: $(SPECIES)_trinity.Trinity.fasta
 TRINITY_PATH?=/home/apps/trinityrnaseq/trinityrnaseq_r2014-07-17/
 
 
-trinity_align: $(SPECIES)_trinity.Trinity.fasta
+trinity_align: $(SPECIES)_trinity_align_rsem_isoforms.txt
+$(SPECIES)_trinity_align_rsem_isoforms.txt: $(SPECIES)_trinity.Trinity.fasta
 	$(MODULE) load samtools/0.1.19; \
 	$(MODULE) load bowtie; \
 	$(MODULE) load trinityrnaseq/r2014-07-17; \
@@ -132,6 +133,7 @@ trinity_align: $(SPECIES)_trinity.Trinity.fasta
 		--aln_method bowtie \
 		--prep_reference \
         --output_dir $(SPECIES)_trinity_align;
+    mv $(SPECIES)_trinity_align/RSEM.isoforms.results $@
 
 
 $(PROTEIN_ALIGNMENT_SPECIES)_diamond.dmnd: $(PROTEIN_ALIGNMENT_FASTA)

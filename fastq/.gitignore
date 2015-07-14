@@ -7,3 +7,4 @@
 *.fastq.gz
 *.fastq
 *.fpkm_tracking
+cluster_host.mk

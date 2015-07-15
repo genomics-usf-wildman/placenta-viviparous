@@ -56,7 +56,8 @@ for (file in trinity.rsem) {
     setkey(trinity.fpkms[[file]],"protein_id")
     protein.to.gene[trinity.fpkms[[file]]]
     trinity.fpkms[[file]] <-
-        protein.to.gene[trinity.fpkms[[file]]][,list(tracking_id,gene_id,gene_short_name,FPKM)]
+        protein.to.gene[trinity.fpkms[[file]]][,list(tracking_id,gene_id,gene_short_name,
+                                                     species,file,FPKM)]
     trinity.fpkms[[file]][,tracking_id:=paste0(species.name,"_",tracking_id)]
     trinity.fpkms[[file]][,file:=file]
     trinity.gene.fpkms[[file]] <-

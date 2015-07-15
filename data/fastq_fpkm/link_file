@@ -1,0 +1,6 @@
+#!/bin/bash
+
+for file in "$@"; do
+    new_file="$(basename "$(echo "$file"|sed 's/\(SRR[[:digit:]]*\)\//\1_/g')")"
+    ln -sf "$file" "$new_file";
+done;

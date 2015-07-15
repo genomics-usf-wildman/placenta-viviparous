@@ -10,7 +10,11 @@ args <- commandArgs(trailingOnly=TRUE)
 load(args[1])
 ### ../../data/go_gene_association
 load(args[2])
-pdf(args[3],width=8,height=8)
+### ../species_ordering.R
+source(args[3])
+
+
+pdf(args[length(args)],width=8,height=8)
 
 hormone.genes <-
     go.gene.association[go_name=="hormone activity" & go_namespace=="molecular_function",gene_name]
@@ -73,6 +77,9 @@ combined.long <-
     rbind(igf.exp.long,
           gal.exp.long,
           hor.exp.long)
+combined.long$species <-
+    factor(combined.long$species,
+           levels=species.ordering)
 
 print(ggplot(combined.long, aes(y=gene, x=species))
       + geom_tile(aes(fill = fpkm), colour = "white")
@@ -83,7 +90,7 @@ print(ggplot(combined.long, aes(y=gene, x=species))
       + theme_grey(base_size = 9)
       + theme(legend.position = "none",
               axis.ticks = element_blank(), 
-              axis.text.x = element_text(angle = 330, hjust = 0))
+              axis.text.x = element_text(angle = 300, hjust = 0, vjust=1))
       )
 
 dev.off()

@@ -1,0 +1,12 @@
+species.ordering <-
+    c("homo sapiens",
+      "pan paniscus",
+      "ateles fusciceps",
+      "mus musculus",
+      "spalax carmeli",
+      "nannospalax galili",
+      "monodelphis domestica",
+      "dasypus novemcinctus",
+      "loxodonta africana",
+      "bos taurus",
+      "canis familiaris")

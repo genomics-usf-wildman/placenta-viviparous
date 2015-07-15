@@ -5,8 +5,9 @@ species.ordering <-
       "mus musculus",
       "spalax carmeli",
       "nannospalax galili",
-      "monodelphis domestica",
+      "bos taurus",
+      "canis familiaris",
       "dasypus novemcinctus",
       "loxodonta africana",
-      "bos taurus",
-      "canis familiaris")
+      "monodelphis domestica"
+      )

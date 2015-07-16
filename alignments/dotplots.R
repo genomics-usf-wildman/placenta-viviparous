@@ -1,20 +1,36 @@
 
-dotplot.grid <- function(seq1,seq2,wsize = 1, wstep = 1, nmatch=1) {
-    mkwin <- function(t.seq, wsize, wstep) {
-        sapply(seq(from = 1, to = length(t.seq) - wsize + 1, by = wstep), 
-               function(i) c2s(t.seq[i:(i + wsize - 1)]))
+dotplot.grid <- function(seq1,seq2,wsize = 1, wstep = 1, nmatch=wsize) {
+    if (missing(nmatch)) {
+        nmatch <- wsize
     }
-    wseq1 <- mkwin(seq1, wsize, wstep)
-    wseq2 <- mkwin(seq2, wsize, wstep)
-    "%==%" <- function(x, y) {
-        colSums(sapply(x, s2c) ==
-                    sapply(y, s2c))
+    if (wsize > 1) {
+        ## the way this was originally done was totally the most
+        ## inefficient way possible
+        equality <- outer(seq1,seq2,"==")
+        seq1.seq <-
+            seq(from = 1, to = length(seq1) - wsize + 1, by = wstep)
+        seq2.seq <-
+            seq(from = 1, to = length(seq2) - wsize + 1, by = wstep)
+        xy <- matrix(NA,nrow=length(seq1.seq),ncol=length(seq2.seq))
+        ## now, with a window, average over the whole thing
+        for (i in 1:length(seq1.seq)) {
+            for (j in 1:length(seq2.seq)) {
+                xy[i,j] <- sum(equality[matrix(c(seq1.seq[i]:(seq1.seq[i]+wsize-1),
+                                                 seq2.seq[j]:(seq2.seq[j]+wsize-1)
+                                                 ),
+                                               dimnames=list(NULL,c("row","col")),
+                                               ncol=2
+                                               )])
+            }
+        }
+    } else {
+        xy <- outer(seq1,seq2,"==")
     }
-    xy <- outer(wseq1, wseq2, "%==%")
-    xy <- xy/nmatch*100
-    xy[xy>100] <- 100
+    xy <- xy/nmatch*100-25
+    xy[xy>75] <- 75
+    xy[xy<0] <- 0
     temp <- xy
-    temp[] <- heat.colors(101)[round(xy)+1]
+    temp[] <- grey.colors(76,start=0,end=1)[76-round(xy)]
     # pushViewport(plotViewport(c(5,4,4,2)))
 #     pushViewport(dataViewport(xData = NULL, yData = NULL, xscale = c(1,length(wseq1)),
 #                               yscale = c(1,length(wseq2)), extension = 0))
@@ -46,7 +62,8 @@ dotplot.all <- function(alignment,start,end,seqs=TRUE,...) {
             if (j < i)
                 next;
             pushViewport(viewport(layout.pos.row=i,layout.pos.col=j))
-            dotplot.grid(s2c(as.character(aln[i]))[start:end],s2c(as.character(aln[j]))[start:end],
+            dotplot.grid(s2c(as.character(aln[i]))[start:end],
+                         s2c(as.character(aln[j]))[start:end],
                          ...
                          )
             popViewport()

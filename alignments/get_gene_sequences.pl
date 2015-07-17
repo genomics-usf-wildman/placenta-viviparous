@@ -52,10 +52,14 @@ while (<>) {
     if ($options{flank} > 0) {
         if ($options{promoter_only}) {
             if ($gene->strand() == -1) {
-                # remove all but 100 bases of the sequence, and add on the flank to the promotor
-                $slice = $slice->expand(($slice->start()-$slice->end()),$options{flank});
+                # remove all but flank bases of the sequence, and add on the flank to the promotor
+                $slice = $slice->expand(($slice->start()-$slice->end()+
+                                         $options{flank}),
+                                        $options{flank});
             } else {
-                $slice = $slice->expand($options{flank},($slice->start()-$slice->end()));
+                $slice = $slice->expand($options{flank},
+                                        ($slice->start()-$slice->end()+
+                                         $options{flank}));
             }
         } else {
             $slice = $slice->expand($options{flank},$options{flank});

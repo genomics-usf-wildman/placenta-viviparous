@@ -1,0 +1,1052 @@
+\documentclass[english,12pt]{article}
+\usepackage{fontspec}
+\setmainfont{FreeSerif}
+\setsansfont{FreeSans}
+\setmonofont{FreeMono}
+\usepackage[letterpaper,left=1in,right=1in,top=1in,bottom=1in,headheight=14pt]{geometry}
+\usepackage{url}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage[bf]{caption}
+\usepackage{rotating}
+\usepackage{wrapfig}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{setspace}
+%\usepackage{txfonts}
+%\usepackage{fancyref}
+\usepackage{acronym}
+\usepackage{array}
+\usepackage{dcolumn}
+\usepackage{adjustbox}
+\usepackage{longtable}
+\usepackage{pdflscape}
+\usepackage[backend=biber,natbib=true,hyperref=true,style=reading,autocite=inline]{biblatex}
+\addbibresource{references.bib}
+\usepackage[noblocks,auth-sc]{authblk}
+\usepackage[hyperfigures,bookmarks,colorlinks]{hyperref}
+%\usepackage[hyperfigures,bookmarks,colorlinks,citecolor=black,filecolor=black,linkcolor=black,urlcolor=black]{hyperref}
+% Floats at end for journals
+% \usepackage[nolists,figuresfirst,nomarkers,heads,nofighead,notabhead]{endfloat}
+% \AtBeginFigures{\section*{Figure Legends}\renewcommand{\efloatseparator}{\hbox{}}}
+% \AtBeginTables{\section*{Tables}\renewcommand{\efloatseparator}{\mbox{}}}
+\usepackage[nomargin,inline,draft]{fixme}
+\newcommand{\DLA}[1]{\textcolor{red}{\fxnote{DLA: #1}}}
+\usepackage[x11names,svgnames]{xcolor}
+\usepackage{texshade}
+\usepackage{tikz}
+\usepackage{nameref}
+\usepackage{zref-xr,zref-user}
+\newenvironment{narrow}[2]{%
+  \begin{list}{}{%
+      \setlength{\topsep}{0pt}%
+      \setlength{\leftmargin}{#1}%
+      \setlength{\rightmargin}{#2}%
+      \setlength{\listparindent}{\parindent}%
+      \setlength{\itemindent}{\parindent}%
+      \setlength{\parsep}{\parskip}}%
+  \item[]}{\end{list}}
+\def\newblock{\hskip}
+\newenvironment{paperquote}{%
+  \begin{quote}%
+     \it
+  }%
+  {\end{quote}}
+\renewcommand{\textfraction}{0.15}
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.65}
+\renewcommand{\floatpagefraction}{0.60}
+%\renewcommand{\baselinestretch}{1.8}
+\newenvironment{enumerate*}%
+  {\begin{enumerate}%
+    \setlength{\itemsep}{0pt}%
+    \setlength{\parskip}{0pt}}%
+  {\end{enumerate}}
+\newenvironment{itemize*}%
+  {\begin{itemize}%
+    \setlength{\itemsep}{0pt}%
+    \setlength{\parskip}{0pt}}%
+  {\end{itemize}}
+\oddsidemargin 0.0in 
+\textwidth 6.5in
+\raggedbottom
+\clubpenalty = 10000
+\widowpenalty = 10000
+% make the afill smaller
+\renewcommand\Affilfont{\itshape\small}
+\pagestyle{fancy}
+
+\begin{document}
+\author[1,2]{Michael R. McGowen}
+\author[1]{Don Armstrong}
+\author[1]{Amy Weckle}
+\author[1]{Jason Caravas}
+\author[3]{Dalen Agnew}
+\author[4]{Kurt Benirschke}
+\author[5]{Sue Savage-Rumbaugh}
+\author[6,7]{Chong Jai Kim}
+\author[8]{Günter P. Wagner}
+\author[6]{Roberto Romero}
+\author[1,6,9,*]{Derek E. Wildman}
+\title{The evolution of gene expression in the term placenta of viviparous mammals}
+% These are all wrong, but we'll change them later.
+\affil[1]{Center for Molecular Medicine and Genetics, Wayne State University School of Medicine, Detroit, MI, USA}
+\affil[2]{School of Biological and Chemical Sciences, Queen Mary, University of London, London, UK}
+\affil[3]{Diagnostic Center for Population and Animal Health, College of Veterinary Medicine, Michigan State University, East Lansing, MI, USA}
+\affil[4]{Department of Pathology, University of California San Diego, La Jolla, CA, USA}
+\affil[5]{Great Ape Trust/Bonobo Hope Sanctuary, Des Moines, IA, USA}
+\affil[6]{Perinatology Research Branch, Eunice Kennedy Shriver National Institute of Child Health and Human Development (NICHD), National Institutes of Health (NIH), Detroit, MI, USA}
+\affil[7]{Department of Pathology, Wayne State University School of Medicine, Detroit, MI, USA}
+\affil[8]{Department of Ecology and Evolutionary Biology and Yale Systems Biology Institute, Yale University, New Haven, CT, USA}
+\affil[9]{Department of Obstetrics and Gynecology, Wayne State University School of Medicine, Detroit, MI, USA}
+\affil[*]{To whom correspondence should be addressed}
+\date{\today}
+
+% \twocolumn
+\maketitle
+\onehalfspacing
+
+<<load.libraries,echo=FALSE,results="hide",warning=FALSE,message=FALSE,error=FALSE,cache=FALSE>>=
+opts_chunk$set(dev="cairo_pdf",out.width="\\textwidth",out.height="0.7\\textheight",out.extra="keepaspectratio")
+opts_chunk$set(cache=TRUE, autodep=TRUE)
+options(device = function(file, width = 8, height = 7, ...) {
+  cairo_pdf(tempfile(), width = width, height = height, ...)
+})
+library("data.table")
+library("ggplot2")
+library("reshape2")
+@ 
+
+<<source.to.latex,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../common_r_code/",c("to_latex.R")))>>=
+for (a in paste0("../common_r_code/",c("to_latex.R"))) {
+    source(a)
+}
+@ 
+
+\section{Abstract}
+
+The placenta is arguably the most anatomically variable organ in
+mammals. Understanding gene expression patterns among placentas from
+multiple species can illuminate the molecular basis of placenta
+function as well as potentially enrich our knowledge of the biology of
+obstetrical syndromes. We profiled the term placenta by using Illumina
+RNA-Seq technology to sequence the transcriptomes of 6 species of
+therian (i.e. marsupials and “placental”) mammals. We identified
+significant shifts in gene expression along specific evolutionary
+lineages using a model of character evolution. Genes that showed
+significant elevation in expression along the human lineage
+($\mathrm{FDR}\le 0.01$) were enriched in GO categories such as
+angiogenesis, tube morphogenesis, cell migration, and regulation of
+inflammatory response. Three of these genes (KISS1, ADAM12, GPC3)
+showed exceptionally high expression in humans; these genes are
+implicated in preeclampsia and may indicate that the risk of
+preeclampsia recently emerged on the human lineage.
+
+Keywords: mammal, gene expression, evolution, RNA-seq, placenta
+
+\section{Introduction}
+
+The main role of the placenta in viviparous mammals is the transfer of
+nutrients, oxygen, and waste between mother and offspring. Although
+these functions are conserved among mammals, the placenta is perhaps
+the most variable organ in terms of structure and form (Mossman,
+1937). Species differ in the shape of attachment (i.e., discoid,
+diffuse, cotyledonary, zonary), degree of invasiveness of fetal
+tissues into maternal tissues (i.e. epitheliochorial,
+endotheliochorial, hemochorial), and degree of interdigitation of
+maternal-fetal tissue (i.e., villous, folded, trabecular, lamellar,
+labrynthine) (Mossman, 1987). In addition, therian mammals differ
+drastically in the number and size of their offspring, as well as the
+length of gestation, traits often associated with specific aspects of
+placental morphology (Capellini et al., 2011).
+
+The placenta arose at some point before the origin of therian mammals,
+a group that includes both marsupials and eutherian or “placental”
+mammals. The term “placental mammals” is misleading, as marsupials
+also possess a placenta, although its direct apposition to maternal
+tissues lasts for a proportionally shorter time during gestation
+(Renfree, 2010). Marsupials also differ from eutherian mammals in
+that most possess only a choriovitelline placenta, produced from the
+fusion of the chorion and yolk sac, during most of gestation. Although
+some eutherian mammals may possess a choriovitelline placenta at some
+point in development, the major site of nutrient exchange in
+placentals occurs via the chorioallantoic placenta, produced from the
+fusion of the chorion and allantois (Mossman, 1987). It is unclear
+whether the first placenta was more like that of marsupials or
+eutherians; however, using phylogenetic methods, the ancestral
+eutherian was reconstructed as possessing a relatively invasive
+hemochorial placenta, in which the maternal and fetal blood supply is
+separated by one tissue layer, as in humans and mouse (Elliot
+and Crespi, 2009; Wildman et al., 2006).
+
+Although the morphology of the mammalian placenta has been well
+characterized in a number of species (Mossman, 1987), the diversity of
+the molecular environment is only beginning to be understood from a
+genetic perspective (Carter, 2012). Studies of certain model species
+(i.e., humans, mice, cattle) have revealed a stunning divergence in
+the genetics of the placenta, especially in later stages of pregnancy
+(Carter, 2012; Hou et al., 2012; Knox and Baker, 2008; Su et al.,
+2002). For example, each lineage has evolved expansive
+placenta-specific gene families with expression patterns that can vary
+in space and time (Green et al., 2000; Simmons et al., 2008). These
+include independent expansions of the prolactins in mouse and cow,
+pregnancy-specific glycoproteins (PSGs) in humans and mouse,
+pregnancy-associated glycoproteins (PAGs) in cow, and the expansion of
+the growth hormone and chorionic gonadotropin beta genes in hominoid
+primates (Haig, 2008; Rawn and Cross, 2008). Expression patterns of
+specific genes also can vary widely between species. For example, the
+expression of orthologous genes in the placenta have been found to
+vary substantially between humans and mice (Su et al., 2002), and the
+recruitment of SIGLEC6 to placental expression in humans differs from
+both chimpanzees and mice (Brinkman-Van der Linden et al., 2007).
+
+One explanation for the divergent paths of the placental interface is
+the distinct evolutionary interplay between maternal and fetal
+strategies during pregnancy (Haig, 1993). The maternal strategy is to
+requisition an adequate degree of nutrients to the fetus without
+risking the health of the mother, while the fetal strategy via
+paternal genes is to extract as many resources from the mother as
+possible. Therefore, an interplay between these extremes can set up an
+intricate “arms race”, involving the imprinting of parental alleles,
+production of new genes, and enlistment of existing genes to
+expression at the maternal-fetal interface (Haig, 1993).
+
+One symptom
+of this maternal-fetal conflict is its potential affect on human
+health (Hollegaard et al., 2013). In addition to having an invasive
+hemochorial placenta, humans possess a deeply invasive trophoblast
+layer that can penetrate the myometrium of the uterus (Carter and
+Pijnenborg, 2011). Defects in placental growth are known to be
+associated with the devastating condition of preeclampsia, which can
+cause hypertension, proteinuria, and has the potential to lead to
+death of the mother and/or infant (citation). Although cases have been
+documented in chimpanzees and gorillas (citation), preeclampsia has a
+far higher incidence in human pregnancies with as much as 4\% of
+pregnancies being affected in the United States (citation).
+Chimpanzees and gorillas also have deeply invasive trophoblasts,
+although the progression of invasion in great apes may be slower than
+humans (Carter and Pijnenborg, 2011); however, large-scale expression
+studies of great ape placentas have not been conducted. The increasing
+affordability of next-generation sequencing technology has enabled the
+large-scale study of specific tissues from a wide array of species to
+address broader phylogenetic questions in the evolution of gene
+expression (Brawand et al., 2011). Here we use Illumina RNA-Seq
+technology to sequence and quantify the mRNA environment of six
+mammalian placentas at term, including that of the human, bonobo (the
+sister species to the chimpanzee), dog, cow, African elephant, and
+opossum, representing marsupials as well as three major branches of
+eutherian mammals (Euarchontoglires, Laurasiatheria, Afrotheria).
+These placentas also represent a wide array of placental morphologies
+as well as traits such as number and size of offspring and length of
+gestation (Table 1). We use this data, along with existing RNA-Seq
+data from mouse (Wang et al., 2011), to address the major differences
+between expression in marsupial and eutherian mammals at term,
+identify the evolution of expression in important placental genes such
+as hormones and galectins, identify novel lineage-specific expression
+patterns, and quantify human specific differences in gene expression
+that may be related to obstetrical disorders such as preeclampsia.
+
+\section{Methods}
+
+\subsection{Collection of Placental Tissue and RNA Extraction}
+
+Fetal tissue was collected from the placenta of six mammalian species
+(Homo sapiens [human], Pan paniscus [bonobo], Canis familiaris
+[domestic dog], Bos taurus [domestic cow], Loxodonta africana [African
+savanna elephant], and Monodelphis domestica [gray short-tailed
+opossum]). Information on specimen ID, place and time of collection,
+and collector is shown for each sample in Supplemental Table 1. In the
+case of Pan, Bos, and Loxodonta, the placenta was collected at term
+upon expulsion from the mother following delivery. Placental tissue
+from Homo sapiens was collected upon delivery via a caesarian section.
+Near-term placental tissue from Canis familiaris was collected upon
+the death of the mother from a car accident. Placental tissue from
+Monodelphis domestica was sampled at fetal stage 32, roughly one day
+prior to birth. Only the fetal portion of the placenta was sampled at
+the maternal-fetal interface (i.e. villous portion for Homo, Pan,
+Canis, and Loxodonta; cotyledon for Bos; diffuse placenta for
+Monodelphis). All tissues were collected and stored in RNAlater (Life
+Technologies, Carlsbad, CA) until RNA isolation could be performed.
+Tissues were homogenized in Trizol, and total RNA was isolated
+following the manufacturer’s instructions. RNA was further purified
+using RNeasy Midi Kit (Qiagen, Valencia, CA), in conjunction with the
+RNase-Free DNase Set (Qiagen, Valencia, CA), following the
+manufacturer’s protocol to remove any contaminating DNA from the
+sample. Total RNA was then evaluated on a Nanodrop 1000 (Thermo
+Scientific, Wilmington, DE) and an Agilent Bioanalyzer 2100 (Santa
+Clara, CA) to confirm concentration and quality of the isolation. RNA
+quality was assessed using A260/A280 and A260/A230 absorbance values.
+
+\subsection{Sequencing}
+
+All RNA-Seq mRNA isolation, library construction, and Illumina
+sequencing was performed by the Applied Genomics Technology Center
+(AGTC) at Wayne State University School of Medicine using 2.5-5 µg of
+total RNA and standard Illumina protocol. Paired-end sequencing was
+performed using the Illumina Genome Analyzer II with an insert size of
+230 base pairs (bp). Bos, Loxodonta, and Monodelphis were sequenced
+with read lengths of 75 bp; Canis, Homo, and Pan were sequenced with
+read lengths of 150 bp.
+
+\subsection{Transcriptome Assembly and Mapping}
+
+The quality of reads was evaluated using FASTQC v. 0.9.2
+(http://www.bioinformatics.babraham.ac.uk/projects/fastqc/). Following
+this, reads were trimmed based on quality in Galaxy using the FASTQ
+Trimmer v. 1.0.0 (Blankenberg et al., 2010). All transcriptomes were
+then aligned to reference genomes and assembled using the Tuxedo suite
+of next-generation sequencing analysis tools. Annotated reference
+genomes were downloaded from Ensembl v. 64 (Flicek et al., 2012),
+including Homo sapiens GRCh37, Pan troglodytes CHIMP2.1 (6X coverage),
+Canis familiaris BROADD2 (7.6X), Bos taurus UMD3.1 (9.5X), Loxodonta
+africana loxAfr3 (7X), and Monodelphis domestica BROADO5 (6.8X). The
+genome of the closely-related Pan troglodytes was used to map the
+transcriptome of Pan paniscus; the separation between the two
+recognized Pan species is generally perceived to be ~1 Mya (Prufer et
+al., 2012). Reads were aligned to reference genomes using Bowtie v.
+0.12.7 (Langmead et al., 2009) and TopHat v. 1.3.3 (Trapnell et al.,
+2009). Cufflinks v. 1.2.1 was then used to assemble transcripts and
+quantify expression values using fragments per kilobase of exon per
+million mapped reads (FPKM) (Trapnell et al., 2010). RNA-Seq metrics
+were computed using Picard (http://picard.sourceforge.net/). For
+comparison, we also downloaded the placenta Illumina RNA-Seq
+transcriptome of a mouse from (Wang et al., 2011). Raw reads were
+mapped as above using the Ensembl v. 64 annotation of the Mus musculus
+(house mouse) genome (NCBI m37).
+
+\subsection{Exploration of Individual Transcriptome Data}
+
+To determine enrichment levels of functional categories of genes in
+highly-expressed transcripts in each transcriptome, we performed
+functional annotation cluster analyses per transcriptome using DAVID
+(Huang et al., 2009; Sherman et al., 2007). DAVID ranks functional
+annotation clusters according to enrichment score (ES); functional
+annotation clusters are considered significantly enriched if ES>1.3,
+as this corresponds to p<0.05 (Huang et al., 2009). We executed
+analyses with two gene lists per transcriptome: 1) annotated genes
+with expression levels of the top 5\% of the frequency distribution of
+FPKM and 2) the top 100 genes with the highest FPKM. Due to the
+paucity of annotated gene ontology terms for some species, gene lists
+were compared using gene ontology terms derived from the human genome.
+
+\subsection{Comparative Analysis of Gene Expression}
+
+All 1:1 orthologues present among human, bonobo, mouse, dog, cow,
+elephant, and opossum were determined using Ensembl v.64 gene trees
+via the Biomart online data management tool (Kasprzyk, 2011). A total
+of 6882 1:1 orthologous genes were expressed in at least one species.
+For further analysis, we eliminated all genes that did not have at
+least one species with an FPKM>10. A list of these 4259 1:1
+orthologous genes was retained for future analyses of gene expression
+evolution described below.
+
+We used the software OUCH (Ornstein–Uhlenbeck for Comparative
+Hypotheses) in the R statistical environment to investigate
+significant shifts in gene expression levels over time (Butler and
+King, 2004). OUCH institutes an Ornstein-Uhlenbeck (OU) model of
+evolution, which allows for different optima for quantitative trait
+values along user-specified branches of a phylogenetic tree. The OU
+model explicitly accounts for change in quantitative trait values by
+introducing two parameters into the model of stochastic Brownian
+motion of change in trait value along a phylogenetic tree through
+time. These parameters include, ?, or an optimum trait value, and ,
+or the strength of selection (interpreted as “pull” toward the
+optimum). In addition, the OU model can also integrate evolutionary
+change by assuming that each user-specified set of braches has its own
+separate OU parameters (see Butler and King, 2004).
+
+Various OU branch models were tested against a model in which no
+variation in optima among branches was allowed. The following branches
+were specified in separate models to have a different optimum than all
+other branches: human, bonobo, mouse, dog, cow, elephant, opossum,
+human+bonobo, Euarchontoglires, and Boreoeutheria. Likelihood values
+were computed for each branch model and compared to an OU model with
+one optimum using likelihood ratio tests with df=1. We filtered out
+genes with universally low expression levels, and included only genes
+in which expression in at least one species had an FPKM≥10 as
+described above. We corrected for multiple testing using the false
+discovery rate (FDR) and calculated adjusted p values (q-values) using
+the Benjamini-Hochstein correction. We used the time-calibrated
+phylogenetic tree of (Meredith et al., 2011) with all species not used
+in this analyses pruned.
+
+To determine enrichment of functional categories in lists of genes
+that display a significant shift in expression on a specific branch,
+we performed functional annotation cluster analyses on each branch
+using DAVID (Huang et al., 2009; Sherman et al., 2007). DAVID ranks
+functional annotation clusters according to enrichment score (ES);
+functional annotation clusters are considered significantly enriched
+if ES>1.3, as this corresponds to p<0.05 (Huang et al., 2009). As
+above, due to the paucity of annotated gene ontology terms for some
+species, gene lists were compared using gene ontology terms derived
+from the human genome.
+
+\subsection{Correlation of Tissue Specific Index with Lineage Specific Genes}
+
+To evaluate the extent of tissue specificity of each gene, we
+calculated the tissue specificity index based on human microarray data
+from (Su et al., 2004) available via BioGPS. The tissue specificity
+index (TSI) measures the extent to which a specific gene has
+predominant expression in only one tissue (Yanai et al., 2005). A TSI
+of 1.0 would signify that a gene was solely expressed in only one
+tissue, while a TSI of 0.0 would signify that a gene had equal
+expression in all tissues evaluated. We used the formula available in
+Yanai et al. (2005) to calculate the TSI, and identified the top four
+tissues which expressed each probe set from (Su et al., 2004).
+
+\subsection{Validation of Primate Expression using Spider Monkey Placenta Transcriptome}
+
+To verify expression levels in human and bonobo, we also generated
+RNA-Seq data for the placenta transcriptome of the black-headed spider
+monkey (Ateles fusciceps) using similar protocols discussed above.
+Ateles is outside the clade, which includes hominids and can be used
+to polarize expression values of highly expressed genes in Homo and
+Pan. We sampled placental tissue from an Ateles placenta expelled from
+the mother shortly after birth (see Supplemental Table X). We used
+similar procedures discussed above to extract and sequence this
+sample. [DEREK—I’m unsure how to proceed on describing this so as to
+not step on Natalie’s toes]
+
+\section{Results}
+
+\subsection{Transcriptome Statistics}
+
+For transcriptomes sequenced with 75 bp, (opossum, elephant, and cow),
+the number of reads ranged from 3.61x107 to 3.70x107 and number of
+bases ranged from 1.43x109 to 1.64x109 with at least 96\% of reads
+mapping to the respective reference genome (Table 1). For
+transcriptomes sequenced with 150 bp (human, bonobo, and dog), number
+of reads ranged from 6.47x107 to 9.27x107 and number of bases ranged
+from 5.20x109 to 6.25x109 with at least 99\% of reads mapping to the
+respective reference genome. All reads were submitted to the NCBI
+Sequence Read Archive (SRA) (Accession Number XXX-YYY).
+
+The percentage of bases that mapped to Ensembl annotated mRNA ranged
+from ~35\% in elephant to ~85\% in human, with percentages of bases
+mapping to annotated protein-coding segments of genes ranging from
+~34\% (elephant) to ~54\% (human), untranslated regions (UTRs) ranging
+from ~0.6\% (elephant) to ~31\% (human), and known introns ranging
+from ~5.5\% (dog) to 11\% (bonobo). Median percent genomic coverage
+ranged from ~43\% in elephant to 80\% in bonobo. The number of
+annotated transcripts to which reads mapped in each respective genomes
+ranged from 4119 (bonobo) to 6506 (human) for transcripts with FPKM>10
+and 11689 (dog) to 30733 (human) for transcripts with FPKM>1. The
+greater degree of mapping to annotated protein-coding sequences in
+humans corresponds to the greater number of Ensembl annotated
+sequences in the human genome compared to the other five reference
+genomes (Flicek, 2012).
+
+The top 50 expressed genes in each genome analyzed are shown in Tables
+2-7, and all genes for each transcriptome are listed in Supplementary
+Tables X-XX [These are large Excel files to be included with the
+Supplemental Material]. In addition, specific genes including
+placental hormones and hormone-related genes, galectins, and
+insulin-like growth factor related genes are shown with FPKM values
+side to side for all transcriptomes including the reanalysis of mouse
+from Wang et al. (2011) in Table 8. Below we describe each
+transcriptome separately, specifically concentrating on
+highly-expressed genes.
+
+\subsection{Human Placenta Transcriptome}
+
+The top 50 expressed genes as measured by FPKM in the term placenta of
+the human are shown in Table 2 with a list of all genes in
+Supplemental Table X. The gene with by far the highest FPKM value
+(101962) in humans is chorionic somatomammotropin hormone 1 (CSH1),
+followed by chorionic somatomammotropin hormone 2 (CSH2), and
+chorionic somatomammotropin hormone-like 1 (CSHL1), all three of which
+are members of a distinct expansion of the growth hormone gene family
+within hominoids. Another member of the growth hormone gene family,
+GH2 (FPKM=729.639), is also expressed to a high degree in the human
+placenta (Table 2). Ten pregnancy-specific beta-1-glycoprotein genes
+are highly-expressed (FPKM>100) in the term placenta of humans, with
+PSG4 showing the greatest degree of expression (FPKM= 5201.31; Table
+2). These genes are members of a hominoid-specific expansion of the
+carcinoembryonic antigen (CEA) family and known to be expressed by the
+syncytiotrophoblast (Lei et al., 1992; Rand and Cross, 2008). Genes
+involved in the production of estrogen (CYP19A1) and progesterone
+(HSD3B1) show exceptionally high expression in the human placenta
+(FPKM = 4817.15 and 829.846 respectively), as well as CGA (FPKM=
+4793.08), which generates the alpha subnit of multiple human chorionic
+gonadotropin hormones (Table 2). The genes producing the beta subunits
+of the chorionic gonadotropins (CGB, CGB1, CGB2, CGB5, CGB7, CGB8) are
+either not expressed (CGB8) or expressed modestly (FPKM≤20.826; Table
+8). Other highly expressed genes in the top 50 include members of the
+hemoglobin family (e.g. HBA1, HBB, HBG2, HBA2), the maternally
+imprinted long noncoding RNA gene H19, genes coding for proteins
+required for growth and/or cell proliferation (ADAM12, KISS1, IGF2,
+GPC3, CSF3R), anticoagulation (TFPI2), and glucose transport (SLC2A1)
+among others (Table 2, Supplemental Table X)
+
+\subsection{Bonobo Placenta Transcriptome}
+
+The top 50 expressed genes as measured by FPKM in the term placenta of
+the bonobo are shown in Table 3 with a list of all genes in
+Supplemental Table X. Expression in the bonobo placenta differs
+somewhat from that of the human, as evidenced by the makeup of the top
+50 genes (Table 3). The highest expression (FPKM=10149.1) in bonobo is
+proteoglycan 2, bone marrow (PRG2), which is involved in insulin
+growth factor signaling and angiogenesis during pregnancy (Weyer and
+Glerup, 2011). PRG2 is also expressed at relatively high levels in the
+human placenta (FPKM=250.675; Supplemental Table X), although at
+comparatively much lower levels than the bonobo. A bonobo gene closely
+related to the chorionic somatomammotropins (Q95MK7\_PANTR) is also
+expressed at high levels (FPKM=1232.56; Table 3). Two other Pan genes
+included within this family (ENSPTRG00000030805 which shows similarity
+to GH2 and ENSPTRG00000034560) show expression levels of FPKM>89. Six
+pregnancy-specific beta-1-glycoprotein genes were expressed in the
+bonobo placenta with FPKM ranging from 20.885-167.961 (Supplemental
+Table X). Placental expression of the genes involved in estrogen and
+progesterone production (CYP19A1, HSD3B1 respectively) show lower
+expression in the bonobo as compared to humans (CYP19A1 FPKM= 48.6877;
+HSD3B1 FPKM= 54.5301; Table 8). In addition, CGA is expressed in the
+bonobo placenta (FPKM=202.629), but at much lower levels than humans
+as well (Table 8). Two Ensembl-annotated beta subunits of the
+chorionic gonadotropin genes are expressed in bonobo, one related to
+CGB and another related to CGB7; both are not highly expressed (Table
+8). Among the other top 50 expressed genes, there is high expression
+of ribosomal proteins (e.g., RPL18, RPL23), keratins (e.g., KRT7,
+KRT19), heat-shock proteins (e.g., HSPA5, HSPA1A), serpins (SERPINE1,
+SERPINE2), insulin growth factor 2 (IGF2) and the hormone
+adrenomedullin (ADM).
+
+\subsection{Dog Placenta Transcriptome}
+
+The top 50 expressed genes as measured by FPKM in the term placenta of
+the dog are shown in Table 4 with a list of all genes in Supplemental
+Table X. The gene with the highest expression (FPKM=48399.9) in the
+dog placenta is the hormone relaxin (RLN1). Other highly expressed
+genes among the top 50 (Table 4) include genes involved in the
+cytoskeleton (TMSB10, TMSB4X), anticoagulation (TFPI2, PLA2G7), innate
+immunity (LCN2, GM2A), lipid metabolism (APOE), inhibition of matrix
+metalloproteinases (TIMP2, TIMP3), and growth (PGF, EGFR, HTRA1). The
+gene LGALS1, which shows evidence of immunosupression during pregnancy
+(Than et al., 2008), shows high expression in dog (FPKM= 1405.02). In
+addition, the gene SSLP1, a gene expressed in the placentas of cow and
+sheep but not present in primates (Ushizawa et al., 2009), is also
+expressed at high levels (FPKM= 1853.98). There is no placental
+expression of the estrogen synthase gene (CYP19A1) in dogs, however
+expression of HSD3B1 is relatively high (FPKM=157.622).
+
+\subsection{Cow Placenta Transcriptome}
+
+The top 50 expressed genes as measured by FPKM in the term placenta of
+the dog are shown in Table 5 with a list of all genes in Supplemental
+Table X. The gene with the highest expression (FPKM=12488.8) was the
+miRNA gene bta-mir-2887-1. This gene occurs in several copies in the
+cow genome, and it was unclear as to how many or to which of 12
+bta-mir-2887 genes this mapped (Supplemental Table X). A previous
+study indicated that this miRNA gene was expressed in the bovine ovary
+(Hossain et al., 2009). Several members of the ruminant-specific
+pregnancy-associated glycoprotein family show especially high
+expression in the cow placenta (Table 4, Supplemental Table X)
+including PAG2 (FPKM=7255.34), PAG10 (2076.42), BT.83780 (1793.72),
+PAG11 (962.19), PAG12 (469.751), BT.88769 (408.584), PAG1 (301.61),
+PAG4 (186.496), PAG6 (157.348), PAG8 (153.225), and PAG16 (103.573).
+In addition, 14 other PAGs were expressed with FPKM<40 (Supplemental
+Table X). Other genes with high expression include genes involved with
+regulation of growth (IGF2, PHLDA2), imprinted genes (GNAS, DLK1,
+PHLDA2), and CSH1, a gene that is a member of a ruminant specific
+expansion of placental prolactins and not directly related to the gene
+of the same name in hominids. Other ruminant-specific placental
+prolactins also show high expression in the cow placenta including
+PRP1 (632.766), PRP5 (396.832), PRP6 (345.296), PRP2 (195.771), in
+addition to 7 other placental prolactins with expression of FPKM<51
+(Table 5; Supplemental Table X). SSLP1 (also called SOLD1), a gene
+expressed in the cotyledonary villi of the ruminiant placenta and
+involved in cell proliferation (Ushizawa et al., 2009, 2010), also
+shows evidence of high expression (FPKM=1001.45). There is some
+placental expression of the estrogen synthase gene (CYP19A1) in cows
+(75.1346), and comparatively greater expression of HSD3B1 (FPKM=
+157.622).
+
+\subsection{Elephant Placenta Transcriptome}
+
+The top 50 expressed genes as measured by FPKM in the term placenta of
+the elephant are shown in Table 6 with a list of all genes in
+Supplemental Table X. The gene with the highest expression
+(FPKM=33439.5) was the natriuretic peptide precursor B (NPPB). The
+gene with the second highest expression (FPKM=20233) was the microRNA
+miR-675, which is imbedded in the first exon of the maternally
+imprinted long non-coding RNA gene H19 (Keniry et al., 2012), a gene
+also highly expressed in the elephant placenta (FPKM=7164.3). Five
+uncharacterized genes are expressed to a high degree in the elephant
+placenta (Table 6), three of which are a member of an
+elephant-specific expansion of 11 genes closely related to the
+thymus-specific serine protease gene PRSS16. The other 8 PRSS16-like
+genes are also expressed to a lesser degree (FPKM<284.014). Two other
+novel genes with high expression are related to the gene SSLP1 (Table
+6), which is also expressed in the cow and dog placentas (Tables 4 and
+5). Placental expression of the hormones relaxin (RLN1) and prolactin
+(PRL) are exceptionally high in the elephant when compared to other
+mammals (Tables 6 and 8). There is little to no placental expression
+of the estrogen synthase gene, CYP19A1, (FPKM<1) and the enzyme that
+produces progesterone HSD3B1 (FPKM=0). Other genes with high
+expression in the elephant placenta include genes involved in
+oxidative stress (TXN), growth (IGF2), and PAEP, a gene usually
+expressed in the endometrium of the uterus in humans (Rutanen et al.,
+1987).
+
+\subsection{Opossum Placenta Transcriptome}
+
+The top 50 expressed genes as measured by FPKM in the term placenta of
+the opossum are shown in Table 7 with a list of all genes in
+Supplemental Table X. The gene with the highest expression
+(FPKM=41740.6) was hemoglobin, epsilon (HBE), which is expressed at
+the embryonic stage of development in marsupials, as in other mammals
+(Holland and Gooley, 1997). HBE subunits link up with protein products
+of two hemoglobin, zeta (HBZ) genes, which are also expressed to a
+high degree in the opossum placenta (FPKM=2452.19 and FPKM=1139.25).
+In addition, there is high expression (FPKM=5827.37) of the gene
+hemoglobin, omega (HBO), a hemoglobin found only in marsupials and
+monotremes (Opazo et al., 2008). The hemoglobin gene HBA is also
+expressed in the placenta (FPKM=456.978). The gene with the second
+highest expression (FPKM=22854.8) is superoxide dismutase 3,
+extracellular (SOD3), which functions as an antioxidant. Four cystatin
+genes (CSTB, CST3, two CSTA-like genes) are expressed to a high
+degree, along with two cathepsin-L related genes (Table 7), which are
+known to interact with cystatins (Turk et al., 2001). The
+uncharacterized gene XM\_001364916.1 also shows high expression in the
+opossum placenta (FPKM=13572.8). The gene WFDC2, a member of the whey
+acidic protein (WAP) family is also expressed to a high degree in the
+opossum placenta. Other genes with high expression include genes
+involved in retinol binding (RBP4), growth (IGFBP3), lipid metabolism
+(APOA1, APOA2), and immunosupression (LGALS1). In addition, there was
+little production of CYP19A1 and HSD3B1 (FPKM<2), and moderate
+expression of relaxin RLN1 (FPKM= 41.3949).
+
+\subsection{DAVID Analyses of Individual Transcriptomes}
+
+In order to identify major functional categories of genes expressed in
+the individual transcriptomes, we undertook functional annotation
+clustering analyses using DAVID (see Methods). Concentrating on genes
+with relatively high expression values, we conducted DAVID analyses
+using a list of genes with FPKM values included within the top 5\%
+distribution of expressed genes. Functional annotation clusters from
+all six placenta transcriptomes show enrichment in similar clusters of
+genes (Supplemental Table X). Significant enrichment in genes (ES>1.3,
+p>0.05) in the top 5\% of FPKM values in at least five transcriptomes
+included clusters such as ribosome, vesicle, cytoskeleton,
+glycoprotein, lysosome, annexins, hormone stimulus or response,
+growth, calcium binding, cell migration, basement membrane,
+antioxidant activity or oxidative stress, cell adhesion, and
+mitochondrion among others (Supplemental Table X).
+
+We also investigated enrichment in functional annotation clusters in
+the top 100 genes of each transcriptome (Table 9). As in the analyses
+of the top 5\% of genes, the top 100 genes show significant enrichment
+(ES>1.3) in all six transcriptomes in genes associated with ribosomes.
+Human shows enrichment in clusters such as collagen-binding, hormone
+activity, female pregnancy, coagulation, and the defense response.
+Bonobo shows enrichment in clusters related to apoptosis,
+cytoskeleton-related genes, and the stress response. Cow shows only
+four significantly enriched clusters; however many genes highly
+expressed in the cow are ruminant-specific placenta genes and are not
+yet annotated to specific GO categories. Dog shows enrichment in genes
+associated with RNA, as well as homeostasis, glycoproteins, lyosome,
+and calcium binding. Elephant shows enrichment in genes associated
+with RNA, coagulation and calcium binding. Opossum shows enrichment in
+genes involved in apoptosis, oxidative stress, mitochondrion, hormone
+metabolism, and lipids.
+
+\subsection{Comparative Analysis of Gene Expression}
+
+We performed a comparative analysis of gene expression by
+reconstructing the evolution of expression values and detecting
+significant shifts in expression along specific lineages. Likelihood
+values for each model for each of the X genes reconstructed, as well
+as likelihood ratio tests, P- and Q-values (after correcting for
+multiple testing) are shown in Supplemental Table X. We identified
+between 4 (Boreoeutheria) and 550 (Mouse) significant shifts (Q <
+0.01) in expression on specific lineages (Table 10). The top 10 genes
+with significant shifts (if applicable) per lineage are shown in Table
+10 and all genes for each branch are shown in Supplemental Tables
+X-XX. Genes that showed shifts on the human lineage were
+overwhelmingly identified as placenta-specific by the
+tissue-specificity index (TSI), with 56 out of 279 genes (20\%) with
+both TSI>0.75 and placenta as one the top two tissues with the highest
+expression. Unsurpisingly, this was not the case with other lineages,
+since we used expression values from a human-derived microarray to
+generate TSI values for each gene. However, this does underscore the
+dynamic nature of expression patterns in the placenta and indeed all
+tissues across mammals.
+
+We then performed DAVID functional annotation clustering analyses on
+each list of genes from each lineage. The top three clusters for each
+lineage are shown in Table 10 and a full list of clusters in
+Supplemental Table X. The top enrichment cluster in the human lineage
+is blood vessel development, followed by extracellular matrix and
+metal ion binding (Table 10). Other significant clusters include those
+related to cell communication/signaling, cytokines, defense response,
+tryptophan metabolism, apoptosis, and skeletal system development
+(Supplemental Table X). The bonobo lineage was enriched in only three
+clusters: apoptosis, Toll-like receptor signalling and apoptosis. The
+mouse displayed enrichment in clusters involved in epigenetic
+modifications such as methyltransferase activity and histone
+modification, as well embryonic morphogeneisis, lipid biosynthesis,
+among others (Supplemental Table X). The top enriched cluster in the
+cow lineage was the response to vitamin A, as well as many clusters
+related to the immune system. The dog showed enrichment in skeletal
+system development, as well as lipid metabolic processes and blood
+circulation. The elephant lineage had only one enriched cluster:
+carbohydrate binding. Genes that showed enrichment on the opossum
+lineage (essentially representing the difference between placental
+mammals and marsupials) were clustered in many categories not seen in
+the other lineages, including clusters related to the mitochondria,
+urea cycle, peroxisome, glycolysis, and transport across the cell
+membrane (Table 10 and Supplemental Table X).
+
+\section{Discussion}
+
+\subsection{Evolution of Placental Hormones}
+
+Reproductive hormones are central to the regulation of pregnancy and
+their source, timing, and quantity can vary widely from species to
+species (Carter, 2012). Expression and synthesis of hormones is
+perhaps the most well-documented physiological process in the placenta
+in many species. Here we quantified the extreme disparity in genes
+with hormone products or enzymatic products that directly produce
+hormones in multiple mammalian species (Table 8).
+
+In both ruminants and primates, the placenta is responsible for the
+production of estrogen and progesterone. High relative expression of
+CYP19A1, the enzyme that synthesizes estrogen, and HSD3B1, the enzyme
+that synthesizes progesterone, in the human, bonobo, and cow,
+generally matches the high levels of placental production of estrogen
+and progesterone in humans, other primates, and ruminants in late
+pregnancy. In addition, HSD3B1 shows high levels in dog, which matches
+the high levels of placental production of progesterone at term in
+that species.
+
+The elephant is strikingly the only mammal analyzed that shows high
+expression of the primarily pituitary hormone prolactin (PRL) in the
+placenta. All afrotherians yet analyzed contain only one prolactin
+gene, and prolactin has undergone adaptive evolution on the elephant
+lineage (Wallis, 2009). (Yamamoto et al., 2011) noted the presence of
+a prolactin in the trophoblast of the elephant placenta using
+immunohistological staining and human derived antibodies. A previous
+analysis of the elephant placenta also detected the expression of
+prolactin (Hou et al., 2012). Here we confirm that the sole prolactin
+in the elephant is not only expressed but highly expressed in the
+placenta, and likely functions both in the maintenance of the corpus
+luteum and as a placental lactogen (Yamamoto et al., 2011). PRL is not
+expressed in the opossum, even though there is evidence that it is
+expressed in the placenta of another marsupial, the tammar wallaby
+(Menzies et al., 2011). This suggests that placental prolactin
+expression in marsupials may be as diverse as in eutherian mammals.
+Although, PRL is not expressed to any great degree in the placenta
+other mammals, we see very high expression of genes which resulted
+from duplications of PRL in both the cow (Table X), as well as mouse
+(Supplemental Table X). Describe these
+
+The growth hormone (GH) family has expanded in anthropoid primates,
+resulting in approximately 5 genes in humans (GH1, GH2, CSH1, CSH2,
+CSHL1). All but GH1 show substantial expression in the placenta (Table
+8). There is some evidence that increased expression of these genes
+may be correlated with overall birth weight of offspring in humans
+(Mannik et al., 2010), and it is possible that the extreme expression
+levels of these genes may be due to high birth weight. Ensembl
+annotations show 4 GH genes present in the chimpanzee genome, and
+three of these genes show high expression in bonobo, although to a
+lesser degree than in human (Table 8). Human placental GH genes are
+involved in increasing blood flow, replacing maternal pituitary
+expression of GH, as well as trophoblast invasion (Alsat et al., 1998;
+Lacroix et al., 2005; Schiessl et al., 2007), and it is likely that
+they have the same function in the bonobo.
+
+The human gene CGA codes for the alpha subunit of multiple hormones
+including pituitary hormones (luteinizing hormone,
+follicle-stimulating hormone, thyroid-stimulating hormone), as well as
+numerous chorionic gonadotropins with variable beta subunits (Maston
+and Ruvolo, 2002). The function of the chorionic gonadotropins is to
+prevent the regression of the corpus luteum (Hanson et al., 1971).
+Among the six placentas we analyzed here, CGA is only expressed in the
+placentas of humans and bonobos (Table 8), which corresponds with the
+emergence of the chorionic gonadotropins in anthropoid primates
+(Maston and Ruvolo, 2002). However, oddly, CGA is expressed at much
+higher levels in both species than the beta subunits with which its
+product dimerizes (Table 8). CGA is one of several genes noted by
+(Uddin et al., 2008) to have undergone adaptive evolution of the
+human-chimpanzee stem lineage.
+
+Relaxin is a hormone that has multiple effects during pregnancy
+including increasing maternal blood flow, widening the pubic bone and
+relaxing uterine musculature in preparation for labor. In both dogs
+and elephants, there is high expression of relaxin in the term
+placenta, with little evidence in other species examined here (Table
+8). Relaxin is known to be produced in the placenta of the pregnant
+dog and is used in the diagnosis of canine pregnancy (Steinetz et al.,
+1989; Tsutsui and Stewart, 1991); however, the source of relaxin
+produced by pregnant African elephants remains unclear (Meyer et al.,
+2004). The high rise in relaxin in elephants has been suggested to be
+a major signal for the initiation of labor (Niemuller et al., 1998).
+Here we show that the placenta of elephants show high expression of
+relaxin and is likely the predominant source of relaxin at term (Table
+8).
+
+Two genes, NPPB and NPPC, code for peptide hormones that are important
+in the inducement of vasodilation, and may be important in increasing
+maternal blood flow to the fetus (Cameron et al., 1996). There is some
+indication that these proteins are present in the decidua of mice
+(Cameron et al., 1996), but we find very little expression in the
+fetal portion of the mouse placenta (Table 8). Here we find high
+expression of at least one of these genes in dog, cow, and elephant.
+The lack of expression in the hemochorial placentas of
+Euarchontoglires may mean that high expression of these genes are
+essential in increasing maternal blood flow in epitheliochorial and
+endotheliochorial placentas
+
+\subsection{The Evolution of Placental Expression of Galectins}
+
+Galectins are recognized as major regulators of pregnancy in both
+fetal and maternal tissues (Than et al., 2012). Indeed, the evolution
+of new lineage-specific galectins has occurred in both primates and
+ruminants, with the genes LGALS13, LGALS14, and LGALS16 recognized as
+being placenta-specific in humans and regulating immune responses by
+inducing apoptosis of maternal T-cells (Than et al., 2009). Indeed,
+LGALS14 has the highest expression of any galectin in the human
+placenta (Table 8), and other primate galectins such as LGALS13 and
+LGALS16 are also expressed in human placenta. However, in the closely
+related bonobo, LGALS14 is not found, and LGALS1 is the most abundant
+galectin. LGALS1 shows generally high expression in all placentas
+analyzed. LGALS1 is also involved in mediating maternal-fetal immune
+tolerance, and is expressed in both maternal and fetal tissue in
+primates (Than et al., 2008). LGALS1 placental expression was thought
+to be confined to eutherian mammals, as there is evidence of adaptive
+evolution at this node, as well as the appearance of estrogen response
+elements in eutherian cis-regulatory regions (Than et al., 2008). It
+was unclear as to whether galectins such as LGALS1 were important in
+the regulation of pregnancy in marsupials, as well as eutherians. Here
+we show substantial expression of galectins in the opossum, especially
+LGALS1 (Table 8). In addition, LGALS2, LGALS3, and LGALS8 are also
+expressed. The presence of galectins at the maternal-fetal interface
+in the opossum implies that it was also present in the ancestral
+placenta of therian mammals. Indeed, adaptive evolution of LGALS1 on
+the eutherian stem is likely due to the increased invasive nature of
+eutehrian placentation rather than the origination of maternal-fetal
+tolerance. Although the function of LGALS1 in the marsupial placenta
+needs to be confirmed, it is likely that the mediation of
+maternal-fetal immune tolerance by galectins is an ancient feature of
+mammalian viviparity.
+
+\subsection{The Opossum Placenta and the Evolution of Viviparity}
+
+The placenta of the opossum Monodelphis domestica is distinctly
+different from that of the term placenta of eutherian mammals in that
+it is derived from both the chorion and yolk sac. Indeed other
+differences between the placentas of marsupials and eutherians include
+lack of invasive extravillous trophoblasts in marsupials, the
+retention of a permeable shell coat for 2/3 of marsupial gestation,
+and the greater degree of imprinting in placenta-expressed genes in
+eutherians (Renfree, 2010; Renfree et al., 2013). In addition, the
+placenta of Monodelphis is also distinct from other marsupials, in
+that it is considered one of the least specialized, and thought be
+closer to the original marsupial condition (Renfree, 2010). In
+Monodelphis, the duration of direct connection between maternal and
+fetal tissues is as short as two days in a gestational period of 13-15
+days. During this period, the placenta is directly engaged in the
+exchange of urea with maternal tissues, owing to the lack of a
+vesicular allantois (Freyer et al., 2007). This differs drastically
+with the situation in another well-studied marsupial, the tammar
+wallaby (Freyer et al., 2007). Therefore, we must interpret
+differences between the opossum and eutherian placentas with caution,
+as highly expressed genes and functional annotation clusters may
+represent didelphid or Monodelphis specific adaptations.
+
+Genes that show a significant shift on the opossum lineage include
+functional annotation clusters that correspond to active generation of
+energy, transport, and lipid breakdown via the peroxisome (Table 10;
+Supplemental Table X). The choriovitelline placenta of both didelphids
+and the tammar wallaby are known to be involved in glycolysis and
+protein synethsis (Freyer et al., 2003). This implies that the
+choriovitelline placenta in marsupials is an active site of metabolism
+and molecular synthesis, as well as the transport of nutrients from
+the maternal tissues. This is a distinct difference that is not seen
+in significant shifts on other lineages, and may be due to the
+formation of the placenta in the opossum from the yolk sac. In
+addition, the urea cycle is a highly enriched functional annotation
+cluster which directly correlates with the high levels of urea in the
+Monodelphis placenta (Freyer et al., 2007). This is potentially a
+Monodelphis-specific characteristic as discussed above.
+
+The opossum placenta shows expression of genes that either do not
+exist in eutherians or are not found in the term eutherian placenta
+(Table X). The existence of embryonic forms of hemoglobin in fetal
+tissues at term, as evidenced by the expression of HBE, HBZ, and HBO
+is a feature of marsupials that is generally due to their very short
+gestation periods. Embryonic hemoglobins in marsupials have a lower
+affinity for oxygen and allow for a lower rate of oxygen uptake from
+maternal tissues (Holland and Gooley, 1997). One novel uncharacterized
+gene that shows high expression (XM\_001364916.1) is not found in
+eutherians; Ensembl gene trees reveal that homologs of this gene exist
+in other amniotes such as birds and turtles, but are not present in
+eutherian mammals. The homolog of this gene in chicken is found to
+expressed in reproductive tract (Froman et al., 2006), but its
+function is unknown. WFDC2 is a member of the whey acidic protein
+(WAP) family and involved in innate immunity. It is expressed in the
+mammary gland of the tammar wallaby during pregnancy and early
+lactation (Sharp et al., 2007), and here in abundance in the opossum
+placenta.
+
+\subsection{Novel Gene Expansions in the Elephant Placenta}
+
+We found evidence of high expression in two novel expansions of genes
+in the elephant genome. One family includes 11 genes that are related
+to the gene PRSS16 gene, a thymus-specific serine protease that may be
+involved regulating the presentation of self-peptides in CD4+
+T-lymphocytes (Fornari et al., 2012). All 11 of these genes are
+expressed in the elephant placenta, three of which have very abundant
+mRNAs (Table 6). It is possible that this elephant-specific gene
+family may be involved in immunity in the elephant placenta and the
+mediation of maternal-fetal immune tolerance; however, future work
+will need to test these hypotheses. Three other genes abundantly
+expressed in the elephant placenta are homologues of SSLP1, a gene
+with predominant expression in the seminal vesicle in mouse (Li et
+al., 2006). Homologues of SSLP1 have been identified as being
+expressed in the placental villi of cow, sheep, and goat. SSLP1 also
+contains an Alu retrotransposon and may be involved in the development
+of villi via cell proliferation (Ushizawa et al., 2009, 2010). We
+verified expression in cow, however its abundant expression was also
+identified in dog. This gene is not found in primates. Expansion of
+these genes in elephants may indicate an elaboration of this system.
+
+\subsection{Human Specific Expression Shifts and the Evolution of Preeclampsia}
+
+The human placenta is distinctive from many other primates in that it
+possesses a deeply invasive trophoblast that penetrates the inner
+myometrium of the uterus (Carter and Pijnenborg, 2011). It is
+hypothesized that this feature is related to the increased demand for
+resources by the developing fetus to feed the expanded size of the
+human brain (Carter and Pijnenborg, 2011; Robillard et al., 2002).
+Humans have the largest brain in terms of relative size and this
+differs markedly from closely related great apes (Boddy et al., 2012).
+Deep penetration of the myometrium occurs in chimpanzees and gorillas,
+but this penetration may be accelerated in humans (Carter and
+Pijnenborg, 2011).
+
+The near exclusivity of deep trophoblast invasion in humans has also
+led many to speculate on the origin of various disorders, which are
+almost exclusively symptomatic of human pregnancy. For example,
+preeclampsia is a human disease that occurs in 4\% of pregnancies in
+the United States. Preeclampsia can be attributed to the lack of
+adequate invasion of maternal tissue, and is noted by the onset of
+hypertension and proteinuria (citation). Some cases of preeclampsia
+can develop into eclampsia, a more severe condition resulting in
+seizures during pregnancy and death. Lack of invasion in preeclampsia
+may be attributed to the inefficiency of growth regulators as well as
+the inability to sufficiently suppress the maternal immune response.
+Although there are speculative cases of eclampsia in great apes
+(Baird, 1981; Stout and Lemmon, 1969; Thornton and Onwude, 1992), it
+is exceedingly rare in these species (Carter and Pijnenborg, 2011). It
+is possible that a comparative evolutionary approach to gene
+expression can identify genes that have divergent expression patterns
+from other mammals as well as association with preeclampsia.
+
+Functional annotation clusters significantly enriched on the human
+lineage (blood vessel development, extracellular matrix, tube
+morphogenesis) seem to suggest involvement in remodeling of tissues
+and increased blood flow, both of which may correlate with the
+invasion of the trophoblast (Table 8; Supplemental Table X). In
+addition, clusters such as cytokines and defense response
+(Supplemental Table X) also indicate an a significant change in
+expression of the immune response that may be involved in
+immunosupression at the maternal-fetal boundary to further allow
+invasion of fetal tissues.
+
+Many genes that both show expression shifts on the human lineage and
+have very high expression (FPKM>200) are directly related to the
+highly invasive nature of the human placenta. For example, GPC3,
+glypican 3, is an imprinted gene and cell growth regulator, associated
+with Simpson-Golabi-Behmel fetal overgrowth syndrome, and involved in
+intrauterine growth restriction (Monk and Moore, 2004; Pilia et al.,
+1996). GPC3 has the highest expression in humans (Table 2), but is
+also expressed in other mammals to a lesser degree, especially those
+with invasive hemochorial placentas like bonobos (FPKM= 199.924),
+spider monkeys (FPKM= 96.24), and the mouse (FPKM= 80.7545)
+(Supplemental Tables X-XX). ADAM12 increases the availability of
+insulin-like growth factors that lead to the promotion of cell growth
+and placental invasion (Laigaard et al., 2005). (Hou et al., 2009)
+found evidence of adaptive evolution in ADAM12 on the primate lineage,
+and like GPC3 it is expressed in the bonobo (FPKM= 46.1553), spider
+monkey (FPKM=30.41) and mouse (FPKM=2.25391) as well, although to a
+lesser degree (Supplemental Tables X-XX). RHOBTB3 is imprinted and
+associated with trophoblast invasion as well (Bilban et al., 2010;
+Yuen et al., 2011). In addition, one other gene, KISS1, shows
+exceptional abundance in the human placenta (Table 2); however due to
+its absence in elephant Ensmebl gene annotations, it was not part of
+the 1:1 orthologues examined in the comparative study. Here, it is
+only expressed in the term placentas of humans (Table 2) and bonobos
+(FPKM=17.6394; Supplemental Table X). KISS1 is thought to be involved
+in the regulation of trophoblast invasion, and shows highest
+expression in the first trimester of pregnancy (Bilban et al., 2004;
+Reynolds et al., 2009).
+
+In addition, several other genes that show expression shifts on the
+human lineage also have major effects on placental function. Genes
+such as TXK and EBI3 are intimately involved in the immune system in
+the placenta. TXK is involved in natural killer cell differentiation
+(Bezman et al., 2012). EBI3 is implicated in natural killer cell
+function an maternal-fetal immunomodulation in the syncytiotrophoblast
+(Devergne et al., 2001). KYNU and KMO are interacting genes that are
+involved in tryptophan metabolism, which may be involved in
+immunosupression and the prevention of fetal rejection (Takikawa,
+2005). THSD7A is a thrombospondin, which inhibits endothelial cell
+migration and tube morphogenesis (Wang et al., 2010).
+
+Many genes that show evidence of a shift on the human lineage show
+evidence of implication in preeclampsia, including ADAM12 (Gack et
+al., 2005; Laigaard et al., 2005) MAOA (Carrasco et al., 2000;
+Bottalico et al., 2004), BCL2 (Ishihara et al., 2002), GPC3 (Gui et
+al., 2012; Ogawa, 2007), TMEM8A, CLIC3, EBI3, FLT1, BCL6, SYDE1, and
+MAN1C1 (Enquobahrie et al., 2008; Winn et al., 2009; Nishizawa, 2011).
+In addition KISS1 is also involved in preeclampsia as well (Sado et
+al., 2011; Qiao et al, 2012). Due to the association of many genes
+that show human-specific shifts as well as high expression, we
+conclude that preeclampsia is possibly a symptom of recent evolution
+of gene expression on the human lineage. Although many genes such as
+GPC3 and ADAM12 show distinctive relatively high expression in bonobo,
+this expression has intensified on the human lineage. Sequencing of
+more placentas of nonhuman primates, including other individuals of
+the genus Pan will help to further characterize this transition.
+
+\section{Conclusion}
+    
+Here we sequenced six placentas spanning the phylogenetic tree of
+mammals. This revealed a dynamic expression pattern of expression of
+lineage-specific expansions of gene families and differential gene
+expression that agreed with the scenario of an “arms race” between
+maternal and fetal tissues that have shaped such disparate gene
+expression profiles. In addition, we highlighted the broad spectrum of
+hormone gene expression in multiple species that suggested that there
+was a lack of conservation in hormone signaling during mammalian
+pregnancy. Major differences between expression in marsupial and
+eutherian mammals at term seemed to be correlated with the differences
+between choriovitelline and chorioamniotic placenta, with the
+marsupial placenta more enriched in genes the contributed to the
+active generation of energy. We also identified that galectin
+expression, especially that of LGALS1, is a common feature of all
+mammalian placentas and was most likely present in the ancestral
+therian. Also, we identified two new expansions of genes that are
+highly expressed in the elephant placenta hat may be involved in
+trophoplast differentiation and immune system function, mirroring
+expansions in other groups such as primates, rodents, and ruminants.
+We also quantified significant lineage-specific shifts in gene
+expression, concentrating on the identification of genes that showed
+gene expression changes on the human lineage. We cautiously propose
+that many of these genes may be related to the invasive nature of the
+trophoblast in humans, although we note that in many of these genes,
+there is in some cases substantial expression in the bonobo as well.
+These genes have the potential to spur further research and may be at
+the root of obstetrical disorders such as preeclampsia. We propose
+that more placentas from diverse lineages, especially those of
+marsupials and primates, to further identify genes and expression
+levels that are specific to marsupials and eutehrians, as well as
+confirm the identity of human-specific expression shifts.
+
+ 
+\printbibliography
+
+
+
+\end{document}

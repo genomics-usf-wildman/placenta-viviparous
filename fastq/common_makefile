@@ -133,7 +133,7 @@ $(SPECIES)_trinity_align_rsem_isoforms.txt: $(SPECIES)_trinity.Trinity.fasta
 		--aln_method bowtie \
 		--prep_reference \
         --output_dir $(SPECIES)_trinity_align;
-    mv $(SPECIES)_trinity_align/RSEM.isoforms.results $@
+	mv $(SPECIES)_trinity_align/RSEM.isoforms.results $@
 
 
 $(PROTEIN_ALIGNMENT_SPECIES)_diamond.dmnd: $(PROTEIN_ALIGNMENT_FASTA)

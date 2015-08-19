@@ -150,16 +150,17 @@ Keywords: mammal, gene expression, evolution, RNA-seq, placenta
 The main role of the placenta in viviparous mammals is the transfer of
 nutrients, oxygen, and waste between mother and offspring. Although
 these functions are conserved among mammals, the placenta is perhaps
-the most variable organ in terms of structure and form (Mossman,
-1937). Species differ in the shape of attachment (i.e., discoid,
-diffuse, cotyledonary, zonary), degree of invasiveness of fetal
-tissues into maternal tissues (i.e. epitheliochorial,
-endotheliochorial, hemochorial), and degree of interdigitation of
-maternal-fetal tissue (i.e., villous, folded, trabecular, lamellar,
-labrynthine) (Mossman, 1987). In addition, therian mammals differ
-drastically in the number and size of their offspring, as well as the
-length of gestation, traits often associated with specific aspects of
-placental morphology (Capellini et al., 2011).
+the most variable organ in terms of structure and form
+\cite{Mossman.1937:comparativemorphogenesisofthe}. Species differ in
+the shape of attachment (i.e., discoid, diffuse, cotyledonary,
+zonary), degree of invasiveness of fetal tissues into maternal tissues
+(i.e. epitheliochorial, endotheliochorial, hemochorial), and degree of
+interdigitation of maternal-fetal tissue (i.e., villous, folded,
+trabecular, lamellar, labrynthine)
+\cite{Mossman.1987:vertebratefetalmembranes}. In addition, therian
+mammals differ drastically in the number and size of their offspring,
+as well as the length of gestation, traits often associated with
+specific aspects of placental morphology (Capellini et al., 2011).
 
 The placenta arose at some point before the origin of therian mammals,
 a group that includes both marsupials and eutherian or “placental”
@@ -172,7 +173,7 @@ fusion of the chorion and yolk sac, during most of gestation. Although
 some eutherian mammals may possess a choriovitelline placenta at some
 point in development, the major site of nutrient exchange in
 placentals occurs via the chorioallantoic placenta, produced from the
-fusion of the chorion and allantois (Mossman, 1987). It is unclear
+fusion of the chorion and allantois \cite{Mossman.1987:vertebratefetalmembranes}. It is unclear
 whether the first placenta was more like that of marsupials or
 eutherians; however, using phylogenetic methods, the ancestral
 eutherian was reconstructed as possessing a relatively invasive
@@ -181,9 +182,9 @@ separated by one tissue layer, as in humans and mouse (Elliot
 and Crespi, 2009; Wildman et al., 2006).
 
 Although the morphology of the mammalian placenta has been well
-characterized in a number of species (Mossman, 1987), the diversity of
+characterized in a number of species \cite{Mossman.1987:vertebratefetalmembranes}, the diversity of
 the molecular environment is only beginning to be understood from a
-genetic perspective (Carter, 2012). Studies of certain model species
+genetic perspective \cite{Carter2012:Evolutionofplacentalfunction}. Studies of certain model species
 (i.e., humans, mice, cattle) have revealed a stunning divergence in
 the genetics of the placenta, especially in later stages of pregnancy
 (Carter, 2012; Hou et al., 2012; Knox and Baker, 2008; Su et al.,

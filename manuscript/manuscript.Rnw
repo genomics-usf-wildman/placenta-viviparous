@@ -160,14 +160,15 @@ trabecular, lamellar, labrynthine)
 \cite{Mossman.1987:vertebratefetalmembranes}. In addition, therian
 mammals differ drastically in the number and size of their offspring,
 as well as the length of gestation, traits often associated with
-specific aspects of placental morphology (Capellini et al., 2011).
+specific aspects of placental morphology
+\cite{Capellini.ea2011:Placentationandmaternalinvestment}.
 
 The placenta arose at some point before the origin of therian mammals,
 a group that includes both marsupials and eutherian or “placental”
 mammals. The term “placental mammals” is misleading, as marsupials
 also possess a placenta, although its direct apposition to maternal
 tissues lasts for a proportionally shorter time during gestation
-(Renfree, 2010). Marsupials also differ from eutherian mammals in
+\cite{Renfree2010:ReviewMarsupialsplacentalmammals}. Marsupials also differ from eutherian mammals in
 that most possess only a choriovitelline placenta, produced from the
 fusion of the chorion and yolk sac, during most of gestation. Although
 some eutherian mammals may possess a choriovitelline placenta at some
@@ -178,8 +179,8 @@ whether the first placenta was more like that of marsupials or
 eutherians; however, using phylogenetic methods, the ancestral
 eutherian was reconstructed as possessing a relatively invasive
 hemochorial placenta, in which the maternal and fetal blood supply is
-separated by one tissue layer, as in humans and mouse (Elliot
-and Crespi, 2009; Wildman et al., 2006).
+separated by one tissue layer, as in humans and mouse
+\cite{Elliot.ea2009:Phylogeneticevidenceforearly,Wildman.ea2006:Evolutionofmammalianplacenta}.
 
 Although the morphology of the mammalian placenta has been well
 characterized in a number of species \cite{Mossman.1987:vertebratefetalmembranes}, the diversity of
@@ -187,31 +188,31 @@ the molecular environment is only beginning to be understood from a
 genetic perspective \cite{Carter2012:Evolutionofplacentalfunction}. Studies of certain model species
 (i.e., humans, mice, cattle) have revealed a stunning divergence in
 the genetics of the placenta, especially in later stages of pregnancy
-(Carter, 2012; Hou et al., 2012; Knox and Baker, 2008; Su et al.,
-2002). For example, each lineage has evolved expansive
+\cite{Carter2012:Evolutionofplacentalfunction,Hou.ea2012:Elephanttranscriptomeprovidesinsights,Knox.ea2008:Genomicevolutionofplacenta,Su.ea2002:Large-scaleanalysisofhuman}.
+For example, each lineage has evolved expansive
 placenta-specific gene families with expression patterns that can vary
-in space and time (Green et al., 2000; Simmons et al., 2008). These
+in space and time \cite{Green.ea2000:Pregnancy-associatedbovineandovine,Simmons.ea2008:Spatialandtemporalexpression}. These
 include independent expansions of the prolactins in mouse and cow,
 pregnancy-specific glycoproteins (PSGs) in humans and mouse,
 pregnancy-associated glycoproteins (PAGs) in cow, and the expansion of
 the growth hormone and chorionic gonadotropin beta genes in hominoid
-primates (Haig, 2008; Rawn and Cross, 2008). Expression patterns of
+primates \cite{Haig2008:Placentalgrowthhormone-relatedproteins,Rawn.ea2008:evolutionregulationandfunction}. Expression patterns of
 specific genes also can vary widely between species. For example, the
 expression of orthologous genes in the placenta have been found to
-vary substantially between humans and mice (Su et al., 2002), and the
+vary substantially between humans and mice \cite{Su.ea2002:Large-scaleanalysisofhuman}, and the
 recruitment of SIGLEC6 to placental expression in humans differs from
-both chimpanzees and mice (Brinkman-Van der Linden et al., 2007).
+both chimpanzees and mice \cite{Linden.ea2007:Human-specificexpressionofSiglec-6}.
 
 One explanation for the divergent paths of the placental interface is
 the distinct evolutionary interplay between maternal and fetal
-strategies during pregnancy (Haig, 1993). The maternal strategy is to
+strategies during pregnancy \cite{Haig1993:Geneticconflictsinhuman}. The maternal strategy is to
 requisition an adequate degree of nutrients to the fetus without
 risking the health of the mother, while the fetal strategy via
 paternal genes is to extract as many resources from the mother as
 possible. Therefore, an interplay between these extremes can set up an
 intricate “arms race”, involving the imprinting of parental alleles,
 production of new genes, and enlistment of existing genes to
-expression at the maternal-fetal interface (Haig, 1993).
+expression at the maternal-fetal interface \cite{Haig1993:Geneticconflictsinhuman}.
 
 One symptom
 of this maternal-fetal conflict is its potential affect on human

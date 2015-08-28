@@ -216,24 +216,26 @@ expression at the maternal-fetal interface \cite{Haig1993:Geneticconflictsinhuma
 
 One symptom
 of this maternal-fetal conflict is its potential affect on human
-health (Hollegaard et al., 2013). In addition to having an invasive
+health \cite{Hollegaard.ea2013:Parent-offspringconflictandpersistence}. 
+In addition to having an invasive
 hemochorial placenta, humans possess a deeply invasive trophoblast
-layer that can penetrate the myometrium of the uterus (Carter and
-Pijnenborg, 2011). Defects in placental growth are known to be
+layer that can penetrate the myometrium of the uterus 
+\cite{Carter.ea2011:Evolutionofinvasiveplacentation}.
+ Defects in placental growth are known to be
 associated with the devastating condition of preeclampsia, which can
 cause hypertension, proteinuria, and has the potential to lead to
-death of the mother and/or infant (citation). Although cases have been
-documented in chimpanzees and gorillas (citation), preeclampsia has a
+death of the mother and/or infant \DLA{(citation)}. Although cases have been
+documented in chimpanzees and gorillas \DLA{(citation)}, preeclampsia has a
 far higher incidence in human pregnancies with as much as 4\% of
-pregnancies being affected in the United States (citation).
+pregnancies being affected in the United States \DLA{(citation)}.
 Chimpanzees and gorillas also have deeply invasive trophoblasts,
 although the progression of invasion in great apes may be slower than
-humans (Carter and Pijnenborg, 2011); however, large-scale expression
+humans \cite{Carter.ea2011:Evolutionofinvasiveplacentation}; however, large-scale expression
 studies of great ape placentas have not been conducted. The increasing
 affordability of next-generation sequencing technology has enabled the
 large-scale study of specific tissues from a wide array of species to
 address broader phylogenetic questions in the evolution of gene
-expression (Brawand et al., 2011). Here we use Illumina RNA-Seq
+expression \cite{Brawand.ea2011:evolutionofgeneexpression}. Here we use Illumina RNA-Seq
 technology to sequence and quantify the mRNA environment of six
 mammalian placentas at term, including that of the human, bonobo (the
 sister species to the chimpanzee), dog, cow, African elephant, and
@@ -241,8 +243,8 @@ opossum, representing marsupials as well as three major branches of
 eutherian mammals (Euarchontoglires, Laurasiatheria, Afrotheria).
 These placentas also represent a wide array of placental morphologies
 as well as traits such as number and size of offspring and length of
-gestation (Table 1). We use this data, along with existing RNA-Seq
-data from mouse (Wang et al., 2011), to address the major differences
+gestation \DLA{(Table 1)}. We use this data, along with existing RNA-Seq
+data from mouse \cite{Wang.ea2011:surveyfornovelimprinted}, to address the major differences
 between expression in marsupial and eutherian mammals at term,
 identify the evolution of expression in important placental genes such
 as hormones and galectins, identify novel lineage-specific expression
@@ -254,21 +256,22 @@ that may be related to obstetrical disorders such as preeclampsia.
 \subsection{Collection of Placental Tissue and RNA Extraction}
 
 Fetal tissue was collected from the placenta of six mammalian species
-(Homo sapiens [human], Pan paniscus [bonobo], Canis familiaris
-[domestic dog], Bos taurus [domestic cow], Loxodonta africana [African
-savanna elephant], and Monodelphis domestica [gray short-tailed
-opossum]). Information on specimen ID, place and time of collection,
-and collector is shown for each sample in Supplemental Table 1. In the
-case of Pan, Bos, and Loxodonta, the placenta was collected at term
+(\textit{Homo sapiens} [human], \textit{Pan paniscus} [bonobo], \textit{Canis familiaris}
+[domestic dog], \textit{Bos taurus} [domestic cow], \textit{Loxodonta africana} [African
+savanna elephant], \textit{Monodelphis domestica} [gray short-tailed
+opossum], \textit{Nannospalax gallili} [?], \textit{Spalax carmelli} [?]).
+Information on specimen ID, place and time of collection,
+and collector is shown for each sample in \DLA{Supplemental Table 1}. In the
+case of \textit{Pan}, \textit{Bos}, and \textit{Loxodonta}, the placenta was collected at term
 upon expulsion from the mother following delivery. Placental tissue
-from Homo sapiens was collected upon delivery via a caesarian section.
-Near-term placental tissue from Canis familiaris was collected upon
+from \textit{Homo sapiens} was collected upon delivery via a caesarian section.
+Near-term placental tissue from \textit{Canis familiaris} was collected upon
 the death of the mother from a car accident. Placental tissue from
-Monodelphis domestica was sampled at fetal stage 32, roughly one day
+\textit{Monodelphis domestica} was sampled at fetal stage 32, roughly one day
 prior to birth. Only the fetal portion of the placenta was sampled at
-the maternal-fetal interface (i.e. villous portion for Homo, Pan,
-Canis, and Loxodonta; cotyledon for Bos; diffuse placenta for
-Monodelphis). All tissues were collected and stored in RNAlater (Life
+the maternal-fetal interface (i.e. villous portion for \textit{Homo}, \textit{Pan},
+\textit{Canis}, and \textit{Loxodonta}; cotyledon for \textit{Bos}; diffuse placenta for
+\textit{Monodelphis}). All tissues were collected and stored in RNAlater (Life
 Technologies, Carlsbad, CA) until RNA isolation could be performed.
 Tissues were homogenized in Trizol, and total RNA was isolated
 following the manufacturer’s instructions. RNA was further purified
@@ -280,6 +283,8 @@ Scientific, Wilmington, DE) and an Agilent Bioanalyzer 2100 (Santa
 Clara, CA) to confirm concentration and quality of the isolation. RNA
 quality was assessed using A260/A280 and A260/A230 absorbance values.
 
+\DLA{Add details for new sequences and fix numbers}
+
 \subsection{Sequencing}
 
 All RNA-Seq mRNA isolation, library construction, and Illumina
@@ -287,14 +292,19 @@ sequencing was performed by the Applied Genomics Technology Center
 (AGTC) at Wayne State University School of Medicine using 2.5-5 µg of
 total RNA and standard Illumina protocol. Paired-end sequencing was
 performed using the Illumina Genome Analyzer II with an insert size of
-230 base pairs (bp). Bos, Loxodonta, and Monodelphis were sequenced
-with read lengths of 75 bp; Canis, Homo, and Pan were sequenced with
+230 base pairs (bp). \textit{Bos}, \textit{Loxodonta}, and
+\textit{Monodelphis} were sequenced with read lengths of 75 bp;
+\textit{Canis}, \textit{Homo}, and \textit{Pan} were sequenced with
 read lengths of 150 bp.
+
+
 
 \subsection{Transcriptome Assembly and Mapping}
 
+\DLA{This isn't how these were analyzed anymore; fix this.}
+
 The quality of reads was evaluated using FASTQC v. 0.9.2
-(http://www.bioinformatics.babraham.ac.uk/projects/fastqc/). Following
+(\url{http://www.bioinformatics.babraham.ac.uk/projects/fastqc/}). Following
 this, reads were trimmed based on quality in Galaxy using the FASTQ
 Trimmer v. 1.0.0 (Blankenberg et al., 2010). All transcriptomes were
 then aligned to reference genomes and assembled using the Tuxedo suite
@@ -316,6 +326,7 @@ comparison, we also downloaded the placenta Illumina RNA-Seq
 transcriptome of a mouse from (Wang et al., 2011). Raw reads were
 mapped as above using the Ensembl v. 64 annotation of the Mus musculus
 (house mouse) genome (NCBI m37).
+
 
 \subsection{Exploration of Individual Transcriptome Data}
 
@@ -917,7 +928,7 @@ these genes in elephants may indicate an elaboration of this system.
 
 The human placenta is distinctive from many other primates in that it
 possesses a deeply invasive trophoblast that penetrates the inner
-myometrium of the uterus (Carter and Pijnenborg, 2011). It is
+myometrium of the uterus \cite{Carter.ea2011:Evolutionofinvasiveplacentation}. It is
 hypothesized that this feature is related to the increased demand for
 resources by the developing fetus to feed the expanded size of the
 human brain (Carter and Pijnenborg, 2011; Robillard et al., 2002).
@@ -940,7 +951,7 @@ may be attributed to the inefficiency of growth regulators as well as
 the inability to sufficiently suppress the maternal immune response.
 Although there are speculative cases of eclampsia in great apes
 (Baird, 1981; Stout and Lemmon, 1969; Thornton and Onwude, 1992), it
-is exceedingly rare in these species (Carter and Pijnenborg, 2011). It
+is exceedingly rare in these species \cite{Carter.ea2011:Evolutionofinvasiveplacentation}. It
 is possible that a comparative evolutionary approach to gene
 expression can identify genes that have divergent expression patterns
 from other mammals as well as association with preeclampsia.

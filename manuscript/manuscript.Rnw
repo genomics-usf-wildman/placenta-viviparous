@@ -304,28 +304,33 @@ read lengths of 150 bp.
 \DLA{This isn't how these were analyzed anymore; fix this.}
 
 The quality of reads was evaluated using FASTQC v. 0.9.2
-(\url{http://www.bioinformatics.babraham.ac.uk/projects/fastqc/}). Following
-this, reads were trimmed based on quality in Galaxy using the FASTQ
-Trimmer v. 1.0.0 (Blankenberg et al., 2010). All transcriptomes were
-then aligned to reference genomes and assembled using the Tuxedo suite
-of next-generation sequencing analysis tools. Annotated reference
-genomes were downloaded from Ensembl v. 64 (Flicek et al., 2012),
-including Homo sapiens GRCh37, Pan troglodytes CHIMP2.1 (6X coverage),
-Canis familiaris BROADD2 (7.6X), Bos taurus UMD3.1 (9.5X), Loxodonta
-africana loxAfr3 (7X), and Monodelphis domestica BROADO5 (6.8X). The
-genome of the closely-related Pan troglodytes was used to map the
-transcriptome of Pan paniscus; the separation between the two
-recognized Pan species is generally perceived to be ~1 Mya (Prufer et
-al., 2012). Reads were aligned to reference genomes using Bowtie v.
-0.12.7 (Langmead et al., 2009) and TopHat v. 1.3.3 (Trapnell et al.,
-2009). Cufflinks v. 1.2.1 was then used to assemble transcripts and
-quantify expression values using fragments per kilobase of exon per
-million mapped reads (FPKM) (Trapnell et al., 2010). RNA-Seq metrics
-were computed using Picard (http://picard.sourceforge.net/). For
-comparison, we also downloaded the placenta Illumina RNA-Seq
-transcriptome of a mouse from (Wang et al., 2011). Raw reads were
-mapped as above using the Ensembl v. 64 annotation of the Mus musculus
-(house mouse) genome (NCBI m37).
+(\url{http://www.bioinformatics.babraham.ac.uk/projects/fastqc/}).
+Following this, reads were trimmed based on quality in Galaxy using
+the FASTQ Trimmer v. 1.0.0
+\cite{Blankenberg.ea2010:ManipulationofFASTQdata}. All transcriptomes
+were then aligned to reference genomes and assembled using the Tuxedo
+suite of next-generation sequencing analysis tools. Annotated
+reference genomes were downloaded from Ensembl v. 64
+\cite{Flicek.ea2012:Ensembl2012}, including \textit{Homo sapiens}
+GRCh37, \textit{Pan troglodytes} CHIMP2.1 (6X coverage), \textit{Canis
+  familiaris} BROADD2 (7.6X), \textit{Bos taurus} UMD3.1 (9.5X),
+\textit{Loxodonta africana} loxAfr3 (7X), and \textit{Monodelphis
+  domestica} BROADO5 (6.8X). The genome of the closely-related Pan
+troglodytes was used to map the transcriptome of Pan paniscus; the
+separation between the two recognized Pan species is generally
+perceived to be ~1 Mya (Prufer et al., 2012). Reads were aligned to
+reference genomes using Bowtie v. 0.12.7\cite{Langmead2009} and TopHat
+v. 1.3.3 \cite{Trapnell.ea2009:TopHatdiscoveringsplicejunctions}.
+Cufflinks v. 1.2.1 was then used to assemble transcripts and quantify
+expression values using fragments per kilobase of exon per million
+mapped reads (FPKM)
+\cite{Trapnell.ea2010:Transcriptassemblyandquantification}. RNA-Seq
+metrics were computed using Picard
+(\url{http://picard.sourceforge.net/}). For comparison, we also
+downloaded the placenta Illumina RNA-Seq transcriptome of a mouse from
+\cite{Wang.ea2011:surveyfornovelimprinted}. Raw reads were mapped as
+above using the Ensembl v. 64 annotation of the \textit{Mus musculus} (house
+mouse) genome (NCBI m37).
 
 
 \subsection{Exploration of Individual Transcriptome Data}
@@ -333,10 +338,11 @@ mapped as above using the Ensembl v. 64 annotation of the Mus musculus
 To determine enrichment levels of functional categories of genes in
 highly-expressed transcripts in each transcriptome, we performed
 functional annotation cluster analyses per transcriptome using DAVID
-(Huang et al., 2009; Sherman et al., 2007). DAVID ranks functional
-annotation clusters according to enrichment score (ES); functional
-annotation clusters are considered significantly enriched if ES>1.3,
-as this corresponds to p<0.05 (Huang et al., 2009). We executed
+\cite{Huang.ea2009:Systematicandintegrativeanalysis,Sherman.ea2007:DAVIDKnowledgebasegene-centereddatabase}.
+DAVID ranks functional annotation clusters according to enrichment
+score (ES); functional annotation clusters are considered
+significantly enriched if ES>1.3, as this corresponds to p<0.05
+\cite{Huang.ea2009:Systematicandintegrativeanalysis}. We executed
 analyses with two gene lists per transcriptome: 1) annotated genes
 with expression levels of the top 5\% of the frequency distribution of
 FPKM and 2) the top 100 genes with the highest FPKM. Due to the
@@ -347,27 +353,29 @@ were compared using gene ontology terms derived from the human genome.
 
 All 1:1 orthologues present among human, bonobo, mouse, dog, cow,
 elephant, and opossum were determined using Ensembl v.64 gene trees
-via the Biomart online data management tool (Kasprzyk, 2011). A total
-of 6882 1:1 orthologous genes were expressed in at least one species.
-For further analysis, we eliminated all genes that did not have at
-least one species with an FPKM>10. A list of these 4259 1:1
-orthologous genes was retained for future analyses of gene expression
-evolution described below.
+via the Biomart online data management
+tool\cite{Kasprzyk2011:BioMartdrivingparadigmchange}. A total of 6882
+1:1 orthologous genes were expressed in at least one species. For
+further analysis, we eliminated all genes that did not have at least
+one species with an $\mathrm{FPKM}\ge10$. A list of these 4259 1:1 orthologous
+genes was retained for future analyses of gene expression evolution
+described below.
 
 We used the software OUCH (Ornstein–Uhlenbeck for Comparative
 Hypotheses) in the R statistical environment to investigate
-significant shifts in gene expression levels over time (Butler and
-King, 2004). OUCH institutes an Ornstein-Uhlenbeck (OU) model of
-evolution, which allows for different optima for quantitative trait
-values along user-specified branches of a phylogenetic tree. The OU
-model explicitly accounts for change in quantitative trait values by
-introducing two parameters into the model of stochastic Brownian
-motion of change in trait value along a phylogenetic tree through
-time. These parameters include, ?, or an optimum trait value, and ,
-or the strength of selection (interpreted as “pull” toward the
-optimum). In addition, the OU model can also integrate evolutionary
-change by assuming that each user-specified set of braches has its own
-separate OU parameters (see Butler and King, 2004).
+significant shifts in gene expression levels over
+time\cite{Butler.2004:phlogeneticcomparativeanalysis}. OUCH institutes
+an Ornstein-Uhlenbeck (OU) model of evolution, which allows for
+different optima for quantitative trait values along user-specified
+branches of a phylogenetic tree. The OU model explicitly accounts for
+change in quantitative trait values by introducing two parameters into
+the model of stochastic Brownian motion of change in trait value along
+a phylogenetic tree through time. These parameters include, $\theta$,
+or an optimum trait value, and $\alpha$, or the strength of selection
+(interpreted as “pull” toward the optimum). In addition, the OU model
+can also integrate evolutionary change by assuming that each
+user-specified set of braches has its own separate OU parameters
+\cite{Butler.2004:phlogeneticcomparativeanalysis}.
 
 Various OU branch models were tested against a model in which no
 variation in optima among branches was allowed. The following branches
@@ -377,20 +385,24 @@ human+bonobo, Euarchontoglires, and Boreoeutheria. Likelihood values
 were computed for each branch model and compared to an OU model with
 one optimum using likelihood ratio tests with df=1. We filtered out
 genes with universally low expression levels, and included only genes
-in which expression in at least one species had an FPKM≥10 as
-described above. We corrected for multiple testing using the false
-discovery rate (FDR) and calculated adjusted p values (q-values) using
-the Benjamini-Hochstein correction. We used the time-calibrated
-phylogenetic tree of (Meredith et al., 2011) with all species not used
-in this analyses pruned.
+in which expression in at least one species had an
+$\mathrm{FPKM}\ge10$ as described above. We corrected for multiple
+testing using the false discovery rate (FDR) and calculated adjusted
+$p$ values (q-values) using the Benjamini-Hochberg
+correction\cite{Benjamini1995:bh_procedure}. We used the
+time-calibrated phylogenetic tree of
+\cite{Meredith.ea2011:ImpactsofCretaceousTerrestrial} with all species
+not used in this analyses pruned.
 
 To determine enrichment of functional categories in lists of genes
 that display a significant shift in expression on a specific branch,
 we performed functional annotation cluster analyses on each branch
-using DAVID (Huang et al., 2009; Sherman et al., 2007). DAVID ranks
-functional annotation clusters according to enrichment score (ES);
-functional annotation clusters are considered significantly enriched
-if ES>1.3, as this corresponds to p<0.05 (Huang et al., 2009). As
+using DAVID
+\cite{Huang.ea2009:Systematicandintegrativeanalysis,Sherman.ea2007:DAVIDKnowledgebasegene-centereddatabase}.
+DAVID ranks functional annotation clusters according to enrichment
+score (ES); functional annotation clusters are considered
+significantly enriched if $\mathrm{ES}\ge1.3$, as this corresponds to
+$p\le0.05$ \cite{Huang.ea2009:Systematicandintegrativeanalysis}. As
 above, due to the paucity of annotated gene ontology terms for some
 species, gene lists were compared using gene ontology terms derived
 from the human genome.

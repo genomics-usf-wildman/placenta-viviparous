@@ -433,6 +433,8 @@ similar procedures discussed above to extract and sequence this
 sample. [DEREK—I’m unsure how to proceed on describing this so as to
 not step on Natalie’s toes]
 
+\DLA{Complete discussion of the ateles placenta}
+
 \section{Results}
 
 \subsection{Transcriptome Statistics}
@@ -446,6 +448,8 @@ of reads ranged from 6.47x107 to 9.27x107 and number of bases ranged
 from 5.20x109 to 6.25x109 with at least 99\% of reads mapping to the
 respective reference genome. All reads were submitted to the NCBI
 Sequence Read Archive (SRA) (Accession Number XXX-YYY).
+
+\DLA{Need to do an embargoed submission to SRA}
 
 The percentage of bases that mapped to Ensembl annotated mRNA ranged
 from ~35\% in elephant to ~85\% in human, with percentages of bases
@@ -462,16 +466,18 @@ humans corresponds to the greater number of Ensembl annotated
 sequences in the human genome compared to the other five reference
 genomes (Flicek, 2012).
 
-The top 50 expressed genes in each genome analyzed are shown in Tables
-2-7, and all genes for each transcriptome are listed in Supplementary
-Tables X-XX [These are large Excel files to be included with the
-Supplemental Material]. In addition, specific genes including
-placental hormones and hormone-related genes, galectins, and
+\DLA{Summarize all of this in a table}
+
+The top 50 expressed genes in each genome analyzed are shown in
+\DLA{Tables 2-7}, and all genes for each transcriptome are listed in
+\DLA{Supplementary Tables X-XX} [These are large Excel files to be
+included with the Supplemental Material]. In addition, specific genes
+including placental hormones and hormone-related genes, galectins, and
 insulin-like growth factor related genes are shown with FPKM values
 side to side for all transcriptomes including the reanalysis of mouse
-from Wang et al. (2011) in Table 8. Below we describe each
-transcriptome separately, specifically concentrating on
-highly-expressed genes.
+from \cite{Wang.ea2011:surveyfornovelimprinted} in \DLA{Table 8}.
+Below we describe each transcriptome separately, specifically
+concentrating on highly-expressed genes.
 
 \subsection{Human Placenta Transcriptome}
 
@@ -728,11 +734,11 @@ membrane (Table 10 and Supplemental Table X).
 
 Reproductive hormones are central to the regulation of pregnancy and
 their source, timing, and quantity can vary widely from species to
-species (Carter, 2012). Expression and synthesis of hormones is
+species \cite{Carter2012:Evolutionofplacentalfunction}. Expression and synthesis of hormones is
 perhaps the most well-documented physiological process in the placenta
 in many species. Here we quantified the extreme disparity in genes
 with hormone products or enzymatic products that directly produce
-hormones in multiple mammalian species (Table 8).
+hormones in multiple mammalian species (\DLA{Table 8}).
 
 In both ruminants and primates, the placenta is responsible for the
 production of estrogen and progesterone. High relative expression of
@@ -742,57 +748,55 @@ generally matches the high levels of placental production of estrogen
 and progesterone in humans, other primates, and ruminants in late
 pregnancy. In addition, HSD3B1 shows high levels in dog, which matches
 the high levels of placental production of progesterone at term in
-that species.
+that species. \DLA{I think we need citations for this}
 
 The elephant is strikingly the only mammal analyzed that shows high
 expression of the primarily pituitary hormone prolactin (PRL) in the
 placenta. All afrotherians yet analyzed contain only one prolactin
 gene, and prolactin has undergone adaptive evolution on the elephant
-lineage (Wallis, 2009). (Yamamoto et al., 2011) noted the presence of
-a prolactin in the trophoblast of the elephant placenta using
-immunohistological staining and human derived antibodies. A previous
-analysis of the elephant placenta also detected the expression of
-prolactin (Hou et al., 2012). Here we confirm that the sole prolactin
-in the elephant is not only expressed but highly expressed in the
-placenta, and likely functions both in the maintenance of the corpus
-luteum and as a placental lactogen (Yamamoto et al., 2011). PRL is not
-expressed in the opossum, even though there is evidence that it is
-expressed in the placenta of another marsupial, the tammar wallaby
-(Menzies et al., 2011). This suggests that placental prolactin
-expression in marsupials may be as diverse as in eutherian mammals.
-Although, PRL is not expressed to any great degree in the placenta
-other mammals, we see very high expression of genes which resulted
-from duplications of PRL in both the cow (Table X), as well as mouse
-(Supplemental Table X). Describe these
+lineage \cite{Wallis2009:ProlactininAfrotheriacharacterization}.
+\cite{Yamamoto.ea2011:PlacentationinAfricanelephant} noted the
+presence of a prolactin in the trophoblast of the elephant placenta
+using immunohistological staining and human derived antibodies. A
+previous analysis of the elephant placenta also detected the
+expression of prolactin (Hou et al., 2012). Here we confirm that the
+sole prolactin in the elephant is not only expressed but highly
+expressed in the placenta, and likely functions both in the
+maintenance of the corpus luteum and as a placental lactogen \cite{Yamamoto.ea2011:PlacentationinAfricanelephant}. PRL is not expressed in the opossum, even though there
+is evidence that it is expressed in the placenta of another marsupial,
+the tammar wallaby \cite{Menzies.ea2011:Placentalexpressionofpituitary}. This suggests that
+placental prolactin expression in marsupials may be as diverse as in
+eutherian mammals. Although, PRL is not expressed to any great degree
+in the placenta other mammals, we see very high expression of genes
+which resulted from duplications of PRL in both the cow \DLA{(Table X)}, as
+well as mouse \DLA{(Supplemental Table X)}. \DLA{Describe these}
 
 The growth hormone (GH) family has expanded in anthropoid primates,
 resulting in approximately 5 genes in humans (GH1, GH2, CSH1, CSH2,
 CSHL1). All but GH1 show substantial expression in the placenta (Table
 8). There is some evidence that increased expression of these genes
 may be correlated with overall birth weight of offspring in humans
-(Mannik et al., 2010), and it is possible that the extreme expression
+\DLA{(Mannik et al., 2010)}, and it is possible that the extreme expression
 levels of these genes may be due to high birth weight. Ensembl
 annotations show 4 GH genes present in the chimpanzee genome, and
 three of these genes show high expression in bonobo, although to a
 lesser degree than in human (Table 8). Human placental GH genes are
 involved in increasing blood flow, replacing maternal pituitary
-expression of GH, as well as trophoblast invasion (Alsat et al., 1998;
-Lacroix et al., 2005; Schiessl et al., 2007), and it is likely that
+expression of GH, as well as trophoblast invasion \cite{Alsat.ea1998:Physiologicalroleofhuman,Lacroix.ea2005:Stimulationofhumantrophoblast,Schiessl.ea2007:Roleofplacentalgrowth}, and it is likely that
 they have the same function in the bonobo.
 
 The human gene CGA codes for the alpha subunit of multiple hormones
 including pituitary hormones (luteinizing hormone,
 follicle-stimulating hormone, thyroid-stimulating hormone), as well as
-numerous chorionic gonadotropins with variable beta subunits (Maston
-and Ruvolo, 2002). The function of the chorionic gonadotropins is to
-prevent the regression of the corpus luteum (Hanson et al., 1971).
+numerous chorionic gonadotropins with variable beta subunits \cite{Maston.ea2002:Chorionicgonadotropinhasrecent}. The function of the chorionic gonadotropins is to
+prevent the regression of the corpus luteum \cite{Hanson.ea1971:EffectsofHCGand}.
 Among the six placentas we analyzed here, CGA is only expressed in the
-placentas of humans and bonobos (Table 8), which corresponds with the
+placentas of humans and bonobos (\DLA{Table 8}), which corresponds with the
 emergence of the chorionic gonadotropins in anthropoid primates
-(Maston and Ruvolo, 2002). However, oddly, CGA is expressed at much
+\cite{Maston.ea2002:Chorionicgonadotropinhasrecent}. However, oddly, CGA is expressed at much
 higher levels in both species than the beta subunits with which its
-product dimerizes (Table 8). CGA is one of several genes noted by
-(Uddin et al., 2008) to have undergone adaptive evolution of the
+product dimerizes (\DLA{Table 8}). CGA is one of several genes noted by
+\cite{Uddin.ea2008:Distinctgenomicsignaturesof} to have undergone adaptive evolution of the
 human-chimpanzee stem lineage.
 
 Relaxin is a hormone that has multiple effects during pregnancy
@@ -801,14 +805,15 @@ relaxing uterine musculature in preparation for labor. In both dogs
 and elephants, there is high expression of relaxin in the term
 placenta, with little evidence in other species examined here (Table
 8). Relaxin is known to be produced in the placenta of the pregnant
-dog and is used in the diagnosis of canine pregnancy (Steinetz et al.,
-1989; Tsutsui and Stewart, 1991); however, the source of relaxin
-produced by pregnant African elephants remains unclear (Meyer et al.,
-2004). The high rise in relaxin in elephants has been suggested to be
-a major signal for the initiation of labor (Niemuller et al., 1998).
-Here we show that the placenta of elephants show high expression of
-relaxin and is likely the predominant source of relaxin at term (Table
-8).
+dog and is used in the diagnosis of canine pregnancy
+\cite{Steinetz.ea1989:Serumrelaxinandprogesterone,Tsutsui.ea1991:Determinationofsourceof};
+however, the source of relaxin produced by pregnant African elephants
+remains unclear \cite{Meyer.ea2004:Speciesandfetalgender}. The high
+rise in relaxin in elephants has been suggested to be a major signal
+for the initiation of labor
+\cite{Niemuller.ea1998:Plasmaconcentrationsofimmunoreactive} Here we
+show that the placenta of elephants show high expression of relaxin
+and is likely the predominant source of relaxin at term \DLA{(Table 8)}.
 
 Two genes, NPPB and NPPC, code for peptide hormones that are important
 in the inducement of vasodilation, and may be important in increasing

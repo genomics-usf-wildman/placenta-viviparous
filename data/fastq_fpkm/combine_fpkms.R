@@ -35,6 +35,8 @@ for (file in trinity.rsem) {
     }
     trinity.fpkms[[file]] <- fread(file)
     trinity.fpkms[[file]][,species:=gsub("_"," ",species.name)]
+    ## rename transcript_id to tracking_id because RSEM using
+    ## transcript_id and everything else uses tracking_id
     setnames(trinity.fpkms[[file]],"transcript_id","tracking_id")
     ## read in appropriate diamond file
     trinity.diamond[[file]] <-
@@ -51,10 +53,11 @@ for (file in trinity.rsem) {
         trinity.diamond[[file]][bitscore >= 40,]
     setkey(trinity.diamond[[file]],"tracking_id")
     setkey(trinity.fpkms[[file]],"tracking_id")
+    ## merge the diamond based protein ids to the fpkms
     trinity.fpkms[[file]] <-
         trinity.diamond[[file]][trinity.fpkms[[file]]]
     setkey(trinity.fpkms[[file]],"protein_id")
-    protein.to.gene[trinity.fpkms[[file]]]
+    ## map the ensembl ids to gene names
     trinity.fpkms[[file]] <-
         protein.to.gene[trinity.fpkms[[file]]][,list(tracking_id,gene_id,gene_short_name,
                                                      species,file,FPKM)]
@@ -62,7 +65,8 @@ for (file in trinity.rsem) {
     trinity.fpkms[[file]][,file:=file]
     trinity.gene.fpkms[[file]] <-
         copy(trinity.fpkms[[file]])
-    ## I think summing the FPKM per gene is the best approach here
+    ## I think summing the FPKM per gene is the best approach here;
+    ## may need to do something else.
     trinity.gene.fpkms[[file]][,FPKM.sum:=sum(FPKM),gene_id]
     trinity.gene.fpkms[[file]] <-
         trinity.gene.fpkms[[file]][!is.na(gene_id) & !duplicated(gene_id),]

@@ -63,7 +63,7 @@ $(SPECIES)_placenta_local.sorted.bam: $(SPECIES)_placenta_local.bam
 alignment: $(SPECIES)_placenta_star.bam
 
 STAR_INDEX_DIR=$(BOWTIE_INDEX_DIR)/star/
-GENOME_FASTQ=$(BOWTIE_INDEX_DIR)$(FASTA)
+GENOME_FASTQ=$(FASTA)
 STAR_INDEX_OPTIONS?=
 
 ifdef USE_TRINITY

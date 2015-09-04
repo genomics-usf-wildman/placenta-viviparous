@@ -40,7 +40,7 @@ ifdef USE_TRINITY
 $(SPECIES)_genes.fpkm_tracking: $(SPECIES)_placenta_star.bam
 	$(MODULE) load cufflinks/2.2.1; \
 	cufflinks -p $(CORES)
-	for file in genes.fpkm_tracking isoforms.fpkm_tracking skipped.gtf transcripts.gtf; do \
+	for file in genes.fpkm_tracking isoforms.fpkm_tracking; do \
 		mv $${file} $(SPECIES)_$${file}; \
 	done;
 else

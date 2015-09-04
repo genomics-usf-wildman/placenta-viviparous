@@ -68,7 +68,7 @@ STAR_INDEX_OPTIONS?=
 
 ifdef USE_TRINITY
 GENOME_FASTQ=$(SPECIES)_trinity.Trinity.fasta
-STAR_INDEX_OPTIONS=
+STAR_INDEX_OPTIONS=--genomeChrBinNbits=10
 endif
 
 star_indexes: $(STAR_INDEX_DIR)/SA
@@ -77,6 +77,7 @@ $(STAR_INDEX_DIR)/SA: $(GENOME_FASTQ)
 	mkdir -p $(STAR_INDEX_DIR); \
 	STAR --genomeFastaFiles  $(GENOME_FASTQ) \
 		--runMode genomeGenerate \
+		$(STAR_INDEX_OPTIONS) \
 		--limitGenomeGenerateRAM 128849018880 \
 		--runThreadN $(CORES) \
 		--genomeDir $(STAR_INDEX_DIR)

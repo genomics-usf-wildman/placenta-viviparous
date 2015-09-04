@@ -70,6 +70,8 @@ GENOME_FASTQ=$(BOWTIE_INDEX_DIR)$(FASTA)
 ifdef USE_TRINITY
 GENOME_FASTQ=$(SPECIES)_trinity.Trinity.fasta
 endif
+
+star_indexes: $(STAR_INDEX_DIR)/SA
 $(STAR_INDEX_DIR)/SA: $(GENOME_FASTQ)
 	$(MODULE) load STAR/2.4.2a; \
 	mkdir -p $(STAR_INDEX_DIR); \

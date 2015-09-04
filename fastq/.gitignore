@@ -8,3 +8,4 @@
 *.fastq
 *.fpkm_tracking
 cluster_host.mk
+*_star

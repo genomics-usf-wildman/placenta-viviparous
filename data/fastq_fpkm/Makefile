@@ -34,6 +34,7 @@ link_stuff:
 		-o -iname '*_genes.fpkm_tracking' \
 		-o -iname '*_trinity_diamond.txt' \
 		-o -iname '*_trinity_align_rsem_isoforms.txt' \
+        -o -iname 'Log.final.out' \
 		\) \
 		-not -path '*local*' \
 		-print0|xargs -0 ./link_file;

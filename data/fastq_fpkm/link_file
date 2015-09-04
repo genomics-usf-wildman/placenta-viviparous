@@ -1,6 +1,10 @@
 #!/bin/bash
 
 for file in "$@"; do
-    new_file="$(basename "$(echo "$file"|sed 's/\(SRR[[:digit:]]*\)\//\1_/g')")"
+    new_file="$file"
+    if [ "$(basename "$file")" = "Log.final.out" ]; then
+        new_file="$(echo $(dirname $file)|sed 's/_star/_log_star.txt/')"
+    fi;
+    new_file="$(basename "$(echo "$new_file"|sed 's/\(SRR[[:digit:]]*\)\//\1_/g')")"
     ln -sf "$file" "$new_file";
 done;

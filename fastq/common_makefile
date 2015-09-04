@@ -68,7 +68,7 @@ STAR_INDEX_OPTIONS?=
 
 ifdef USE_TRINITY
 GENOME_FASTQ=$(SPECIES)_trinity.Trinity.fasta
-STAR_INDEX_OPTIONS=--genomeChrBinNbits=10
+STAR_INDEX_OPTIONS=--genomeChrBinNbits 10
 endif
 
 star_indexes: $(STAR_INDEX_DIR)/SA

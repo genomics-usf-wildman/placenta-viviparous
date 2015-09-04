@@ -84,7 +84,7 @@ $(STAR_INDEX_DIR)/SA: $(GENOME_FASTQ)
 
 $(SPECIES)_placenta_star.bam: $(FASTQ_FILES) $(STAR_INDEX_DIR)/SA
 	$(MODULE) load STAR/2.4.2a; \
-	mkdir -p $(SRX)_star; \
+	mkdir -p $(SPECIES)_star; \
 	STAR --outFileNamePrefix $(SPECIES)_star/ \
 		--outSAMtype BAM SortedByCoordinate \
 		--runThreadN $(CORES) \

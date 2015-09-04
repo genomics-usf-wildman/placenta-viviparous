@@ -20,7 +20,7 @@ MODULE=echo
 endif
 
 BOWTIE_OPTIONS?=
-BOWTIE_INDEX_DIR?=
+BOWTIE_INDEX_DIR?=./
 LOCAL_BOWTIE_OPTIONS?= -N 1 -L 15 -k 10 --local
 ALIGNMENT_SPECIES?=$(SPECIES)
 REMOTE_FILES=$(FASTA).gz $(GTF).gz
@@ -61,8 +61,6 @@ $(SPECIES)_placenta_local.sorted.bam: $(SPECIES)_placenta_local.bam
 	samtools sort $< -o $@ -T temp
 
 alignment: $(SPECIES)_placenta_star.bam
-
-STAR_INDEX_DIR?=$(BOWTIE_INDEX_DIR)/star/
 
 STAR_INDEX_DIR=$(BOWTIE_INDEX_DIR)/star/
 GENOME_FASTQ=$(BOWTIE_INDEX_DIR)$(FASTA)

@@ -4,7 +4,7 @@ SPECIES=spalax_carmeli
 ALIGNMENT_SPECIES=nannospalax_galili
 GTF=../nannospalax_galili/nannospalax_galili.gtf
 FASTA=../nannospalax_galili/nannospalax_galili.toplevel.fa
-BOWTIE_INDEX_DIR=../nannospalax_galili/
+BOWTIE_INDEX_DIR=./
 
 COMMON_MAKEFILE=../common_makefile
 

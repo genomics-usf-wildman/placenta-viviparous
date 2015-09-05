@@ -5,6 +5,7 @@ args <- c("protein_id_to_gene_id.txt",
           grep(".fpkm_tracking$",dir(),value=TRUE),
           grep("_trinity_diamond.txt$",dir(),value=TRUE),
           grep("_trinity_align_rsem_isoforms.txt$",dir(),value=TRUE),
+          grep("_log_star.txt$",dir(),value=TRUE),
           "combined_fpkms")
 
 args <- commandArgs(trailingOnly=TRUE)
@@ -17,6 +18,8 @@ trinity.rsem <- grep("_trinity_align_rsem_isoforms.txt$",args,value=TRUE)
 trinity.diamond.files <- grep("_trinity_diamond.txt$",args,value=TRUE)
 gene.files <- grep("genes.fpkm_tracking",args,value=TRUE)
 isoform.files <- grep("isoforms.fpkm_tracking",args,value=TRUE)
+
+star.log.files <- grep("_log_star.txt",args,value=TRUE)
 
 ## read in the protein to gene id information
 protein.to.gene <- fread(protein.to.id)
@@ -81,6 +84,7 @@ for (file in gene.files) {
     gene.fpkms[[file]][,file:=file]
 }
 
+
 gene.fpkms <- rbindlist(c(gene.fpkms,trinity.gene.fpkms),fill=TRUE)
 
 gene.fpkms[,mean_fpkm := mean(FPKM),tracking_id]
@@ -102,6 +106,23 @@ isoform.fpkms[,mean_fpkm := mean(FPKM),tracking_id]
 isoform.fpkms[,sd_fpkm := sd(FPKM),tracking_id]
 isoform.fpkms <- isoform.fpkms[!duplicated(tracking_id),]
 
+
+star.logs <- list()
+for (file in star.log.files) {
+    star.log <- read.table(file,sep="|",fill=TRUE,stringsAsFactors=FALSE)
+    colnames(star.log) <- c("field","value")
+    star.log$value <- gsub("\\t","",star.log$value)
+    star.log$field <- gsub("^\\s+","",star.log$field)
+    star.logs[[file]] <- data.table(star.log)[!grepl(":",field),]
+    star.logs[[file]][,species := gsub("_"," ",
+                                   gsub("_log_star.txt","",
+                                        gsub("SRR\\d+_","",file)))]
+    star.logs[[file]][,file:=file]
+
+}
+star.logs <- rbindlist(star.logs)
+
 save(gene.fpkms,
      isoform.fpkms,
+     star.logs,
      file=output.file)

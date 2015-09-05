@@ -9,17 +9,17 @@ ISOFORM_FPKM_FILES=$(wildcard *_isoforms.fpkm_tracking)
 
 
 SPECIES_WITH_TRINITY_ALIGNMENTS=nannospalax_galili spalax_carmeli ateles_fusciceps
-
-BAD_ISOFORMS=$(patsubst %,%_isoforms.fpkm_tracking,$(SPECIES_WITH_TRINITY_ALIGNMENTS))
-BAD_GENES=$(patsubst %,%_genes.fpkm_tracking,$(SPECIES_WITH_TRINITY_ALIGNMENTS))
-TRINITY_RSEM_FILES=$(patsubst %,%_trinity_align_rsem_isoforms.txt,$(SPECIES_WITH_TRINITY_ALIGNMENTS))
+# 
+# BAD_ISOFORMS=$(patsubst %,%_isoforms.fpkm_tracking,$(SPECIES_WITH_TRINITY_ALIGNMENTS))
+# BAD_GENES=$(patsubst %,%_genes.fpkm_tracking,$(SPECIES_WITH_TRINITY_ALIGNMENTS))
+# TRINITY_RSEM_FILES=$(patsubst %,%_trinity_align_rsem_isoforms.txt,$(SPECIES_WITH_TRINITY_ALIGNMENTS))
 TRINITY_DIAMOND_FILES=$(patsubst %,%_trinity_diamond.txt,$(SPECIES_WITH_TRINITY_ALIGNMENTS))
 
 all: combined_fpkms
 
 combined_fpkms: combine_fpkms.R protein_id_to_gene_id.txt \
 	$(GENE_FPKM_FILES) $(ISOFORM_FPKM_FILES) \
-	$(TRINITY_RSEM_FILES) $(TRINITY_DIAMOND_FILES)
+	$(TRINITY_DIAMOND_FILES)
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
 
 protein_id_to_gene_id.txt: protein_to_gene.pl \
@@ -38,4 +38,4 @@ link_stuff:
 		\) \
 		-not -path '*local*' \
 		-print0|xargs -0 ./link_file;
-	rm -f $(BAD_ISOFORMS) $(BAD_GENES)
+#	rm -f $(BAD_ISOFORMS) $(BAD_GENES)

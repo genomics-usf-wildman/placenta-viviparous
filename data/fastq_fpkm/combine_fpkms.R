@@ -13,6 +13,9 @@ args <- commandArgs(trailingOnly=TRUE)
 output.file <- args[length(args)]
 args <- args[-length(args)]
 
+pb <- txtProgressBar(min=1,max=length(args),style=3)
+i <- 0
+
 protein.to.id <- grep("protein_id_to_gene_id.txt",args,value=TRUE)
 trinity.rsem <- grep("_trinity_align_rsem_isoforms.txt$",args,value=TRUE)
 trinity.diamond.files <- grep("_trinity_diamond.txt$",args,value=TRUE)
@@ -25,25 +28,18 @@ star.log.files <- grep("_log_star.txt",args,value=TRUE)
 protein.to.gene <- fread(protein.to.id)
 setkey(protein.to.gene,"protein_id")
 
-trinity.fpkms <- list()
-trinity.gene.fpkms <- list()
-## these are the annotations
+## these are the annotations for trinity species
+trinity.diamond.species <- NULL
 trinity.diamond <- list()
-for (file in trinity.rsem) {
-    species.name <- gsub("_trinity_align_rsem_isoforms.txt","",file)
-    diamond.file <- paste0(species.name,"_trinity_diamond.txt")
-    
-    if (!any(diamond.file %in% trinity.diamond.files)) {
-        stop(paste0("There is no diamond file corresponding to species ",species))
-    }
-    trinity.fpkms[[file]] <- fread(file)
-    trinity.fpkms[[file]][,species:=gsub("_"," ",species.name)]
-    ## rename transcript_id to tracking_id because RSEM using
-    ## transcript_id and everything else uses tracking_id
-    setnames(trinity.fpkms[[file]],"transcript_id","tracking_id")
+for (file in trinity.diamond.files) {
+    species.name <- gsub("_trinity_diamond.txt","",file)
+
+    trinity.diamond.species <-
+        c(trinity.diamond.species,
+          species.name)
     ## read in appropriate diamond file
     trinity.diamond[[file]] <-
-        fread(diamond.file)
+        fread(file)
     setnames(trinity.diamond[[file]],
              c("tracking_id","protein_id","identity.per.len","len",
                "mismatches","gaps","query_begin","query_end",
@@ -54,38 +50,58 @@ for (file in trinity.rsem) {
     ## there shouldn't be any bitscores below 40, either.
     trinity.diamond[[file]] <-
         trinity.diamond[[file]][bitscore >= 40,]
-    setkey(trinity.diamond[[file]],"tracking_id")
-    setkey(trinity.fpkms[[file]],"tracking_id")
-    ## merge the diamond based protein ids to the fpkms
-    trinity.fpkms[[file]] <-
-        trinity.diamond[[file]][trinity.fpkms[[file]]]
-    setkey(trinity.fpkms[[file]],"protein_id")
+    trinity.diamond[[file]][,species:=species.name]
+    ## we're going to match on protein_id
+    setkey(trinity.diamond[[file]],"protein_id")
     ## map the ensembl ids to gene names
-    trinity.fpkms[[file]] <-
-        protein.to.gene[trinity.fpkms[[file]]][,list(tracking_id,gene_id,gene_short_name,
-                                                     species,file,FPKM)]
-    trinity.fpkms[[file]][,tracking_id:=paste0(species.name,"_",tracking_id)]
-    trinity.fpkms[[file]][,file:=file]
-    trinity.gene.fpkms[[file]] <-
-        copy(trinity.fpkms[[file]])
-    ## I think summing the FPKM per gene is the best approach here;
-    ## may need to do something else.
-    trinity.gene.fpkms[[file]][,FPKM.sum:=sum(FPKM),gene_id]
-    trinity.gene.fpkms[[file]] <-
-        trinity.gene.fpkms[[file]][!is.na(gene_id) & !duplicated(gene_id),]
+    trinity.diamond[[file]] <-
+        protein.to.gene[trinity.diamond[[file]]][,list(tracking_id,gene_id,gene_short_name,
+                                                     species)]
+    trinity.diamond[[file]][,tracking_id:=paste0(species.name,"_",tracking_id)]
+    i <- i+1
+    setTxtProgressBar(pb,i)
 }
 
 gene.fpkms <- list();
 for (file in gene.files) {
     gene.fpkms[[file]] <- fread(file)
-    gene.fpkms[[file]][,species := gsub("_"," ",
-                                    gsub("_genes.fpkm_tracking","",
-                                         gsub("SRR\\d+_","",file)))]
+    species.name <-
+        gsub("_"," ",
+             gsub("_genes.fpkm_tracking","",
+                  gsub("SRR\\d+_","",file)))
+    gene.fpkms[[file]][,species := species.name]
+    if (all(species.name %in% trinity.diamond.species)) {
+        ## need to merge in the gene names here and then merge down
+        ## the calls on the genes to only a single gene
+        diamond.file <-
+            paste0(gsub(" ","_",species.name),"_trinity_diamond.txt")
+        gene.fpkms[[file]][,tracking_id:=paste0(gsub(" +","_",species.name),
+                                "_",gsub(":.+","",locus))]
+        setkey(gene.fpkms[[file]],"tracking_id")
+        setkey(trinity.diamond[[diamond.file]],"tracking_id")
+        gene.fpkms[[file]] <-
+            trinity.diamond[[diamond.file]][gene.fpkms[[file]]]
+        ## sum the FPKM in order to determine the total expression for
+        ## this gene
+        gene.fpkms[[file]][,
+                           FPKM:=sum(FPKM),gene_id]
+        gene.fpkms[[file]][,
+                           FPKM_conf_lo:=sum(FPKM_conf_lo),gene_id]
+        gene.fpkms[[file]][,
+                           FPKM_conf_hi:=sum(FPKM_conf_hi),gene_id]
+        gene.fpkms[[file]] <-
+            gene.fpkms[[file]][!duplicated(gene_id),]
+        gene.fpkms[[file]][,i.gene_id:=NULL]
+        gene.fpkms[[file]][,i.gene_short_id:=NULL]
+        gene.fpkms[[file]][,i.species:=NULL]
+    }
     gene.fpkms[[file]][,file:=file]
+    i <- i+1
+    setTxtProgressBar(pb,i)
 }
 
 
-gene.fpkms <- rbindlist(c(gene.fpkms,trinity.gene.fpkms),fill=TRUE)
+gene.fpkms <- rbindlist(gene.fpkms,fill=TRUE)
 
 gene.fpkms[,mean_fpkm := mean(FPKM),tracking_id]
 gene.fpkms[,sd_fpkm := sd(FPKM),tracking_id]
@@ -98,12 +114,14 @@ for (file in isoform.files) {
                                        gsub("_isoforms.fpkm_tracking","",
                                             gsub("SRR\\d+_","",file)))]
     isoform.fpkms[[file]][,file:=file]
+    i <- i+1
+    setTxtProgressBar(pb,i)
 }
 
-isoform.fpkms <- rbindlist(c(isoform.fpkms,trinity.fpkms),fill=TRUE)
+isoform.fpkms <- rbindlist(c(isoform.fpkms),fill=TRUE)
 
-isoform.fpkms[,mean_fpkm := mean(FPKM),tracking_id]
-isoform.fpkms[,sd_fpkm := sd(FPKM),tracking_id]
+isoform.fpkms[,mean_fpkm := mean(FPKM,na.rm=TRUE),tracking_id]
+isoform.fpkms[,sd_fpkm := sd(FPKM,na.rm=TRUE),tracking_id]
 isoform.fpkms <- isoform.fpkms[!duplicated(tracking_id),]
 
 
@@ -119,8 +137,11 @@ for (file in star.log.files) {
                                         gsub("SRR\\d+_","",file)))]
     star.logs[[file]][,file:=file]
 
+    i <- i+1
+    setTxtProgressBar(pb,i)
 }
 star.logs <- rbindlist(star.logs)
+close(pb)
 
 save(gene.fpkms,
      isoform.fpkms,

@@ -17,6 +17,7 @@ get_results:
 	rsync -avmP \
 		--include '**_genes.fpkm_tracking' \
 		--include '**_isoforms.fpkm_tracking' \
+		--include '**_star/Log.final.out' \
 		--include '**trinity_diamond.txt' \
 		--include '**_trinity_align_rsem_isoforms.txt' \
         --include '**/' \

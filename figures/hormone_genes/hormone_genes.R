@@ -14,6 +14,10 @@ load(args[2])
 source(args[3])
 
 
+plot_type <- "onepage"
+if (any(grepl("multipage",args[length(args)]))) {
+    plot_type <- "multipage"
+}
 pdf(args[length(args)],width=8,height=8)
 
 hormone.genes <-
@@ -81,16 +85,35 @@ combined.long$species <-
     factor(combined.long$species,
            levels=species.ordering)
 
-print(ggplot(combined.long, aes(y=gene, x=species))
-      + geom_tile(aes(fill = fpkm), colour = "white")
-      + scale_fill_gradientn(colours = colorends, values = rescale(gradientends))
-#      + scale_fill_gradient(low = "white", high = "steelblue")
-      + scale_x_discrete("", expand = c(0, 0))
-      + scale_y_discrete("", expand = c(0, 0))
-      + theme_grey(base_size = 9)
-      + theme(legend.position = "none",
-              axis.ticks = element_blank(), 
-              axis.text.x = element_text(angle = 300, hjust = 0, vjust=1))
-      )
+common.plot.options <- 
+    (geom_tile(aes(fill = fpkm), colour = "white")
+     + scale_fill_gradientn(colours = colorends, values = rescale(gradientends))
+     ##   + scale_fill_gradient(low = "white", high = "steelblue")
+     + scale_x_discrete("", expand = c(0, 0))
+     + scale_y_discrete("", expand = c(0, 0))
+     + theme_grey(base_size = 9)
+     + theme(legend.position = "none",
+             axis.ticks = element_blank(), 
+             axis.text.x = element_text(angle = 300, hjust = 0, vjust=1))
+     )
+if (type=="multipage") {
+    print(ggplot(combined.long[1:nrow(igf.exp.long),],aes(y=gene,x=species))
+          + common.plot.options
+          + ggtitle("IGF Related Genes")
+          )
+    print(ggplot(combined.long[nrow(igf.exp.long)+1:nrow(gal.exp.long),],aes(y=gene,x=species))
+          + common.plot.options
+          + ggtitle("Galectins")
+          )
+    print(ggplot(combined.long[nrow(igf.exp.long)+nrow(gal.exp.long)+1:nrow(hor.exp.log),],
+                 aes(y=gene,x=species))
+          + common.plot.options
+          + ggtitle("Hormones")
+          )
+} else {
+    print(ggplot(combined.long, aes(y=gene, x=species))
+          + common.plot.options
+          )
+}
 
 dev.off()

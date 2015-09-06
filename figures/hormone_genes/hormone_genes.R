@@ -102,7 +102,7 @@ if (plot_type=="multipage") {
               theme(legend.position = "none",
                     axis.ticks = element_blank(), 
                     axis.text.x = element_text(angle = 300, hjust = 0, vjust=1),
-                    plot.margin = unit(0.5,"inch")
+                    plot.margin = unit(c(0,0.5,0,0),"inch")
                     ),
               scale_fill_gradient(low="white",high="red")
               )

@@ -109,18 +109,18 @@ if (plot_type=="multipage") {
     print(ggplot(combined.long[1:nrow(igf.exp.long),],aes(y=gene,x=species))
           + common.plot.options
           + multipage.options
-          + ggtitle("IGF Related Genes")
+          ## + ggtitle("IGF Related Genes")
           )
     print(ggplot(combined.long[nrow(igf.exp.long)+1:nrow(gal.exp.long),],aes(y=gene,x=species))
           + common.plot.options
           + multipage.options
-          + ggtitle("Galectins")
+          ## + ggtitle("Galectins")
           )
     print(ggplot(combined.long[nrow(igf.exp.long)+nrow(gal.exp.long)+1:nrow(hor.exp.long),],
                  aes(y=gene,x=species))
           + common.plot.options
           + multipage.options
-          + ggtitle("Hormones")
+          ## + ggtitle("Hormones")
           )
 } else {
     print(ggplot(combined.long, aes(y=gene, x=species))

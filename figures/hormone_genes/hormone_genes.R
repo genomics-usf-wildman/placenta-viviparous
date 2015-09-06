@@ -100,17 +100,20 @@ if (plot_type=="multipage") {
     print(ggplot(combined.long[1:nrow(igf.exp.long),],aes(y=gene,x=species))
           + common.plot.options
           + scale_fill_gradient(low="white",high="red")
+          + theme_grey(base_size = 14),
           + ggtitle("IGF Related Genes")
           )
     print(ggplot(combined.long[nrow(igf.exp.long)+1:nrow(gal.exp.long),],aes(y=gene,x=species))
           + common.plot.options
           + scale_fill_gradient(low="white",high="red")
+          + theme_grey(base_size = 14),
           + ggtitle("Galectins")
           )
     print(ggplot(combined.long[nrow(igf.exp.long)+nrow(gal.exp.long)+1:nrow(hor.exp.long),],
                  aes(y=gene,x=species))
           + common.plot.options
           + scale_fill_gradient(low="white",high="red")
+          + theme_grey(base_size = 14),
           + ggtitle("Hormones")
           )
 } else {

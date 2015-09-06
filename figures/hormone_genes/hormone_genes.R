@@ -98,7 +98,7 @@ common.plot.options <-
          )
 if (plot_type=="multipage") {
     multipage.options <-
-         list(theme_grey(base_size = 14),
+         list(theme_grey(base_size = 18),
               theme(legend.position = "none",
                     axis.ticks = element_blank(), 
                     axis.text.x = element_text(angle = 300, hjust = 0, vjust=1)),

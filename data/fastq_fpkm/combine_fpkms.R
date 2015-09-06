@@ -32,8 +32,7 @@ setkey(protein.to.gene,"protein_id")
 trinity.diamond.species <- NULL
 trinity.diamond <- list()
 for (file in trinity.diamond.files) {
-    species.name <- gsub("_trinity_diamond.txt","",file)
-
+    species.name <- gsub("_"," ",gsub("_trinity_diamond.txt","",file))
     trinity.diamond.species <-
         c(trinity.diamond.species,
           species.name)
@@ -57,7 +56,7 @@ for (file in trinity.diamond.files) {
     trinity.diamond[[file]] <-
         protein.to.gene[trinity.diamond[[file]]][,list(tracking_id,gene_id,gene_short_name,
                                                      species)]
-    trinity.diamond[[file]][,tracking_id:=paste0(species.name,"_",tracking_id)]
+    trinity.diamond[[file]][,tracking_id:=paste0(gsub(" ","_",species.name),"_",tracking_id)]
     i <- i+1
     setTxtProgressBar(pb,i)
 }
@@ -70,7 +69,7 @@ for (file in gene.files) {
              gsub("_genes.fpkm_tracking","",
                   gsub("SRR\\d+_","",file)))
     gene.fpkms[[file]][,species := species.name]
-    if (all(species.name %in% trinity.diamond.species)) {
+    if (any(species.name %in% trinity.diamond.species)) {
         ## need to merge in the gene names here and then merge down
         ## the calls on the genes to only a single gene
         diamond.file <-

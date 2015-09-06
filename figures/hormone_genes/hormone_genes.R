@@ -86,16 +86,16 @@ combined.long$species <-
            levels=species.ordering)
 
 common.plot.options <- 
-    (geom_tile(aes(fill = fpkm), colour = "white")
-     + scale_fill_gradientn(colours = colorends, values = rescale(gradientends))
-     ##   + scale_fill_gradient(low = "white", high = "steelblue")
-     + scale_x_discrete("", expand = c(0, 0))
-     + scale_y_discrete("", expand = c(0, 0))
-     + theme_grey(base_size = 9)
-     + theme(legend.position = "none",
-             axis.ticks = element_blank(), 
-             axis.text.x = element_text(angle = 300, hjust = 0, vjust=1))
-     )
+    list(geom_tile(aes(fill = fpkm), colour = "white"),
+         scale_fill_gradientn(colours = colorends, values = rescale(gradientends)),
+         ##   + scale_fill_gradient(low = "white", high = "steelblue")
+         scale_x_discrete("", expand = c(0, 0)),
+         scale_y_discrete("", expand = c(0, 0)),
+         theme_grey(base_size = 9),
+         theme(legend.position = "none",
+               axis.ticks = element_blank(), 
+               axis.text.x = element_text(angle = 300, hjust = 0, vjust=1))
+         )
 if (type=="multipage") {
     print(ggplot(combined.long[1:nrow(igf.exp.long),],aes(y=gene,x=species))
           + common.plot.options

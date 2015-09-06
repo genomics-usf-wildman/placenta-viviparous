@@ -101,7 +101,9 @@ if (plot_type=="multipage") {
          list(theme_grey(base_size = 18),
               theme(legend.position = "none",
                     axis.ticks = element_blank(), 
-                    axis.text.x = element_text(angle = 300, hjust = 0, vjust=1)),
+                    axis.text.x = element_text(angle = 300, hjust = 0, vjust=1)
+                    plot.margin = unit(0.5,"inch")
+                    ),
               scale_fill_gradient(low="white",high="red")
               )
     print(ggplot(combined.long[1:nrow(igf.exp.long),],aes(y=gene,x=species))

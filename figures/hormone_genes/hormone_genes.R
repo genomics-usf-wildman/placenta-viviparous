@@ -105,7 +105,7 @@ if (plot_type=="multipage") {
           + common.plot.options
           + ggtitle("Galectins")
           )
-    print(ggplot(combined.long[nrow(igf.exp.long)+nrow(gal.exp.long)+1:nrow(hor.exp.log),],
+    print(ggplot(combined.long[nrow(igf.exp.long)+nrow(gal.exp.long)+1:nrow(hor.exp.long),],
                  aes(y=gene,x=species))
           + common.plot.options
           + ggtitle("Hormones")

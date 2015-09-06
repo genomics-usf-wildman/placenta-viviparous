@@ -96,7 +96,7 @@ common.plot.options <-
                axis.ticks = element_blank(), 
                axis.text.x = element_text(angle = 300, hjust = 0, vjust=1))
          )
-if (type=="multipage") {
+if (plot_type=="multipage") {
     print(ggplot(combined.long[1:nrow(igf.exp.long),],aes(y=gene,x=species))
           + common.plot.options
           + ggtitle("IGF Related Genes")

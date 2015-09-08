@@ -437,7 +437,13 @@ not step on Natalie’s toes]
 
 \section{Results}
 
+<<load.results,>>=
+@ 
+
 \subsection{Transcriptome Statistics}
+
+<<transcriptome.statistics>>=
+@ 
 
 For transcriptomes sequenced with 75 bp, (opossum, elephant, and cow),
 the number of reads ranged from 3.61x107 to 3.70x107 and number of

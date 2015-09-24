@@ -30,6 +30,8 @@ PROTEIN_ALIGNMENT_FASTA?=$(patsubst %.dna.toplevel.fa,%.pep.all.fa,$(FASTA))
 REMOTE_FILES:=$(REMOTE_FILES) $(PROTEIN_ALIGNMENT_FASTA)
 endif
 
+FASTQC_ANALYSIS_FILES=$(patsubst %.fastq.gz,%_fastqc.html,$(FASTQ_FILES))
+
 # we need to use a comma in a rule below, so this handles that
 # escaping.
 comma=,
@@ -68,6 +70,12 @@ $(SPECIES)_placenta.sorted.bam: $(SPECIES)_placenta.bam
 $(SPECIES)_placenta_local.sorted.bam: $(SPECIES)_placenta_local.bam
 	$(MODULE) load samtools/1.0; \
 	samtools sort $< -o $@ -T temp
+
+fastqc: $(FASTQC_ANALYSIS_FILES)
+
+$(FASTQC_ANALYSIS_FILES): %_fastqc.html: %.fastq.gz
+	$(MODULE) load fastqc/0.11.2; \
+	fastqc -t $(CORES) $<
 
 alignment: $(SPECIES)_placenta_star.bam
 

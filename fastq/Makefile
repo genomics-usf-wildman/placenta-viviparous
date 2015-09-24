@@ -20,6 +20,8 @@ get_results:
 		--include '**_star/Log.final.out' \
 		--include '**trinity_diamond.txt' \
 		--include '**_trinity_align_rsem_isoforms.txt' \
+        --include '**_fastqc.html' \
+        --include '**_fastqc.zip' \
         --include '**/' \
 	    --exclude '**' \
 		$(CLUSTER_HOST)/fastq/ .;

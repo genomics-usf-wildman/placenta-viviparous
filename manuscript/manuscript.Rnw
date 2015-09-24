@@ -14,8 +14,10 @@
 \usepackage{float}
 \usepackage{multirow}
 \usepackage{setspace}
-%\usepackage{txfonts}
-%\usepackage{fancyref}
+\usepackage{wrapfig}
+% \usepackage{txfonts}
+\usepackage[plain]{fancyref}
+\renewcommand*{\fref}[1]{\Fref{#1}}
 \usepackage{acronym}
 \usepackage{array}
 \usepackage{dcolumn}
@@ -103,6 +105,14 @@
 \affil[*]{To whom correspondence should be addressed}
 \date{\today}
 
+% Acronyms
+\acrodef{EV}[EV]{Extracellular Vesicle}
+\acrodef{SVM}{Support Vector Machine}
+\acrodef{ROC}{Receiver Operating Characteristic}
+\acrodef{KNN}{K Nearest Neighbors}
+\acrodef{SRA}{Sequence Read Archive}
+\acrodef{FPKM}{Fragments Per Kilobase of exon per Million reads \cite{Trapnell.ea2010:Transcriptassemblyandquantification}}
+
 % \twocolumn
 \maketitle
 \onehalfspacing
@@ -116,11 +126,18 @@ options(device = function(file, width = 8, height = 7, ...) {
 library("data.table")
 library("ggplot2")
 library("reshape2")
+library("xtable")
 @ 
 
 <<source.to.latex,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../common_r_code/",c("to_latex.R")))>>=
 for (a in paste0("../common_r_code/",c("to_latex.R"))) {
     source(a)
+}
+@ 
+
+<<load.data,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../data/",c("combined_fpkm")))>>=
+for (a in paste0("../data/",c("combined_fpkm"))) {
+    load(a)
 }
 @ 
 
@@ -287,6 +304,8 @@ quality was assessed using A260/A280 and A260/A230 absorbance values.
 
 \subsection{Sequencing}
 
+\DLA{Fix how the sequencing was done}
+
 All RNA-Seq mRNA isolation, library construction, and Illumina
 sequencing was performed by the Applied Genomics Technology Center
 (AGTC) at Wayne State University School of Medicine using 2.5-5 µg of
@@ -297,41 +316,57 @@ performed using the Illumina Genome Analyzer II with an insert size of
 \textit{Canis}, \textit{Homo}, and \textit{Pan} were sequenced with
 read lengths of 150 bp.
 
-
+For comparison, additional sequences of placenta in \textit{Mus
+  musculus} \cite{Wang.ea2011:surveyfornovelimprinted} and
+\textit{Homo sapiens}
+\cite{Hughes.ea2015:Evaluatingintra-andinter-individual} were obtained
+from the \ac{SRA}.
 
 \subsection{Transcriptome Assembly and Mapping}
 
-\DLA{This isn't how these were analyzed anymore; fix this.}
-
-The quality of reads was evaluated using FASTQC v. 0.9.2
+The quality of reads was evaluated using FASTQC v0.11.2
 (\url{http://www.bioinformatics.babraham.ac.uk/projects/fastqc/}).
-Following this, reads were trimmed based on quality in Galaxy using
-the FASTQ Trimmer v. 1.0.0
-\cite{Blankenberg.ea2010:ManipulationofFASTQdata}. All transcriptomes
-were then aligned to reference genomes and assembled using the Tuxedo
-suite of next-generation sequencing analysis tools. Annotated
-reference genomes were downloaded from Ensembl v. 64
-\cite{Flicek.ea2012:Ensembl2012}, including \textit{Homo sapiens}
-GRCh37, \textit{Pan troglodytes} CHIMP2.1 (6X coverage), \textit{Canis
-  familiaris} BROADD2 (7.6X), \textit{Bos taurus} UMD3.1 (9.5X),
-\textit{Loxodonta africana} loxAfr3 (7X), and \textit{Monodelphis
-  domestica} BROADO5 (6.8X). The genome of the closely-related Pan
-troglodytes was used to map the transcriptome of Pan paniscus; the
-separation between the two recognized Pan species is generally
-perceived to be ~1 Mya (Prufer et al., 2012). Reads were aligned to
-reference genomes using Bowtie v. 0.12.7\cite{Langmead2009} and TopHat
-v. 1.3.3 \cite{Trapnell.ea2009:TopHatdiscoveringsplicejunctions}.
-Cufflinks v. 1.2.1 was then used to assemble transcripts and quantify
-expression values using fragments per kilobase of exon per million
-mapped reads (FPKM)
-\cite{Trapnell.ea2010:Transcriptassemblyandquantification}. RNA-Seq
-metrics were computed using Picard
-(\url{http://picard.sourceforge.net/}). For comparison, we also
-downloaded the placenta Illumina RNA-Seq transcriptome of a mouse from
-\cite{Wang.ea2011:surveyfornovelimprinted}. Raw reads were mapped as
-above using the Ensembl v. 64 annotation of the \textit{Mus musculus} (house
-mouse) genome (NCBI m37).
+Transcriptomes without a suitable reference genome (Reference of ---
+in \fref{tab:ref_genome_aligned_species}) were assembled into a
+reference using Trinity v2014-07-17
+\cite{Haas.ea2013:Denovotranscriptsequence} and annotated using
+Diamond \cite{Buchfink.ea2015:Fastandsensitiveprotein} against either
+the \textit{Homo sapiens} or \textit{Mus musculus} transcriptome
+(\fref{tab:ref_genome_aligned_species}).
+% 
+All transcriptomes were then aligned to the appropriate reference
+genome using STAR v2.4.2a
+\cite{Dobin.ea2013:STARultrafastuniversalRNA-seq} and expression
+values in \ac{FPKM} were quantified using Cufflinks v2.2.1
+\cite{Trapnell.ea2009:TopHatdiscoveringsplicejunctions}.
+%
+The genome of the closely-related \textit{Pan troglodytes} was used as
+a reference for \textit{Pan paniscus}. The separation between the two
+recognized Pan species is generally perceived to be $\approx 1$ Mya
+\cite{Prüfer.ea2012:bonobogenomecomparedwith}.
 
+
+\begin{table}
+  \begin{tabular}{c c c c}
+    \toprule
+    Species                       & Common Name        & Reference & Annotation \\
+    \midrule
+    \textit{Dasypus novemcinctus} & 9-Banded Armadillo & DASNOV3    & Ensembl 80 \\
+    \textit{Ateles fusciceps}     & Spider monkey      & ---        & \textit{Homo sapiens} Ensembl 80 \\
+    \textit{Pan paniscus}         & Bonobo             & CHIMP2.1.4 & Ensembl 80 \\
+    \textit{Bos taurus}           & Cow                & UMD3.1     & Ensembl 80 \\
+    \textit{Canis familiaris}     & Dog                & CanFam3.1  & Ensembl 80 \\
+    \textit{Loxodonta africana}   & Elephant           & loxAfr3    & Ensembl 80 \\
+    \textit{Homo sapiens}         & Human              & GRCh38     & Ensembl 80 \\
+    \textit{Mus musculus}         & Mouse              & GRCm38     & Ensembl 80 \\
+    \textit{Nannospalax galili}   & Blind mole rat     & ----       & \textit{Mus musculus} Ensembl 80 \\
+    \textit{Monodelphis domestica} & Opossum           & BROAD05    & Ensembl 80 \\
+    \textit{Spalax carmeli}       & Blind mole rat     & ----       & \textit{Mus musculus} Ensembl 80 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Reference genomes for aligned species}
+  \label{tab:ref_genome_aligned_species}
+\end{table}
 
 \subsection{Exploration of Individual Transcriptome Data}
 
@@ -345,7 +380,7 @@ significantly enriched if ES>1.3, as this corresponds to p<0.05
 \cite{Huang.ea2009:Systematicandintegrativeanalysis}. We executed
 analyses with two gene lists per transcriptome: 1) annotated genes
 with expression levels of the top 5\% of the frequency distribution of
-FPKM and 2) the top 100 genes with the highest FPKM. Due to the
+\ac{FPKM} and 2) the top 100 genes with the highest \ac{FPKM}. Due to the
 paucity of annotated gene ontology terms for some species, gene lists
 were compared using gene ontology terms derived from the human genome.
 
@@ -437,9 +472,6 @@ not step on Natalie’s toes]
 
 \section{Results}
 
-<<load.results,>>=
-@ 
-
 \subsection{Transcriptome Statistics}
 
 <<transcriptome.statistics>>=
@@ -465,8 +497,8 @@ from ~0.6\% (elephant) to ~31\% (human), and known introns ranging
 from ~5.5\% (dog) to 11\% (bonobo). Median percent genomic coverage
 ranged from ~43\% in elephant to 80\% in bonobo. The number of
 annotated transcripts to which reads mapped in each respective genomes
-ranged from 4119 (bonobo) to 6506 (human) for transcripts with FPKM>10
-and 11689 (dog) to 30733 (human) for transcripts with FPKM>1. The
+ranged from 4119 (bonobo) to 6506 (human) for transcripts with \ac{FPKM}>10
+and 11689 (dog) to 30733 (human) for transcripts with \ac{FPKM}>1. The
 greater degree of mapping to annotated protein-coding sequences in
 humans corresponds to the greater number of Ensembl annotated
 sequences in the human genome compared to the other five reference
@@ -479,32 +511,59 @@ The top 50 expressed genes in each genome analyzed are shown in
 \DLA{Supplementary Tables X-XX} [These are large Excel files to be
 included with the Supplemental Material]. In addition, specific genes
 including placental hormones and hormone-related genes, galectins, and
-insulin-like growth factor related genes are shown with FPKM values
+insulin-like growth factor related genes are shown with \ac{FPKM} values
 side to side for all transcriptomes including the reanalysis of mouse
 from \cite{Wang.ea2011:surveyfornovelimprinted} in \DLA{Table 8}.
 Below we describe each transcriptome separately, specifically
 concentrating on highly-expressed genes.
 
+<<top.genes.function,echo=FALSE,results="hide">>=
+top.genes.table <- function(species.name,n=50) {
+    temp <- combined.fpkm[species==species.name &
+                      !grepl("^MT-?",gene_short_name)][order(-mean_fpkm)][!duplicated(gene_short_name)][1:n,list(gene_short_name,human_name,mean_fpkm)]
+    setnames(temp,c("Gene name","Human Name","FPKM"))
+    if (species.name=="homo sapiens") {
+        temp <- temp[,-2,with=FALSE]
+    }
+    return(temp)
+}
+@ 
+
 \subsection{Human Placenta Transcriptome}
 
-The top 50 expressed genes as measured by FPKM in the term placenta of
-the human are shown in Table 2 with a list of all genes in
-Supplemental Table X. The gene with by far the highest FPKM value
+\begin{wraptable}{I}{0.3\textwidth}
+  \tiny
+<<top.50.human.expressed.genes,echo=FALSE,results="asis">>=
+top.human.genes <- top.genes.table(species.name="homo sapiens")
+print(xtable(top.human.genes),
+      booktabs=TRUE,
+      floating=FALSE
+      )
+setkey(top.human.genes,"Gene name")
+@ 
+\caption{Expression in \ac{FPKM} of top 50 non-mitochondrial genes in
+  \textit{Homo sapiens}}
+\label{tab:top50_human_placenta}
+\end{wraptable}
+
+The top 50 expressed genes as measured by \ac{FPKM} in the term placenta of
+the human are shown in \fref{tab:top50_human_placenta} with a list of all genes in
+Supplemental Table X. The gene with by far the highest \ac{FPKM} value
 (101962) in humans is chorionic somatomammotropin hormone 1 (CSH1),
 followed by chorionic somatomammotropin hormone 2 (CSH2), and
 chorionic somatomammotropin hormone-like 1 (CSHL1), all three of which
 are members of a distinct expansion of the growth hormone gene family
 within hominoids. Another member of the growth hormone gene family,
-GH2 (FPKM=729.639), is also expressed to a high degree in the human
+GH2 (\ac{FPKM}=729.639), is also expressed to a high degree in the human
 placenta (Table 2). Ten pregnancy-specific beta-1-glycoprotein genes
 are highly-expressed (FPKM>100) in the term placenta of humans, with
-PSG4 showing the greatest degree of expression (FPKM= 5201.31; Table
+PSG4 showing the greatest degree of expression (\ac{FPKM}= 5201.31; Table
 2). These genes are members of a hominoid-specific expansion of the
 carcinoembryonic antigen (CEA) family and known to be expressed by the
 syncytiotrophoblast (Lei et al., 1992; Rand and Cross, 2008). Genes
 involved in the production of estrogen (CYP19A1) and progesterone
 (HSD3B1) show exceptionally high expression in the human placenta
-(FPKM = 4817.15 and 829.846 respectively), as well as CGA (FPKM=
+(\ac{FPKM} = 4817.15 and 829.846 respectively), as well as CGA (\ac{FPKM}=
 4793.08), which generates the alpha subnit of multiple human chorionic
 gonadotropin hormones (Table 2). The genes producing the beta subunits
 of the chorionic gonadotropins (CGB, CGB1, CGB2, CGB5, CGB7, CGB8) are
@@ -518,27 +577,42 @@ among others (Table 2, Supplemental Table X)
 
 \subsection{Bonobo Placenta Transcriptome}
 
-The top 50 expressed genes as measured by FPKM in the term placenta of
+\begin{wraptable}{O}{0.3\textwidth}
+  \tiny
+<<top.50.bonobo.expressed.genes,echo=FALSE,results="asis">>=
+top.human.genes <- top.genes.table(species.name="pan paniscus")
+print(xtable(top.human.genes),
+      booktabs=TRUE,
+      floating=FALSE
+      )
+setkey(top.human.genes,"Gene name")
+@ 
+\caption{Expression in \ac{FPKM} of top 50 non-mitochondrial genes in
+  \textit{Pan paniscus}}
+\label{tab:top50_bonobo_placenta}
+\end{wraptable}
+
+The top 50 expressed genes as measured by \ac{FPKM} in the term placenta of
 the bonobo are shown in Table 3 with a list of all genes in
 Supplemental Table X. Expression in the bonobo placenta differs
 somewhat from that of the human, as evidenced by the makeup of the top
-50 genes (Table 3). The highest expression (FPKM=10149.1) in bonobo is
+50 genes (Table 3). The highest expression (\ac{FPKM}=10149.1) in bonobo is
 proteoglycan 2, bone marrow (PRG2), which is involved in insulin
 growth factor signaling and angiogenesis during pregnancy (Weyer and
 Glerup, 2011). PRG2 is also expressed at relatively high levels in the
-human placenta (FPKM=250.675; Supplemental Table X), although at
+human placenta (\ac{FPKM}=250.675; Supplemental Table X), although at
 comparatively much lower levels than the bonobo. A bonobo gene closely
 related to the chorionic somatomammotropins (Q95MK7\_PANTR) is also
-expressed at high levels (FPKM=1232.56; Table 3). Two other Pan genes
+expressed at high levels (\ac{FPKM}=1232.56; Table 3). Two other Pan genes
 included within this family (ENSPTRG00000030805 which shows similarity
-to GH2 and ENSPTRG00000034560) show expression levels of FPKM>89. Six
+to GH2 and ENSPTRG00000034560) show expression levels of \ac{FPKM}>89. Six
 pregnancy-specific beta-1-glycoprotein genes were expressed in the
-bonobo placenta with FPKM ranging from 20.885-167.961 (Supplemental
+bonobo placenta with \ac{FPKM} ranging from 20.885-167.961 (Supplemental
 Table X). Placental expression of the genes involved in estrogen and
 progesterone production (CYP19A1, HSD3B1 respectively) show lower
-expression in the bonobo as compared to humans (CYP19A1 FPKM= 48.6877;
-HSD3B1 FPKM= 54.5301; Table 8). In addition, CGA is expressed in the
-bonobo placenta (FPKM=202.629), but at much lower levels than humans
+expression in the bonobo as compared to humans (CYP19A1 \ac{FPKM}= 48.6877;
+HSD3B1 \ac{FPKM}= 54.5301; Table 8). In addition, CGA is expressed in the
+bonobo placenta (\ac{FPKM}=202.629), but at much lower levels than humans
 as well (Table 8). Two Ensembl-annotated beta subunits of the
 chorionic gonadotropin genes are expressed in bonobo, one related to
 CGB and another related to CGB7; both are not highly expressed (Table
@@ -550,27 +624,27 @@ adrenomedullin (ADM).
 
 \subsection{Dog Placenta Transcriptome}
 
-The top 50 expressed genes as measured by FPKM in the term placenta of
+The top 50 expressed genes as measured by \ac{FPKM} in the term placenta of
 the dog are shown in Table 4 with a list of all genes in Supplemental
-Table X. The gene with the highest expression (FPKM=48399.9) in the
+Table X. The gene with the highest expression (\ac{FPKM}=48399.9) in the
 dog placenta is the hormone relaxin (RLN1). Other highly expressed
 genes among the top 50 (Table 4) include genes involved in the
 cytoskeleton (TMSB10, TMSB4X), anticoagulation (TFPI2, PLA2G7), innate
 immunity (LCN2, GM2A), lipid metabolism (APOE), inhibition of matrix
 metalloproteinases (TIMP2, TIMP3), and growth (PGF, EGFR, HTRA1). The
 gene LGALS1, which shows evidence of immunosupression during pregnancy
-(Than et al., 2008), shows high expression in dog (FPKM= 1405.02). In
+(Than et al., 2008), shows high expression in dog (\ac{FPKM}= 1405.02). In
 addition, the gene SSLP1, a gene expressed in the placentas of cow and
 sheep but not present in primates (Ushizawa et al., 2009), is also
-expressed at high levels (FPKM= 1853.98). There is no placental
+expressed at high levels (\ac{FPKM}= 1853.98). There is no placental
 expression of the estrogen synthase gene (CYP19A1) in dogs, however
-expression of HSD3B1 is relatively high (FPKM=157.622).
+expression of HSD3B1 is relatively high (\ac{FPKM}=157.622).
 
 \subsection{Cow Placenta Transcriptome}
 
-The top 50 expressed genes as measured by FPKM in the term placenta of
+The top 50 expressed genes as measured by \ac{FPKM} in the term placenta of
 the dog are shown in Table 5 with a list of all genes in Supplemental
-Table X. The gene with the highest expression (FPKM=12488.8) was the
+Table X. The gene with the highest expression (\ac{FPKM}=12488.8) was the
 miRNA gene bta-mir-2887-1. This gene occurs in several copies in the
 cow genome, and it was unclear as to how many or to which of 12
 bta-mir-2887 genes this mapped (Supplemental Table X). A previous
@@ -578,10 +652,10 @@ study indicated that this miRNA gene was expressed in the bovine ovary
 (Hossain et al., 2009). Several members of the ruminant-specific
 pregnancy-associated glycoprotein family show especially high
 expression in the cow placenta (Table 4, Supplemental Table X)
-including PAG2 (FPKM=7255.34), PAG10 (2076.42), BT.83780 (1793.72),
+including PAG2 (\ac{FPKM}=7255.34), PAG10 (2076.42), BT.83780 (1793.72),
 PAG11 (962.19), PAG12 (469.751), BT.88769 (408.584), PAG1 (301.61),
 PAG4 (186.496), PAG6 (157.348), PAG8 (153.225), and PAG16 (103.573).
-In addition, 14 other PAGs were expressed with FPKM<40 (Supplemental
+In addition, 14 other PAGs were expressed with \ac{FPKM}<40 (Supplemental
 Table X). Other genes with high expression include genes involved with
 regulation of growth (IGF2, PHLDA2), imprinted genes (GNAS, DLK1,
 PHLDA2), and CSH1, a gene that is a member of a ruminant specific
@@ -589,25 +663,25 @@ expansion of placental prolactins and not directly related to the gene
 of the same name in hominids. Other ruminant-specific placental
 prolactins also show high expression in the cow placenta including
 PRP1 (632.766), PRP5 (396.832), PRP6 (345.296), PRP2 (195.771), in
-addition to 7 other placental prolactins with expression of FPKM<51
+addition to 7 other placental prolactins with expression of \ac{FPKM}<51
 (Table 5; Supplemental Table X). SSLP1 (also called SOLD1), a gene
 expressed in the cotyledonary villi of the ruminiant placenta and
 involved in cell proliferation (Ushizawa et al., 2009, 2010), also
-shows evidence of high expression (FPKM=1001.45). There is some
+shows evidence of high expression (\ac{FPKM}=1001.45). There is some
 placental expression of the estrogen synthase gene (CYP19A1) in cows
-(75.1346), and comparatively greater expression of HSD3B1 (FPKM=
+(75.1346), and comparatively greater expression of HSD3B1 (\ac{FPKM}=
 157.622).
 
 \subsection{Elephant Placenta Transcriptome}
 
-The top 50 expressed genes as measured by FPKM in the term placenta of
+The top 50 expressed genes as measured by \ac{FPKM} in the term placenta of
 the elephant are shown in Table 6 with a list of all genes in
 Supplemental Table X. The gene with the highest expression
-(FPKM=33439.5) was the natriuretic peptide precursor B (NPPB). The
-gene with the second highest expression (FPKM=20233) was the microRNA
+(\ac{FPKM}=33439.5) was the natriuretic peptide precursor B (NPPB). The
+gene with the second highest expression (\ac{FPKM}=20233) was the microRNA
 miR-675, which is imbedded in the first exon of the maternally
 imprinted long non-coding RNA gene H19 (Keniry et al., 2012), a gene
-also highly expressed in the elephant placenta (FPKM=7164.3). Five
+also highly expressed in the elephant placenta (\ac{FPKM}=7164.3). Five
 uncharacterized genes are expressed to a high degree in the elephant
 placenta (Table 6), three of which are a member of an
 elephant-specific expansion of 11 genes closely related to the
@@ -619,7 +693,7 @@ novel genes with high expression are related to the gene SSLP1 (Table
 (PRL) are exceptionally high in the elephant when compared to other
 mammals (Tables 6 and 8). There is little to no placental expression
 of the estrogen synthase gene, CYP19A1, (FPKM<1) and the enzyme that
-produces progesterone HSD3B1 (FPKM=0). Other genes with high
+produces progesterone HSD3B1 (\ac{FPKM}=0). Other genes with high
 expression in the elephant placenta include genes involved in
 oxidative stress (TXN), growth (IGF2), and PAEP, a gene usually
 expressed in the endometrium of the uterus in humans (Rutanen et al.,
@@ -627,31 +701,31 @@ expressed in the endometrium of the uterus in humans (Rutanen et al.,
 
 \subsection{Opossum Placenta Transcriptome}
 
-The top 50 expressed genes as measured by FPKM in the term placenta of
+The top 50 expressed genes as measured by \ac{FPKM} in the term placenta of
 the opossum are shown in Table 7 with a list of all genes in
 Supplemental Table X. The gene with the highest expression
-(FPKM=41740.6) was hemoglobin, epsilon (HBE), which is expressed at
+(\ac{FPKM}=41740.6) was hemoglobin, epsilon (HBE), which is expressed at
 the embryonic stage of development in marsupials, as in other mammals
 (Holland and Gooley, 1997). HBE subunits link up with protein products
 of two hemoglobin, zeta (HBZ) genes, which are also expressed to a
-high degree in the opossum placenta (FPKM=2452.19 and FPKM=1139.25).
-In addition, there is high expression (FPKM=5827.37) of the gene
+high degree in the opossum placenta (\ac{FPKM}=2452.19 and \ac{FPKM}=1139.25).
+In addition, there is high expression (\ac{FPKM}=5827.37) of the gene
 hemoglobin, omega (HBO), a hemoglobin found only in marsupials and
 monotremes (Opazo et al., 2008). The hemoglobin gene HBA is also
-expressed in the placenta (FPKM=456.978). The gene with the second
-highest expression (FPKM=22854.8) is superoxide dismutase 3,
+expressed in the placenta (\ac{FPKM}=456.978). The gene with the second
+highest expression (\ac{FPKM}=22854.8) is superoxide dismutase 3,
 extracellular (SOD3), which functions as an antioxidant. Four cystatin
 genes (CSTB, CST3, two CSTA-like genes) are expressed to a high
 degree, along with two cathepsin-L related genes (Table 7), which are
 known to interact with cystatins (Turk et al., 2001). The
 uncharacterized gene XM\_001364916.1 also shows high expression in the
-opossum placenta (FPKM=13572.8). The gene WFDC2, a member of the whey
+opossum placenta (\ac{FPKM}=13572.8). The gene WFDC2, a member of the whey
 acidic protein (WAP) family is also expressed to a high degree in the
 opossum placenta. Other genes with high expression include genes
 involved in retinol binding (RBP4), growth (IGFBP3), lipid metabolism
 (APOA1, APOA2), and immunosupression (LGALS1). In addition, there was
 little production of CYP19A1 and HSD3B1 (FPKM<2), and moderate
-expression of relaxin RLN1 (FPKM= 41.3949).
+expression of relaxin RLN1 (\ac{FPKM}= 41.3949).
 
 \subsection{DAVID Analyses of Individual Transcriptomes}
 
@@ -659,11 +733,11 @@ In order to identify major functional categories of genes expressed in
 the individual transcriptomes, we undertook functional annotation
 clustering analyses using DAVID (see Methods). Concentrating on genes
 with relatively high expression values, we conducted DAVID analyses
-using a list of genes with FPKM values included within the top 5\%
+using a list of genes with \ac{FPKM} values included within the top 5\%
 distribution of expressed genes. Functional annotation clusters from
 all six placenta transcriptomes show enrichment in similar clusters of
 genes (Supplemental Table X). Significant enrichment in genes (ES>1.3,
-p>0.05) in the top 5\% of FPKM values in at least five transcriptomes
+p>0.05) in the top 5\% of \ac{FPKM} values in at least five transcriptomes
 included clusters such as ribosome, vesicle, cytoskeleton,
 glycoprotein, lysosome, annexins, hormone stimulus or response,
 growth, calcium binding, cell migration, basement membrane,
@@ -998,14 +1072,14 @@ with Simpson-Golabi-Behmel fetal overgrowth syndrome, and involved in
 intrauterine growth restriction (Monk and Moore, 2004; Pilia et al.,
 1996). GPC3 has the highest expression in humans (Table 2), but is
 also expressed in other mammals to a lesser degree, especially those
-with invasive hemochorial placentas like bonobos (FPKM= 199.924),
-spider monkeys (FPKM= 96.24), and the mouse (FPKM= 80.7545)
+with invasive hemochorial placentas like bonobos (\ac{FPKM}= 199.924),
+spider monkeys (\ac{FPKM}= 96.24), and the mouse (\ac{FPKM}= 80.7545)
 (Supplemental Tables X-XX). ADAM12 increases the availability of
 insulin-like growth factors that lead to the promotion of cell growth
 and placental invasion (Laigaard et al., 2005). (Hou et al., 2009)
 found evidence of adaptive evolution in ADAM12 on the primate lineage,
-and like GPC3 it is expressed in the bonobo (FPKM= 46.1553), spider
-monkey (FPKM=30.41) and mouse (FPKM=2.25391) as well, although to a
+and like GPC3 it is expressed in the bonobo (\ac{FPKM}= 46.1553), spider
+monkey (\ac{FPKM}=30.41) and mouse (\ac{FPKM}=2.25391) as well, although to a
 lesser degree (Supplemental Tables X-XX). RHOBTB3 is imprinted and
 associated with trophoblast invasion as well (Bilban et al., 2010;
 Yuen et al., 2011). In addition, one other gene, KISS1, shows
@@ -1013,7 +1087,7 @@ exceptional abundance in the human placenta (Table 2); however due to
 its absence in elephant Ensmebl gene annotations, it was not part of
 the 1:1 orthologues examined in the comparative study. Here, it is
 only expressed in the term placentas of humans (Table 2) and bonobos
-(FPKM=17.6394; Supplemental Table X). KISS1 is thought to be involved
+(\ac{FPKM}=17.6394; Supplemental Table X). KISS1 is thought to be involved
 in the regulation of trophoblast invasion, and shows highest
 expression in the first trimester of pregnancy (Bilban et al., 2004;
 Reynolds et al., 2009).

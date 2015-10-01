@@ -99,6 +99,7 @@ $(STAR_INDEX_DIR)/SA: $(GENOME_FASTQ)
 		--runThreadN $(CORES) \
 		--genomeDir $(STAR_INDEX_DIR)
 
+STAR_OPTIONS?=
 $(SPECIES)_placenta_star.bam: $(FASTQ_FILES) $(STAR_INDEX_DIR)/SA
 	$(MODULE) load STAR/2.4.2a; \
 	mkdir -p $(SPECIES)_star; \
@@ -107,6 +108,7 @@ $(SPECIES)_placenta_star.bam: $(FASTQ_FILES) $(STAR_INDEX_DIR)/SA
 		--runThreadN $(CORES) \
         --outSAMstrandField intronMotif \
 		--genomeDir $(STAR_INDEX_DIR) \
+		$(STAR_OPTIONS) \
 		--readFilesCommand "gzip -dc" \
 		--readFilesIn $(shell echo $(FASTQ_FILES)|sed 's/  */,/g');
 	ln $(SPECIES)_star/Aligned.sortedByCoord.out.bam $@ -s

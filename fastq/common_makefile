@@ -144,7 +144,7 @@ trim: $(TRIMMED_FASTQ_FILES)
 
 # This is the directory where the trimmomatic adapters are kept
 ifdef MODULEPATH
-TRIMMOMATIC_FASTA_PATH?=/home/apps/trimmomatic/trimmomatic-0.33
+TRIMMOMATIC_FASTA_PATH?=/home/apps/trimmomatic/trimmomatic-0.33/adapters
 TRIMMOMATIC_PE=java org.usadellab.trimmomatic.TrimmomaticPE
 TRIMMOMATIC_SE=java org.usadellab.trimmomatic.TrimmomaticSE
 else

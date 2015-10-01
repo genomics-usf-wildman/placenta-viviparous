@@ -158,7 +158,7 @@ endif
 TRIMMOMATIC_OPTIONS?=ILLUMINACLIP:$(TRIMMOMATIC_FASTA_PATH)/TruSeq2-SE.fa:2:20:10
 
 $(TRIMMED_FASTQ_FILES): $(FASTQ_FILES)
-	$(MODULE) load trimmomatic/0.3.2; \
+	$(MODULE) load trimmomatic/0.33; \
 	$(if $(filter 2,$(words $(TRIMMED_FASTQ_FILES))), \
 		$(TRIMMOMATIC_PE) \
 			$(FASTQ_FILES) $(wordlist 1,1,$(TRIMMED_FASTQ_FILES)) /dev/null \

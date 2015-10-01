@@ -31,7 +31,7 @@ make_srr_dirs:
 	for a in $(SRRS); do \
 		mkdir -p $$a; \
 		(cd $$a; \
-			ln ../srr_makefile Makefile -sf; \
+			ln ../../srr_makefile Makefile -sf; \
 			echo "SRR=$$a" > srr_num.mk; \
 			echo "STAR_OPTIONS=--outFilterMatchNminOverLread 0.5 --outFilterMatchNminOverLread 0.5" >> srr_num.mk; \
 		); \

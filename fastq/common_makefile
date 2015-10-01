@@ -30,7 +30,9 @@ PROTEIN_ALIGNMENT_FASTA?=$(patsubst %.dna.toplevel.fa,%.pep.all.fa,$(FASTA))
 REMOTE_FILES:=$(REMOTE_FILES) $(PROTEIN_ALIGNMENT_FASTA)
 endif
 
-FASTQC_ANALYSIS_FILES=$(patsubst %.fastq.gz,%_fastqc.html,$(FASTQ_FILES))
+
+TRIMMED_FASTQ_FILES=$(patsubst %.fastq.gz,%_trimmed.fastq.gz,$(FASTQ_FILES))
+FASTQC_ANALYSIS_FILES=$(patsubst %.fastq.gz,%_fastqc.html,$(TRIMMED_FASTQ_FILES))
 
 # we need to use a comma in a rule below, so this handles that
 # escaping.
@@ -100,7 +102,7 @@ $(STAR_INDEX_DIR)/SA: $(GENOME_FASTQ)
 		--genomeDir $(STAR_INDEX_DIR)
 
 STAR_OPTIONS?=
-$(SPECIES)_placenta_star.bam: $(FASTQ_FILES) $(STAR_INDEX_DIR)/SA
+$(SPECIES)_placenta_star.bam: $(TRIMMED_FASTQ_FILES) $(STAR_INDEX_DIR)/SA
 	$(MODULE) load STAR/2.4.2a; \
 	mkdir -p $(SPECIES)_star; \
 	STAR --outFileNamePrefix $(SPECIES)_star/ \
@@ -110,55 +112,83 @@ $(SPECIES)_placenta_star.bam: $(FASTQ_FILES) $(STAR_INDEX_DIR)/SA
 		--genomeDir $(STAR_INDEX_DIR) \
 		$(STAR_OPTIONS) \
 		--readFilesCommand "gzip -dc" \
-		--readFilesIn $(shell echo $(FASTQ_FILES)|sed 's/  */,/g');
+		--readFilesIn $(shell echo $(TRIMMED_FASTQ_FILES)|sed 's/  */,/g');
 	ln $(SPECIES)_star/Aligned.sortedByCoord.out.bam $@ -s
 
 $(SPECIES)_placenta.bam:  \
 	$(BOWTIE_INDEX_DIR)$(ALIGNMENT_SPECIES)_bt2.1.bt2 \
-	$(FASTQ_FILES)
+	$(TRIMMED_FASTQ_FILES)
 	$(MODULE) load bowtie2/2.1.0; \
 	$(MODULE) load samtools/1.0; \
 	bowtie2 -p $(CORES) -x $(patsubst %.1.bt2,%,$(wordlist 1,1,$^)) \
-		$(if $(filter 2,$(words $(FASTQ_FILES))), \
-			-1 $(wordlist 1,1,$(FASTQ_FILES)) -2 $(wordlist 2,2,$(FASTQ_FILES)),\
-			-U $(FASTQ_FILES)) | \
+		$(if $(filter 2,$(words $(TRIMMED_FASTQ_FILES))), \
+			-1 $(wordlist 1,1,$(TRIMMED_FASTQ_FILES)) -2 $(wordlist 2,2,$(TRIMMED_FASTQ_FILES)),\
+			-U $(TRIMMED_FASTQ_FILES)) | \
 		samtools view -b -o $@ -;
 
 $(SPECIES)_tophat_placenta.bam: \
 	$(BOWTIE_INDEX_DIR)$(ALIGNMENT_SPECIES)_bt2.1.bt2 \
-	$(FASTQ_FILES) $(GTF) $(BOWTIE_INDEX_DIR)$(ALIGNMENT_SPECIES)_bt2.fa
+	$(TRIMMED_FASTQ_FILES) $(GTF) $(BOWTIE_INDEX_DIR)$(ALIGNMENT_SPECIES)_bt2.fa
 	$(MODULE) load tophat2/2.0.10; \
 	tophat -G $(GTF) -p $(CORES) \
 		--transcriptome-index $(BOWTIE_INDEX_DIR)$(ALIGNMENT_SPECIES)_tophat_indexes \
 		-o $(SPECIES)_tophat_placenta \
 		$(patsubst %.1.bt2,%,$(wordlist 1,1,$^)) \
-		$(FASTQ_FILES);
+		$(TRIMMED_FASTQ_FILES);
 	ln $(SPECIES)_tophat_placenta/accepted_hits.bam $@ -s
 
 local_alignment: $(SPECIES)_placenta_local.bam
 
+trim: $(TRIMMED_FASTQ_FILES)
+
+
+# This is the directory where the trimmomatic adapters are kept
+ifdef MODULEPATH
+TRIMMOMATIC_FASTA_PATH?=/home/apps/trimmomatic/trimmomatic-0.33
+TRIMMOMATIC_PE=java org.usadellab.trimmomatic.TrimmomaticPE
+TRIMMOMATIC_SE=java org.usadellab.trimmomatic.TrimmomaticSE
+else
+TRIMMOMATIC_PE=TrimmomaticPE
+TRIMMOMATIC_SE=TrimmomaticSE
+TRIMMOMATIC_FASTA_PATH?=/usr/share/trimmomatic
+endif
+
+## this is the right set of adapters for the mouse sequences which
+## have tons of adapter dimers and relatively bad short reads
+TRIMMOMATIC_OPTIONS?=ILLUMINACLIP:$(TRIMMOMATIC_FASTA_PATH)/TruSeq2-SE.fa:2:20:10
+
+$(TRIMMED_FASTQ_FILES): $(FASTQ_FILES)
+	$(MODULE) load trimmomatic/0.3.2; \
+	$(if $(filter 2,$(words $(TRIMMED_FASTQ_FILES))), \
+		$(TRIMMOMATIC_PE) \
+			$(FASTQ_FILES) $(wordlist 1,1,$(TRIMMED_FASTQ_FILES)) /dev/null \
+			$(wordlist 2,2,$(TRIMMED_FASTQ_FILES)) /dev/null, \
+		$(TRIMMOMATIC_SE) \
+			$(FASTQ_FILES) $(TRIMMED_FASTQ_FILES) \
+			$(TRIMMOMATIC_OPTIONS);)
+
 $(SPECIES)_placenta_local.bam: \
 	$(BOWTIE_INDEX_DIR)$(ALIGNMENT_SPECIES)_bt2.1.bt2 \
-	$(FASTQ_FILES)
+	$(TRIMMED_FASTQ_FILES)
 	$(MODULE) load bowtie2/2.1.0; \
 	$(MODULE) load samtools/1.0; \
 	bowtie2 -p $(CORES) $(LOCAL_BOWTIE_OPTIONS) \
 		-x $(patsubst %.1.bt2,%,$(wordlist 1,1,$^)) \
-		$(if $(filter 2,$(words $(FASTQ_FILES))), \
-			-1 $(wordlist 1,1,$(FASTQ_FILES)) -2 $(wordlist 2,2,$(FASTQ_FILES)),\
-			-U $(FASTQ_FILES)) | \
+		$(if $(filter 2,$(words $(TRIMMED_FASTQ_FILES))), \
+			-1 $(wordlist 1,1,$(TRIMMED_FASTQ_FILES)) -2 $(wordlist 2,2,$(TRIMMED_FASTQ_FILES)),\
+			-U $(TRIMMED_FASTQ_FILES)) | \
 		samtools view -b -o $@ -;
 
 ifdef USE_TRINITY
 trinity: $(SPECIES)_trinity.Trinity.fasta
 
-$(SPECIES)_trinity.Trinity.fasta: $(FASTQ_FILES)
+$(SPECIES)_trinity.Trinity.fasta: $(TRIMMED_FASTQ_FILES)
 	$(MODULE) load samtools/0.1.19; \
 	$(MODULE) load trinityrnaseq/r2014-07-17; \
 	Trinity --seqType fq \
-	$(if $(filter 2,$(words $(FASTQ_FILES))), \
-		--left $(wordlist 1,1,$(FASTQ_FILES)) --right $(wordlist 2,2,$(FASTQ_FILES)),\
-		--single $(FASTQ_FILES)) \
+	$(if $(filter 2,$(words $(TRIMMED_FASTQ_FILES))), \
+		--left $(wordlist 1,1,$(TRIMMED_FASTQ_FILES)) --right $(wordlist 2,2,$(TRIMMED_FASTQ_FILES)),\
+		--single $(TRIMMED_FASTQ_FILES)) \
 		--CPU $(CORES) --trimmomatic --output $(SPECIES)_trinity --JM 10G;
 	mv $(SPECIES)_trinity/Trinity.fasta $@
 
@@ -176,9 +206,9 @@ $(SPECIES)_trinity_align_rsem_isoforms.txt: $(SPECIES)_trinity.Trinity.fasta
 	$(MODULE) load trinityrnaseq/r2014-07-17; \
 	$(TRINITY_PATH)/util/align_and_estimate_abundance.pl \
 	--transcripts $(SPECIES)_trinity.Trinity.fasta \
-	$(if $(filter 2,$(words $(FASTQ_FILES))), \
-		--left $(wordlist 1,1,$(FASTQ_FILES)) --right $(wordlist 2,2,$(FASTQ_FILES)),\
-		--single $(FASTQ_FILES)) \
+	$(if $(filter 2,$(words $(TRIMMED_FASTQ_FILES))), \
+		--left $(wordlist 1,1,$(TRIMMED_FASTQ_FILES)) --right $(wordlist 2,2,$(TRIMMED_FASTQ_FILES)),\
+		--single $(TRIMMED_FASTQ_FILES)) \
 		--seqType fq \
 		--est_method RSEM \
 		--aln_method bowtie \

@@ -129,7 +129,7 @@ for (file in star.log.files) {
     star.log <- read.table(file,sep="|",fill=TRUE,stringsAsFactors=FALSE)
     colnames(star.log) <- c("field","value")
     star.log$value <- gsub("\\t","",star.log$value)
-    star.log$field <- gsub("^\\s+","",star.log$field)
+    star.log$field <- gsub("(^\\s+|\\s+$)","",star.log$field)
     star.logs[[file]] <- data.table(star.log)[!grepl(":",field),]
     star.logs[[file]][,species := gsub("_"," ",
                                    gsub("_log_star.txt","",

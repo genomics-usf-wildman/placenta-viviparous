@@ -77,6 +77,7 @@
 \widowpenalty = 10000
 % make the afill smaller
 \renewcommand\Affilfont{\itshape\small}
+\renewcommand\cite[1]{\autocite{#1}}
 \pagestyle{fancy}
 
 \begin{document}
@@ -111,7 +112,7 @@
 \acrodef{ROC}{Receiver Operating Characteristic}
 \acrodef{KNN}{K Nearest Neighbors}
 \acrodef{SRA}{Sequence Read Archive}
-\acrodef{FPKM}{Fragments Per Kilobase of exon per Million reads \cite{Trapnell.ea2010:Transcriptassemblyandquantification}}
+\acrodef{FPKM}{Fragments Per Kilobase of exon per Million reads}
 
 % \twocolumn
 \maketitle
@@ -322,7 +323,7 @@ For comparison, additional sequences of placenta in \textit{Mus
 \cite{Hughes.ea2015:Evaluatingintra-andinter-individual} were obtained
 from the \ac{SRA}.
 
-\subsection{Transcriptome Assembly and Mapping}
+\subsection{Transcriptome Assembly, Alignment, and Quantification}
 
 The quality of reads was evaluated using FASTQC v0.11.2
 (\url{http://www.bioinformatics.babraham.ac.uk/projects/fastqc/}).
@@ -337,7 +338,9 @@ the \textit{Homo sapiens} or \textit{Mus musculus} transcriptome
 All transcriptomes were then aligned to the appropriate reference
 genome using STAR v2.4.2a
 \cite{Dobin.ea2013:STARultrafastuniversalRNA-seq} and expression
-values in \ac{FPKM} were quantified using Cufflinks v2.2.1
+values in \ac{FPKM}
+\cite{Trapnell.ea2010:Transcriptassemblyandquantification} were
+quantified using Cufflinks v2.2.1
 \cite{Trapnell.ea2009:TopHatdiscoveringsplicejunctions}.
 %
 The genome of the closely-related \textit{Pan troglodytes} was used as
@@ -474,6 +477,23 @@ not step on Natalie’s toes]
 
 \subsection{Transcriptome Statistics}
 
+\begin{figure}
+<<transcriptome.mapping.figure,fig.width=8,fig.height=8,echo=FALSE>>=
+print(ggplot(star.logs[grepl("%",field),],
+             aes(x=species,y=as.numeric(gsub("%","",value)),
+                 color=field))
+      + geom_boxplot()
+      + facet_grid(field~.,scales="free")
+      + ylab("Percent of Reads")
+      + theme(legend.position="top",
+              axis.text.x = element_text(angle = 30, hjust = 1, vjust=1))
+      )
+@ 
+\caption{Transcript statistics for each species}
+\label{fig:transcriptome_statistics}
+\end{figure}
+
+
 <<transcriptome.statistics>>=
 @ 
 
@@ -520,7 +540,9 @@ concentrating on highly-expressed genes.
 <<top.genes.function,echo=FALSE,results="hide">>=
 top.genes.table <- function(species.name,n=50) {
     temp <- combined.fpkm[species==species.name &
-                      !grepl("^MT-?",gene_short_name)][order(-mean_fpkm)][!duplicated(gene_short_name)][1:n,list(gene_short_name,human_name,mean_fpkm)]
+                      !grepl("^MT-?",gene_short_name) & 
+                          !grepl("(RNA\\d|MT)-",human_name)
+                          ][order(-mean_fpkm)][!duplicated(gene_short_name)][1:n,list(gene_short_name,human_name,mean_fpkm)]
     setnames(temp,c("Gene name","Human Name","FPKM"))
     if (species.name=="homo sapiens") {
         temp <- temp[,-2,with=FALSE]
@@ -531,7 +553,7 @@ top.genes.table <- function(species.name,n=50) {
 
 \subsection{Human Placenta Transcriptome}
 
-\begin{wraptable}{I}{0.3\textwidth}
+\begin{wraptable}{R}{0.3\textwidth}
   \tiny
 <<top.50.human.expressed.genes,echo=FALSE,results="asis">>=
 top.human.genes <- top.genes.table(species.name="homo sapiens")
@@ -577,15 +599,15 @@ among others (Table 2, Supplemental Table X)
 
 \subsection{Bonobo Placenta Transcriptome}
 
-\begin{wraptable}{O}{0.3\textwidth}
+\begin{wraptable}{L}{0.3\textwidth}
   \tiny
 <<top.50.bonobo.expressed.genes,echo=FALSE,results="asis">>=
-top.human.genes <- top.genes.table(species.name="pan paniscus")
-print(xtable(top.human.genes),
+top.bonobo.genes <- top.genes.table(species.name="pan paniscus")
+print(xtable(top.bonobo.genes),
       booktabs=TRUE,
       floating=FALSE
       )
-setkey(top.human.genes,"Gene name")
+setkey(top.bonobo.genes,"Gene name")
 @ 
 \caption{Expression in \ac{FPKM} of top 50 non-mitochondrial genes in
   \textit{Pan paniscus}}
@@ -624,6 +646,22 @@ adrenomedullin (ADM).
 
 \subsection{Dog Placenta Transcriptome}
 
+\begin{wraptable}{R}{0.3\textwidth}
+  \tiny
+<<top.50.dog.expressed.genes,echo=FALSE,results="asis">>=
+top.dog.genes <- top.genes.table(species.name="canis familiaris")
+print(xtable(top.dog.genes),
+      booktabs=TRUE,
+      floating=FALSE
+      )
+setkey(top.dog.genes,"Gene name")
+@ 
+\caption{Expression in \ac{FPKM} of top 50 non-mitochondrial genes in
+  \textit{Canis familiaris}}
+\label{tab:top50_dog_placenta}
+\end{wraptable}
+
+
 The top 50 expressed genes as measured by \ac{FPKM} in the term placenta of
 the dog are shown in Table 4 with a list of all genes in Supplemental
 Table X. The gene with the highest expression (\ac{FPKM}=48399.9) in the
@@ -641,6 +679,21 @@ expression of the estrogen synthase gene (CYP19A1) in dogs, however
 expression of HSD3B1 is relatively high (\ac{FPKM}=157.622).
 
 \subsection{Cow Placenta Transcriptome}
+
+\begin{wraptable}{L}{0.3\textwidth}
+  \tiny
+<<top.50.cow.expressed.genes,echo=FALSE,results="asis">>=
+top.cow.genes <- top.genes.table(species.name="bos taurus")
+print(xtable(top.cow.genes),
+      booktabs=TRUE,
+      floating=FALSE
+      )
+setkey(top.cow.genes,"Gene name")
+@ 
+\caption{Expression in \ac{FPKM} of top 50 non-mitochondrial genes in
+  \textit{Bos taurus}}
+\label{tab:top50_cow_placenta}
+\end{wraptable}
 
 The top 50 expressed genes as measured by \ac{FPKM} in the term placenta of
 the dog are shown in Table 5 with a list of all genes in Supplemental

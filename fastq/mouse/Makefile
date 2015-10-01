@@ -33,7 +33,7 @@ make_srr_dirs:
 		(cd $$a; \
 			ln ../../srr_makefile Makefile -sf; \
 			echo "SRR=$$a" > srr_num.mk; \
-			echo "STAR_OPTIONS=--outFilterMatchNminOverLread 0.5 --outFilterScoreMinOverLread 0.5" >> srr_num.mk; \
+			echo "STAR_OPTIONS=--outReadsUnmapped Fastx --outFilterMatchNminOverLread 0.5 --outFilterScoreMinOverLread 0.5" >> srr_num.mk; \
 		); \
 	done;
 

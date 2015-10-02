@@ -8,11 +8,15 @@ GENE_FPKM_FILES=$(wildcard *_genes.fpkm_tracking)
 ISOFORM_FPKM_FILES=$(wildcard *_isoforms.fpkm_tracking)
 STAR_LOG_FILES=$(wildcard *_log_star.txt)
 
+## this mouse sample has nearly zero alignable reads and is terrible;
+## do not use it at all
+BAD_SAMPLES=mus_musculus
+
+BAD_ISOFORMS=$(patsubst %,%_isoforms.fpkm_tracking,$(BAD_SAMPLES))
+BAD_GENES=$(patsubst %,%_genes.fpkm_tracking,$(BAD_SAMPLES))
+BAD_LOGS=$(patsubst %,%_log_star.txt,$(BAD_SAMPLES))
+
 SPECIES_WITH_TRINITY_ALIGNMENTS=nannospalax_galili spalax_carmeli ateles_fusciceps
-# 
-# BAD_ISOFORMS=$(patsubst %,%_isoforms.fpkm_tracking,$(SPECIES_WITH_TRINITY_ALIGNMENTS))
-# BAD_GENES=$(patsubst %,%_genes.fpkm_tracking,$(SPECIES_WITH_TRINITY_ALIGNMENTS))
-# TRINITY_RSEM_FILES=$(patsubst %,%_trinity_align_rsem_isoforms.txt,$(SPECIES_WITH_TRINITY_ALIGNMENTS))
 TRINITY_DIAMOND_FILES=$(patsubst %,%_trinity_diamond.txt,$(SPECIES_WITH_TRINITY_ALIGNMENTS))
 
 
@@ -40,4 +44,4 @@ link_stuff:
 		\) \
 		-not -path '*local*' \
 		-print0|xargs -0 ./link_file;
-#	rm -f $(BAD_ISOFORMS) $(BAD_GENES)
+	rm -f $(BAD_ISOFORMS) $(BAD_LOGS) $(BAD_GENES)

@@ -92,5 +92,5 @@ gene.fpkms[is.na(human_name),
 ### data.table code
 combined.fpkm <- data.table(data.frame(gene.fpkms))
 
-save(file=output.file,combined.fpkm)
+save(file=output.file,combined.fpkm,star.logs)
 

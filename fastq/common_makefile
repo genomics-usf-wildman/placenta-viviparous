@@ -156,14 +156,19 @@ endif
 ## this is the right set of adapters for the mouse sequences which
 ## have tons of adapter dimers and relatively bad short reads
 TRIMMOMATIC_OPTIONS?=ILLUMINACLIP:$(TRIMMOMATIC_FASTA_PATH)/TruSeq2-SE.fa:2:20:10
+TRIMMOMATIC_QUALITY?=
 
 $(TRIMMED_FASTQ_FILES): $(FASTQ_FILES)
 	$(MODULE) load trimmomatic/0.33; \
 	$(if $(filter 2,$(words $(TRIMMED_FASTQ_FILES))), \
 		$(TRIMMOMATIC_PE) \
+			-threads $(CORES) \
+			$(TRIMMOMATIC_QUALITY) \
 			$(FASTQ_FILES) $(wordlist 1,1,$(TRIMMED_FASTQ_FILES)) /dev/null \
 			$(wordlist 2,2,$(TRIMMED_FASTQ_FILES)) /dev/null, \
 		$(TRIMMOMATIC_SE) \
+			-threads $(CORES) \
+			$(TRIMMOMATIC_QUALITY) \
 			$(FASTQ_FILES) $(TRIMMED_FASTQ_FILES)) \
 			$(TRIMMOMATIC_OPTIONS);
 

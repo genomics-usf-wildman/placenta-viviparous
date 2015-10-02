@@ -187,13 +187,13 @@ $(SPECIES)_placenta_local.bam: \
 ifdef USE_TRINITY
 trinity: $(SPECIES)_trinity.Trinity.fasta
 
-$(SPECIES)_trinity.Trinity.fasta: $(TRIMMED_FASTQ_FILES)
+$(SPECIES)_trinity.Trinity.fasta: $(FASTQ_FILES)
 	$(MODULE) load samtools/0.1.19; \
 	$(MODULE) load trinityrnaseq/r2014-07-17; \
 	Trinity --seqType fq \
-	$(if $(filter 2,$(words $(TRIMMED_FASTQ_FILES))), \
-		--left $(wordlist 1,1,$(TRIMMED_FASTQ_FILES)) --right $(wordlist 2,2,$(TRIMMED_FASTQ_FILES)),\
-		--single $(TRIMMED_FASTQ_FILES)) \
+	$(if $(filter 2,$(words $(FASTQ_FILES))), \
+		--left $(wordlist 1,1,$(FASTQ_FILES)) --right $(wordlist 2,2,$(FASTQ_FILES)),\
+		--single $(FASTQ_FILES)) \
 		--CPU $(CORES) --trimmomatic --output $(SPECIES)_trinity --JM 10G;
 	mv $(SPECIES)_trinity/Trinity.fasta $@
 

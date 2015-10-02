@@ -113,7 +113,7 @@ $(SPECIES)_placenta_star.bam: $(TRIMMED_FASTQ_FILES) $(STAR_INDEX_DIR)/SA
 		$(STAR_OPTIONS) \
 		--readFilesCommand "gzip -dc" \
 		--readFilesIn $(shell echo $(TRIMMED_FASTQ_FILES)|sed 's/  */,/g');
-	ln $(SPECIES)_star/Aligned.sortedByCoord.out.bam $@ -s
+	ln $(SPECIES)_star/Aligned.sortedByCoord.out.bam $@ -sf
 
 $(SPECIES)_placenta.bam:  \
 	$(BOWTIE_INDEX_DIR)$(ALIGNMENT_SPECIES)_bt2.1.bt2 \
@@ -135,7 +135,7 @@ $(SPECIES)_tophat_placenta.bam: \
 		-o $(SPECIES)_tophat_placenta \
 		$(patsubst %.1.bt2,%,$(wordlist 1,1,$^)) \
 		$(TRIMMED_FASTQ_FILES);
-	ln $(SPECIES)_tophat_placenta/accepted_hits.bam $@ -s
+	ln $(SPECIES)_tophat_placenta/accepted_hits.bam $@ -sf
 
 local_alignment: $(SPECIES)_placenta_local.bam
 

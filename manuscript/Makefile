@@ -16,6 +16,6 @@ all: manuscript.pdf
 	$(R) --encoding=utf-8 -e "library('knitr'); knit('$<')"
 
 %.pdf: %.tex $(wildcard *.bib) $(wildcard *.tex)
-	latexmk -pdf -pdflatex='xelatex -interaction=nonstopmode %O %S' -bibtex -use-make $<
+	latexmk -f -pdf -pdflatex='xelatex -interaction=nonstopmode %O %S' -bibtex -use-make $<
 
-manuscript.tex: manuscript.Rnw
+manuscript.tex: manuscript.Rnw ../data/combined_fpkm

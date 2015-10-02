@@ -128,6 +128,21 @@ library("data.table")
 library("ggplot2")
 library("reshape2")
 library("xtable")
+library("grid")
+
+capwords <- function(s, strict = FALSE) {
+    cap <- function(s) paste(toupper(substring(s, 1, 1)),
+                             {s <- substring(s, 2); if(strict) tolower(s) else s},
+                             sep = "", collapse = " " )
+    sapply(strsplit(s, split = " "), cap, USE.NAMES = !is.null(names(s)))
+}
+
+capfirst <- function(s, strict = FALSE) {
+    paste(toupper(substring(s, 1, 1)),
+          {s <- substring(s, 2); if(strict) tolower(s) else s},
+          sep = "")
+}
+
 @ 
 
 <<source.to.latex,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../common_r_code/",c("to_latex.R")))>>=
@@ -140,6 +155,7 @@ for (a in paste0("../common_r_code/",c("to_latex.R"))) {
 for (a in paste0("../data/",c("combined_fpkm"))) {
     load(a)
 }
+star.logs[,value:=gsub("%$","",value)]
 @ 
 
 \section{Abstract}
@@ -149,19 +165,19 @@ mammals. Understanding gene expression patterns among placentas from
 multiple species can illuminate the molecular basis of placenta
 function as well as potentially enrich our knowledge of the biology of
 obstetrical syndromes. We profiled the term placenta by using Illumina
-RNA-Seq technology to sequence the transcriptomes of 6 species of
-therian (i.e. marsupials and “placental”) mammals. We identified
-significant shifts in gene expression along specific evolutionary
-lineages using a model of character evolution. Genes that showed
-significant elevation in expression along the human lineage
-($\mathrm{FDR}\le 0.01$) were enriched in GO categories such as
-angiogenesis, tube morphogenesis, cell migration, and regulation of
-inflammatory response. Three of these genes (KISS1, ADAM12, GPC3)
-showed exceptionally high expression in humans; these genes are
-implicated in preeclampsia and may indicate that the risk of
-preeclampsia recently emerged on the human lineage.
+RNA-Seq technology to sequence the transcriptomes of
+\Sexpr{star.logs[,length(unique(species))]} species of therian (i.e.
+marsupials and “placental”) mammals. We identified significant shifts
+in gene expression along specific evolutionary lineages using a model
+of character evolution. Genes that showed significant elevation in
+expression along the human lineage ($\mathrm{FDR}\le 0.01$) were
+enriched in GO categories such as angiogenesis, tube morphogenesis,
+cell migration, and regulation of inflammatory response. Three of
+these genes (KISS1, ADAM12, GPC3) showed exceptionally high expression
+in humans; these genes are implicated in preeclampsia and may indicate
+that the risk of preeclampsia recently emerged on the human lineage.
 
-Keywords: mammal, gene expression, evolution, RNA-seq, placenta
+\textbf{Keywords:} mammal, gene expression, evolution, RNA-seq, placenta
 
 \section{Introduction}
 
@@ -352,19 +368,19 @@ recognized Pan species is generally perceived to be $\approx 1$ Mya
 \begin{table}
   \begin{tabular}{c c c c}
     \toprule
-    Species                       & Common Name        & Reference & Annotation \\
+    Species                       & Common Name        & Reference & Read Length  \\
     \midrule
-    \textit{Dasypus novemcinctus} & 9-Banded Armadillo & DASNOV3    & Ensembl 80 \\
-    \textit{Ateles fusciceps}     & Spider monkey      & ---        & \textit{Homo sapiens} Ensembl 80 \\
-    \textit{Pan paniscus}         & Bonobo             & CHIMP2.1.4 & Ensembl 80 \\
-    \textit{Bos taurus}           & Cow                & UMD3.1     & Ensembl 80 \\
-    \textit{Canis familiaris}     & Dog                & CanFam3.1  & Ensembl 80 \\
-    \textit{Loxodonta africana}   & Elephant           & loxAfr3    & Ensembl 80 \\
-    \textit{Homo sapiens}         & Human              & GRCh38     & Ensembl 80 \\
-    \textit{Mus musculus}         & Mouse              & GRCm38     & Ensembl 80 \\
-    \textit{Nannospalax galili}   & Blind mole rat     & ----       & \textit{Mus musculus} Ensembl 80 \\
-    \textit{Monodelphis domestica} & Opossum           & BROAD05    & Ensembl 80 \\
-    \textit{Spalax carmeli}       & Blind mole rat     & ----       & \textit{Mus musculus} Ensembl 80 \\
+    \textit{Ateles fusciceps}     & Spider monkey      & \textit{Homo sapiens} & 100 \\
+    \textit{Bos taurus}           & Cow                & UMD3.1     & 76 \\
+    \textit{Canis familiaris}     & Dog                & CanFam3.1  & 151 \\
+    \textit{Dasypus novemcinctus} & 9-Banded Armadillo & DASNOV3    & 101 \\
+    \textit{Loxodonta africana}   & Elephant           & loxAfr3    & 76 \\
+    \textit{Homo sapiens}         & Human              & GRCh38     & 76, 151 \\
+    \textit{Monodelphis domestica} & Opossum           & BROAD05    & 76 \\
+    \textit{Mus musculus}         & Mouse              & GRCm38     & 36,44,151 \\
+    \textit{Nannospalax galili}   & Blind mole rat     & \textit{Mus musculus} & 100 \\
+    \textit{Pan paniscus}         & Bonobo             & CHIMP2.1.4 & 151 \\
+    \textit{Spalax carmeli}       & Blind mole rat     & \textit{Mus musculus} & 100 \\
     \bottomrule
   \end{tabular}
   \caption{Reference genomes for aligned species}
@@ -479,23 +495,54 @@ not step on Natalie’s toes]
 
 \begin{figure}
 <<transcriptome.mapping.figure,fig.width=8,fig.height=8,echo=FALSE>>=
-print(ggplot(star.logs[grepl("%",field),],
-             aes(x=species,y=as.numeric(gsub("%","",value)),
-                 color=field))
+star.logs.unmapped <- 
+    star.logs[grepl("%",field) & 
+                  grepl("unmapped",field) & 
+                      !grepl("too many mismatches",field),]
+star.logs.unmapped <- 
+    star.logs.unmapped[,field:=capfirst(gsub("\\% of reads unmapped: ","",field))]
+pushViewport(viewport(layout=grid.layout(ncol=1,nrow=2,heights=c(2,1))))
+print(ggplot(star.logs.unmapped,
+             aes(x=capfirst(species),y=as.numeric(gsub("%","",value))))
       + geom_boxplot()
       + facet_grid(field~.,scales="free")
       + ylab("Percent of Reads")
+      + xlab("Species")
       + theme(legend.position="top",
-              axis.text.x = element_text(angle = 30, hjust = 1, vjust=1))
+              axis.text.x = element_text(angle = 30, hjust = 1, vjust=1,face="italic")),
+      vp=viewport(layout.pos.col=1,layout.pos.row=1)
       )
+pushViewport(viewport(layout.pos.col=1,layout.pos.row=1))
+grid.text("A",
+          y=unit(1,"npc")-unit(0.1,"cm"),
+          x=unit(0,"npc")+unit(0.1,"cm"),
+          gp=gpar(fontsize=24),
+          just=c("left","top"))
+popViewport()          
+print(ggplot(star.logs[grepl("input reads$",field),],
+             aes(x=capfirst(species),y=as.numeric(value)))
+      + geom_boxplot()
+      + scale_y_log10()
+      + ylab("Reads")
+      + xlab("Species")
+      + theme(legend.position="top",
+              axis.text.x = element_text(angle = 30, hjust = 1, vjust=1,face="italic")),
+      vp=viewport(layout.pos.col=1,layout.pos.row=2))
+pushViewport(viewport(layout.pos.col=1,layout.pos.row=2))
+grid.text("B",
+          y=unit(1,"npc")-unit(0.1,"cm"),
+          x=unit(0,"npc")+unit(0.1,"cm"),
+          gp=gpar(fontsize=24),
+          just=c("left","top"))
+popViewport(2)
 @ 
-\caption{Transcript statistics for each species}
+\caption{RNAseq read and alignment statistics for all species. A)
+  Boxplot of percentages of unmapped reads in each species; 0\% of
+  reads in all species were unmapped because of mismatches. B) Boxplot
+  of number of RNAseq reads in each species.}
 \label{fig:transcriptome_statistics}
 \end{figure}
 
-
-<<transcriptome.statistics>>=
-@ 
 
 For transcriptomes sequenced with 75 bp, (opossum, elephant, and cow),
 the number of reads ranged from 3.61x107 to 3.70x107 and number of

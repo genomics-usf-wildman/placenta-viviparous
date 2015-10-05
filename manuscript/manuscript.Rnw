@@ -124,11 +124,13 @@ opts_chunk$set(cache=TRUE, autodep=TRUE)
 options(device = function(file, width = 8, height = 7, ...) {
   cairo_pdf(tempfile(), width = width, height = height, ...)
 })
+options(scipen = -2, digits = 3)
 library("data.table")
 library("ggplot2")
 library("reshape2")
 library("xtable")
 library("grid")
+library("gridExtra")
 
 capwords <- function(s, strict = FALSE) {
     cap <- function(s) paste(toupper(substring(s, 1, 1)),
@@ -141,6 +143,30 @@ capfirst <- function(s, strict = FALSE) {
     paste(toupper(substring(s, 1, 1)),
           {s <- substring(s, 2); if(strict) tolower(s) else s},
           sep = "")
+}
+
+species <- function(s,join=TRUE) {
+    temp <- paste0("\\textit{",capfirst(s),"}")
+    if (join) {
+        return(english.join(temp))
+    } else {
+        return(temp)
+    }
+}
+
+english.join <- function(s){
+    ret <- c()
+    ## everything but the last gets a , appended if there are more than two
+    if (length(s) > 2) {
+        s[-length(s)] <- 
+            paste0(s[-length(s)],",")
+    }
+    ## the second to last gets an and appended if there are more than one
+    if (length(s) > 1) {
+        s[length(s)-1] <- 
+            paste0(s[length(s)-1]," and")
+    }
+    return(paste(sep="",collapse=" ",s))
 }
 
 @ 
@@ -156,6 +182,17 @@ for (a in paste0("../data/",c("combined_fpkm"))) {
     load(a)
 }
 star.logs[,value:=gsub("%$","",value)]
+star.logs.wide <- 
+    data.table(dcast(star.logs,species+file~field))
+setnames(star.logs.wide,
+         "Average input read length",
+         "input.read.length")
+setnames(star.logs.wide,
+         "Number of input reads",
+         "input.reads")
+setnames(star.logs.wide,
+         "Uniquely mapped reads number",
+         "unique.map.reads")
 @ 
 
 \section{Abstract}
@@ -507,9 +544,12 @@ print(ggplot(star.logs.unmapped,
       + geom_boxplot()
       + facet_grid(field~.,scales="free")
       + ylab("Percent of Reads")
-      + xlab("Species")
+      + xlab(NULL)
+      + theme_bw()
       + theme(legend.position="top",
-              axis.text.x = element_text(angle = 30, hjust = 1, vjust=1,face="italic")),
+              plot.margin=unit(c(0,0,0,1.1),"strwidth",data=list("","","","e8")),
+              axis.title.x=element_blank(),
+              axis.text.x = element_blank()),#element_text(angle = 30, hjust = 1, vjust=1,face="italic")),
       vp=viewport(layout.pos.col=1,layout.pos.row=1)
       )
 pushViewport(viewport(layout.pos.col=1,layout.pos.row=1))
@@ -525,7 +565,9 @@ print(ggplot(star.logs[grepl("input reads$",field),],
       + scale_y_log10()
       + ylab("Reads")
       + xlab("Species")
+      + theme_bw()
       + theme(legend.position="top",
+              plot.margin=unit(c(0,1.6,0,0),"strheight",data=list("","TO","","")),
               axis.text.x = element_text(angle = 30, hjust = 1, vjust=1,face="italic")),
       vp=viewport(layout.pos.col=1,layout.pos.row=2))
 pushViewport(viewport(layout.pos.col=1,layout.pos.row=2))
@@ -543,16 +585,81 @@ popViewport(2)
 \label{fig:transcriptome_statistics}
 \end{figure}
 
+\begin{figure}
+<<reads.vs.read.length,fig.width=8,fig.height=8,echo=FALSE>>=
+print(ggplot(star.logs.wide,
+             aes(x=as.numeric(input.read.length),
+                 y=as.numeric(input.reads),
+                 color=capfirst(species),
+                 shape=capfirst(species)
+                 ))
+      + scale_shape_manual(values=1:nlevels(as.factor(star.logs.wide[,species])),
+                           guide=guide_legend(title="Species")
+                           )
+      + scale_color_discrete(guide=guide_legend(title="Species")
+                             )
+      + geom_point(size=5)
+      + xlab("Trimmed Read Length")
+      + ylab("Read number")
+      + scale_y_log10()
+      + theme(legend.text=element_text(face="italic")
+              )
+      )
+@ 
+\caption{RNA Read number as a function of trimmed read length}
+\label{fig:transcriptome_reads_vs_read_length}
+\end{figure}
 
-For transcriptomes sequenced with 75 bp, (opossum, elephant, and cow),
-the number of reads ranged from 3.61x107 to 3.70x107 and number of
-bases ranged from 1.43x109 to 1.64x109 with at least 96\% of reads
-mapping to the respective reference genome (Table 1). For
-transcriptomes sequenced with 150 bp (human, bonobo, and dog), number
-of reads ranged from 6.47x107 to 9.27x107 and number of bases ranged
-from 5.20x109 to 6.25x109 with at least 99\% of reads mapping to the
-respective reference genome. All reads were submitted to the NCBI
-Sequence Read Archive (SRA) (Accession Number XXX-YYY).
+
+
+
+For transcriptomes sequenced with 75 bp, %
+(\Sexpr{species(star.logs.wide[input.read.length > 70 & input.read.length < 80,unique(species)])})
+%
+,
+the number of trimmed reads ranged from %
+\Sexpr{star.logs.wide[input.read.length > 70 & input.read.length < 80,min(as.numeric(input.reads))]} 
+%
+to %
+\Sexpr{star.logs.wide[input.read.length > 70 & input.read.length < 80,max(as.numeric(input.reads))]}
+with at least 96\% of reads \DLA{This is wrong}
+mapping to the respective reference genome (\fref{tab:ref_genome_aligned_species}). 
+
+For transcriptomes sequenced with 150 bp, %
+% The mismatch here is because we're reporting trimmed reads here, not
+% full length reads
+(\Sexpr{species(star.logs.wide[input.read.length > 120 & input.read.length < 160,unique(species)])})
+%
+,
+the number of trimmed reads ranged from %
+\Sexpr{star.logs.wide[input.read.length > 120 & input.read.length < 160,min(as.numeric(input.reads))]} 
+%
+to %
+\Sexpr{star.logs.wide[input.read.length  > 120 & input.read.length < 160,max(as.numeric(input.reads))]}
+%
+with at least 99\% of reads mapping to the
+respective reference genome \DLA{This is also wrong}.
+%
+All reads were submitted to the NCBI Sequence Read Archive (SRA)
+(Accession Number XXX-YYY).
+
+For transcriptomes sequenced with 35 bp, %
+% The mismatch here is because we're reporting trimmed reads here, not
+% full length reads
+(\Sexpr{species(star.logs.wide[input.read.length < 40 ,unique(species)])})
+%
+,
+the number of trimmed reads ranged from %
+\Sexpr{star.logs.wide[input.read.length < 40 ,min(as.numeric(input.reads))]} 
+%
+to %
+\Sexpr{star.logs.wide[input.read.length  < 40  ,max(as.numeric(input.reads))]}
+%
+with at least 99\% of reads mapping to the
+respective reference genome \DLA{This is also wrong}.
+%
+All reads were submitted to the NCBI Sequence Read Archive (SRA)
+(Accession Number XXX-YYY).
 
 \DLA{Need to do an embargoed submission to SRA}
 

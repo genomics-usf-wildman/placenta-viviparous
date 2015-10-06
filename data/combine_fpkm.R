@@ -92,5 +92,17 @@ gene.fpkms[is.na(human_name),
 ### data.table code
 combined.fpkm <- data.table(data.frame(gene.fpkms))
 
+setkey(oma.groups,"ensembl")
+setkey(combined.fpkm,"tracking_id")
+combined.fpkm <- oma.groups[,list(group_num,fingerprint,ensembl)][combined.fpkm]
+combined.fpkm[,ensembl:=NULL]
+setnames(combined.fpkm,"group_num","oma_group_num")
+
+combined.fpkm[,oma_group_name:=NA]
+combined.fpkm[!is.na(oma_group_num),
+              oma_group_name:=paste(collapse=",",
+                  grep("^-$",unique(gene_short_name),value=TRUE,invert=TRUE)),
+              by=as.numeric(oma_group_num)]
+
 save(file=output.file,combined.fpkm,star.logs)
 

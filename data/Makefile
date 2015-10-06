@@ -58,6 +58,9 @@ homology_table: homology_table.R combined_fpkm
 ensembl_orthologs: ensembl_orthologs.R
 	$(R) $(ROPTS) -f $< --args $@
 
+ensembl_orthologs_long: ensembl_orthologs_long.R
+	$(R) $(ROPTS) -f $< --args $@
+
 Compara.80.protein.nhx.emf.gz:
 	rsync -avP "rsync://ftp.ensembl.org/ensembl/pub/current_emf/ensembl-compara/homologies/$@" $@
 

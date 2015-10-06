@@ -68,7 +68,6 @@ for (file in gene.files) {
         gsub("_"," ",
              gsub("_genes.fpkm_tracking","",
                   gsub("SRR\\d+_","",file)))
-    gene.fpkms[[file]][,species := species.name]
     if (any(species.name %in% trinity.diamond.species)) {
         ## need to merge in the gene names here and then merge down
         ## the calls on the genes to only a single gene
@@ -82,18 +81,19 @@ for (file in gene.files) {
             trinity.diamond[[diamond.file]][gene.fpkms[[file]]]
         ## sum the FPKM in order to determine the total expression for
         ## this gene
-        gene.fpkms[[file]][,
+        gene.fpkms[[file]][!is.na(gene_id),
                            FPKM:=sum(FPKM),gene_id]
-        gene.fpkms[[file]][,
+        gene.fpkms[[file]][!is.na(gene_id),
                            FPKM_conf_lo:=sum(FPKM_conf_lo),gene_id]
-        gene.fpkms[[file]][,
+        gene.fpkms[[file]][!is.na(gene_id),
                            FPKM_conf_hi:=sum(FPKM_conf_hi),gene_id]
         gene.fpkms[[file]] <-
-            gene.fpkms[[file]][!duplicated(gene_id),]
+            gene.fpkms[[file]][is.na(gene_id) | !duplicated(gene_id),]
         gene.fpkms[[file]][,i.gene_id:=NULL]
         gene.fpkms[[file]][,i.gene_short_id:=NULL]
         gene.fpkms[[file]][,i.species:=NULL]
     }
+    gene.fpkms[[file]][,species := species.name]
     gene.fpkms[[file]][,file:=file]
     i <- i+1
     setTxtProgressBar(pb,i)

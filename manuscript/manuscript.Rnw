@@ -131,6 +131,7 @@ library("reshape2")
 library("xtable")
 library("grid")
 library("gridExtra")
+library("ggtree")
 
 capwords <- function(s, strict = FALSE) {
     cap <- function(s) paste(toupper(substring(s, 1, 1)),
@@ -171,16 +172,17 @@ english.join <- function(s){
 
 @ 
 
-<<source.to.latex,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../common_r_code/",c("to_latex.R")))>>=
-for (a in paste0("../common_r_code/",c("to_latex.R"))) {
+<<source.to.latex,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../common_r_code/",c("to_latex.R","plot_tree_matrix.R")))>>=
+for (a in paste0("../common_r_code/",c("to_latex.R","plot_tree_matrix.R"))) {
     source(a)
 }
 @ 
 
-<<load.data,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../data/",c("combined_fpkm")))>>=
-for (a in paste0("../data/",c("combined_fpkm"))) {
+<<load.data,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../data/",c("combined_fpkm","gene_trees")))>>=
+for (a in paste0("../data/",c("combined_fpkm","gene_trees"))) {
     load(a)
 }
+setkey(genes.to.tree,"gene_id")
 star.logs[,value:=gsub("%$","",value)]
 star.logs.wide <- 
     data.table(dcast(star.logs,species+file~field))
@@ -515,7 +517,7 @@ tissues which expressed each probe set from (Su et al., 2004).
 
 To verify expression levels in human and bonobo, we also generated
 RNA-Seq data for the placenta transcriptome of the black-headed spider
-monkey (Ateles fusciceps) using similar protocols discussed above.
+monkey (\textit{Ateles fusciceps}) using similar protocols discussed above.
 Ateles is outside the clade, which includes hominids and can be used
 to polarize expression values of highly expressed genes in Homo and
 Pan. We sampled placental tissue from an Ateles placenta expelled from
@@ -624,7 +626,7 @@ to %
 \Sexpr{star.logs.wide[input.read.length > 70 & input.read.length < 80,max(as.numeric(input.reads))]}
 with at least 96\% of reads \DLA{This is wrong}
 mapping to the respective reference genome (\fref{tab:ref_genome_aligned_species}). 
-
+%
 For transcriptomes sequenced with 150 bp, %
 % The mismatch here is because we're reporting trimmed reads here, not
 % full length reads
@@ -640,9 +642,7 @@ to %
 with at least 99\% of reads mapping to the
 respective reference genome \DLA{This is also wrong}.
 %
-All reads were submitted to the NCBI Sequence Read Archive (SRA)
-(Accession Number XXX-YYY).
-
+%
 For transcriptomes sequenced with 35 bp, %
 % The mismatch here is because we're reporting trimmed reads here, not
 % full length reads
@@ -797,6 +797,24 @@ of ribosomal proteins (e.g., RPL18, RPL23), keratins (e.g., KRT7,
 KRT19), heat-shock proteins (e.g., HSPA5, HSPA1A), serpins (SERPINE1,
 SERPINE2), insulin growth factor 2 (IGF2) and the hormone
 adrenomedullin (ADM).
+
+\subsection{Spider Monkey Transcriptome}
+
+\begin{wraptable}{L}{0.3\textwidth}
+  \tiny
+<<top.50.spider.monkey.expressed.genes,echo=FALSE,results="asis">>=
+top.spider.monkey.genes <- top.genes.table(species.name="ateles fusciceps")
+print(xtable(top.spider.monkey.genes),
+      booktabs=TRUE,
+      floating=FALSE
+      )
+setkey(top.spider.monkey.genes,"Gene name")
+@ 
+\caption{Expression in \ac{FPKM} of top 50 non-mitochondrial genes in
+  \textit{Ateles fusciceps}}
+\label{tab:top50_spider_monkey_placenta}
+\end{wraptable}
+
 
 \subsection{Dog Placenta Transcriptome}
 
@@ -1037,6 +1055,20 @@ pregnancy. In addition, HSD3B1 shows high levels in dog, which matches
 the high levels of placental production of progesterone at term in
 that species. \DLA{I think we need citations for this}
 
+\begin{figure}
+<<prolactin.evolution.tree,echo=FALSE,fig.width=8,fig.height=8>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="PRL" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+@ 
+\caption{Expression of prolactin}
+\label{fig:prolactin_evolution_tree}
+\end{figure}
+
 The elephant is strikingly the only mammal analyzed that shows high
 expression of the primarily pituitary hormone prolactin (PRL) in the
 placenta. All afrotherians yet analyzed contain only one prolactin
@@ -1115,6 +1147,20 @@ essential in increasing maternal blood flow in epitheliochorial and
 endotheliochorial placentas
 
 \subsection{The Evolution of Placental Expression of Galectins}
+
+\begin{figure}
+<<galectins.evolution.tree,echo=FALSE,fig.width=8,fig.height=8>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="LGALS1" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+@ 
+\caption{Expression of galectins}
+\label{fig:galectins_evolution_tree}
+\end{figure}
 
 Galectins are recognized as major regulators of pregnancy in both
 fetal and maternal tissues (Than et al., 2012). Indeed, the evolution

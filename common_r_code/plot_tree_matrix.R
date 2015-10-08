@@ -11,9 +11,10 @@ plot.tree.matrix <- function(gene.tree,gene.tree.table,expression) {
         drop.tip(gene.tree,gene.tree$tip.label[!(gene.tree$tip.label %in%
                                                      gene.tree.expression[,gene_id])])
 
+    gene.tree.expression[,mean_fpkm_log:=log10(mean_fpkm+1)]
     gene.tree.expression.matrix <-
         dcast(gene.tree.expression,
-              gene_id~species,value.var="mean_fpkm")
+              gene_id~species,value.var="mean_fpkm_log")
     rownames(gene.tree.expression.matrix) <-
         gene.tree.expression.matrix[,1]
     gene.tree.expression.matrix <-
@@ -40,6 +41,6 @@ plot.tree.matrix <- function(gene.tree,gene.tree.table,expression) {
     print(gheatmap(p,data=gene.tree.expression.matrix,offset=0.3,colnames=TRUE) +
               theme(legend.title=element_text())
           + scale_fill_gradient(low="white",high="green",na.value="gray50",
-                                name="FPKM")
-          )    
+                                name=expression(log[10](FPKM)))
+          )
 }

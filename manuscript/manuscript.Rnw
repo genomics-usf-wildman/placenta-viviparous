@@ -724,34 +724,41 @@ setkey(top.human.genes,"Gene name")
 \label{tab:top50_human_placenta}
 \end{wraptable}
 
-The top 50 expressed genes as measured by \ac{FPKM} in the term placenta of
-the human are shown in \fref{tab:top50_human_placenta} with a list of all genes in
+The top 50 expressed genes as measured by \ac{FPKM} in the term
+placenta of \textit{Homo sapiens} are shown in
+\fref{tab:top50_human_placenta} with a list of all genes in
 Supplemental Table X. The gene with by far the highest \ac{FPKM} value
-(101962) in humans is chorionic somatomammotropin hormone 1 (CSH1),
-followed by chorionic somatomammotropin hormone 2 (CSH2), and
-chorionic somatomammotropin hormone-like 1 (CSHL1), all three of which
-are members of a distinct expansion of the growth hormone gene family
-within hominoids. Another member of the growth hormone gene family,
-GH2 (\ac{FPKM}=729.639), is also expressed to a high degree in the human
-placenta (Table 2). Ten pregnancy-specific beta-1-glycoprotein genes
-are highly-expressed (FPKM>100) in the term placenta of humans, with
-PSG4 showing the greatest degree of expression (\ac{FPKM}= 5201.31; Table
-2). These genes are members of a hominoid-specific expansion of the
+(\Sexpr{gene.expression(species.name="homo sapiens",gene="CSH1")}) %
+in humans is \ac{CSH1}, followed by \ac{CSH2}, and \ac{CSHL1}, all
+three of which are members of a distinct expansion of the growth
+hormone gene family within hominoids. Another member of the growth
+hormone gene family, \ac{GH2} (\ac{FPKM}=%
+\Sexpr{gene.expression(species.name="homo sapiens",gene="GH2")}), %
+is also expressed to a high degree in the human placenta
+(\fref{tab:top50_human_placenta}).
+% 
+Ten pregnancy-specific beta-1-glycoprotein genes are highly-expressed
+(\ac{FPKM}>100) in the term placenta of humans, with \ac{PSG4} showing the
+greatest degree of expression %
+(\ac{FPKM}=\Sexpr{gene.expression(species.name="homo sapiens",gene="PSG4")}). % 
+These
+genes are members of a hominoid-specific expansion of the
 carcinoembryonic antigen (CEA) family and known to be expressed by the
 syncytiotrophoblast (Lei et al., 1992; Rand and Cross, 2008). Genes
 involved in the production of estrogen (CYP19A1) and progesterone
 (HSD3B1) show exceptionally high expression in the human placenta
-(\ac{FPKM} = 4817.15 and 829.846 respectively), as well as CGA (\ac{FPKM}=
-4793.08), which generates the alpha subnit of multiple human chorionic
-gonadotropin hormones (Table 2). The genes producing the beta subunits
-of the chorionic gonadotropins (CGB, CGB1, CGB2, CGB5, CGB7, CGB8) are
-either not expressed (CGB8) or expressed modestly (FPKM≤20.826; Table
-8). Other highly expressed genes in the top 50 include members of the
-hemoglobin family (e.g. HBA1, HBB, HBG2, HBA2), the maternally
-imprinted long noncoding RNA gene H19, genes coding for proteins
-required for growth and/or cell proliferation (ADAM12, KISS1, IGF2,
-GPC3, CSF3R), anticoagulation (TFPI2), and glucose transport (SLC2A1)
-among others (Table 2, Supplemental Table X)
+(\ac{FPKM} = 4817.15 and 829.846 respectively), as well as CGA
+(\ac{FPKM}= 4793.08), which generates the alpha subnit of multiple
+human chorionic gonadotropin hormones (Table 2). The genes producing
+the beta subunits of the chorionic gonadotropins (CGB, CGB1, CGB2,
+CGB5, CGB7, CGB8) are either not expressed (CGB8) or expressed
+modestly (FPKM≤20.826; Table 8). Other highly expressed genes in the
+top 50 include members of the hemoglobin family (e.g. HBA1, HBB, HBG2,
+HBA2), the maternally imprinted long noncoding RNA gene H19, genes
+coding for proteins required for growth and/or cell proliferation
+(ADAM12, KISS1, IGF2, GPC3, CSF3R), anticoagulation (TFPI2), and
+glucose transport (SLC2A1) among others (Table 2, Supplemental Table
+X)
 
 \subsection{Bonobo Placenta Transcriptome}
 
@@ -771,17 +778,18 @@ setkey(top.bonobo.genes,"Gene name")
 \end{wraptable}
 
 The top 50 expressed genes as measured by \ac{FPKM} in the term placenta of
-the bonobo are shown in Table 3 with a list of all genes in
+the bonobo are shown in \fref{tab:top50_bonobo_placenta} with a list of all genes in
 Supplemental Table X. Expression in the bonobo placenta differs
 somewhat from that of the human, as evidenced by the makeup of the top
-50 genes (Table 3). The highest expression (\ac{FPKM}=10149.1) in bonobo is
-proteoglycan 2, bone marrow (PRG2), which is involved in insulin
-growth factor signaling and angiogenesis during pregnancy (Weyer and
-Glerup, 2011). PRG2 is also expressed at relatively high levels in the
-human placenta (\ac{FPKM}=250.675; Supplemental Table X), although at
+50 genes (Table 3). The highest expression (\ac{FPKM}=%
+\Sexpr{gene.expression("pan paniscus","PRG2")}%
+%
+) in bonobo is \ac{PRG2}, which is involved in insulin
+growth factor signaling and angiogenesis during pregnancy \cite{Weyer.ea2011:Placentalregulationofpeptide}. \ac{PRG2} is also expressed at relatively high levels in the
+human placenta (\ac{FPKM}=\Sexpr{gene.expression("homo sapiens","PRG2")}; Supplemental Table X), although at
 comparatively much lower levels than the bonobo. A bonobo gene closely
 related to the chorionic somatomammotropins (Q95MK7\_PANTR) is also
-expressed at high levels (\ac{FPKM}=1232.56; Table 3). Two other Pan genes
+expressed at high levels (\ac{FPKM}=1232.56; \fref{tab:top50_bonobo_placenta}). Two other Pan genes
 included within this family (ENSPTRG00000030805 which shows similarity
 to GH2 and ENSPTRG00000034560) show expression levels of \ac{FPKM}>89. Six
 pregnancy-specific beta-1-glycoprotein genes were expressed in the

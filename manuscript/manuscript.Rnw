@@ -172,8 +172,8 @@ for (a in paste0("../common_r_code/",c("to_latex.R","plot_tree_matrix.R"))) {
 }
 @ 
 
-<<load.data,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../data/",c("combined_fpkm","gene_trees")))>>=
-for (a in paste0("../data/",c("combined_fpkm","gene_trees"))) {
+<<load.data,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../data/",c("combined_fpkm","gene_trees","housekeeping_genes_superset")))>>=
+for (a in paste0("../data/",c("combined_fpkm","gene_trees","housekeeping_genes_superset"))) {
     load(a)
 }
 setkey(genes.to.tree,"gene_id")
@@ -945,6 +945,84 @@ involved in retinol binding (RBP4), growth (IGFBP3), lipid metabolism
 (APOA1, APOA2), and immunosupression (LGALS1). In addition, there was
 little production of CYP19A1 and HSD3B1 (FPKM<2), and moderate
 expression of relaxin RLN1 (\ac{FPKM}= 41.3949).
+
+\subsection{Core Placenta Transcriptome}
+
+
+\begin{figure}
+<<core.placenta.transcriptome,fig.width=8,fig.height=12,echo=FALSE>>=
+combined.fpkm.wide <- 
+    data.table(dcast(combined.fpkm,
+                     human_name~species,
+                     fun.aggregate=sum,
+                     value.var="mean_fpkm"))
+temp <- 
+    combined.fpkm.wide[,median_expression := apply(combined.fpkm.wide[,-1,with=FALSE],1,median)]
+temp <- 
+    combined.fpkm.wide[,min_expression := apply(combined.fpkm.wide[,-1,with=FALSE],1,min)]
+setkey(combined.fpkm.wide,"human_name")
+core.placenta.transcriptome.long <- 
+    data.table(melt(combined.fpkm.wide[min_expression >= 10,
+                                       ][order(-median_expression)
+                                         ][!(human_name %in% 
+                                                 housekeeping.genes.superset[,gene_short_name])],
+                    id.vars="human_name",
+                    variable.name="Species",
+                    value.name="FPKM"
+                    ))
+temp <- core.placenta.transcriptome.long[,human_name:=
+                                     reorder(human_name,
+                                             combined.fpkm.wide[core.placenta.transcriptome.long[,human_name],median_expression])]
+rm(temp)
+
+print(ggplot(core.placenta.transcriptome.long[!Species %in% c("median_expression","min_expression"),],
+             aes(y=human_name,x=capfirst(Species)))
+      + geom_tile(aes(fill=log10(FPKM)))
+      + scale_x_discrete(expand=c(0,0))
+      + scale_y_discrete(expand=c(0,0))
+      + scale_fill_gradient(low="white",
+                            high="blue",
+                            limits=c(0,4),
+                            guide=guide_colorbar(title=expression(log[10](FPKM)))
+                            )
+      + ylab("Human Ortholog Name")
+      + xlab("Species")
+      + theme_grey()
+      + theme(legend.position="top",
+              axis.ticks = element_blank(), 
+              axis.text.x = element_text(angle = 340, hjust = 0.3, vjust=0.8,face="italic"))
+      )
+                            
+# 
+# print(xtable(combined.fpkm.wide[min_expression > 10,
+#                                 ][order(-median_expression)
+#                                   ][!(human_name %in% 
+#                                           housekeeping.genes.superset[,gene_short_name])][1:75,],
+#              digits=0
+#              ),
+#       include.rownames=FALSE,
+#       booktabs=TRUE,
+#       floating=FALSE
+#       )
+@ 
+\caption{Core Placenta Transcriptome.
+  \Sexpr{core.placenta.transcriptome.long[,length(unique(human_name))]}
+  genes expressed (\ac{FPKM}$\ge 10$) in the placenta of all organisms
+  studied with housekeeping
+  genes\cite{Eisenberg.ea2013:Humanhousekeepinggenesrevisited}
+  removed.}
+\label{fig:core_placenta_transcriptome}
+\end{figure}
+
+Annexins?
+
+TIMP3 -- maybe in pre-eclampsia (23172037)
+SERPINH1? with TIMP3 
+% http://www.proteinatlas.org/ENSG00000149257-SERPINH1/tissue/placenta
+
+Why are RPL17 and RPS26 here? They are ribosomal proteins. These
+should be missing now.
+
 
 \subsection{DAVID Analyses of Individual Transcriptomes}
 

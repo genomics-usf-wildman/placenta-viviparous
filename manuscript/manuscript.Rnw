@@ -107,13 +107,7 @@
 \date{\today}
 
 % Acronyms
-\acrodef{EV}[EV]{Extracellular Vesicle}
-\acrodef{SVM}{Support Vector Machine}
-\acrodef{ROC}{Receiver Operating Characteristic}
-\acrodef{KNN}{K Nearest Neighbors}
-\acrodef{SRA}{Sequence Read Archive}
-\acrodef{FPKM}{Fragments Per Kilobase of exon per Million reads}
-
+\input{acronyms}
 % \twocolumn
 \maketitle
 \onehalfspacing

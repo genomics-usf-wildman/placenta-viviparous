@@ -118,13 +118,14 @@ opts_chunk$set(cache=TRUE, autodep=TRUE)
 options(device = function(file, width = 8, height = 7, ...) {
   cairo_pdf(tempfile(), width = width, height = height, ...)
 })
-options(scipen = -2, digits = 3)
+options(scipen = -2, digits = 2)
 library("data.table")
 library("ggplot2")
 library("reshape2")
 library("xtable")
 library("grid")
 library("gridExtra")
+library("ape")
 library("ggtree")
 
 capwords <- function(s, strict = FALSE) {
@@ -687,16 +688,23 @@ concentrating on highly-expressed genes.
 
 <<top.genes.function,echo=FALSE,results="hide">>=
 top.genes.table <- function(species.name,n=50) {
-    temp <- combined.fpkm[species==species.name &
-                      !grepl("^MT-?",gene_short_name) & 
-                          !grepl("(RNA\\d|MT)-",human_name)
-                          ][order(-mean_fpkm)][!duplicated(gene_short_name)][1:n,list(gene_short_name,human_name,mean_fpkm)]
+    temp <- 
+        combined.fpkm[species==species.name &
+                          !(human_name %in% housekeeping.genes.superset[,gene_short_name]) &
+                              !grepl("(RNA\\d|MT)-",human_name)
+                      ][order(-mean_fpkm)][!duplicated(gene_short_name)][1:n,list(gene_short_name,
+                                                                                  human_name,mean_fpkm)]
     setnames(temp,c("Gene name","Human Name","FPKM"))
     if (species.name=="homo sapiens") {
         temp <- temp[,-2,with=FALSE]
     }
     return(temp)
 }
+gene.expression <- function(species.name,gene) {
+    combined.fpkm[species==species.name &
+                      gene_short_name==gene,mean_fpkm]
+}
+    
 @ 
 
 \subsection{Human Placenta Transcriptome}
@@ -794,7 +802,7 @@ adrenomedullin (ADM).
 
 \subsection{Spider Monkey Transcriptome}
 
-\begin{wraptable}{L}{0.3\textwidth}
+\begin{wraptable}{R}{0.3\textwidth}
   \tiny
 <<top.50.spider.monkey.expressed.genes,echo=FALSE,results="asis">>=
 top.spider.monkey.genes <- top.genes.table(species.name="ateles fusciceps")
@@ -1128,7 +1136,7 @@ the high levels of placental production of progesterone at term in
 that species. \DLA{I think we need citations for this}
 
 \begin{figure}
-<<prolactin.evolution.tree,echo=FALSE,fig.width=8,fig.height=8>>=
+<<prolactin.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
 
 tree.id <-
     genes.to.tree[combined.fpkm[gene_short_name=="PRL" & species=="homo sapiens",gene_id],tree]
@@ -1221,7 +1229,7 @@ endotheliochorial placentas
 \subsection{The Evolution of Placental Expression of Galectins}
 
 \begin{figure}
-<<galectins.evolution.tree,echo=FALSE,fig.width=8,fig.height=8>>=
+<<galectins.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
 
 tree.id <-
     genes.to.tree[combined.fpkm[gene_short_name=="LGALS1" & species=="homo sapiens",gene_id],tree]

@@ -2,7 +2,7 @@
 
 SPECIES=equus_caballus
 GTF=Equus_caballus.EquCab2.80.gtf
-FASTA=Equus_caballus.EquCab2.dna_sm.toplevel.fa
+FASTA=Equus_caballus.EquCab2.dna.toplevel.fa
 
 BOWTIE_INDEX_DIR=./
 COMMON_MAKEFILE=../common_makefile

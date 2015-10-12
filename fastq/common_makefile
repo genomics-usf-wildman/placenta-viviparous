@@ -158,6 +158,26 @@ endif
 TRIMMOMATIC_OPTIONS?=ILLUMINACLIP:$(TRIMMOMATIC_FASTA_PATH)/TruSeq2-SE.fa:2:20:10
 TRIMMOMATIC_QUALITY?=
 
+ifdef NREADS
+ifeq ($(NREADS),1)
+$(TRIMMED_FASTQ_FILES): %_trimmed.fastq.gz: %.fastq.gz
+	$(MODULE) load trimmomatic/0.33; \
+	$(TRIMMOMATIC_SE) \
+		-threads $(CORES) \
+		$(TRIMMOMATIC_QUALITY) \
+		$< $@ \
+		$(TRIMMOMATIC_OPTIONS);
+else
+%_1_trimmed.fastq.gz %_2_trimmed.fastq.gz: %_1.fastq.gz %_2.fastq.gz
+	$(MODULE) load trimmomatic/0.33; \
+	$(TRIMMOMATIC_PE) \
+		-threads $(CORES) \
+		$(TRIMMOMATIC_QUALITY) \
+		$(wordlist 1,1,$^) $(wordlist 1,1,$@) /dev/null \
+		$(wordlist 2,2,$^) $(wordlist 2,2,$@) /dev/null \
+		$(TRIMMOMATIC_OPTIONS);
+endif
+else
 $(TRIMMED_FASTQ_FILES): $(FASTQ_FILES)
 	$(MODULE) load trimmomatic/0.33; \
 	$(if $(filter 2,$(words $(TRIMMED_FASTQ_FILES))), \
@@ -171,6 +191,7 @@ $(TRIMMED_FASTQ_FILES): $(FASTQ_FILES)
 			$(TRIMMOMATIC_QUALITY) \
 			$(FASTQ_FILES) $(TRIMMED_FASTQ_FILES)) \
 			$(TRIMMOMATIC_OPTIONS);
+endif
 
 $(SPECIES)_placenta_local.bam: \
 	$(BOWTIE_INDEX_DIR)$(ALIGNMENT_SPECIES)_bt2.1.bt2 \

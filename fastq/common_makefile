@@ -173,8 +173,9 @@ else
 	$(TRIMMOMATIC_PE) \
 		-threads $(CORES) \
 		$(TRIMMOMATIC_QUALITY) \
-		$(wordlist 1,1,$^) $(*)_1_trimmed.fastq.gz /dev/null \
-		$(wordlist 2,2,$^) $(*)_2_trimmed.fastq.gz /dev/null \
+		$(wordlist 1,1,$^) $(wordlist 2,2,$^) \
+		$(*)_1_trimmed.fastq.gz /dev/null \
+		$(*)_2_trimmed.fastq.gz /dev/null \
 		$(TRIMMOMATIC_OPTIONS);
 endif
 else

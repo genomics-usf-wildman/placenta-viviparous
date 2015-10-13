@@ -1229,6 +1229,50 @@ the high levels of placental production of progesterone at term in
 that species. \DLA{I think we need citations for this}
 
 \begin{figure}
+<<estrogen.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="CYP19A1" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+@ 
+\caption{Expression of estrogen sythesis genes}
+\label{fig:estrogen_evolution_tree}
+\end{figure}
+
+\begin{figure}
+<<progesterone.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="HSD3B1" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+@ 
+\caption{Expression of progesterone sythesis genes}
+\label{fig:progesterone_evolution_tree}
+\end{figure}
+
+
+\begin{figure}
+<<chorionic.gonadotropin.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="CGB1" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+@ 
+\caption{Expression of chorionic gonadotropin}
+\label{fig:cgb_evolution_tree}
+\end{figure}
+
+
+\begin{figure}
 <<prolactin.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
 
 tree.id <-

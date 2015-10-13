@@ -27,7 +27,7 @@ SRR_FILES=$(patsubst %,%.sra,$(SRRS))
 get_srr: $(SRR_FILES)
 
 $(SRR_FILES): %.sra:
-	rsync -avP "rsync://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByRun/sra/SRR/$(shell echo -n $*|sed 's/\(SRR[0-9][0-9][0-9]\).*/\1/')/$*/$*.sra" $@;
+	rsync -avP "rsync://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByRun/sra/$(shell echo -n $*|sed 's/\([SED]RR\).*/\1/')/$(shell echo -n $*|sed 's/\([SED]RR[0-9][0-9][0-9]\).*/\1/')/$*/$*.sra" $@;
 
 make_fastq: $(FASTQ_FILES)
 

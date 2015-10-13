@@ -5,7 +5,7 @@ library(parallel)
 args <- commandArgs(trailingOnly=TRUE)
 
 if (is.null(getOption("mc.cores"))) {
-    options(mc.cores=8)
+    options(mc.cores=12)
 }
 
 output.file <- args[1]
@@ -98,7 +98,7 @@ combined.fpkm <- oma.groups[,list(group_num,fingerprint,ensembl)][combined.fpkm]
 combined.fpkm[,ensembl:=NULL]
 setnames(combined.fpkm,"group_num","oma_group_num")
 
-combined.fpkm[,oma_group_name:=NA]
+combined.fpkm[,oma_group_name:=as.character(NA)]
 combined.fpkm[!is.na(oma_group_num),
               oma_group_name:=paste(collapse=",",
                   grep("^-$",unique(gene_short_name),value=TRUE,invert=TRUE)),

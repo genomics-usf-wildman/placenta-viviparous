@@ -699,19 +699,32 @@ concentrating on highly-expressed genes.
 top.genes.table <- function(species.name,n=50) {
     temp <- 
         combined.fpkm[species==species.name &
-                          !(human_name %in% housekeeping.genes.superset[,gene_short_name]) &
-                              !grepl("(RNA\\d|MT)-",human_name)
-                      ][order(-mean_fpkm)][!duplicated(gene_short_name)][1:n,list(gene_short_name,
-                                                                                  human_name,mean_fpkm)]
+                           !(!is.na(human_name) & 
+                                 human_name %in% housekeeping.genes.superset[,gene_short_name]) &
+                               !grepl("((RNA\\d|MT)-|^RPS\\d+$)",human_name) &
+                                   !grepl("(^MT-|^RP[LS]\\d+[ABCD]?(?:-.+)?$|rRNA$)",gene_short_name)
+                      ][order(-mean_fpkm)][,list(name_or_id,
+                                                 human_name,mean_fpkm)]
+    temp <- temp[!duplicated(name_or_id)][1:n]
     setnames(temp,c("Gene name","Human Name","FPKM"))
     if (species.name=="homo sapiens") {
         temp <- temp[,-2,with=FALSE]
     }
     return(temp)
 }
-gene.expression <- function(species.name,gene) {
-    combined.fpkm[species==species.name &
-                      gene_short_name==gene,mean_fpkm]
+gene.expression <- function(species.name,gene,complete=FALSE) {
+    fpkm <- combined.fpkm[species==species.name &
+                              gene_short_name==gene,
+                          mean_fpkm]
+
+    if (complete) {
+        return(paste0("\\textit{",gene,"}=",
+                      formatC(fpkm,digits=2,format="f"),
+                      " \\ac{FPKM}"
+                      ))
+    } else {
+        return(fpkm)
+    }
 }
     
 @ 

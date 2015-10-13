@@ -1,9 +1,13 @@
-plot.tree.matrix <- function(gene.tree,gene.tree.table,expression) {
+plot.tree.matrix <- function(gene.tree,gene.tree.table,expression,min.fpkm=NA) {
     gene.tree$tip.label <- gsub("^(ENS.+)\\1$","\\1",gene.tree$tip.label)
     gene.tree.table[,species:=capfirst(gsub("_"," ",species))]
     gene.tree.table[,symbol_or_id:=ifelse(symbol=="NULL",gene_id,paste0(symbol," ",species))]
     gene.tree.expression <-
         combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+    if (!is.na(min.fpkm)) {
+        gene.tree.expression <-
+            gene.tree.expression[mean_fpkm >= min.fpkm ,]
+    }
     setkey(gene.tree.table,"protein_id")
     gene.tree$tip.label <-
         gene.tree.table[gene.tree$tip.label,gene_id]

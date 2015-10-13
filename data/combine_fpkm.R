@@ -104,5 +104,12 @@ combined.fpkm[!is.na(oma_group_num),
                   grep("^-$",unique(gene_short_name),value=TRUE,invert=TRUE)),
               by=as.numeric(oma_group_num)]
 
-save(file=output.file,combined.fpkm,star.logs)
+combined.fpkm[,c("class_code","nearest_ref_id",
+                 "i.gene_short_name",
+                 "tss_id","locus","length","coverage"):=
+                     list(NULL,NULL,NULL,NULL,NULL,NULL)]
+combined.fpkm[,name_or_id:=gene_short_name]
+combined.fpkm[is.null(name_or_id),name_or_id:=gene_id]
+combined.fpkm[name_or_id=="-" | name_or_id=="",name_or_id:=gene_id]
 
+save(file=output.file,combined.fpkm,star.logs)

@@ -9,3 +9,10 @@
 *.fpkm_tracking
 cluster_host.mk
 *_star
+*_fastqc.html
+*_fastqc.zip
+Trinity.fasta*
+*.dmnd
+*align_rsem_isoforms.txt
+*diamond.txt
+*.sra

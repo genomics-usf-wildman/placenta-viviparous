@@ -987,7 +987,23 @@ placental expression of the estrogen synthase gene (CYP19A1) in cows
 (75.1346), and comparatively greater expression of HSD3B1 (\ac{FPKM}=
 157.622).
 
-\subsection{Elephant Placenta Transcriptome}
+\subsection{African Elephant Placenta Transcriptome}
+
+\begin{wraptable}{L}{0.3\textwidth}
+  \tiny
+<<top.50.elephant.expressed.genes,echo=FALSE,results="asis">>=
+top.elephant.genes <- top.genes.table(species.name="loxodonta africana")
+print(xtable(top.elephant.genes),
+      booktabs=TRUE,
+      floating=FALSE
+      )
+setkey(top.elephant.genes,"Gene name")
+@ 
+\caption{Expression in \ac{FPKM} of top 50 non-mitochondrial genes in
+  \textit{Loxodonta africana}}
+\label{tab:top50_elphant_placenta}
+\end{wraptable}
+
 
 The top 50 expressed genes as measured by \ac{FPKM} in the term placenta of
 the elephant are shown in Table 6 with a list of all genes in
@@ -1015,6 +1031,21 @@ expressed in the endometrium of the uterus in humans (Rutanen et al.,
 1987).
 
 \subsection{Opossum Placenta Transcriptome}
+
+\begin{wraptable}{L}{0.3\textwidth}
+  \tiny
+<<top.50.opossum.expressed.genes,echo=FALSE,results="asis">>=
+top.opossum.genes <- top.genes.table(species.name="monodelphis domestica")
+print(xtable(top.opossum.genes),
+      booktabs=TRUE,
+      floating=FALSE
+      )
+setkey(top.opossum.genes,"Gene name")
+@ 
+\caption{Expression in \ac{FPKM} of top 50 non-mitochondrial genes in
+  \textit{Monodelphis domestica}}
+\label{tab:top50_opossum_placenta}
+\end{wraptable}
 
 The top 50 expressed genes as measured by \ac{FPKM} in the term placenta of
 the opossum are shown in Table 7 with a list of all genes in

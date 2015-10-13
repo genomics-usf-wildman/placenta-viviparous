@@ -40,6 +40,8 @@
 \usepackage{tikz}
 \usepackage{nameref}
 \usepackage{zref-xr,zref-user}
+\zxrsetup{toltxlabel}
+\zexternaldocument*{supplemental_material}
 \newenvironment{narrow}[2]{%
   \begin{list}{}{%
       \setlength{\topsep}{0pt}%

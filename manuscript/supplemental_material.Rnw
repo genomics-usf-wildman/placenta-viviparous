@@ -1,0 +1,300 @@
+\documentclass[english,12pt]{article}
+\usepackage{fontspec}
+\setmainfont{FreeSerif}
+\setsansfont{FreeSans}
+\setmonofont{FreeMono}
+\usepackage[letterpaper,left=1in,right=1in,top=1in,bottom=1in,headheight=14pt]{geometry}
+\usepackage{url}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage[bf]{caption}
+\usepackage{rotating}
+\usepackage{wrapfig}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{setspace}
+\usepackage{wrapfig}
+% \usepackage{txfonts}
+\usepackage[plain]{fancyref}
+\renewcommand*{\fref}[1]{\Fref{#1}}
+\usepackage{acronym}
+\usepackage{array}
+\usepackage{dcolumn}
+\usepackage{adjustbox}
+\usepackage{longtable}
+\usepackage{pdflscape}
+\usepackage[backend=biber,natbib=true,hyperref=true,style=reading,autocite=inline]{biblatex}
+\addbibresource{references.bib}
+\usepackage[noblocks,auth-sc]{authblk}
+\usepackage[hyperfigures,bookmarks,colorlinks]{hyperref}
+%\usepackage[hyperfigures,bookmarks,colorlinks,citecolor=black,filecolor=black,linkcolor=black,urlcolor=black]{hyperref}
+% Floats at end for journals
+% \usepackage[nolists,figuresfirst,nomarkers,heads,nofighead,notabhead]{endfloat}
+% \AtBeginFigures{\section*{Figure Legends}\renewcommand{\efloatseparator}{\hbox{}}}
+% \AtBeginTables{\section*{Tables}\renewcommand{\efloatseparator}{\mbox{}}}
+\usepackage[nomargin,inline,draft]{fixme}
+\newcommand{\DLA}[1]{\textcolor{red}{\fxnote{DLA: #1}}}
+\usepackage[x11names,svgnames]{xcolor}
+\usepackage{texshade}
+\usepackage{tikz}
+\usepackage{nameref}
+\usepackage{zref-xr,zref-user}
+\newenvironment{narrow}[2]{%
+  \begin{list}{}{%
+      \setlength{\topsep}{0pt}%
+      \setlength{\leftmargin}{#1}%
+      \setlength{\rightmargin}{#2}%
+      \setlength{\listparindent}{\parindent}%
+      \setlength{\itemindent}{\parindent}%
+      \setlength{\parsep}{\parskip}}%
+  \item[]}{\end{list}}
+\def\newblock{\hskip}
+\newenvironment{paperquote}{%
+  \begin{quote}%
+     \it
+  }%
+  {\end{quote}}
+\renewcommand{\textfraction}{0.15}
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.65}
+\renewcommand{\floatpagefraction}{0.60}
+%\renewcommand{\baselinestretch}{1.8}
+\newenvironment{enumerate*}%
+  {\begin{enumerate}%
+    \setlength{\itemsep}{0pt}%
+    \setlength{\parskip}{0pt}}%
+  {\end{enumerate}}
+\newenvironment{itemize*}%
+  {\begin{itemize}%
+    \setlength{\itemsep}{0pt}%
+    \setlength{\parskip}{0pt}}%
+  {\end{itemize}}
+\oddsidemargin 0.0in 
+\textwidth 6.5in
+\raggedbottom
+\clubpenalty = 10000
+\widowpenalty = 10000
+% make the afill smaller
+\renewcommand\Affilfont{\itshape\small}
+\renewcommand\cite[1]{\autocite{#1}}
+\pagestyle{fancy}
+
+\begin{document}
+
+\makeatletter 
+\renewcommand{\thefigure}{S\@arabic\c@figure} 
+\makeatother
+
+\makeatletter 
+\renewcommand{\thetable}{S\@arabic\c@table} 
+\makeatother
+
+\title{Supplemental Material for: The evolution of gene expression in the term placenta of viviparous mammals}
+
+% \maketitle
+
+<<load.libraries,echo=FALSE,results="hide",warning=FALSE,message=FALSE,error=FALSE,cache=FALSE>>=
+opts_chunk$set(dev="cairo_pdf",out.width="\\textwidth",out.height="0.7\\textheight",out.extra="keepaspectratio")
+opts_chunk$set(cache=TRUE, autodep=TRUE)
+options(device = function(file, width = 8, height = 7, ...) {
+  cairo_pdf(tempfile(), width = width, height = height, ...)
+})
+options(scipen = -2, digits = 2)
+library("data.table")
+library("ggplot2")
+library("reshape2")
+library("xtable")
+library("grid")
+library("gridExtra")
+library("ape")
+library("ggtree")
+library("topGO")
+library("org.Hs.eg.db")
+
+capwords <- function(s, strict = FALSE) {
+    cap <- function(s) paste(toupper(substring(s, 1, 1)),
+                             {s <- substring(s, 2); if(strict) tolower(s) else s},
+                             sep = "", collapse = " " )
+    sapply(strsplit(s, split = " "), cap, USE.NAMES = !is.null(names(s)))
+}
+
+capfirst <- function(s, strict = FALSE) {
+    paste(toupper(substring(s, 1, 1)),
+          {s <- substring(s, 2); if(strict) tolower(s) else s},
+          sep = "")
+}
+
+species <- function(s,join=TRUE) {
+    temp <- paste0("\\textit{",capfirst(s),"}")
+    if (join) {
+        return(english.join(temp))
+    } else {
+        return(temp)
+    }
+}
+
+english.join <- function(s){
+    ret <- c()
+    ## everything but the last gets a , appended if there are more than two
+    if (length(s) > 2) {
+        s[-length(s)] <- 
+            paste0(s[-length(s)],",")
+    }
+    ## the second to last gets an and appended if there are more than one
+    if (length(s) > 1) {
+        s[length(s)-1] <- 
+            paste0(s[length(s)-1]," and")
+    }
+    return(paste(sep="",collapse=" ",s))
+}
+
+@ 
+
+<<source.to.latex,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../common_r_code/",c("to_latex.R","plot_tree_matrix.R")))>>=
+for (a in paste0("../common_r_code/",c("to_latex.R","plot_tree_matrix.R"))) {
+    source(a)
+}
+@ 
+
+<<load.data,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../data/",c("combined_fpkm","gene_trees","housekeeping_genes_superset","placenta_core_transcriptome","placenta_go_results_bp","palcenta_go_results_mf")))>>=
+for (a in paste0("../data/",c("combined_fpkm","gene_trees",
+                              "housekeeping_genes_superset",
+                              "placenta_core_transcriptome",
+                              "placenta_go_results_bp",
+                              "placenta_go_results_mf"
+                              ))) {
+    load(a)
+}
+setkey(genes.to.tree,"gene_id")
+star.logs[,value:=gsub("%$","",value)]
+star.logs.wide <- 
+    data.table(dcast(star.logs,species+file~field))
+setnames(star.logs.wide,
+         "Average input read length",
+         "input.read.length")
+setnames(star.logs.wide,
+         "Number of input reads",
+         "input.reads")
+setnames(star.logs.wide,
+         "Uniquely mapped reads number",
+         "unique.map.reads")
+@ 
+
+
+\begin{figure}
+<<transcriptome.mapping.figure,fig.width=8,fig.height=8,echo=FALSE>>=
+star.logs.unmapped <- 
+    star.logs[grepl("%",field) & 
+                  grepl("unmapped",field) & 
+                      !grepl("too many mismatches",field),]
+star.logs.unmapped <- 
+    star.logs.unmapped[,field:=capfirst(gsub("\\% of reads unmapped: ","",field))]
+pushViewport(viewport(layout=grid.layout(ncol=1,nrow=2,heights=c(2,1))))
+print(ggplot(star.logs.unmapped,
+             aes(x=capfirst(species),y=as.numeric(gsub("%","",value))))
+      + geom_boxplot()
+      + facet_grid(field~.,scales="free")
+      + ylab("Percent of Reads")
+      + xlab(NULL)
+      + theme_bw()
+      + theme(legend.position="top",
+              plot.margin=unit(c(0,0,0,1.1),"strwidth",data=list("","","","e8")),
+              axis.title.x=element_blank(),
+              axis.text.x = element_blank()),#element_text(angle = 30, hjust = 1, vjust=1,face="italic")),
+      vp=viewport(layout.pos.col=1,layout.pos.row=1)
+      )
+pushViewport(viewport(layout.pos.col=1,layout.pos.row=1))
+grid.text("A",
+          y=unit(1,"npc")-unit(0.1,"cm"),
+          x=unit(0,"npc")+unit(0.1,"cm"),
+          gp=gpar(fontsize=24),
+          just=c("left","top"))
+popViewport()          
+print(ggplot(star.logs[grepl("input reads$",field),],
+             aes(x=capfirst(species),y=as.numeric(value)))
+      + geom_boxplot()
+      + scale_y_log10()
+      + ylab("Reads")
+      + xlab("Species")
+      + theme_bw()
+      + theme(legend.position="top",
+              plot.margin=unit(c(0,1.6,0,0),"strheight",data=list("","TO","","")),
+              axis.text.x = element_text(angle = 30, hjust = 1, vjust=1,face="italic")),
+      vp=viewport(layout.pos.col=1,layout.pos.row=2))
+pushViewport(viewport(layout.pos.col=1,layout.pos.row=2))
+grid.text("B",
+          y=unit(1,"npc")-unit(0.1,"cm"),
+          x=unit(0,"npc")+unit(0.1,"cm"),
+          gp=gpar(fontsize=24),
+          just=c("left","top"))
+popViewport(2)
+@ 
+\caption{RNAseq read and alignment statistics for all species. A)
+  Boxplot of percentages of unmapped reads in each species; 0\% of
+  reads in all species were unmapped because of mismatches. B) Boxplot
+  of number of RNAseq reads in each species.}
+\label{fig:transcriptome_statistics}
+\end{figure}
+
+\begin{figure}
+<<reads.vs.read.length,fig.width=8,fig.height=8,echo=FALSE>>=
+print(ggplot(star.logs.wide,
+             aes(x=as.numeric(input.read.length),
+                 y=as.numeric(input.reads),
+                 color=capfirst(species),
+                 shape=capfirst(species)
+                 ))
+      + scale_shape_manual(values=1:nlevels(as.factor(star.logs.wide[,species])),
+                           guide=guide_legend(title="Species")
+                           )
+      + scale_color_discrete(guide=guide_legend(title="Species")
+                             )
+      + geom_point(size=5)
+      + xlab("Trimmed Read Length")
+      + ylab("Read number")
+      + scale_y_log10()
+      + theme(legend.text=element_text(face="italic")
+              )
+      )
+@ 
+\caption{RNA Read number as a function of trimmed read length}
+\label{fig:transcriptome_reads_vs_read_length}
+\end{figure}
+
+
+
+<<genes.expression,echo=FALSE,results="hide">>=
+genes.expression.table <- function(species.name,min.fpkm=50) {
+    temp <- 
+        combined.fpkm[species==species.name][order(-mean_fpkm)][,list(name_or_id,
+                          human_name,mean_fpkm)]
+    temp <- temp[!duplicated(name_or_id)][mean_fpkm>=min.fpkm]
+    setnames(temp,c("Gene name","Human Name","FPKM"))
+    if (species.name=="homo sapiens") {
+        temp <- temp[,-2,with=FALSE]
+    }
+    return(temp)
+}
+@ 
+
+<<human.expressed.genes,echo=FALSE,results="asis">>=
+print(xtable(genes.expression.table(species.name="homo sapiens"),
+             caption="Expression of all genes with FPKM $\\ge 50$ in \\textit{Homo sapiens}",
+             label="tab:all_human_placenta"
+             ),
+      booktabs=TRUE,
+      tabular.environment="longtable",
+      floating=FALSE,
+      caption.placement="top",
+      add.to.row = list(pos = list(0),command = "\\midrule \\endhead "),
+      size="\\tiny"
+      )
+@ 
+
+ 
+\printbibliography
+
+
+
+\end{document}

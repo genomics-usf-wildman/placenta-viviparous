@@ -120,7 +120,7 @@ opts_chunk$set(cache=TRUE, autodep=TRUE)
 options(device = function(file, width = 8, height = 7, ...) {
   cairo_pdf(tempfile(), width = width, height = height, ...)
 })
-options(scipen = -2, digits = 2)
+options(scipen = -1, digits = 2)
 library("data.table")
 library("ggplot2")
 library("reshape2")
@@ -129,6 +129,8 @@ library("grid")
 library("gridExtra")
 library("ape")
 library("ggtree")
+library("topGO")
+library("org.Hs.eg.db")
 
 capwords <- function(s, strict = FALSE) {
     cap <- function(s) paste(toupper(substring(s, 1, 1)),
@@ -175,8 +177,13 @@ for (a in paste0("../common_r_code/",c("to_latex.R","plot_tree_matrix.R"))) {
 }
 @ 
 
-<<load.data,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../data/",c("combined_fpkm","gene_trees","housekeeping_genes_superset")))>>=
-for (a in paste0("../data/",c("combined_fpkm","gene_trees","housekeeping_genes_superset"))) {
+<<load.data,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../data/",c("combined_fpkm","gene_trees","housekeeping_genes_superset","placenta_core_transcriptome","placenta_go_results_bp","palcenta_go_results_mf")))>>=
+for (a in paste0("../data/",c("combined_fpkm","gene_trees",
+                              "housekeeping_genes_superset",
+                              "placenta_core_transcriptome",
+                              "placenta_go_results_bp",
+                              "placenta_go_results_mf"
+                              ))) {
     load(a)
 }
 setkey(genes.to.tree,"gene_id")
@@ -968,31 +975,7 @@ expression of relaxin RLN1 (\ac{FPKM}= 41.3949).
 
 
 \begin{figure}
-<<core.placenta.transcriptome,fig.width=8,fig.height=12,echo=FALSE>>=
-combined.fpkm.wide <- 
-    data.table(dcast(combined.fpkm,
-                     human_name~species,
-                     fun.aggregate=sum,
-                     value.var="mean_fpkm"))
-temp <- 
-    combined.fpkm.wide[,median_expression := apply(combined.fpkm.wide[,-1,with=FALSE],1,median)]
-temp <- 
-    combined.fpkm.wide[,min_expression := apply(combined.fpkm.wide[,-1,with=FALSE],1,min)]
-setkey(combined.fpkm.wide,"human_name")
-core.placenta.transcriptome.long <- 
-    data.table(melt(combined.fpkm.wide[min_expression >= 10,
-                                       ][order(-median_expression)
-                                         ][!(human_name %in% 
-                                                 housekeeping.genes.superset[,gene_short_name])],
-                    id.vars="human_name",
-                    variable.name="Species",
-                    value.name="FPKM"
-                    ))
-temp <- core.placenta.transcriptome.long[,human_name:=
-                                     reorder(human_name,
-                                             combined.fpkm.wide[core.placenta.transcriptome.long[,human_name],median_expression])]
-rm(temp)
-
+<<core.placenta.transcriptome,fig.width=8,fig.height=12,out.height="0.8\\textheight",echo=FALSE>>=
 print(ggplot(core.placenta.transcriptome.long[!Species %in% c("median_expression","min_expression"),],
              aes(y=human_name,x=capfirst(Species)))
       + geom_tile(aes(fill=log10(FPKM)))
@@ -1010,27 +993,56 @@ print(ggplot(core.placenta.transcriptome.long[!Species %in% c("median_expression
               axis.ticks = element_blank(), 
               axis.text.x = element_text(angle = 340, hjust = 0.3, vjust=0.8,face="italic"))
       )
-                            
-# 
-# print(xtable(combined.fpkm.wide[min_expression > 10,
-#                                 ][order(-median_expression)
-#                                   ][!(human_name %in% 
-#                                           housekeeping.genes.superset[,gene_short_name])][1:75,],
-#              digits=0
-#              ),
-#       include.rownames=FALSE,
-#       booktabs=TRUE,
-#       floating=FALSE
-#       )
 @ 
 \caption{Core Placenta Transcriptome.
   \Sexpr{core.placenta.transcriptome.long[,length(unique(human_name))]}
-  genes expressed (\ac{FPKM}$\ge 10$) in the placenta of all organisms
+  genes expressed (\ac{FPKM}$ \ge 10$) in the placenta of all organisms
   studied with housekeeping
-  genes\cite{Eisenberg.ea2013:Humanhousekeepinggenesrevisited}
+  genes \cite{Eisenberg.ea2013:Humanhousekeepinggenesrevisited}
   removed.}
 \label{fig:core_placenta_transcriptome}
 \end{figure}
+
+
+<<go.analysis,warning=FALSE,message=FALSE,echo=FALSE,results="asis">>=
+go.results <- rbindlist(list(placenta_go_results_mf[1:10,],
+                             placenta_go_results_bp[1:10,]))
+go.results <- go.results[,Annotated:=NULL]
+setnames(go.results,"classic","p value")
+setnames(go.results,"classic.fdr","FDR")
+setnames(go.results,"GO.ID","GO ID")
+setnames(go.results,"Term","GO Term")
+print(xtable(go.results,
+             digits=2,
+             display=c("d","s","s","d","f","e","e","s"),
+             caption="Top go MF results",
+             label="tab:core_placenta_go_terms"),
+      include.rownames=FALSE,
+      floating=TRUE,
+      booktabs=TRUE,
+      size="\\tiny"
+      )
+@ 
+
+The
+\Sexpr{core.placenta.transcriptome.long[,length(unique(human_name))]}
+genes comprising the core placenta transcriptome are shown in
+\fref{fig:core_placenta_transcriptome} ordered by their median
+transcription level in \ac{FPKM}. We considered a gene to be core to
+the transcriptome if an ortholog of that gene was expressed with
+$\mathrm{FPKM} \ge 10$ in all species studied and was not a
+housekeeping gene
+\cite{Eisenberg.ea2013:Humanhousekeepinggenesrevisited}.
+\textit{ANXA1} is involved in the modulation of the inflammatory
+response \DLA{It does more stuff; read the huthcinson2011 review and
+  fill this in}
+%
+Another annexin, \textit{ANXA2} 
+%
+\textit{TIMP3}, which may be down-regulated in pre-eclampsia
+\cite{Ma.ea2014:Down-regulationofTIMP3leads} (though another study
+\cite{Xiang.ea2013:PromoterhypomethylationofTIMP3} claims
+up-regulation)
 
 Annexins?
 

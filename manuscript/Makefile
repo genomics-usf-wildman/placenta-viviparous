@@ -4,7 +4,7 @@
 R ?= R
 ROPTS=-q --no-save --no-restore-data
 
-all: manuscript.pdf
+all: manuscript.pdf supplemental_material.pdf
 
 %.pdf: %.svg
 	inkscape -D -A $@ $<
@@ -18,4 +18,6 @@ all: manuscript.pdf
 %.pdf: %.tex $(wildcard *.bib) $(wildcard *.tex)
 	latexmk -f -pdf -pdflatex='xelatex -interaction=nonstopmode %O %S' -bibtex -use-make $<
 
-manuscript.tex: manuscript.Rnw ../data/combined_fpkm
+manuscript.tex: manuscript.Rnw ../data/combined_fpkm ../data/placenta_core_transcriptome ../data/placenta_go_results_mf ../data/placenta_go_results_bp
+
+supplemental_material.tex: supplemental_material.Rnw ../data/combined_fpkm ../data/placenta_core_transcriptome ../data/placenta_go_results_mf ../data/placenta_go_results_bp

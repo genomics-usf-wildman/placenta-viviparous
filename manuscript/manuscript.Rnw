@@ -414,16 +414,19 @@ recognized Pan species is generally perceived to be $\approx 1$ Mya
     Species                       & Common Name        & Reference & Read Length  \\
     \midrule
     \textit{Ateles fusciceps}     & Spider monkey      & \textit{Homo sapiens} & 100 \\
-    \textit{Bos taurus}           & Cow                & UMD3.1     & 76 \\
-    \textit{Canis familiaris}     & Dog                & CanFam3.1  & 151 \\
-    \textit{Dasypus novemcinctus} & 9-Banded Armadillo & DASNOV3    & 101 \\
-    \textit{Loxodonta africana}   & Elephant           & loxAfr3    & 76 \\
-    \textit{Homo sapiens}         & Human              & GRCh38     & 76, 151 \\
-    \textit{Monodelphis domestica} & Opossum           & BROAD05    & 76 \\
-    \textit{Mus musculus}         & Mouse              & GRCm38     & 36,44,151 \\
+    \textit{Bos taurus}           & Cow                & UMD3.1     & 75 \\
+    \textit{Canis familiaris}     & Dog                & CanFam3.1  & 150 \\
+    \textit{Dasypus novemcinctus} & 9-Banded Armadillo & DASNOV3    & 100 \\
+    \textit{Equus caballus}       & Horse              & EquCab2    & 100 \\ 
+    \textit{Loxodonta africana}   & Elephant           & loxAfr3    & 75 \\
+    \textit{Homo sapiens}         & Human              & GRCh38     & 75, 150 \\
+    \textit{Monodelphis domestica} & Opossum           & BROAD05    & 75 \\
+    \textit{Mus musculus}         & Mouse              & GRCm38     & 35,44,150 \\
     \textit{Nannospalax galili}   & Blind mole rat     & \textit{Mus musculus} & 100 \\
-    \textit{Pan paniscus}         & Bonobo             & CHIMP2.1.4 & 151 \\
+    \textit{Ovis aries}           & Sheep              & Oar_v3.1   & 151 \\
+    \textit{Pan paniscus}         & Bonobo             & CHIMP2.1.4 & 150 \\
     \textit{Spalax carmeli}       & Blind mole rat     & \textit{Mus musculus} & 100 \\
+    \textit{Sus scrofa}           & Wild Boar          & Sscrofa10.2 & 51 \\
     \bottomrule
   \end{tabular}
   \caption{Reference genomes for aligned species}
@@ -701,11 +704,13 @@ top.genes.table <- function(species.name,n=50) {
         combined.fpkm[species==species.name &
                            !(!is.na(human_name) & 
                                  human_name %in% housekeeping.genes.superset[,gene_short_name]) &
-                               !grepl("((RNA\\d|MT)-|^RPS\\d+$)",human_name) &
-                                   !grepl("(^MT-|^RP[LS]\\d+[ABCD]?(?:-.+)?$|rRNA$)",gene_short_name)
+                               !grepl("((RNA\\d|MT)-|^RP[SL]\\d+$)",human_name) &
+                                   !grepl("(^[Mm][Tt]-|^R[pP][lsLS]\\d+[abcdABCD]?[l]?(?:-.+)?$|rRNA$)",gene_short_name)
                       ][order(-mean_fpkm)][,list(name_or_id,
                                                  human_name,mean_fpkm)]
     temp <- temp[!duplicated(name_or_id)][1:n]
+    ## remove any genes which have a null name_or_id; they are probably from unassembled contigs
+    temp <- temp[!(is.na(name_or_id)|name_or_id==""),]
     setnames(temp,c("Gene name","Human Name","FPKM"))
     if (species.name=="homo sapiens") {
         temp <- temp[,-2,with=FALSE]
@@ -741,12 +746,13 @@ print(xtable(top.human.genes),
       )
 setkey(top.human.genes,"Gene name")
 @ 
-\caption{Expression in \ac{FPKM} of top 50 non-mitochondrial genes in
-  \textit{Homo sapiens}}
+\caption{Expression in \ac{FPKM} of top 50 genes which are not
+  ribosomal, mitochondrial, or a housekeeping gene in \textit{Homo
+    sapiens}}
 \label{tab:top50_human_placenta}
 \end{wraptable}
 
-<<cgb.min.expression,results="hide",echo=FALSE,warnings=FALSE>>=
+  <<cgb.min.expression,results="hide",echo=FALSE,warnings=FALSE>>=
 cgb.min.expression <- 
     min(sapply(paste0("CGB",c("","1","2","5","7","8")),
                function(x){gene.expression(species.name="homo sapiens",gene=x)}))
@@ -852,7 +858,8 @@ print(xtable(top.bonobo.genes),
       )
 setkey(top.bonobo.genes,"Gene name")
 @ 
-\caption{Expression in \ac{FPKM} of top 50 non-mitochondrial genes in
+\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
+mitochondrial, or whose human ortholog is a housekeeping gene in
   \textit{Pan paniscus}}
 \label{tab:top50_bonobo_placenta}
 \end{wraptable}
@@ -900,7 +907,8 @@ print(xtable(top.spider.monkey.genes),
       )
 setkey(top.spider.monkey.genes,"Gene name")
 @ 
-\caption{Expression in \ac{FPKM} of top 50 non-mitochondrial genes in
+\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
+mitochondrial, or whose human ortholog is a housekeeping gene in
   \textit{Ateles fusciceps}}
 \label{tab:top50_spider_monkey_placenta}
 \end{wraptable}
@@ -918,7 +926,8 @@ print(xtable(top.dog.genes),
       )
 setkey(top.dog.genes,"Gene name")
 @ 
-\caption{Expression in \ac{FPKM} of top 50 non-mitochondrial genes in
+\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
+mitochondrial, or whose human ortholog is a housekeeping gene in
   \textit{Canis familiaris}}
 \label{tab:top50_dog_placenta}
 \end{wraptable}
@@ -952,7 +961,8 @@ print(xtable(top.cow.genes),
       )
 setkey(top.cow.genes,"Gene name")
 @ 
-\caption{Expression in \ac{FPKM} of top 50 non-mitochondrial genes in
+\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
+mitochondrial, or whose human ortholog is a housekeeping gene in
   \textit{Bos taurus}}
 \label{tab:top50_cow_placenta}
 \end{wraptable}
@@ -999,7 +1009,8 @@ print(xtable(top.elephant.genes),
       )
 setkey(top.elephant.genes,"Gene name")
 @ 
-\caption{Expression in \ac{FPKM} of top 50 non-mitochondrial genes in
+\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
+mitochondrial, or whose human ortholog is a housekeeping gene in
   \textit{Loxodonta africana}}
 \label{tab:top50_elphant_placenta}
 \end{wraptable}
@@ -1042,7 +1053,8 @@ print(xtable(top.opossum.genes),
       )
 setkey(top.opossum.genes,"Gene name")
 @ 
-\caption{Expression in \ac{FPKM} of top 50 non-mitochondrial genes in
+\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
+mitochondrial, or whose human ortholog is a housekeeping gene in
   \textit{Monodelphis domestica}}
 \label{tab:top50_opossum_placenta}
 \end{wraptable}
@@ -1072,6 +1084,158 @@ involved in retinol binding (RBP4), growth (IGFBP3), lipid metabolism
 (APOA1, APOA2), and immunosupression (LGALS1). In addition, there was
 little production of CYP19A1 and HSD3B1 (FPKM<2), and moderate
 expression of relaxin RLN1 (\ac{FPKM}= 41.3949).
+
+\subsection{Mouse Placenta Transcriptome}
+
+\begin{table}[h]
+  \tiny
+<<top.50.mouse.expressed.genes,echo=FALSE,results="asis">>=
+top.mouse.genes <- top.genes.table(species.name="mus musculus")
+print(xtable(top.mouse.genes),
+      booktabs=TRUE,
+      floating=FALSE
+      )
+setkey(top.mouse.genes,"Gene name")
+@ 
+\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
+mitochondrial, or whose human ortholog is a housekeeping gene in
+  \textit{Mus musculus}}
+\label{tab:top50_mouse_placenta}
+\end{table}
+
+The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
+in the term placenta of \textit{Mus musculus} are shown in
+\fref{tab:top50_mouse_placenta} with a list of all highly expressed
+genes in Supplemental \fref{tab:all_mouse_placenta}.
+
+% No idea what mir-6236 is doing
+
+% AC099934.1 probably overlaps with Rn7sl (part of SRP?)
+
+% AC157822.1 overlaps with Rn7s2
+
+% AC122546.1 = no idea
+
+% Gm3788 = psuedogene (Thymosin beta 10)
+
+\DLA{Why are there so many psuedogenes in the mouse? Maybe because of
+  the short read length?}
+
+\subsection{\textit{Nannospalax galili} (Blind Mole Rat) Placenta Transcriptome}
+
+\begin{table}[h]
+  \tiny
+<<top.50.n.galili.expressed.genes,echo=FALSE,results="asis">>=
+top.galili.genes <- top.genes.table(species.name="nannospalax galili")
+print(xtable(top.galili.genes),
+      booktabs=TRUE,
+      floating=FALSE
+      )
+setkey(top.galili.genes,"Gene name")
+@ 
+\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
+mitochondrial, or whose human ortholog is a housekeeping gene in
+  \textit{Nannospalax galili}}
+\label{tab:top50_n_galili_placenta}
+\end{table}
+
+The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
+in the term placenta of \textit{Nannospalax galili} are shown in
+\fref{tab:top50_n_galili_placenta} with a list of all highly expressed
+genes in Supplemental \fref{tab:all_n_galili_placenta}.
+
+\subsection{\textit{Spalax carmeli} (Blind Mole Rat) Placenta Transcriptome}
+
+\begin{table}[h]
+  \tiny
+<<top.50.s.carmeli.expressed.genes,echo=FALSE,results="asis">>=
+top.carmeli.genes <- top.genes.table(species.name="spalax carmeli")
+print(xtable(top.carmeli.genes),
+      booktabs=TRUE,
+      floating=FALSE
+      )
+setkey(top.carmeli.genes,"Gene name")
+@ 
+\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
+mitochondrial, or whose human ortholog is a housekeeping gene in
+  \textit{Spalax carmeli}}
+\label{tab:top50_s_carmeli_placenta}
+\end{table}
+
+The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
+in the term placenta of \textit{Spalax carmeli} are shown in
+\fref{tab:top50_s_carmeli_placenta} with a list of all highly expressed
+genes in Supplemental \fref{tab:all_s_carmeli_placenta}.
+
+\subsection{Wild Boar Placenta Transcriptome}
+
+\begin{table}[h]
+  \tiny
+<<top.50.pig.expressed.genes,echo=FALSE,results="asis">>=
+top.pig.genes <- top.genes.table(species.name="sus scrofa")
+print(xtable(top.pig.genes),
+      booktabs=TRUE,
+      floating=FALSE
+      )
+setkey(top.pig.genes,"Gene name")
+@ 
+\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
+mitochondrial, or whose human ortholog is a housekeeping gene in
+  \textit{Sus scrofa}}
+\label{tab:top50_pig_placenta}
+\end{table}
+
+The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
+in the term placenta of \textit{Sus scrofa} are shown in
+\fref{tab:top50_pig_placenta} with a list of all highly expressed
+genes in Supplemental \fref{tab:all_pig_placenta}.
+
+\subsection{Horse Placenta Transcriptome}
+
+\begin{table}[h]
+  \tiny
+<<top.50.horse.expressed.genes,echo=FALSE,results="asis">>=
+top.horse.genes <- top.genes.table(species.name="equus caballus")
+print(xtable(top.horse.genes),
+      booktabs=TRUE,
+      floating=FALSE
+      )
+setkey(top.horse.genes,"Gene name")
+@ 
+\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
+mitochondrial, or whose human ortholog is a housekeeping gene in
+  \textit{Equus caballus}}
+\label{tab:top50_horse_placenta}
+\end{table}
+
+The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
+in the term placenta of \textit{Equus Caballus} are shown in
+\fref{tab:top50_horse_placenta} with a list of all highly expressed
+genes in Supplemental \fref{tab:all_horse_placenta}.
+
+\subsection{Sheep Placenta Transcriptome}
+
+\begin{table}[h]
+  \tiny
+<<top.50.sheep.expressed.genes,echo=FALSE,results="asis">>=
+top.sheep.genes <- top.genes.table(species.name="ovis aries")
+print(xtable(top.sheep.genes),
+      booktabs=TRUE,
+      floating=FALSE
+      )
+setkey(top.sheep.genes,"Gene name")
+@ 
+\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
+mitochondrial, or whose human ortholog is a housekeeping gene in
+  \textit{Ovis aries}}
+\label{tab:top50_sheep_placenta}
+\end{table}
+
+The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
+in the term placenta of \textit{Ovis aries} are shown in
+\fref{tab:top50_sheep_placenta} with a list of all highly expressed
+genes in Supplemental \fref{tab:all_sheep_placenta}.
+
 
 \subsection{Core Placenta Transcriptome}
 
@@ -1146,15 +1310,8 @@ Another annexin, \textit{ANXA2}
 \cite{Xiang.ea2013:PromoterhypomethylationofTIMP3} claims
 up-regulation)
 
-Annexins?
-
-TIMP3 -- maybe in pre-eclampsia (23172037)
 SERPINH1? with TIMP3 
 % http://www.proteinatlas.org/ENSG00000149257-SERPINH1/tissue/placenta
-
-Why are RPL17 and RPS26 here? They are ribosomal proteins. These
-should be missing now.
-
 
 \subsection{DAVID Analyses of Individual Transcriptomes}
 

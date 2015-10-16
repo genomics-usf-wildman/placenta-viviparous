@@ -1270,6 +1270,47 @@ print(ggplot(core.placenta.transcriptome.long[!Species %in% c("median_expression
 \end{figure}
 
 
+\begin{figure}
+<<core.placenta.transcriptome.distribution,fig.width=8,fig.height=8,out.height="0.8\\textheight",echo=FALSE,message=FALSE>>=
+cpt.distribution.shape <- 
+    data.table(melt(
+        core.placenta.transcriptome.genes.shape[fifth_min_expression > 0,
+                                                list(human_name,
+                                                     min_expression,
+                                                     second_min_expression,
+                                                     third_min_expression,
+                                                     fourth_min_expression,
+                                                     fifth_min_expression)],
+               id.vars="human_name",
+               variable.name="Lowest Expression",
+               value.name="Expression (FPKM)"
+               ))
+cpt.distribution.shape <- 
+    cpt.distribution.shape[,`Lowest Expression`:=
+                               gsub("^min_expression$","First",
+                                    `Lowest Expression`)]
+cpt.distribution.shape <- 
+    cpt.distribution.shape[,`Lowest Expression`:=
+                               factor(gsub("^(.)(.+)_min_expression$","\\U\\1\\L\\2",
+                                           `Lowest Expression`,perl=TRUE),
+                                      levels=c("First","Second","Third","Fourth","Fifth"))
+                           ]
+print(ggplot(cpt.distribution.shape[`Expression (FPKM)` > 0,],
+             aes(x=`Expression (FPKM)`+1,color=`Lowest Expression`))
+      + geom_histogram(aes(y=..count..+1))
+      + xlab(expression(FPKM+1))
+      + ylab("Genes with N-th Lowest Expression + 1")
+      + scale_y_log10()
+      + scale_x_log10())
+@ 
+\caption{Distribution shape of placenta core genes. A histogram and
+  density plot of the first through fifth lowest expression in each of
+  \Sexpr{star.logs[,length(unique(species))]} species for each of
+  \Sexpr{nrow(core.placenta.transcriptome.genes.shape)} human ortholog
+  genes.}
+\label{fig:core_placenta_transcriptome_shape}
+\end{figure}
+
 <<go.analysis,warning=FALSE,message=FALSE,echo=FALSE,results="asis">>=
 go.results <- rbindlist(list(placenta_go_results_mf[1:10,],
                              placenta_go_results_bp[1:10,]))

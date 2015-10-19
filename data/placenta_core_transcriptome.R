@@ -82,7 +82,8 @@ placenta.transcriptome.genes <-
 pts <- data.table(all.genes=all.genes)
 pts <- pts[,placenta.ts:=all.genes %in% placenta.transcriptome.genes]
 pts <- pts[,housekeeping:=all.genes %in% housekeeping.genes.superset[,gene_short_name]]
-pts <- pts[,egid:=as.vector(unlist(mget(all.genes,org.Hs.egSYMBOL2EG,ifnotfound=NA)))]
+pts <- pts[,egid:=as.vector(unlist(sapply(mget(all.genes,org.Hs.egSYMBOL2EG,ifnotfound=NA),
+                                          function(x){x[1]})))]
 ## this list contains all possible genes with a 0 if it is not in the
 ## core placenta transcriptome, or a 1 if it is in the core placenta
 ## transcriptome

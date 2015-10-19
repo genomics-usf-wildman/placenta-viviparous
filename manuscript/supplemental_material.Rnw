@@ -181,6 +181,10 @@ setnames(star.logs.wide,
          "unique.map.reads")
 @ 
 
+<<load.go.results,echo=FALSE,results="hide",cache.extra=tools::md5sum("../go_annotation/go_tissue_analysis")>>=
+load("../go_annotation/go_tissue_analysis")
+
+@ 
 
 \begin{figure}
 <<transcriptome.mapping.figure,fig.width=8,fig.height=8,echo=FALSE>>=
@@ -263,6 +267,21 @@ print(ggplot(star.logs.wide,
 \end{figure}
 
 
+<<go.analysis.all.species,echo=FALSE,results="asis">>=
+for (this.species in go.results[grepl("100 No Housekeeping",type) & FDR <= 0.0005,unique(species)]) {
+    print(xtable(go.results[grepl("100 No Housekeeping",type) & FDR <= 0.0005 & species == this.species,
+                            list(GO.ID,Term,FDR,Ontology,type)
+                            ],
+                 caption=paste0("Signficantly enriched ($\\mathrm{FDR}\\le0.0005$) GO terms in ",
+                     "\\textit{",capfirst(this.species),"}"),
+                 label=paste0("tab:go_terms_enriched_",gsub(" ","_",this.species)),
+                 display=c("s","s","s","e","s","s")
+                 ),
+          size="\\small",
+          booktabs=TRUE,
+          floating=TRUE)
+}
+@ 
 
 <<genes.expression,echo=FALSE,results="hide">>=
 genes.expression.table <- function(species.name,min.fpkm=50) {
@@ -278,18 +297,21 @@ genes.expression.table <- function(species.name,min.fpkm=50) {
 }
 @ 
 
-<<human.expressed.genes,echo=FALSE,results="asis">>=
-print(xtable(genes.expression.table(species.name="homo sapiens"),
-             caption="Expression of all genes with FPKM $\\ge 50$ in \\textit{Homo sapiens}",
-             label="tab:all_human_placenta"
-             ),
-      booktabs=TRUE,
-      tabular.environment="longtable",
-      floating=FALSE,
-      caption.placement="top",
-      add.to.row = list(pos = list(0),command = "\\midrule \\endhead "),
-      size="\\tiny"
-      )
+<<top.expressed.genes,echo=FALSE,results="asis">>=
+for (this.species in combined.fpkm[,sort(unique(species))]) {
+    print(xtable(genes.expression.table(species.name=this.species),
+                 caption=paste0("Expression of all genes with FPKM $\\ge 50$ in \\textit{",
+                     capfirst(this.species),"}"),
+                 label=paste0("tab:all_",gsub(" ","_",this.species),"_placenta")
+                 ),
+          booktabs=TRUE,
+          tabular.environment="longtable",
+          floating=FALSE,
+          caption.placement="top",
+          add.to.row = list(pos = list(0),command = "\\midrule \\endhead "),
+          size="\\tiny"
+          )
+}
 @ 
 
  

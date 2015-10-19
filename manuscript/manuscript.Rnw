@@ -177,7 +177,7 @@ for (a in paste0("../common_r_code/",c("to_latex.R","plot_tree_matrix.R"))) {
 }
 @ 
 
-<<load.data,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../data/",c("combined_fpkm","gene_trees","housekeeping_genes_superset","placenta_core_transcriptome","placenta_go_results_bp","palcenta_go_results_mf")))>>=
+<<load.data,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../data/",c("combined_fpkm","gene_trees","housekeeping_genes_superset","placenta_core_transcriptome","placenta_go_results_bp","placenta_go_results_mf")))>>=
 for (a in paste0("../data/",c("combined_fpkm","gene_trees",
                               "housekeeping_genes_superset",
                               "placenta_core_transcriptome",
@@ -199,6 +199,11 @@ setnames(star.logs.wide,
 setnames(star.logs.wide,
          "Uniquely mapped reads number",
          "unique.map.reads")
+@ 
+
+<<load.go.results,echo=FALSE,results="hide",cache.extra=tools::md5sum("../go_annotation/go_tissue_analysis")>>=
+load("../go_annotation/go_tissue_analysis")
+
 @ 
 
 \section{Abstract}
@@ -1242,7 +1247,7 @@ genes in Supplemental \fref{tab:all_sheep_placenta}.
 
 \begin{figure}
 <<core.placenta.transcriptome,fig.width=8,fig.height=12,out.height="0.8\\textheight",echo=FALSE>>=
-print(ggplot(core.placenta.transcriptome.long[!grepl("(min|median)_expression",Species),],
+print(ggplot(core.placenta.transcriptome.long[!grepl("(min|median|max)_expression",Species),],
              aes(y=human_name,x=capfirst(Species)))
       + geom_tile(aes(fill=log10(FPKM)))
       + scale_x_discrete(expand=c(0,0))
@@ -1349,14 +1354,14 @@ print(ggplot(cpt.distribution.shape[`Expression (FPKM)` > 1,],
 \end{figure}
 
 <<go.analysis,warning=FALSE,message=FALSE,echo=FALSE,results="asis">>=
-go.results <- rbindlist(list(placenta_go_results_mf[1:10,],
+placenta.go.results <- rbindlist(list(placenta_go_results_mf[1:10,],
                              placenta_go_results_bp[1:10,]))
-go.results <- go.results[,Annotated:=NULL]
-setnames(go.results,"classic","p value")
-setnames(go.results,"classic.fdr","FDR")
-setnames(go.results,"GO.ID","GO ID")
-setnames(go.results,"Term","GO Term")
-print(xtable(go.results,
+placenta.go.results <- placenta.go.results[,Annotated:=NULL]
+setnames(placenta.go.results,"classic","p value")
+setnames(placenta.go.results,"classic.fdr","FDR")
+setnames(placenta.go.results,"GO.ID","GO ID")
+setnames(placenta.go.results,"Term","GO Term")
+print(xtable(placenta.go.results,
              digits=2,
              display=c("d","s","s","d","f","e","e","s"),
              caption="Top go MF results",
@@ -1424,6 +1429,33 @@ and calcium binding. Elephant shows enrichment in genes associated
 with RNA, coagulation and calcium binding. Opossum shows enrichment in
 genes involved in apoptosis, oxidative stress, mitochondrion, hormone
 metabolism, and lipids.
+
+\begin{table}
+<<go.analysis.all.tissue,echo=FALSE,results="asis">>=
+go.analysis.wide <- 
+    data.table(dcast(data=go.results,
+                     formula=GO.ID+type+Term+Ontology~species,
+                     value.var="FDR"))
+go.analysis.wide <- 
+    go.analysis.wide[,`max(FDR)`:=apply(go.analysis.wide[,-(1:4),with=FALSE],
+                                    1,max,na.rm=TRUE)]
+go.analysis.wide.table <- 
+    go.analysis.wide[`max(FDR)` <= 0.1 & grepl("No Housekeeping",type),
+                     list(GO.ID,Term,Ontology,`max(FDR)`)]
+go.analysis.wide.table <- 
+    go.analysis.wide.table[order(`max(FDR)`)]
+print(xtable(go.analysis.wide.table,
+             display=c("d","s","s","s","e")
+             ),
+      booktabs=TRUE,
+      floating=FALSE
+      )
+@ 
+\caption{GO terms with enrichment in all species analyzed with
+  housekeeping genes removed}
+\label{tab:go_terms_all_species}
+\end{table}
+
 
 \subsection{Comparative Analysis of Gene Expression}
 

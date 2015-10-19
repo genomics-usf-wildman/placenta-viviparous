@@ -16,3 +16,9 @@ Trinity.fasta*
 *align_rsem_isoforms.txt
 *diamond.txt
 *.sra
+tophat_out
+*.phr
+*.pin
+*.psq
+*.daa
+*.fai

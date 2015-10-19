@@ -1272,19 +1272,28 @@ print(ggplot(core.placenta.transcriptome.long[!grepl("(min|median)_expression",S
 
 \begin{figure}
 <<core.placenta.transcriptome.distribution,fig.width=8,fig.height=8,out.height="0.8\\textheight",echo=FALSE,message=FALSE>>=
+calculate.distribution.shape <- 
+    function(min.vector) {
+        min.vector <- sort(min.vector,decreasing=TRUE)
+        temp <- data.table(FPKM=min.vector,num_genes=1:length(min.vector))
+        temp <- temp[order(-num_genes)][!duplicated(FPKM)]
+        return(temp)
+    }
+
+cptg.nh <- core.placenta.transcriptome.genes.shape[!(human_name %in% housekeeping.genes.superset[,gene_short_name])]
+
 cpt.distribution.shape <- 
-    data.table(melt(
-        core.placenta.transcriptome.genes.shape[fifth_min_expression > 0,
-                                                list(human_name,
-                                                     min_expression,
-                                                     second_min_expression,
-                                                     third_min_expression,
-                                                     fourth_min_expression,
-                                                     fifth_min_expression)],
-               id.vars="human_name",
-               variable.name="Lowest Expression",
-               value.name="Expression (FPKM)"
-               ))
+    lapply(c("min_expression",
+             "second_min_expression",
+             "third_min_expression",
+             "fourth_min_expression",
+             "fifth_min_expression"),
+           function(x){
+               calculate.distribution.shape(cptg.nh[,x,with=FALSE][[1]])[,`Lowest Expression`:=x]
+           })
+cpt.distribution.shape <- 
+    rbindlist(cpt.distribution.shape)
+
 cpt.distribution.shape <- 
     cpt.distribution.shape[,`Lowest Expression`:=
                                gsub("^min_expression$","First",
@@ -1295,19 +1304,47 @@ cpt.distribution.shape <-
                                            `Lowest Expression`,perl=TRUE),
                                       levels=c("First","Second","Third","Fourth","Fifth"))
                            ]
-print(ggplot(cpt.distribution.shape[`Expression (FPKM)` > 0,],
-             aes(x=`Expression (FPKM)`+1,color=`Lowest Expression`))
-      + geom_histogram(aes(y=..count..+1))
-      + xlab(expression(FPKM+1))
-      + ylab("Genes with N-th Lowest Expression + 1")
+setnames(cpt.distribution.shape,
+         "FPKM",
+         "Expression (FPKM)")
+         
+
+print(ggplot(cpt.distribution.shape[`Expression (FPKM)` > 1,],
+             aes(x=`Expression (FPKM)`,color=`Lowest Expression`,y=num_genes))
+      + geom_line(lwd=1)
+      + xlab(expression(FPKM))
+      + ylab("Genes with N-th Lowest Expression")
       + scale_y_log10()
-      + scale_x_log10())
+      + scale_x_log10()
+      + geom_vline(xintercept=10)
+      + geom_segment(mapping=aes(y=V1,
+                         yend=V1,
+                         xend=10,
+                         x=100,
+                         color=`Lowest Expression`),
+                     data=cpt.distribution.shape[`Expression (FPKM)` > 10,
+                                              max(num_genes),`Lowest Expression`],
+                     arrow=arrow(length=unit(0.5,"cm"))
+                   )
+      + geom_text(mapping=aes(x=100,
+                      y=V1,
+                      label=paste0(V1," genes"),override=TRUE),
+                  data=cpt.distribution.shape[`Expression (FPKM)` > 10,
+                      max(num_genes),`Lowest Expression`],
+                  show_guide=FALSE,
+                  hjust=0
+                  )
+      + guides(color=guide_legend(title="Lowest\nExpression"))
+      )
 @ 
-\caption{Distribution shape of placenta core genes. A histogram and
-  density plot of the first through fifth lowest expression in each of
-  \Sexpr{star.logs[,length(unique(species))]} species for each of
-  \Sexpr{nrow(core.placenta.transcriptome.genes.shape)} human ortholog
-  genes.}
+\caption{Distribution shape of placenta core genes. The Y axis shows
+  the number of orthologous gene sets included in the core placenta
+  transcriptome if the least expression cutoff (or second-least, etc.)
+  was set to the X axis. For example, if the cutoff is set to 10
+  (vertical black line), 37 genes would be included if the FPKM of all
+  species must be at least 10, 134 genes would be included if all but
+  one species must have FPKM of at least 10. 655 genes would be
+  included if all but five species must have FPKM of at least 10.}
 \label{fig:core_placenta_transcriptome_shape}
 \end{figure}
 

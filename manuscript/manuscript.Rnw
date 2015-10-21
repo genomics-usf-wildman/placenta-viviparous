@@ -836,14 +836,14 @@ cgb.sum.expression <-
 The top 50 expressed genes as measured by \ac{FPKM} in the term
 placenta of \textit{Homo sapiens} are shown in
 \fref{tab:top50_human_placenta} with all genes with \ac{FPKM} $\ge 50$
-in Supplemental \fref{tab:all_human_placenta}. The gene with by far
+in Supplemental \fref{tab:all_homo_sapiens_placenta}. The gene with by far
 the highest \ac{FPKM} value
 %
 (\Sexpr{gene.expression(species.name="homo sapiens",gene="CSH1")}) %
 %
 in humans is \textit{CSH1}, followed by \textit{CSH2}, and \textit{CSHL1}, all
 three of which are members of a distinct expansion of the growth
-hormone gene family within hominoids (~\ref{fig:galectins_evolution_tree}). Another member of the growth
+hormone gene family within hominoids (\fref{fig:galectins_evolution_tree}). Another member of the growth
 hormone gene family, \ac{GH2} (\ac{FPKM}=%
 \Sexpr{gene.expression(species.name="homo sapiens",gene="GH2")}), %
 is also expressed to a high degree in the human placenta
@@ -880,14 +880,10 @@ which generates the alpha subnit of multiple human chorionic
 gonadotropin hormones (\fref{tab:top50_human_placenta}). The genes
 producing the beta subunits of the chorionic gonadotropins
 (\textit{CGB}, \textit{CGB1}, \textit{CGB2}, \textit{CGB5},
-\textit{CGB7}, \textit{CGB8}) are either not expressed (%
-%
-\Sexpr{gene.expression(species.name="homo sapiens",gene="CGB8")}
-%
-) have reasonable expression ($\mathrm{FPKM} \ge \Sexpr{cgb.min.expression}$),
-and the sum of their expression is on the order of the expression of
-expression of \textit{CGA}
-($\sum \mathit{CGBs}=\Sexpr{cgb.sum.expression}$ FPKM) .
+\textit{CGB7}, \textit{CGB8}) have reasonable expression
+($\mathrm{FPKM} \ge \Sexpr{cgb.min.expression}$), and the sum of their
+expression is on the order of the expression of expression of
+\textit{CGA} ($\sum \mathit{CGBs}=\Sexpr{cgb.sum.expression}$ FPKM) .
 %
 %
 Other highly expressed genes in the top 50 include members of the

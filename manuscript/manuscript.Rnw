@@ -898,7 +898,7 @@ cell proliferation (\textit{ADAM12}, \textit{KISS1}, \textit{IGF2},
 \textit{GPC3}, \textit{CSF3R}), anticoagulation (\textit{TFPI2}), and
 glucose transport (\textit{SLC2A1}) among others
 (\fref{tab:top50_human_placenta}, Supplemental
-\fref{tab:all_human_placenta}).
+\fref{tab:all_homo_sapiens_placenta}).
 
 
 

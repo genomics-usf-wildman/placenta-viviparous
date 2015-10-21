@@ -796,7 +796,7 @@ gene.expression <- function(species.name,gene,complete=FALSE) {
 
     if (complete) {
         return(paste0("\\textit{",gene,"}=",
-                      formatC(fpkm,digits=2,format="f"),
+                      formatC(fpkm,digits=0,format="f"),
                       " \\ac{FPKM}"
                       ))
     } else {

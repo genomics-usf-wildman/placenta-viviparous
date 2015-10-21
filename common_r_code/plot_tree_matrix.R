@@ -2,6 +2,7 @@ plot.tree.matrix <- function(gene.tree,gene.tree.table,expression,min.fpkm=NA) {
     gene.tree$tip.label <- gsub("^(ENS.+)\\1$","\\1",gene.tree$tip.label)
     gene.tree.table[,species:=capfirst(gsub("_"," ",species))]
     gene.tree.table[,symbol_or_id:=ifelse(symbol=="NULL",gene_id,paste0(symbol," ",species))]
+    gene.tree.table[duplicated(symbol_or_id),symbol_or_id:=paste0(symbol_or_id," dup")]
     gene.tree.expression <-
         combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
     if (!is.na(min.fpkm)) {

@@ -1857,6 +1857,20 @@ verified expression in cow, however its abundant expression was also
 identified in dog. This gene is not found in primates. Expansion of
 these genes in elephants may indicate an elaboration of this system.
 
+\begin{figure}
+<<prss16.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="PRSS16" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+@ 
+\caption{Expression of \textit{PRSS16} and related genes}
+\label{fig:prss16_evolution_tree}
+\end{figure}
+
 \subsection{Human Specific Expression Shifts and the Evolution of Preeclampsia}
 
 The human placenta is distinctive from many other primates in that it

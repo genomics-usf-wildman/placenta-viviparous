@@ -966,6 +966,21 @@ KRT19), heat-shock proteins (e.g., HSPA5, HSPA1A), serpins (SERPINE1,
 SERPINE2), insulin growth factor 2 (IGF2) and the hormone
 adrenomedullin (ADM).
 
+\begin{figure}
+<<serpine.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="SERPINE2" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,min.fpkm=1)
+@ 
+\caption{Expression of \textit{SERPINE2} genes with $\mathrm{FPKM} \ge 1$}
+\label{fig:serpine_evolution_tree}
+\end{figure}
+
+
 \subsection{Spider Monkey Transcriptome}
 
 \begin{table}

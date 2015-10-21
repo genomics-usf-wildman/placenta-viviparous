@@ -808,7 +808,7 @@ gene.expression <- function(species.name,gene,complete=FALSE) {
 
 \subsection{Human Placenta Transcriptome}
 
-\begin{wraptable}{R}{0.3\textwidth}
+\begin{table}
   \tiny
 <<top.50.human.expressed.genes,echo=FALSE,results="asis">>=
 top.human.genes <- top.genes.table(species.name="homo sapiens")
@@ -822,7 +822,7 @@ setkey(top.human.genes,"Gene name")
   ribosomal, mitochondrial, or a housekeeping gene in \textit{Homo
     sapiens}}
 \label{tab:top50_human_placenta}
-\end{wraptable}
+\end{table}
 
   <<cgb.min.expression,results="hide",echo=FALSE,warnings=FALSE>>=
 cgb.min.expression <- 
@@ -917,10 +917,9 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 \end{figure}
 
 
-
 \subsection{Bonobo Placenta Transcriptome}
 
-\begin{wraptable}{L}{0.3\textwidth}
+\begin{table}
   \tiny
 <<top.50.bonobo.expressed.genes,echo=FALSE,results="asis">>=
 top.bonobo.genes <- top.genes.table(species.name="pan paniscus")
@@ -934,7 +933,7 @@ setkey(top.bonobo.genes,"Gene name")
 mitochondrial, or whose human ortholog is a housekeeping gene in
   \textit{Pan paniscus}}
 \label{tab:top50_bonobo_placenta}
-\end{wraptable}
+\end{table}
 
 The top 50 expressed genes as measured by \ac{FPKM} in the term placenta of
 the bonobo are shown in \fref{tab:top50_bonobo_placenta} with a list of all genes in
@@ -969,7 +968,7 @@ adrenomedullin (ADM).
 
 \subsection{Spider Monkey Transcriptome}
 
-\begin{wraptable}{R}{0.3\textwidth}
+\begin{table}
   \tiny
 <<top.50.spider.monkey.expressed.genes,echo=FALSE,results="asis">>=
 top.spider.monkey.genes <- top.genes.table(species.name="ateles fusciceps")
@@ -983,12 +982,12 @@ setkey(top.spider.monkey.genes,"Gene name")
 mitochondrial, or whose human ortholog is a housekeeping gene in
   \textit{Ateles fusciceps}}
 \label{tab:top50_spider_monkey_placenta}
-\end{wraptable}
+\end{table}
 
 
 \subsection{Dog Placenta Transcriptome}
 
-\begin{wraptable}{R}{0.3\textwidth}
+\begin{table}
   \tiny
 <<top.50.dog.expressed.genes,echo=FALSE,results="asis">>=
 top.dog.genes <- top.genes.table(species.name="canis familiaris")
@@ -1002,7 +1001,7 @@ setkey(top.dog.genes,"Gene name")
 mitochondrial, or whose human ortholog is a housekeeping gene in
   \textit{Canis familiaris}}
 \label{tab:top50_dog_placenta}
-\end{wraptable}
+\end{table}
 
 
 The top 50 expressed genes as measured by \ac{FPKM} in the term placenta of
@@ -1023,7 +1022,7 @@ expression of HSD3B1 is relatively high (\ac{FPKM}=157.622).
 
 \subsection{Cow Placenta Transcriptome}
 
-\begin{wraptable}{L}{0.3\textwidth}
+\begin{table}
   \tiny
 <<top.50.cow.expressed.genes,echo=FALSE,results="asis">>=
 top.cow.genes <- top.genes.table(species.name="bos taurus")
@@ -1037,7 +1036,7 @@ setkey(top.cow.genes,"Gene name")
 mitochondrial, or whose human ortholog is a housekeeping gene in
   \textit{Bos taurus}}
 \label{tab:top50_cow_placenta}
-\end{wraptable}
+\end{table}
 
 The top 50 expressed genes as measured by \ac{FPKM} in the term placenta of
 the dog are shown in Table 5 with a list of all genes in Supplemental
@@ -1071,8 +1070,8 @@ placental expression of the estrogen synthase gene (CYP19A1) in cows
 
 \subsection{African Elephant Placenta Transcriptome}
 
-\begin{wraptable}{L}{0.3\textwidth}
-  \tiny
+\begin{table}
+\tiny
 <<top.50.elephant.expressed.genes,echo=FALSE,results="asis">>=
 top.elephant.genes <- top.genes.table(species.name="loxodonta africana")
 print(xtable(top.elephant.genes),
@@ -1085,7 +1084,7 @@ setkey(top.elephant.genes,"Gene name")
 mitochondrial, or whose human ortholog is a housekeeping gene in
   \textit{Loxodonta africana}}
 \label{tab:top50_elphant_placenta}
-\end{wraptable}
+\end{table}
 
 
 The top 50 expressed genes as measured by \ac{FPKM} in the term placenta of
@@ -1113,9 +1112,11 @@ oxidative stress (TXN), growth (IGF2), and PAEP, a gene usually
 expressed in the endometrium of the uterus in humans (Rutanen et al.,
 1987).
 
+
+
 \subsection{Opossum Placenta Transcriptome}
 
-\begin{wraptable}{L}{0.3\textwidth}
+\begin{table}
   \tiny
 <<top.50.opossum.expressed.genes,echo=FALSE,results="asis">>=
 top.opossum.genes <- top.genes.table(species.name="monodelphis domestica")
@@ -1129,7 +1130,7 @@ setkey(top.opossum.genes,"Gene name")
 mitochondrial, or whose human ortholog is a housekeeping gene in
   \textit{Monodelphis domestica}}
 \label{tab:top50_opossum_placenta}
-\end{wraptable}
+\end{table}
 
 The top 50 expressed genes as measured by \ac{FPKM} in the term placenta of
 the opossum are shown in Table 7 with a list of all genes in

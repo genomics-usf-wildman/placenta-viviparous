@@ -931,16 +931,18 @@ mitochondrial, or whose human ortholog is a housekeeping gene in
 \label{tab:top50_bonobo_placenta}
 \end{table}
 
-The top 50 expressed genes as measured by \ac{FPKM} in the term placenta of
-the bonobo are shown in \fref{tab:top50_bonobo_placenta} with a list of all genes in
-Supplemental Table X. Expression in the bonobo placenta differs
-somewhat from that of the human, as evidenced by the makeup of the top
-50 genes (Table 3). The highest expression (\ac{FPKM}=%
+The top 50 expressed genes as measured by \ac{FPKM} in the term
+placenta of the bonobo are shown in \fref{tab:top50_bonobo_placenta}
+with a list of all genes in Supplemental
+\fref{tab:all_pan_paniscus_placenta}. Expression in the bonobo
+placenta differs somewhat from that of the human, as evidenced by the
+makeup of the top 50 genes (\fref{tab:top50_bonobo_placenta}). The highest expression
+(\ac{FPKM}=%
 \Sexpr{gene.expression("pan paniscus","PRG2")}%
 %
-) in bonobo is \ac{PRG2}, which is involved in insulin
-growth factor signaling and angiogenesis during pregnancy \cite{Weyer.ea2011:Placentalregulationofpeptide}. \ac{PRG2} is also expressed at relatively high levels in the
-human placenta (\ac{FPKM}=\Sexpr{gene.expression("homo sapiens","PRG2")}; Supplemental Table X), although at
+) in bonobo is \textit{PRG2}, which is involved in insulin
+growth factor signaling and angiogenesis during pregnancy \cite{Weyer.ea2011:Placentalregulationofpeptide}. \textit{PRG2} is also expressed at relatively high levels in the
+human placenta (\ac{FPKM}=\Sexpr{gene.expression("homo sapiens","PRG2")}; Supplemental \fref{tab:all_homo_sapiens_placenta}), although at
 comparatively much lower levels than the bonobo. A bonobo gene closely
 related to the chorionic somatomammotropins (Q95MK7\_PANTR) is also
 expressed at high levels (\ac{FPKM}=1232.56; \fref{tab:top50_bonobo_placenta}). Two other Pan genes

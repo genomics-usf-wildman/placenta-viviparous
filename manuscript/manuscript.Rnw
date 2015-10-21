@@ -1680,6 +1680,20 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 \label{fig:prolactin_evolution_tree}
 \end{figure}
 
+\begin{figure}
+<<prolactin.receptor.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="PRLR" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+@ 
+\caption{Expression of prolactin receptor}
+\label{fig:prolactin_receptor_evolution_tree}
+\end{figure}
+
 The elephant is strikingly the only mammal analyzed that shows high
 expression of the primarily pituitary hormone prolactin (PRL) in the
 placenta. All afrotherians yet analyzed contain only one prolactin

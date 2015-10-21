@@ -1696,7 +1696,12 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 
 The elephant is strikingly the only mammal analyzed that shows high
 expression of the primarily pituitary hormone prolactin (PRL) in the
-placenta. All afrotherians yet analyzed contain only one prolactin
+placenta. %
+\DLA{This is totally not true. \textit{A. fusciceps} expresses PRL,
+  and so does \textit{S. carmeli}, and \textit{B. taurus}, \textit{M.
+    musculus}, all have expansions of prolatacin.}
+%
+All afrotherians yet analyzed contain only one prolactin
 gene, and prolactin has undergone adaptive evolution on the elephant
 lineage \cite{Wallis2009:ProlactininAfrotheriacharacterization}.
 \cite{Yamamoto.ea2011:PlacentationinAfricanelephant} noted the

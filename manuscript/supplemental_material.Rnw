@@ -268,18 +268,21 @@ print(ggplot(star.logs.wide,
 
 
 <<go.analysis.all.species,echo=FALSE,results="asis">>=
-for (this.species in go.results[grepl("100 No Housekeeping",type) & FDR <= 0.0005,unique(species)]) {
-    print(xtable(go.results[grepl("100 No Housekeeping",type) & FDR <= 0.0005 & species == this.species,
+for (this.species in go.results[grepl("100 No Housekeeping",type) & FDR <= 0.05,unique(species)]) {
+    print(xtable(go.results[grepl("100 No Housekeeping",type) & FDR <= 0.05 & species == this.species,
                             list(GO.ID,Term,FDR,Ontology,type)
-                            ],
-                 caption=paste0("Signficantly enriched ($\\mathrm{FDR}\\le0.0005$) GO terms in ",
+                            ][order(FDR)],
+                 caption=paste0("Signficantly enriched ($\\mathrm{FDR}\\le0.05$) GO terms in ",
                      "\\textit{",capfirst(this.species),"}"),
                  label=paste0("tab:go_terms_enriched_",gsub(" ","_",this.species)),
                  display=c("s","s","s","e","s","s")
                  ),
           size="\\small",
           booktabs=TRUE,
-          floating=TRUE)
+          tabular.environment="longtable",
+          caption.placement="top",
+          add.to.row = list(pos = list(0),command = "\\midrule \\endhead "),
+          floating=FALSE)
 }
 @ 
 

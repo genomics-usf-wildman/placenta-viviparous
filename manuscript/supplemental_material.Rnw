@@ -94,6 +94,11 @@
 
 % \maketitle
 
+\listoftables
+
+\listoffigures
+
+
 <<load.libraries,echo=FALSE,results="hide",warning=FALSE,message=FALSE,error=FALSE,cache=FALSE>>=
 opts_chunk$set(dev="cairo_pdf",out.width="\\textwidth",out.height="0.7\\textheight",out.extra="keepaspectratio")
 opts_chunk$set(cache=TRUE, autodep=TRUE)

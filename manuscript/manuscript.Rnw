@@ -607,6 +607,14 @@ not step on Natalie’s toes]
 
 \DLA{Complete discussion of the ateles placenta}
 
+\subsection{Sequence Deposition and Code}
+
+All of the code used to produce every analysis presented in this paper
+is available at
+\url{https://github.com/uiuc-cgm/placenta-viviparous.git}. All of the
+sequences used are deposited in SRA, and can be obtained using
+\DLA{add GSE label for the experiment}.
+
 \section{Results}
 
 \subsection{Transcriptome Statistics}

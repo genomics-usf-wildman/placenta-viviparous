@@ -1446,10 +1446,10 @@ print(ggplot(cpt.distribution.shape[`Expression (FPKM)` > 1,],
       + guides(color=guide_legend(title="Lowest\nExpression"))
       )
 @ 
-\caption{Distribution shape of placenta core genes. The Y axis shows
+\caption{Distribution shape of placenta core genes. The vertical axis shows
   the number of orthologous gene sets included in the core placenta
   transcriptome if the least expression cutoff (or second-least, etc.)
-  was set to the X axis. For example, if the cutoff is set to 10
+  was set to the horizontal axis. For example, if the cutoff is set to 10
   (vertical black line), 37 genes would be included if the FPKM of all
   species must be at least 10, 134 genes would be included if all but
   one species must have FPKM of at least 10. 655 genes would be

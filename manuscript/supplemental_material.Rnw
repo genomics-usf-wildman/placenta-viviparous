@@ -16,8 +16,6 @@
 \usepackage{setspace}
 \usepackage{wrapfig}
 % \usepackage{txfonts}
-\usepackage[plain]{fancyref}
-\renewcommand*{\fref}[1]{\Fref{#1}}
 \usepackage{acronym}
 \usepackage{array}
 \usepackage{dcolumn}
@@ -40,6 +38,7 @@
 \usepackage{tikz}
 \usepackage{nameref}
 \usepackage{zref-xr,zref-user}
+\usepackage{cleveref}
 \newenvironment{narrow}[2]{%
   \begin{list}{}{%
       \setlength{\topsep}{0pt}%

@@ -505,6 +505,21 @@ recognized Pan species is generally perceived to be $\approx 1$ Mya
   \label{tab:ref_genome_aligned_species}
 \end{table}
 
+\begin{figure}
+<<species.tree,fig.width=8,fig.height=6,echo=FALSE>>=
+species.tree <- 
+    read.tree(text="(Monodelphis_domestica,((Dasypus_novemcinctus,Loxodona_africana),((Canis_familiaris,(Equus_caballus,(Sus_scrofa,(Ovis_aries,Bos_taurus)))),(((Spalax_carmeli,Nannospalax_galili),Mus_Musculus),((Pan_paniscus,Homo_sapiens),Ateles_fuciceps)))));")
+plot(species.tree,x.lim=18)
+edgelabels("Eutheria",2,frame="none",bg="white",font=1,adj=c(0.75,0),cex=0.9)
+edgelabels("Euarchontoglires",16,frame="none",bg="white",font=1,adj=c(0.5,0),cex=0.9)
+edgelabels("Laurasiatheria",7,frame="none",bg="white",font=1,adj=c(0.5,0),cex=0.9)
+edgelabels("Atlantogenata",3,frame="none",bg="white",font=1,adj=c(0.5,0),cex=0.9)
+edgelabels("Boreoeutheria",6,frame="none",bg="white",font=1,adj=c(0.7,0),cex=0.9)
+@ 
+\caption{Species tree for organisms studied}
+\label{fig:species_tree}
+\end{figure}
+
 \subsection{Exploration of Individual Transcriptome Data}
 
 To determine enrichment levels of functional categories of genes in

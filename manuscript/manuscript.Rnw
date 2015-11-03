@@ -16,8 +16,7 @@
 \usepackage{setspace}
 \usepackage{wrapfig}
 % \usepackage{txfonts}
-\usepackage[plain]{fancyref}
-\renewcommand*{\fref}[1]{\Fref{#1}}
+%\usepackage[plain]{fancyref}
 \usepackage{acronym}
 \usepackage{array}
 \usepackage{dcolumn}
@@ -42,6 +41,7 @@
 \usepackage{zref-xr,zref-user}
 \zxrsetup{toltxlabel}
 \zexternaldocument*{supplemental_material}
+\usepackage{cleveref}
 \newenvironment{narrow}[2]{%
   \begin{list}{}{%
       \setlength{\topsep}{0pt}%
@@ -459,12 +459,12 @@ from the \ac{SRA}.
 The quality of reads was evaluated using FASTQC v0.11.2
 (\url{http://www.bioinformatics.babraham.ac.uk/projects/fastqc/}).
 Transcriptomes without a suitable reference genome (Reference of ---
-in \fref{tab:ref_genome_aligned_species}) were assembled into a
+in \cref{tab:ref_genome_aligned_species}) were assembled into a
 reference using Trinity v2014-07-17
 \cite{Haas.ea2013:Denovotranscriptsequence} and annotated using
 Diamond \cite{Buchfink.ea2015:Fastandsensitiveprotein} against either
 the \textit{Homo sapiens} or \textit{Mus musculus} transcriptome
-(\fref{tab:ref_genome_aligned_species}).
+(\cref{tab:ref_genome_aligned_species}).
 % 
 All transcriptomes were then aligned to the appropriate reference
 genome using STAR v2.4.2a
@@ -727,7 +727,7 @@ the number of trimmed reads ranged from %
 to %
 \Sexpr{star.logs.wide[input.read.length > 70 & input.read.length < 80,max(as.numeric(input.reads))]}
 with at least 96\% of reads \DLA{This is wrong}
-mapping to the respective reference genome (\fref{tab:ref_genome_aligned_species}). 
+mapping to the respective reference genome (\cref{tab:ref_genome_aligned_species}). 
 %
 For transcriptomes sequenced with 150 bp, %
 % The mismatch here is because we're reporting trimmed reads here, not
@@ -858,26 +858,26 @@ cgb.sum.expression <-
 
 The top 50 expressed genes as measured by \ac{FPKM} in the term
 placenta of \textit{Homo sapiens} are shown in
-\fref{tab:top50_human_placenta} with all genes with \ac{FPKM} $\ge 50$
-in Supplemental \fref{tab:all_homo_sapiens_placenta}. The gene with by far
+\cref{tab:top50_human_placenta} with all genes with \ac{FPKM} $\ge 50$
+in Supplemental \cref{tab:all_homo_sapiens_placenta}. The gene with by far
 the highest \ac{FPKM} value
 %
 (\Sexpr{gene.expression(species.name="homo sapiens",gene="CSH1")}) %
 %
 in humans is \textit{CSH1}, followed by \textit{CSH2}, and \textit{CSHL1}, all
 three of which are members of a distinct expansion of the growth
-hormone gene family within hominoids (\fref{fig:galectins_evolution_tree}). Another member of the growth
+hormone gene family within hominoids (\cref{fig:galectins_evolution_tree}). Another member of the growth
 hormone gene family, \ac{GH2} (\ac{FPKM}=%
 \Sexpr{gene.expression(species.name="homo sapiens",gene="GH2")}), %
 is also expressed to a high degree in the human placenta
-(\fref{tab:top50_human_placenta}).
+(\cref{tab:top50_human_placenta}).
 % 
 Eleven pregnancy-specific beta-1-glycoprotein genes are highly-expressed
 (\ac{FPKM}$\ge 100$) in the term placenta of humans, with \textit{PSG1} showing the
 greatest degree of expression %
 (\ac{FPKM}=\Sexpr{gene.expression(species.name="homo sapiens",gene="PSG1")}) % 
 and the pseudogene \textit{PSG10P} showing the least %
-(\ac{FPKM}=\Sexpr{gene.expression(species.name="homo sapiens",gene="PSG10P")}, \fref{fig:psg_evolution_tree}) . %
+(\ac{FPKM}=\Sexpr{gene.expression(species.name="homo sapiens",gene="PSG10P")}, \cref{fig:psg_evolution_tree}) . %
 These
 genes are members of a hominoid-specific expansion of the \ac{CEA} family
 and known to be expressed by the syncytiotrophoblast
@@ -900,7 +900,7 @@ show exceptionally high expression in the human placenta, as well as %
 \textit{CGA} (FPKM=\Sexpr{gene.expression(species.name="homo sapiens",gene="CGA")}, %
 %
 which generates the alpha subnit of multiple human chorionic
-gonadotropin hormones (\fref{tab:top50_human_placenta}). The genes
+gonadotropin hormones (\cref{tab:top50_human_placenta}). The genes
 producing the beta subunits of the chorionic gonadotropins
 (\textit{CGB}, \textit{CGB1}, \textit{CGB2}, \textit{CGB5},
 \textit{CGB7}, \textit{CGB8}) have reasonable expression
@@ -916,8 +916,8 @@ hemoglobin family (e.g. \textit{HBA1}, \textit{HBB}, \textit{HBG2},
 cell proliferation (\textit{ADAM12}, \textit{KISS1}, \textit{IGF2},
 \textit{GPC3}, \textit{CSF3R}), anticoagulation (\textit{TFPI2}), and
 glucose transport (\textit{SLC2A1}) among others
-(\fref{tab:top50_human_placenta}, Supplemental
-\fref{tab:all_homo_sapiens_placenta}).
+(\cref{tab:top50_human_placenta}, Supplemental
+\cref{tab:all_homo_sapiens_placenta}).
 
 
 
@@ -955,20 +955,20 @@ mitochondrial, or whose human ortholog is a housekeeping gene in
 \end{table}
 
 The top 50 expressed genes as measured by \ac{FPKM} in the term
-placenta of the bonobo are shown in \fref{tab:top50_bonobo_placenta}
+placenta of the bonobo are shown in \cref{tab:top50_bonobo_placenta}
 with a list of all genes in Supplemental
-\fref{tab:all_pan_paniscus_placenta}. Expression in the bonobo
+\cref{tab:all_pan_paniscus_placenta}. Expression in the bonobo
 placenta differs somewhat from that of the human, as evidenced by the
-makeup of the top 50 genes (\fref{tab:top50_bonobo_placenta}). The highest expression
+makeup of the top 50 genes (\cref{tab:top50_bonobo_placenta}). The highest expression
 (\ac{FPKM}=%
 \Sexpr{gene.expression("pan paniscus","PRG2")}%
 %
 ) in bonobo is \textit{PRG2}, which is involved in insulin
 growth factor signaling and angiogenesis during pregnancy \cite{Weyer.ea2011:Placentalregulationofpeptide}. \textit{PRG2} is also expressed at relatively high levels in the
-human placenta (\ac{FPKM}=\Sexpr{gene.expression("homo sapiens","PRG2")}; Supplemental \fref{tab:all_homo_sapiens_placenta}), although at
+human placenta (\ac{FPKM}=\Sexpr{gene.expression("homo sapiens","PRG2")}; Supplemental \cref{tab:all_homo_sapiens_placenta}), although at
 comparatively much lower levels than the bonobo. A bonobo gene closely
 related to the chorionic somatomammotropins (Q95MK7\_PANTR) is also
-expressed at high levels (\ac{FPKM}=1232.56; \fref{tab:top50_bonobo_placenta}). Two other Pan genes
+expressed at high levels (\ac{FPKM}=1232.56; \cref{tab:top50_bonobo_placenta}). Two other Pan genes
 included within this family (ENSPTRG00000030805 which shows similarity
 to GH2 and ENSPTRG00000034560) show expression levels of \ac{FPKM}>89. Six
 pregnancy-specific beta-1-glycoprotein genes were expressed in the
@@ -1214,8 +1214,8 @@ mitochondrial, or whose human ortholog is a housekeeping gene in
 
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
 in the term placenta of \textit{Mus musculus} are shown in
-\fref{tab:top50_mouse_placenta} with a list of all highly expressed
-genes in Supplemental \fref{tab:all_mouse_placenta}.
+\cref{tab:top50_mouse_placenta} with a list of all highly expressed
+genes in Supplemental \cref{tab:all_mouse_placenta}.
 
 % No idea what mir-6236 is doing
 
@@ -1250,8 +1250,8 @@ mitochondrial, or whose human ortholog is a housekeeping gene in
 
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
 in the term placenta of \textit{Nannospalax galili} are shown in
-\fref{tab:top50_n_galili_placenta} with a list of all highly expressed
-genes in Supplemental \fref{tab:all_n_galili_placenta}.
+\cref{tab:top50_n_galili_placenta} with a list of all highly expressed
+genes in Supplemental \cref{tab:all_n_galili_placenta}.
 
 \subsection{\textit{Spalax carmeli} (Blind Mole Rat) Placenta Transcriptome}
 
@@ -1273,8 +1273,8 @@ mitochondrial, or whose human ortholog is a housekeeping gene in
 
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
 in the term placenta of \textit{Spalax carmeli} are shown in
-\fref{tab:top50_s_carmeli_placenta} with a list of all highly expressed
-genes in Supplemental \fref{tab:all_s_carmeli_placenta}.
+\cref{tab:top50_s_carmeli_placenta} with a list of all highly expressed
+genes in Supplemental \cref{tab:all_s_carmeli_placenta}.
 
 \subsection{Wild Boar Placenta Transcriptome}
 
@@ -1296,8 +1296,8 @@ mitochondrial, or whose human ortholog is a housekeeping gene in
 
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
 in the term placenta of \textit{Sus scrofa} are shown in
-\fref{tab:top50_pig_placenta} with a list of all highly expressed
-genes in Supplemental \fref{tab:all_pig_placenta}.
+\cref{tab:top50_pig_placenta} with a list of all highly expressed
+genes in Supplemental \cref{tab:all_pig_placenta}.
 
 \subsection{Horse Placenta Transcriptome}
 
@@ -1319,8 +1319,8 @@ mitochondrial, or whose human ortholog is a housekeeping gene in
 
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
 in the term placenta of \textit{Equus Caballus} are shown in
-\fref{tab:top50_horse_placenta} with a list of all highly expressed
-genes in Supplemental \fref{tab:all_horse_placenta}.
+\cref{tab:top50_horse_placenta} with a list of all highly expressed
+genes in Supplemental \cref{tab:all_horse_placenta}.
 
 \subsection{Sheep Placenta Transcriptome}
 
@@ -1342,8 +1342,8 @@ mitochondrial, or whose human ortholog is a housekeeping gene in
 
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
 in the term placenta of \textit{Ovis aries} are shown in
-\fref{tab:top50_sheep_placenta} with a list of all highly expressed
-genes in Supplemental \fref{tab:all_sheep_placenta}.
+\cref{tab:top50_sheep_placenta} with a list of all highly expressed
+genes in Supplemental \cref{tab:all_sheep_placenta}.
 
 
 \subsection{Core Placenta Transcriptome}
@@ -1480,15 +1480,19 @@ print(xtable(placenta.go.results,
 The
 \Sexpr{core.placenta.transcriptome.long[,length(unique(human_name))]}
 genes comprising the core placenta transcriptome are shown in
-\fref{fig:core_placenta_transcriptome} ordered by their median
+\cref{fig:core_placenta_transcriptome} ordered by their median
 transcription level in \ac{FPKM}. We considered a gene to be core to
 the transcriptome if an ortholog of that gene was expressed with
 $\mathrm{FPKM} \ge 10$ in all species studied and was not a
 housekeeping gene
 \cite{Eisenberg.ea2013:Humanhousekeepinggenesrevisited}.
-\textit{ANXA1} is involved in the modulation of the inflammatory
-response \DLA{It does more stuff; read the huthcinson2011 review and
-  fill this in}
+\Cref{fig:core_placenta_transcriptome_shape} shows the number of genes
+which would be included in the core placenta set if the cutoff was set
+differently.
+%
+\textit{ANXA1} is
+involved in the modulation of the inflammatory response \DLA{It does
+  more stuff; read the huthcinson2011 review and fill this in}
 %
 Another annexin, \textit{ANXA2} 
 %

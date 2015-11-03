@@ -8,10 +8,10 @@ PERL?=perl
 
 all: $(GO_ANALYSES)
 
-include species.mk
+# include species.mk
 
-species.mk: species_list.R combined_fpkm
-	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
+# species.mk: species_list.R combined_fpkm
+# 	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
 
 GO_ANALYSES=$(patsubst %,go_%_mf,$(SPECIES)) $(patsubst %,go_%_bp,$(SPECIES))
 

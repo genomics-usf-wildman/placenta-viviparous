@@ -495,7 +495,7 @@ recognized Pan species is generally perceived to be $\approx 1$ Mya
     \textit{Monodelphis domestica} & Opossum           & BROAD05    & 75 \\
     \textit{Mus musculus}         & Mouse              & GRCm38     & 35,44,150 \\
     \textit{Nannospalax galili}   & Blind mole rat     & \textit{Mus musculus} & 100 \\
-    \textit{Ovis aries}           & Sheep              & Oar_v3.1   & 151 \\
+    \textit{Ovis aries}           & Sheep              & Oar\_v3.1   & 151 \\
     \textit{Pan paniscus}         & Bonobo             & CHIMP2.1.4 & 150 \\
     \textit{Spalax carmeli}       & Blind mole rat     & \textit{Mus musculus} & 100 \\
     \textit{Sus scrofa}           & Wild Boar          & Sscrofa10.2 & 51 \\

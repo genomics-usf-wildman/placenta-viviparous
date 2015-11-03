@@ -1458,8 +1458,8 @@ print(ggplot(cpt.distribution.shape[`Expression (FPKM)` > 1,],
 \end{figure}
 
 <<go.analysis,warning=FALSE,message=FALSE,echo=FALSE,results="asis">>=
-placenta.go.results <- rbindlist(list(placenta_go_results_mf[1:10,],
-                             placenta_go_results_bp[1:10,]))
+placenta.go.results <- rbindlist(list(placenta_go_results_mf[classic.fdr < 0.05,],
+                             placenta_go_results_bp[classic.fdr < 0.05,]))
 placenta.go.results <- placenta.go.results[,Annotated:=NULL]
 setnames(placenta.go.results,"classic","p value")
 setnames(placenta.go.results,"classic.fdr","FDR")

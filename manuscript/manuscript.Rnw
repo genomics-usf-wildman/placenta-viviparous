@@ -1501,6 +1501,19 @@ Another annexin, \textit{ANXA2}
 \cite{Xiang.ea2013:PromoterhypomethylationofTIMP3} claims
 up-regulation)
 
+% SPINT2 -- Serine Peptidase inhibitor
+
+% SLC3A2 -- this is probably actually a housekeeping gene; it's
+% involved in amino acid transport
+
+% SQSTM1 -- NFκB signaling (immune supression?)
+
+% KRTCAP2  N-glycosylation (probably housekeeping)
+
+% NRDG1 -- interacts with HSP90
+
+% SDC4 -- proteoglycan
+
 SERPINH1? with TIMP3 
 % http://www.proteinatlas.org/ENSG00000149257-SERPINH1/tissue/placenta
 

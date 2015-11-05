@@ -1,0 +1,9 @@
+placenta
+uterus
+eutherian
+amnion
+trophoblast
+placental septa
+decidua basalis
+chorion frondosum	chorion
+vasculogenesis	angiogenesis

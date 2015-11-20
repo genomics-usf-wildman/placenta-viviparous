@@ -102,6 +102,8 @@ print(results)
 
 go.results <- rbindlist(results)
 
+go.results <- go.results[`p value` <= 0.05,]
+
 save(file=args[length(args)],
      go.results)
                

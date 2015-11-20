@@ -1409,17 +1409,26 @@ up-regulation)
 
 % NRDG1 -- interacts with HSP90
 
-% SDC4 -- proteoglycan
+% SDC4 -- proteoglycan (syndecan) cell adhesion
+
+% LAMC1 -- laminin
+
+% LUM -- proteoglycan
+
+% VDAC1 -- mitochondrial gene?
+
+% F11R -- tight junctions
 
 SERPINH1? with TIMP3 
 % http://www.proteinatlas.org/ENSG00000149257-SERPINH1/tissue/placenta
 
-\subsection{topGO Analyses of Individual Transcriptomes}
+\subsection{\ac{GSE} Analyses of Individual Transcriptomes}
 
 In order to identify major functional categories of genes expressed in
-the individual transcriptomes, we undertook functional annotation
-clustering analyses using topGO. We examined \ac{GSE} in 1:1 human
+the individual transcriptomes, we examined \ac{GSE} in 1:1 human
 orthologs which had \ac{FPKM} values in the top 5\% of expressed genes
+(Supplemental %
+\cref{tab:go_terms_enriched_top_five_dasypus_novemcinctus,tab:go_terms_enriched_top_five_equus_caballus,tab:go_terms_enriched_top_five_homo_sapiens,tab:go_terms_enriched_top_five_loxodonta_africana,tab:go_terms_enriched_top_five_monodelphis_domestica,tab:go_terms_enriched_top_five_mus_musculus,tab:go_terms_enriched_top_five_ovis_aries,tab:go_terms_enriched_top_five_pan_paniscus,tab:go_terms_enriched_top_five_sus_scrofa,tab:go_terms_enriched_top_five_ateles_fusciceps,tab:go_terms_enriched_top_five_nannospalax_galili,tab:go_terms_enriched_top_five_spalax_carmeli,tab:go_terms_enriched_top_five_bos_taurus,tab:go_terms_enriched_top_five_canis_familiaris}) using topGO \cite{topGO:2.20.0}. %
 %
 Significant enrichment in genes ($\mathrm{FDR}\le0.05$) in the top 5\%
 of \ac{FPKM} values in at least 12 of the
@@ -1427,23 +1436,38 @@ of \ac{FPKM} values in at least 12 of the
 membrane organization , locomotion, tissue development, extracellular
 matrix organization, regulation of peptidase activity, and various
 cell death related pathways among others
-(\cref{tab:go_terms_all_species}).
+(\cref{tab:go_terms_all_species}). If we instead examine the top 100
+genes by \ac{FPKM} in each of the \Sexpr{length(species.names)}
+species (Supplemental %
+\cref{tab:go_terms_enriched_dasypus_novemcinctus,tab:go_terms_enriched_equus_caballus,tab:go_terms_enriched_homo_sapiens,tab:go_terms_enriched_loxodonta_africana,tab:go_terms_enriched_monodelphis_domestica,tab:go_terms_enriched_mus_musculus,tab:go_terms_enriched_ovis_aries,tab:go_terms_enriched_pan_paniscus,tab:go_terms_enriched_sus_scrofa,tab:go_terms_enriched_ateles_fusciceps,tab:go_terms_enriched_nannospalax_galili,tab:go_terms_enriched_spalax_carmeli,tab:go_terms_enriched_bos_taurus,tab:go_terms_enriched_canis_familiaris})
+notable enrichments include extracellular matrix, female pregnancy,
+integrin and collagen-related processes, and various cell death
+related processes.
 
-(Supplemental %
-\cref{tab:go_terms_enriched_dasypus_novemcinctus,tab:go_terms_enriched_equus_caballus,tab:go_terms_enriched_homo_sapiens,tab:go_terms_enriched_loxodonta_africana,tab:go_terms_enriched_monodelphis_domestica,tab:go_terms_enriched_mus_musculus,tab:go_terms_enriched_ovis_aries,tab:go_terms_enriched_pan_paniscus,tab:go_terms_enriched_sus_scrofa,tab:go_terms_enriched_ateles_fusciceps,tab:go_terms_enriched_nannospalax_galili,tab:go_terms_enriched_spalax_carmeli,tab:go_terms_enriched_bos_taurus,tab:go_terms_enriched_canis_familiaris}.) %
+% \textit{Ateles fuciceps} shows enrichment in extracellular
+% matrix and structural molecular activity (Supplemental
+% \cref{tab:go_terms_enriched_ateles_fusciceps}). \textit{Homo sapiens}
+% placentas are enriched in female pregnancy, estrogen biosynthesis,
+% reproductive process, hormone aactivity, oxygen transporter activity,
+% and haptoglobin binding (Supplemental
+% \cref{tab:go_terms_enriched_homo_sapiens}). \textit{Pan paniscus}
+% placentas are enriched in clusters related to stress, apoptosis, and
+% response to abiotic stimuli. \textit{Mus musculus} placentas are
+% enriched in cell junction, vesicle transport, in utero embryonic
+% development, and many cytoskeletal processes. \textit{Nannospalax
+%   galili} placentas are enriched in extracellular matrix organization,
+% integrin binding, and cell death.
+% 
+% Cow shows only four
+% significantly enriched clusters; however many genes highly expressed
+% in the cow are ruminant-specific placenta genes and are not yet
+% annotated to specific GO categories. Dog shows enrichment in genes
+% associated with RNA, as well as homeostasis, glycoproteins, lyosome,
+% and calcium binding. Elephant shows enrichment in genes associated
+% with RNA, coagulation and calcium binding. Opossum shows enrichment in
+% genes involved in apoptosis, oxidative stress, mitochondrion, hormone
+% metabolism, and lipids.
 
-Human shows enrichment in clusters such as collagen-binding, hormone
-activity, female pregnancy, coagulation, and the defense response.
-Bonobo shows enrichment in clusters related to apoptosis,
-cytoskeleton-related genes, and the stress response. Cow shows only
-four significantly enriched clusters; however many genes highly
-expressed in the cow are ruminant-specific placenta genes and are not
-yet annotated to specific GO categories. Dog shows enrichment in genes
-associated with RNA, as well as homeostasis, glycoproteins, lyosome,
-and calcium binding. Elephant shows enrichment in genes associated
-with RNA, coagulation and calcium binding. Opossum shows enrichment in
-genes involved in apoptosis, oxidative stress, mitochondrion, hormone
-metabolism, and lipids.
 
 \begin{table}
   \footnotesize

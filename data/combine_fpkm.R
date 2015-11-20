@@ -112,4 +112,9 @@ combined.fpkm[,name_or_id:=gene_short_name]
 combined.fpkm[is.null(name_or_id),name_or_id:=gene_id]
 combined.fpkm[name_or_id=="-" | name_or_id=="",name_or_id:=gene_id]
 
+if (!all(grepl("_per_sample",output.file))) {
+    combined.fpkm <-
+        combined.fpkm[!duplicated(tracking_id)]
+}
+
 save(file=output.file,combined.fpkm,star.logs)

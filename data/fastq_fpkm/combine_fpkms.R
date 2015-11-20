@@ -104,7 +104,7 @@ gene.fpkms <- rbindlist(gene.fpkms,fill=TRUE)
 
 gene.fpkms[,mean_fpkm := mean(FPKM),tracking_id]
 gene.fpkms[,sd_fpkm := sd(FPKM),tracking_id]
-gene.fpkms <- gene.fpkms[!duplicated(tracking_id),]
+# gene.fpkms <- gene.fpkms[!duplicated(tracking_id),]
 
 isoform.fpkms <- list();
 for (file in isoform.files) {

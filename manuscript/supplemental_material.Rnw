@@ -116,47 +116,11 @@ library("ggtree")
 library("topGO")
 library("org.Hs.eg.db")
 
-capwords <- function(s, strict = FALSE) {
-    cap <- function(s) paste(toupper(substring(s, 1, 1)),
-                             {s <- substring(s, 2); if(strict) tolower(s) else s},
-                             sep = "", collapse = " " )
-    sapply(strsplit(s, split = " "), cap, USE.NAMES = !is.null(names(s)))
-}
-
-capfirst <- function(s, strict = FALSE) {
-    paste(toupper(substring(s, 1, 1)),
-          {s <- substring(s, 2); if(strict) tolower(s) else s},
-          sep = "")
-}
-
-species <- function(s,join=TRUE) {
-    temp <- paste0("\\textit{",capfirst(s),"}")
-    if (join) {
-        return(english.join(temp))
-    } else {
-        return(temp)
-    }
-}
-
-english.join <- function(s){
-    ret <- c()
-    ## everything but the last gets a , appended if there are more than two
-    if (length(s) > 2) {
-        s[-length(s)] <- 
-            paste0(s[-length(s)],",")
-    }
-    ## the second to last gets an and appended if there are more than one
-    if (length(s) > 1) {
-        s[length(s)-1] <- 
-            paste0(s[length(s)-1]," and")
-    }
-    return(paste(sep="",collapse=" ",s))
-}
 
 @ 
 
-<<source.to.latex,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../common_r_code/",c("to_latex.R","plot_tree_matrix.R")))>>=
-for (a in paste0("../common_r_code/",c("to_latex.R","plot_tree_matrix.R"))) {
+<<source.to.latex,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../common_r_code/",c("to_latex.R","plot_tree_matrix.R","utility_functions.R")))>>=
+for (a in paste0("../common_r_code/",c("to_latex.R","plot_tree_matrix.R","utility_functions.R"))) {
     source(a)
 }
 @ 
@@ -189,6 +153,8 @@ setnames(star.logs.wide,
 load("../go_annotation/go_tissue_analysis")
 
 @ 
+
+\section{Transcriptome statistics}
 
 \begin{figure}
 <<transcriptome.mapping.figure,fig.width=8,fig.height=8,echo=FALSE>>=
@@ -271,21 +237,54 @@ print(ggplot(star.logs.wide,
 \end{figure}
 
 
+\section{Gene Ontology Analyses}
+
+\subsection{Top 100 Transcripts Enrichment}
+
 <<go.analysis.all.species,echo=FALSE,results="asis">>=
-for (this.species in go.results[grepl("100 No Housekeeping",type) & FDR <= 0.05,unique(species)]) {
+for (this.species in names(species.names)) {
+    cat(paste0("\\subsubsection{Signficantly enriched ($\\mathrm{FDR}\\le0.05$) GO terms in ",
+                           " the top 100 \\textit{",
+                           capfirst(this.species),"} expressed transcripts}\n\n"))
+    this.caption <- paste0("Signficantly enriched ($\\mathrm{FDR}\\le0.05$) GO terms in ",
+                           " the top 100 \\textit{",capfirst(this.species),"} expressed transcripts")
+    this.label <- paste0("tab:go_terms_enriched_",gsub(" ","_",this.species))
     print(xtable(go.results[grepl("100 No Housekeeping",type) & FDR <= 0.05 & species == this.species,
-                            list(GO.ID,Term,FDR,Ontology,type)
+                            list(GO.ID,Term,FDR,Ontology)
                             ][order(FDR)],
-                 caption=paste0("Signficantly enriched ($\\mathrm{FDR}\\le0.05$) GO terms in ",
-                     "\\textit{",capfirst(this.species),"}"),
-                 label=paste0("tab:go_terms_enriched_",gsub(" ","_",this.species)),
-                 display=c("s","s","s","e","s","s")
+                 caption=this.caption,
+                 label=this.label,
+                 display=c("s","s","s","e","s")
                  ),
           size="\\small",
           booktabs=TRUE,
           tabular.environment="longtable",
           caption.placement="top",
-          add.to.row = list(pos = list(0),command = "\\midrule \\endhead "),
+          floating=FALSE)
+}
+@ 
+
+\subsection{Top 5\% Transcripts Enrichment}
+
+<<go.analysis.top.5p.all.species,echo=FALSE,results="asis">>=
+for (this.species in names(species.names)) {
+    cat(paste0("\\subsubsection{Signficantly enriched ($\\mathrm{FDR}\\le0.05$) GO terms in ",
+                           " the top 5\\% of \\textit{",
+                           capfirst(this.species),"} expressed transcripts}\n\n"))
+    this.caption <- paste0("Signficantly enriched ($\\mathrm{FDR}\\le0.05$) GO terms in ",
+                           " the top 5\\% of \\textit{",
+                           capfirst(this.species),"} expressed transcripts.")
+    print(xtable(go.results[grepl("Top 5% No Housekeeping",type) & FDR <= 0.05 & species == this.species,
+                            list(GO.ID,Term,FDR,Ontology)
+                            ][order(FDR)],
+                 caption=this.caption,
+                 label=paste0("tab:go_terms_enriched_top_five_",gsub(" ","_",this.species)),
+                 display=c("s","s","s","e","s")
+                 ),
+          size="\\small",
+          booktabs=TRUE, 
+          tabular.environment="longtable",
+          caption.placement="top",
           floating=FALSE)
 }
 @ 
@@ -304,18 +303,20 @@ genes.expression.table <- function(species.name,min.fpkm=50) {
 }
 @ 
 
+\section{Gene Expression}
 <<top.expressed.genes,echo=FALSE,results="asis">>=
-for (this.species in combined.fpkm[,sort(unique(species))]) {
+for (this.species in names(species.names)) {
+    this.caption <- paste0("Expression of all genes with FPKM $\\ge 50$ in \\textit{",
+                           capfirst(this.species),"}")
+    cat(paste0("\\subsection{",this.caption,"}\n\n"))
     print(xtable(genes.expression.table(species.name=this.species),
-                 caption=paste0("Expression of all genes with FPKM $\\ge 50$ in \\textit{",
-                     capfirst(this.species),"}"),
+                 caption=this.caption,
                  label=paste0("tab:all_",gsub(" ","_",this.species),"_placenta")
                  ),
           booktabs=TRUE,
           tabular.environment="longtable",
           floating=FALSE,
           caption.placement="top",
-          add.to.row = list(pos = list(0),command = "\\midrule \\endhead "),
           size="\\tiny"
           )
 }

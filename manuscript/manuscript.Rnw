@@ -460,20 +460,22 @@ model can also integrate evolutionary change by assuming that each
 user-specified set of braches has its own separate \ac{OU} parameters
 \cite{Butler.2004:phlogeneticcomparativeanalysis}.
 
-Various OU branch models were tested against a model in which no
-variation in optima among branches was allowed. The following branches
-were specified in separate models to have a different optimum than all
-other branches: human, bonobo, mouse, dog, cow, elephant, opossum,
-human+bonobo, Euarchontoglires, and Boreoeutheria. Likelihood values
-were computed for each branch model and compared to an OU model with
-one optimum using likelihood ratio tests with df=1. We filtered out
-genes with universally low expression levels, and included only genes
-in which expression in at least one species had an
-$\mathrm{FPKM}\ge10$ as described above. We corrected for multiple
-testing using the false discovery rate (FDR) and calculated adjusted
-$p$ values (q-values) using the Benjamini-Hochberg
-correction\cite{Benjamini1995:bh_procedure}. We used the
-time-calibrated phylogenetic tree of
+\DLA{The description of the OU process is terrible; it needs to be
+  completely redone}
+
+Various \ac{OU} branch models were tested against a model in which no
+variation in optima ($\theta$) among branches was allowed. The
+following branches were specified in separate models to have a
+different optimum than all other branches: human, bonobo, mouse, dog,
+cow, elephant, opossum, human+bonobo, Euarchontoglires, and
+Boreoeutheria. Likelihood values were computed for each branch model
+and compared to an \ac{OU} model with one optimum using likelihood
+ratio tests with df=1. We filtered out genes with universally low
+expression levels, and included only genes in which expression in at
+least one species had an $\mathrm{FPKM}\ge10$ as described above. We
+corrected for multiple testing using the \ac{FDR} and using the
+Benjamini-Hochberg correction\cite{Benjamini1995:bh_procedure}. We
+used the time-calibrated phylogenetic tree of
 \cite{Meredith.ea2011:ImpactsofCretaceousTerrestrial} with all species
 not used in this analyses pruned.
 

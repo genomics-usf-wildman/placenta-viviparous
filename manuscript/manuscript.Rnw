@@ -493,15 +493,18 @@ from the human genome.
 \subsection{Correlation of Tissue Specific Index with Lineage Specific Genes}
 
 To evaluate the extent of tissue specificity of each gene, we
-calculated the tissue specificity index based on human microarray data
-from (Su et al., 2004) available via BioGPS. The tissue specificity
-index (TSI) measures the extent to which a specific gene has
-predominant expression in only one tissue (Yanai et al., 2005). A TSI
-of 1.0 would signify that a gene was solely expressed in only one
-tissue, while a TSI of 0.0 would signify that a gene had equal
-expression in all tissues evaluated. We used the formula available in
-Yanai et al. (2005) to calculate the TSI, and identified the top four
-tissues which expressed each probe set from (Su et al., 2004).
+calculated the \ac{TSI} based on human RNASeq data in 3267 samples in
+126 tissues the Roadmap Epigenomics
+\cite{Bernstein.ea2010:NIHRoadmapEpigenomicsMapping} and GTEx projects
+\cite{Gtexconsortium.2015:Thegenotypetissueexpression} as well
+additional placenta
+\cite{Hughes.ea2015:Evaluatingintra-andinter-individual} and uterus
+\cite{Chan.ea2014:Assessmentofmyometrialtranscriptome} samples from
+SRA. The \ac{TSI} measures the extent to which a specific gene has
+predominant expression in only one tissue
+\cite{Yanai.ea2005:Genome-widemidrangetranscriptionprofiles}. A gene
+expressed in only one tissue would have a \ac{TSI} of 1, whereas a
+gene expressed in all tissues would have a \ac{TSI} of 0.
 
 \subsection{Validation of Primate Expression using Spider Monkey Placenta Transcriptome}
 

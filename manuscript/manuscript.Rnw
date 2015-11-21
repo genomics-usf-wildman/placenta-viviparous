@@ -438,15 +438,19 @@ using the 1:1 \textit{Homo sapiens} ortholog.
 
 \subsection{Comparative Analysis of Gene Expression}
 
-All 1:1 orthologues present among human, bonobo, mouse, dog, cow,
-elephant, and opossum were determined using Ensembl v.64 gene trees
-via the Biomart online data management
-tool\cite{Kasprzyk2011:BioMartdrivingparadigmchange}. A total of 6882
-1:1 orthologous genes were expressed in at least one species. For
-further analysis, we eliminated all genes that did not have at least
-one species with an $\mathrm{FPKM}\ge10$. A list of these 4259 1:1 orthologous
-genes was retained for future analyses of gene expression evolution
-described below.
+All 1:1 orthologues present among \textit{D. novemcinctus}, \textit{P.
+  troglodytes}, \textit{B. taurus}, \textit{C. familiaris}, \textit{L.
+  africana}, \textit{M. musculus}, \textit{H. sapiens}, and \textit{M.
+  domestica} were determined using Ensembl v.80 gene trees via
+Biomart\cite{Kasprzyk2011:BioMartdrivingparadigmchange} using the
+biomaRt R package \DLA{Cite the biomaRt package}. A total of
+\Sexpr{combined.fpkm[species!="homo sapiens" & mean_fpkm >=
+  1,length(unique(human_short_name))]} 1:1 orthologous genes were
+expressed in at least one species. Of these,
+\Sexpr{combined.fpkm[species!="homo sapiens" & mean_fpkm >=
+  10,length(unique(human_short_name))]} 1:1 orthologous genes with
+\ac{FPKM} $\ge 10$ were retained for future analyses of gene
+expression evolution described below.
 
 We used the software \ac{OUCH} in the R statistical environment to
 investigate significant shifts in gene expression levels over

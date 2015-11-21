@@ -445,20 +445,19 @@ one species with an $\mathrm{FPKM}\ge10$. A list of these 4259 1:1 orthologous
 genes was retained for future analyses of gene expression evolution
 described below.
 
-We used the software OUCH (Ornstein–Uhlenbeck for Comparative
-Hypotheses) in the R statistical environment to investigate
-significant shifts in gene expression levels over
-time\cite{Butler.2004:phlogeneticcomparativeanalysis}. OUCH institutes
-an Ornstein-Uhlenbeck (OU) model of evolution, which allows for
-different optima for quantitative trait values along user-specified
-branches of a phylogenetic tree. The OU model explicitly accounts for
-change in quantitative trait values by introducing two parameters into
-the model of stochastic Brownian motion of change in trait value along
-a phylogenetic tree through time. These parameters include, $\theta$,
-or an optimum trait value, and $\alpha$, or the strength of selection
-(interpreted as “pull” toward the optimum). In addition, the OU model
-can also integrate evolutionary change by assuming that each
-user-specified set of braches has its own separate OU parameters
+We used the software \ac{OUCH} in the R statistical environment to
+investigate significant shifts in gene expression levels over
+time\cite{Butler.2004:phlogeneticcomparativeanalysis}. \ac{OUCH}
+institutes an \ac{OU} model of evolution, which allows for different
+optima for quantitative trait values along user-specified branches of
+a phylogenetic tree. The \ac{OU} model explicitly accounts for change
+in quantitative trait values by introducing two parameters into the
+model of stochastic Brownian motion of change in trait value along a
+phylogenetic tree through time. These parameters are $\theta$, an
+optimum trait value, and $\alpha$, the strength of selection
+(interpreted as “pull” toward the optimum). In addition, the \ac{OU}
+model can also integrate evolutionary change by assuming that each
+user-specified set of braches has its own separate \ac{OU} parameters
 \cite{Butler.2004:phlogeneticcomparativeanalysis}.
 
 Various OU branch models were tested against a model in which no

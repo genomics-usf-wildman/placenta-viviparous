@@ -421,17 +421,20 @@ edgelabels("Boreoeutheria",6,frame="none",bg="white",font=1,adj=c(0.7,0),cex=0.9
 
 To determine enrichment levels of functional categories of genes in
 highly-expressed transcripts in each transcriptome, we performed
-functional annotation cluster analyses per transcriptome using DAVID
-\cite{Huang.ea2009:Systematicandintegrativeanalysis,Sherman.ea2007:DAVIDKnowledgebasegene-centereddatabase}.
-DAVID ranks functional annotation clusters according to enrichment
-score (ES); functional annotation clusters are considered
-significantly enriched if ES>1.3, as this corresponds to p<0.05
-\cite{Huang.ea2009:Systematicandintegrativeanalysis}. We executed
-analyses with two gene lists per transcriptome: 1) annotated genes
-with expression levels of the top 5\% of the frequency distribution of
-\ac{FPKM} and 2) the top 100 genes with the highest \ac{FPKM}. Due to the
-paucity of annotated gene ontology terms for some species, gene lists
-were compared using gene ontology terms derived from the human genome.
+functional annotation cluster analyses per transcriptome using topGO
+\cite{topGO:2.20.0}. Gene Ontology clusters were considered
+significantly enriched if the \ac{FDR} as estimated by the Benjamini
+and Hochberg procedure\cite{Benjamini1995:bh_procedure} on from the
+$p$ values obtained from the Fisher Exact Test were less than or equal
+to 0.05. Enrichment tests were considered with two gene lists per
+transcriptome: annotated genes with expression levels of the top
+5\% of the frequency distribution of \ac{FPKM} (Supplemental
+\cref{tab:go_terms_enriched_top_five_dasypus_novemcinctus,tab:go_terms_enriched_top_five_equus_caballus,tab:go_terms_enriched_top_five_homo_sapiens,tab:go_terms_enriched_top_five_loxodonta_africana,tab:go_terms_enriched_top_five_monodelphis_domestica,tab:go_terms_enriched_top_five_mus_musculus,tab:go_terms_enriched_top_five_ovis_aries,tab:go_terms_enriched_top_five_pan_paniscus,tab:go_terms_enriched_top_five_sus_scrofa,tab:go_terms_enriched_top_five_ateles_fusciceps,tab:go_terms_enriched_top_five_nannospalax_galili,tab:go_terms_enriched_top_five_spalax_carmeli,tab:go_terms_enriched_top_five_bos_taurus,tab:go_terms_enriched_top_five_canis_familiaris});
+the top 100 genes with the highest \ac{FPKM} (Supplemental
+\cref{tab:go_terms_enriched_dasypus_novemcinctus,tab:go_terms_enriched_equus_caballus,tab:go_terms_enriched_homo_sapiens,tab:go_terms_enriched_loxodonta_africana,tab:go_terms_enriched_monodelphis_domestica,tab:go_terms_enriched_mus_musculus,tab:go_terms_enriched_ovis_aries,tab:go_terms_enriched_pan_paniscus,tab:go_terms_enriched_sus_scrofa,tab:go_terms_enriched_ateles_fusciceps,tab:go_terms_enriched_nannospalax_galili,tab:go_terms_enriched_spalax_carmeli,tab:go_terms_enriched_bos_taurus,tab:go_terms_enriched_canis_familiaris}).
+Due to the paucity of annotated gene ontology terms for some species,
+gene lists were compared using the \textit{Homo sapiens} Gene Ontology
+using the 1:1 \textit{Homo sapiens} ortholog.
 
 \subsection{Comparative Analysis of Gene Expression}
 

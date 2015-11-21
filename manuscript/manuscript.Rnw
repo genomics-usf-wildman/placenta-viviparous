@@ -477,18 +477,10 @@ time-calibrated phylogenetic tree of
 \cite{Meredith.ea2011:ImpactsofCretaceousTerrestrial} with all species
 not used in this analyses pruned.
 
-To determine enrichment of functional categories in lists of genes
-that display a significant shift in expression on a specific branch,
-we performed functional annotation cluster analyses on each branch
-using DAVID
-\cite{Huang.ea2009:Systematicandintegrativeanalysis,Sherman.ea2007:DAVIDKnowledgebasegene-centereddatabase}.
-DAVID ranks functional annotation clusters according to enrichment
-score (ES); functional annotation clusters are considered
-significantly enriched if $\mathrm{ES}\ge1.3$, as this corresponds to
-$p\le0.05$ \cite{Huang.ea2009:Systematicandintegrativeanalysis}. As
-above, due to the paucity of annotated gene ontology terms for some
-species, gene lists were compared using gene ontology terms derived
-from the human genome.
+We also calculated the enrichment of functional categories in the
+lists of genes which displayed a significant shift in expression on
+each branch using the same methodology as in the per-species gene
+lists \DLA{reference the tables once this analysis is complete}.
 
 \subsection{Correlation of Tissue Specific Index with Lineage Specific Genes}
 

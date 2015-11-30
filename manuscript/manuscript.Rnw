@@ -333,23 +333,23 @@ quality was assessed using A260/A280 and A260/A230 absorbance values.
 
 \subsection{Sequencing}
 
-\DLA{Fix how the sequencing was done}
-
 All RNA-Seq mRNA isolation, library construction, and Illumina
 sequencing was performed by the Applied Genomics Technology Center
 (AGTC) at Wayne State University School of Medicine using 2.5-5 µg of
 total RNA and standard Illumina protocol. Paired-end sequencing was
 performed using the Illumina Genome Analyzer II with an insert size of
-230 base pairs (bp). \textit{Bos}, \textit{Loxodonta}, and
-\textit{Monodelphis} were sequenced with read lengths of 75 bp;
-\textit{Canis}, \textit{Homo}, and \textit{Pan} were sequenced with
-read lengths of 150 bp.
+230 base pairs (bp). Read lengths for species are shown in
+\cref{tab:ref_genome_aligned_species}.
 
-For comparison, additional sequences of placenta in \textit{Mus
-  musculus} \cite{Wang.ea2011:surveyfornovelimprinted} and
+\subsubsection{Additional Sequences}
+
+For more complete comparisons additional sequences of placenta in
+\textit{Mus musculus} \cite{Wang.ea2011:surveyfornovelimprinted},
 \textit{Homo sapiens}
-\cite{Hughes.ea2015:Evaluatingintra-andinter-individual} were obtained
-from the \ac{SRA}.
+\cite{Hughes.ea2015:Evaluatingintra-andinter-individual} \textit{Equus
+  caballus} \DLA{citation}, \textit{Ovis aries} \DLA{citation}, and
+\textit{Sus scrofa} \DLA{citation} were obtained from the \ac{SRA}
+(Supplemental \cref{tab:srr_numbers}).
 
 \subsection{Transcriptome Assembly, Alignment, and Quantification}
 
@@ -380,7 +380,7 @@ recognized Pan species is generally perceived to be $\approx 1$ Mya
 \begin{table}
   \begin{tabular}{c c c c}
     \toprule
-    Species                       & Common Name        & Reference & Read Length  \\
+    Species                       & Common Name        & Reference & Read Length \\
     \midrule
     \textit{Ateles fusciceps}     & Spider monkey      & \textit{Homo sapiens} & 100 \\
     \textit{Bos taurus}           & Cow                & UMD3.1     & 75 \\
@@ -445,10 +445,10 @@ All 1:1 orthologues present among \textit{D. novemcinctus}, \textit{P.
 Biomart\cite{Kasprzyk2011:BioMartdrivingparadigmchange} using the
 biomaRt R package \DLA{Cite the biomaRt package}. A total of
 \Sexpr{combined.fpkm[species!="homo sapiens" & mean_fpkm >=
-  1,length(unique(human_short_name))]} 1:1 orthologous genes were
+  1,length(unique(human_name))]} 1:1 orthologous genes were
 expressed in at least one species. Of these,
 \Sexpr{combined.fpkm[species!="homo sapiens" & mean_fpkm >=
-  10,length(unique(human_short_name))]} 1:1 orthologous genes with
+  10,length(unique(human_name))]} 1:1 orthologous genes with
 \ac{FPKM} $\ge 10$ were retained for future analyses of gene
 expression evolution described below.
 

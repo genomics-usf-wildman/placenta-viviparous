@@ -154,6 +154,81 @@ load("../go_annotation/go_tissue_analysis")
 
 @ 
 
+\section{Sequence Read Archive}
+
+\DLA{Add in SRR and GSE numbers for everything here once I have them.}
+
+\begin{table}
+  \begin{tabular}{c c p{3in}}
+    \toprule
+    Species                       & Experiment Number & Sample Number(s) \\
+    \midrule
+    \textit{Ateles fusciceps}     &  & \\
+    \textit{Bos taurus}           &  & \\
+    \textit{Canis familiaris}     &  & \\
+    \textit{Dasypus novemcinctus} &  & \\
+    \textit{Equus caballus}       &  & SRR850299,  SRR850300 \\
+    \textit{Loxodonta africana}   &  & \\
+    \textit{Homo sapiens}         & GSE66622 & SRR1850945,
+                                               SRR1850946, 
+                                               SRR1850951, 
+                                               SRR1850952, 
+                                               SRR1850953, 
+                                               SRR1850954, 
+                                               SRR1850957, 
+                                               SRR1850958, 
+                                               SRR1850965, 
+                                               SRR1850966, 
+                                               SRR1850975, 
+                                               SRR1850976, 
+                                               SRR1850983, 
+                                               SRR1850984, 
+                                               SRR1850987, 
+                                               SRR1850988, 
+                                               SRR1850991, 
+                                               SRR1850992, 
+                                               SRR1850993, 
+                                               SRR1850994, 
+                                               SRR1850995, 
+                                               SRR1850996, 
+                                               SRR1851003, 
+                                               SRR1851004, 
+                                               SRR1851011, 
+                                               SRR1851012 \\
+    \textit{Monodelphis domestica} & & \\
+    \textit{Mus musculus}         &  & SRR243594,
+                                       SRR243595,
+                                       SRR243596,
+                                       SRR243597,
+                                       SRR243598,
+                                       SRR243599,
+                                       SRR243600,
+                                       SRR243601,
+                                       SRR243602,
+                                       SRR243586,
+                                       SRR243587,
+                                       SRR243588,
+                                       SRR243589,
+                                       SRR243590,
+                                       SRR243591,
+                                       SRR243592,
+                                       SRR243593\\
+    \textit{Nannospalax galili}   &  & \\
+    \textit{Ovis aries}           &  & ERR489144, ERR489145\\
+    \textit{Pan paniscus}         &  & \\
+    \textit{Spalax carmeli}       &  & \\
+    \textit{Sus scrofa}           &           & SRR543893 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Species, experiment and species numbers used in the analyses presented in this paper}
+  \label{tab:srr_numbers}
+\end{table}
+
+\begin{table}
+  \begin{tabular}
+  \end{tabular}
+\end{table}
+
 \section{Transcriptome statistics}
 
 \begin{figure}

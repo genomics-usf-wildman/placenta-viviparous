@@ -95,7 +95,7 @@ combined.fpkm <- data.table(data.frame(gene.fpkms))
 setkey(oma.groups,"ensembl")
 setkey(combined.fpkm,"tracking_id")
 combined.fpkm <- oma.groups[,list(group_num,fingerprint,ensembl)][combined.fpkm]
-combined.fpkm[,ensembl:=NULL]
+setnames(combined.fpkm,"ensembl","tracking_id")
 setnames(combined.fpkm,"group_num","oma_group_num")
 
 combined.fpkm[,oma_group_name:=as.character(NA)]
@@ -107,7 +107,7 @@ combined.fpkm[!is.na(oma_group_num),
 combined.fpkm[,c("class_code","nearest_ref_id",
                  "i.gene_short_name",
                  "tss_id","locus","length","coverage"):=
-                     list(NULL,NULL,NULL,NULL,NULL,NULL)]
+                     list(NULL,NULL,NULL,NULL,NULL,NULL,NULL)]
 combined.fpkm[,name_or_id:=gene_short_name]
 combined.fpkm[is.null(name_or_id),name_or_id:=gene_id]
 combined.fpkm[name_or_id=="-" | name_or_id=="",name_or_id:=gene_id]

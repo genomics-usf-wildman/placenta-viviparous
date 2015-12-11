@@ -26,7 +26,7 @@
 \usepackage[backend=biber,natbib=true,hyperref=true,style=reading,autocite=inline]{biblatex}
 \addbibresource{references.bib}
 \usepackage[noblocks,auth-sc]{authblk}
-\usepackage[hyperfigures,bookmarks,colorlinks]{hyperref}
+\usepackage[hyperfigures,bookmarks,colorlinks,linkcolor=black,urlcolor=black]{hyperref}
 %\usepackage[hyperfigures,bookmarks,colorlinks,citecolor=black,filecolor=black,linkcolor=black,urlcolor=black]{hyperref}
 % Floats at end for journals
 % \usepackage[nolists,figuresfirst,nomarkers,heads,nofighead,notabhead]{endfloat}
@@ -164,6 +164,7 @@ setnames(star.logs.wide,
 setnames(star.logs.wide,
          "Uniquely mapped reads number",
          "unique.map.reads")
+setkey(hugo.nomenclature,"Approved Symbol")
 @ 
 
 <<load.go.results,echo=FALSE,results="hide",cache.extra=tools::md5sum("../go_annotation/go_tissue_analysis")>>=
@@ -704,14 +705,44 @@ top.genes.table <- function(species.name,n=50) {
                                    !grepl("(^[Mm][Tt]-|^R[pP][lsLS]\\d+[abcdABCD]?[l]?(?:-.+)?$|rRNA$)",gene_short_name)
                       ][order(-mean_fpkm)][,list(name_or_id,
                                                  human_name,mean_fpkm)]
-    temp <- temp[!duplicated(name_or_id)][1:n]
     ## remove any genes which have a null name_or_id; they are probably from unassembled contigs
     temp <- temp[!(is.na(name_or_id)|name_or_id==""),]
-    setnames(temp,c("Gene name","Human Name","FPKM"))
+    temp <- temp[!duplicated(name_or_id)][1:n]
+    setkey(temp,"human_name")
+    temp <- 
+        hugo.nomenclature[temp][order(-mean_fpkm),
+                                list(name_or_id,`Approved Symbol`,`Approved Name`,mean_fpkm)]
+    temp[!is.na(`Approved Name`),
+         `Approved Name`:=paste0("\\href{http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=",`Approved Symbol`,"}{",xtable.sanitize.text(`Approved Name`),"}")]
+    temp[!is.na(`Approved Symbol`),
+         `Approved Symbol`:=paste0("\\href{http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=",`Approved Symbol`,"}{",xtable.sanitize.text(`Approved Symbol`),"}")]
+    setnames(temp,c("Gene symbol","Human Symbol","Human Name","FPKM"))
     if (species.name=="homo sapiens") {
         temp <- temp[,-2,with=FALSE]
     }
     return(temp)
+}
+genes.table.sanitize <- function(str){
+    return(str)
+}
+xtable.sanitize.text <- function(str){
+    result <- str
+    result <- gsub("\\\\", "SANITIZE.BACKSLASH", result)
+    result <- gsub("$", "\\$", result, fixed = TRUE)
+    result <- gsub(">", "$>$", result, fixed = TRUE)
+    result <- gsub("<", "$<$", result, fixed = TRUE)
+    result <- gsub("|", "$|$", result, fixed = TRUE)
+    result <- gsub("{", "\\{", result, fixed = TRUE)
+    result <- gsub("}", "\\}", result, fixed = TRUE)
+    result <- gsub("%", "\\%", result, fixed = TRUE)
+    result <- gsub("&", "\\&", result, fixed = TRUE)
+    result <- gsub("_", "\\_", result, fixed = TRUE)
+    result <- gsub("#", "\\#", result, fixed = TRUE)
+    result <- gsub("^", "\\verb|^|", result, fixed = TRUE)
+    result <- gsub("~", "\\~{}", result, fixed = TRUE)
+    result <- gsub("SANITIZE.BACKSLASH", "$\\backslash$",
+                   result, fixed = TRUE)
+    return(result)
 }
 gene.expression <- function(species.name,gene,complete=FALSE) {
     fpkm <- combined.fpkm[species==species.name &
@@ -738,9 +769,9 @@ gene.expression <- function(species.name,gene,complete=FALSE) {
 top.human.genes <- top.genes.table(species.name="homo sapiens")
 print(xtable(top.human.genes),
       booktabs=TRUE,
-      floating=FALSE
-      )
-setkey(top.human.genes,"Gene name")
+      floating=FALSE,
+      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
+setkey(top.human.genes,"Gene symbol")
 @ 
 \caption{Expression in \ac{FPKM} of top 50 genes which are not
   ribosomal, mitochondrial, or a housekeeping gene in \textit{Homo
@@ -845,9 +876,9 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 top.bonobo.genes <- top.genes.table(species.name="pan paniscus")
 print(xtable(top.bonobo.genes),
       booktabs=TRUE,
-      floating=FALSE
-      )
-setkey(top.bonobo.genes,"Gene name")
+      floating=FALSE,
+      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
+setkey(top.bonobo.genes,"Gene symbol")
 @ 
 \caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
 mitochondrial, or whose human ortholog is a housekeeping gene in
@@ -911,9 +942,9 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 top.spider.monkey.genes <- top.genes.table(species.name="ateles fusciceps")
 print(xtable(top.spider.monkey.genes),
       booktabs=TRUE,
-      floating=FALSE
-      )
-setkey(top.spider.monkey.genes,"Gene name")
+      floating=FALSE,
+      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
+setkey(top.spider.monkey.genes,"Gene symbol")
 @ 
 \caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
 mitochondrial, or whose human ortholog is a housekeeping gene in
@@ -930,9 +961,9 @@ mitochondrial, or whose human ortholog is a housekeeping gene in
 top.dog.genes <- top.genes.table(species.name="canis familiaris")
 print(xtable(top.dog.genes),
       booktabs=TRUE,
-      floating=FALSE
-      )
-setkey(top.dog.genes,"Gene name")
+      floating=FALSE,
+      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
+setkey(top.dog.genes,"Gene symbol")
 @ 
 \caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
 mitochondrial, or whose human ortholog is a housekeeping gene in
@@ -941,21 +972,33 @@ mitochondrial, or whose human ortholog is a housekeeping gene in
 \end{table}
 
 
-The top 50 expressed genes as measured by \ac{FPKM} in the term placenta of
-the dog are shown in Table 4 with a list of all genes in Supplemental
-Table X. The gene with the highest expression (\ac{FPKM}=48399.9) in the
-dog placenta is the hormone relaxin (RLN1). Other highly expressed
-genes among the top 50 (Table 4) include genes involved in the
-cytoskeleton (TMSB10, TMSB4X), anticoagulation (TFPI2, PLA2G7), innate
-immunity (LCN2, GM2A), lipid metabolism (APOE), inhibition of matrix
-metalloproteinases (TIMP2, TIMP3), and growth (PGF, EGFR, HTRA1). The
-gene LGALS1, which shows evidence of immunosupression during pregnancy
-(Than et al., 2008), shows high expression in dog (\ac{FPKM}= 1405.02). In
-addition, the gene SSLP1, a gene expressed in the placentas of cow and
-sheep but not present in primates (Ushizawa et al., 2009), is also
-expressed at high levels (\ac{FPKM}= 1853.98). There is no placental
-expression of the estrogen synthase gene (CYP19A1) in dogs, however
-expression of HSD3B1 is relatively high (\ac{FPKM}=157.622).
+The top 50 non-housekeeping expressed genes as measured by \ac{FPKM}
+in the term placenta of \textit{Canis familiaris} are shown in
+\cref{tab:top50_dog_placenta} with a list of all genes in Supplemental
+\cref{tab:all_canis_familiaris_placenta}. The gene with the highest
+expression %
+(\ac{FPKM}=\Sexpr{gene.expression("canis
+  familiaris","ENSCAFG00000002115")}) %
+is the hormone relaxin (\textit{RLN2}). Other highly expressed genes
+among the top 50 (\cref{tab:top50_dog_placenta}) include genes
+involved in the cytoskeleton (\textit{TMSB10}, \textit{TMSB4X}),
+anticoagulation (\textit{TFPI2}, \textit{PLA2G7}), innate immunity
+(\textit{LCN2}, \textit{GM2A}), lipid metabolism (\textit{APOE}),
+inhibition of matrix metalloproteinases (\textit{TIMP2},
+\textit{TIMP3}), and growth factors (\textit{PGF}, \textit{EGFR},
+HTRA1). The gene \textit{LGALS1}, which shows evidence of
+immunosupression during pregnancy
+\cite{Than.ea2008:Emergenceofhormonaland}, shows high expression in
+dog %
+(\ac{FPKM}=\Sexpr{gene.expression("canis familiaris","LGALS1")}). %
+In addition, the gene SSLP1, a gene expressed in the placentas of cow
+and sheep but not present in primates (Ushizawa et al., 2009), is also
+expressed at high levels
+%
+(\ac{FPKM}=\Sexpr{gene.expression("canis familiaris","SSLP1")}). %
+There is no placental expression of the estrogen synthase gene
+(CYP19A1) in dogs, however expression of HSD3B1 is relatively high
+(\ac{FPKM}=\Sexpr{gene.expression("canis familiaris","HSD3B1")}).
 
 \subsection{Cow Placenta Transcriptome}
 
@@ -965,9 +1008,9 @@ expression of HSD3B1 is relatively high (\ac{FPKM}=157.622).
 top.cow.genes <- top.genes.table(species.name="bos taurus")
 print(xtable(top.cow.genes),
       booktabs=TRUE,
-      floating=FALSE
-      )
-setkey(top.cow.genes,"Gene name")
+      floating=FALSE,
+      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
+setkey(top.cow.genes,"Gene symbol")
 @ 
 \caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
 mitochondrial, or whose human ortholog is a housekeeping gene in
@@ -1013,9 +1056,9 @@ placental expression of the estrogen synthase gene (CYP19A1) in cows
 top.elephant.genes <- top.genes.table(species.name="loxodonta africana")
 print(xtable(top.elephant.genes),
       booktabs=TRUE,
-      floating=FALSE
-      )
-setkey(top.elephant.genes,"Gene name")
+      floating=FALSE,
+      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
+setkey(top.elephant.genes,"Gene symbol")
 @ 
 \caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
 mitochondrial, or whose human ortholog is a housekeeping gene in
@@ -1059,9 +1102,9 @@ expressed in the endometrium of the uterus in humans (Rutanen et al.,
 top.opossum.genes <- top.genes.table(species.name="monodelphis domestica")
 print(xtable(top.opossum.genes),
       booktabs=TRUE,
-      floating=FALSE
-      )
-setkey(top.opossum.genes,"Gene name")
+      floating=FALSE,
+      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
+setkey(top.opossum.genes,"Gene symbol")
 @ 
 \caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
 mitochondrial, or whose human ortholog is a housekeeping gene in
@@ -1103,9 +1146,9 @@ expression of relaxin RLN1 (\ac{FPKM}= 41.3949).
 top.mouse.genes <- top.genes.table(species.name="mus musculus")
 print(xtable(top.mouse.genes),
       booktabs=TRUE,
-      floating=FALSE
-      )
-setkey(top.mouse.genes,"Gene name")
+      floating=FALSE,
+      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
+setkey(top.mouse.genes,"Gene symbol")
 @ 
 \caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
 mitochondrial, or whose human ortholog is a housekeeping gene in
@@ -1139,9 +1182,9 @@ genes in Supplemental \cref{tab:all_mouse_placenta}.
 top.galili.genes <- top.genes.table(species.name="nannospalax galili")
 print(xtable(top.galili.genes),
       booktabs=TRUE,
-      floating=FALSE
-      )
-setkey(top.galili.genes,"Gene name")
+      floating=FALSE,
+      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
+setkey(top.galili.genes,"Gene symbol")
 @ 
 \caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
 mitochondrial, or whose human ortholog is a housekeeping gene in
@@ -1162,9 +1205,9 @@ genes in Supplemental \cref{tab:all_n_galili_placenta}.
 top.carmeli.genes <- top.genes.table(species.name="spalax carmeli")
 print(xtable(top.carmeli.genes),
       booktabs=TRUE,
-      floating=FALSE
-      )
-setkey(top.carmeli.genes,"Gene name")
+      floating=FALSE,
+      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
+setkey(top.carmeli.genes,"Gene symbol")
 @ 
 \caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
 mitochondrial, or whose human ortholog is a housekeeping gene in
@@ -1185,9 +1228,9 @@ genes in Supplemental \cref{tab:all_s_carmeli_placenta}.
 top.pig.genes <- top.genes.table(species.name="sus scrofa")
 print(xtable(top.pig.genes),
       booktabs=TRUE,
-      floating=FALSE
-      )
-setkey(top.pig.genes,"Gene name")
+      floating=FALSE,
+      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
+setkey(top.pig.genes,"Gene symbol")
 @ 
 \caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
 mitochondrial, or whose human ortholog is a housekeeping gene in
@@ -1208,9 +1251,9 @@ genes in Supplemental \cref{tab:all_pig_placenta}.
 top.horse.genes <- top.genes.table(species.name="equus caballus")
 print(xtable(top.horse.genes),
       booktabs=TRUE,
-      floating=FALSE
-      )
-setkey(top.horse.genes,"Gene name")
+      floating=FALSE,
+      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
+setkey(top.horse.genes,"Gene symbol")
 @ 
 \caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
 mitochondrial, or whose human ortholog is a housekeeping gene in
@@ -1231,9 +1274,9 @@ genes in Supplemental \cref{tab:all_horse_placenta}.
 top.sheep.genes <- top.genes.table(species.name="ovis aries")
 print(xtable(top.sheep.genes),
       booktabs=TRUE,
-      floating=FALSE
-      )
-setkey(top.sheep.genes,"Gene name")
+      floating=FALSE,
+      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
+setkey(top.sheep.genes,"Gene symbol")
 @ 
 \caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
 mitochondrial, or whose human ortholog is a housekeeping gene in

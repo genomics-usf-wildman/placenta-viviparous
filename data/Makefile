@@ -19,6 +19,10 @@ hugo_nomenclature: hugo_nomenclature.R hugo_nomenclature.txt
 	$(MODULE) load R/3.2.0; \
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
 
+gene_annotation: ensembl_gene_annotation.R
+	$(MODULE) load R/3.2.0; \
+	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
+
 go_gene_association.txt: go_gene_association.pl go-basic.obo gene_association.goa_human
 	$(PERL) $^ |grep -v '^!' > $@
 

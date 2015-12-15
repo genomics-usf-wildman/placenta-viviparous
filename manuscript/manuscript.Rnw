@@ -988,8 +988,8 @@ in the term placenta of \textit{Canis familiaris} are shown in
 \cref{tab:top50_dog_placenta} with a list of all genes in Supplemental
 \cref{tab:all_canis_familiaris_placenta}. The gene with the highest
 expression %
-(\ac{FPKM}=\Sexpr{gene.expression("canis
-  familiaris","ENSCAFG00000002115")}) %
+(\ac{FPKM}=%
+\Sexpr{gene.expression("canis familiaris","ENSCAFG00000002115")}) %
 is the hormone relaxin (\textit{RLN2}). Other highly expressed genes
 among the top 50 (\cref{tab:top50_dog_placenta}) include genes
 involved in the cytoskeleton (\textit{TMSB10}, \textit{TMSB4X}),
@@ -997,13 +997,17 @@ anticoagulation (\textit{TFPI2}, \textit{PLA2G7}), innate immunity
 (\textit{LCN2}, \textit{GM2A}), lipid metabolism (\textit{APOE}),
 inhibition of matrix metalloproteinases (\textit{TIMP2},
 \textit{TIMP3}), and growth factors (\textit{PGF}, \textit{EGFR},
-HTRA1). The gene \textit{LGALS1}, which shows evidence of
+\textit{HTRA1}). The gene \textit{LGALS1}, which shows evidence of
 immunosupression during pregnancy
-\cite{Than.ea2008:Emergenceofhormonaland}, shows high expression in
-dog %
+\cite{Than.ea2008:Emergenceofhormonaland}, is highly expressed %
 (\ac{FPKM}=\Sexpr{gene.expression("canis familiaris","LGALS1")}). %
-In addition, the gene SSLP1, a gene expressed in the placentas of cow
-and sheep but not present in primates (Ushizawa et al., 2009), is also
+In addition, the gene \textit{SSLP1}, a gene expressed in the
+placentas of \textit{Bos tarus} (%
+\Sexpr{gene.expression("bos tarus","SSLP1")}, %
+\cref{tab:top50_cow_placenta}) and \textit{Ovis Aries}
+(\Sexpr{gene.expression("ovis aries","SSLP1")},
+\cref{tab:top50_sheep_placenta}) but is not present in primates
+\cite{Ushizawa.ea2009:Characterizationandexpressionanalysis}, is also
 expressed at high levels
 %
 (\ac{FPKM}=\Sexpr{gene.expression("canis familiaris","SSLP1")}). %
@@ -1728,6 +1732,21 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 \caption{Expression of prolactin receptor}
 \label{fig:prolactin_receptor_evolution_tree}
 \end{figure}
+
+\begin{figure}
+<<sslp1.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="SSLP1" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+@ 
+\caption{Expression of prolactin receptor}
+\label{fig:prolactin_receptor_evolution_tree}
+\end{figure}
+
 
 The elephant is strikingly the only mammal analyzed that shows high
 expression of the primarily pituitary hormone prolactin (PRL) in the

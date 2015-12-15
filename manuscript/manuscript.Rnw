@@ -1018,7 +1018,7 @@ expressed in the placentas of \cow (%
 %
 (\ac{FPKM}=\Sexpr{gene.expression("canis familiaris","ENSCAFG00000010638")}). %
 There is no placental expression of the estrogen synthase gene
-(\textit{CYP19A1}) in \dog (~\ref{fig:estrogen_evolution_tree}), 
+(\textit{CYP19A1}) in \dog (\cref{fig:estrogen_evolution_tree}), 
 however expression of \textit{HSD3B1} is relatively high
 (\ac{FPKM}=\Sexpr{gene.expression("canis familiaris","HSD3B1")}).
 

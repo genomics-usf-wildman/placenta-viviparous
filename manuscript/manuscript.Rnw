@@ -301,9 +301,9 @@ large-scale study of specific tissues from a wide array of species to
 address broader phylogenetic questions in the evolution of gene
 expression \cite{Brawand.ea2011:evolutionofgeneexpression}. Here we use Illumina RNA-Seq
 technology to sequence and quantify the mRNA environment of six
-mammalian placentas at term, including that of the human, bonobo (the
-sister species to the chimpanzee), dog, cow, African elephant, and
-opossum, representing marsupials as well as three major branches of
+mammalian placentas at term, including that of the \human, \bonobo (the
+sister species to the chimpanzee), \dog, \cow, \elephant, and
+\opossum, representing marsupials as well as three major branches of
 eutherian mammals (Euarchontoglires, Laurasiatheria, Afrotheria).
 These placentas also represent a wide array of placental morphologies
 as well as traits such as number and size of offspring and length of
@@ -320,32 +320,31 @@ that may be related to obstetrical disorders such as preeclampsia.
 \subsection{Collection of Placental Tissue and RNA Extraction}
 
 Fetal tissue was collected from the placenta of six mammalian species
-(\textit{Homo sapiens} [human], \textit{Pan paniscus} [bonobo], \textit{Canis familiaris}
-[domestic dog], \textit{Bos taurus} [domestic cow], \textit{Loxodonta africana} [African
-savanna elephant], \textit{Monodelphis domestica} [gray short-tailed
-opossum], \textit{Nannospalax gallili} [?], \textit{Spalax carmelli} [?]).
-Information on specimen ID, place and time of collection,
-and collector is shown for each sample in \DLA{Supplemental Table 1}. In the
-case of \textit{Pan}, \textit{Bos}, and \textit{Loxodonta}, the placenta was collected at term
-upon expulsion from the mother following delivery. Placental tissue
-from \textit{Homo sapiens} was collected upon delivery via a caesarian section.
-Near-term placental tissue from \textit{Canis familiaris} was collected upon
-the death of the mother from a car accident. Placental tissue from
-\textit{Monodelphis domestica} was sampled at fetal stage 32, roughly one day
-prior to birth. Only the fetal portion of the placenta was sampled at
-the maternal-fetal interface (i.e. villous portion for \textit{Homo}, \textit{Pan},
-\textit{Canis}, and \textit{Loxodonta}; cotyledon for \textit{Bos}; diffuse placenta for
-\textit{Monodelphis}). All tissues were collected and stored in RNAlater (Life
-Technologies, Carlsbad, CA) until RNA isolation could be performed.
-Tissues were homogenized in Trizol, and total RNA was isolated
-following the manufacturer’s instructions. RNA was further purified
-using RNeasy Midi Kit (Qiagen, Valencia, CA), in conjunction with the
-RNase-Free DNase Set (Qiagen, Valencia, CA), following the
-manufacturer’s protocol to remove any contaminating DNA from the
-sample. Total RNA was then evaluated on a Nanodrop 1000 (Thermo
-Scientific, Wilmington, DE) and an Agilent Bioanalyzer 2100 (Santa
-Clara, CA) to confirm concentration and quality of the isolation. RNA
-quality was assessed using A260/A280 and A260/A230 absorbance values.
+(\human [human], \bonobo [bonobo], \dog [domestic dog], \cow [domestic
+cow], \elephant [African savanna elephant], \opossum [gray
+short-tailed opossum], \gallili [?], \carmelli [?]). Information on
+specimen ID, place and time of collection, and collector is shown for
+each sample in \DLA{Supplemental Table 1}. In the case of \bonobo,
+\cow, and \elephant, the placenta was collected at term upon expulsion
+from the mother following delivery. Placental tissue from \human was
+collected upon delivery via a caesarian section. Near-term placental
+tissue from \dog was collected upon the death of the mother from a car
+accident. Placental tissue from \opossum was sampled at fetal stage
+32, roughly one day prior to birth. Only the fetal portion of the
+placenta was sampled at the maternal-fetal interface (i.e. villous
+portion for \human, \bonobo, \dog, and \elephant; cotyledon for \cow;
+diffuse placenta for \opossum). All tissues were collected and stored
+in RNAlater (Life Technologies, Carlsbad, CA) until RNA isolation
+could be performed. Tissues were homogenized in Trizol, and total RNA
+was isolated following the manufacturer’s instructions. RNA was
+further purified using RNeasy Midi Kit (Qiagen, Valencia, CA), in
+conjunction with the RNase-Free DNase Set (Qiagen, Valencia, CA),
+following the manufacturer’s protocol to remove any contaminating DNA
+from the sample. Total RNA was then evaluated on a Nanodrop 1000
+(Thermo Scientific, Wilmington, DE) and an Agilent Bioanalyzer 2100
+(Santa Clara, CA) to confirm concentration and quality of the
+isolation. RNA quality was assessed using A260/A280 and A260/A230
+absorbance values.
 
 \DLA{Add details for new sequences and fix numbers}
 
@@ -362,12 +361,10 @@ performed using the Illumina Genome Analyzer II with an insert size of
 \subsubsection{Additional Sequences}
 
 For more complete comparisons additional sequences of placenta in
-\textit{Mus musculus} \cite{Wang.ea2011:surveyfornovelimprinted},
-\textit{Homo sapiens}
-\cite{Hughes.ea2015:Evaluatingintra-andinter-individual} \textit{Equus
-  caballus} \DLA{citation}, \textit{Ovis aries} \DLA{citation}, and
-\textit{Sus scrofa} \DLA{citation} were obtained from the \ac{SRA}
-(Supplemental \cref{tab:srr_numbers}).
+\mouse \cite{Wang.ea2011:surveyfornovelimprinted}, \human
+\cite{Hughes.ea2015:Evaluatingintra-andinter-individual} \horse
+\DLA{citation}, \sheep \DLA{citation}, and \boar \DLA{citation} were
+obtained from the \ac{SRA} (Supplemental \cref{tab:srr_numbers}).
 
 \subsection{Transcriptome Assembly, Alignment, and Quantification}
 
@@ -378,7 +375,7 @@ in \cref{tab:ref_genome_aligned_species}) were assembled into a
 reference using Trinity v2014-07-17
 \cite{Haas.ea2013:Denovotranscriptsequence} and annotated using
 Diamond \cite{Buchfink.ea2015:Fastandsensitiveprotein} against either
-the \textit{Homo sapiens} or \textit{Mus musculus} transcriptome
+the \human or \mouse transcriptome
 (\cref{tab:ref_genome_aligned_species}).
 % 
 All transcriptomes were then aligned to the appropriate reference
@@ -390,7 +387,7 @@ quantified using Cufflinks v2.2.1
 \cite{Trapnell.ea2009:TopHatdiscoveringsplicejunctions}.
 %
 The genome of the closely-related \textit{Pan troglodytes} was used as
-a reference for \textit{Pan paniscus}. The separation between the two
+a reference for \bonobo. The separation between the two
 recognized Pan species is generally perceived to be $\approx 1$ Mya
 \cite{Prüfer.ea2012:bonobogenomecomparedwith}.
 
@@ -451,15 +448,14 @@ transcriptome: annotated genes with expression levels of the top
 the top 100 genes with the highest \ac{FPKM} (Supplemental
 \cref{tab:go_terms_enriched_dasypus_novemcinctus,tab:go_terms_enriched_equus_caballus,tab:go_terms_enriched_homo_sapiens,tab:go_terms_enriched_loxodonta_africana,tab:go_terms_enriched_monodelphis_domestica,tab:go_terms_enriched_mus_musculus,tab:go_terms_enriched_ovis_aries,tab:go_terms_enriched_pan_paniscus,tab:go_terms_enriched_sus_scrofa,tab:go_terms_enriched_ateles_fusciceps,tab:go_terms_enriched_nannospalax_galili,tab:go_terms_enriched_spalax_carmeli,tab:go_terms_enriched_bos_taurus,tab:go_terms_enriched_canis_familiaris}).
 Due to the paucity of annotated gene ontology terms for some species,
-gene lists were compared using the \textit{Homo sapiens} Gene Ontology
-using the 1:1 \textit{Homo sapiens} ortholog.
+gene lists were compared using the \human Gene Ontology
+using the 1:1 \human ortholog obtained
 
 \subsection{Comparative Analysis of Gene Expression}
 
-All 1:1 orthologues present among \textit{D. novemcinctus}, \textit{P.
-  troglodytes}, \textit{B. taurus}, \textit{C. familiaris}, \textit{L.
-  africana}, \textit{M. musculus}, \textit{H. sapiens}, and \textit{M.
-  domestica} were determined using Ensembl v.80 gene trees via
+All 1:1 orthologues present among \opossum, \textit{Pan troglodytes},
+\cow, \dog, \elephant, \mouse, and \human were determined using
+Ensembl v.80 gene trees via
 Biomart\cite{Kasprzyk2011:BioMartdrivingparadigmchange} using the
 biomaRt R package \DLA{Cite the biomaRt package}. A total of
 \Sexpr{combined.fpkm[species!="homo sapiens" & mean_fpkm >=

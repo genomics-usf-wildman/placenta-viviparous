@@ -727,6 +727,11 @@ top.genes.table <- function(species.name,n=50) {
          `Approved Name`:=paste0("\\href{http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=",`Approved Symbol`,"}{",xtable.sanitize.text(`Approved Name`),"}")]
     temp[!is.na(`Approved Symbol`),
          `Approved Symbol`:=paste0("\\href{http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=",`Approved Symbol`,"}{",xtable.sanitize.text(`Approved Symbol`),"}")]
+    if (species.name=="homo sapiens") {
+        temp[,name_or_id:=paste0("\\href{http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=",name_or_id,"}{",xtable.sanitize.text(name_or_id),"}")]
+    } else {
+        temp[,name_or_id:=xtable.sanitize.text(name_or_id)]
+    }
     setnames(temp,c("Gene symbol","Human Symbol","Human Name","FPKM"))
     if (species.name=="homo sapiens") {
         temp <- temp[,-2,with=FALSE]

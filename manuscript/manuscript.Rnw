@@ -38,6 +38,7 @@
 \usepackage{texshade}
 \usepackage{tikz}
 \usepackage{nameref}
+\usepackage{xspace}
 \usepackage{zref-xr,zref-user}
 \zxrsetup{toltxlabel}
 \zexternaldocument*{supplemental_material}

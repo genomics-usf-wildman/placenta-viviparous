@@ -82,6 +82,21 @@
 \renewcommand\cite[1]{\autocite{#1}}
 \pagestyle{fancy}
 
+\newcommand{\smonkey}[0]{\textit{A. fusciceps}}
+\newcommand{\cow}[0]{\textit{B. taurus}}
+\newcommand{\dog}[0]{\textit{C. familiaris}}
+\newcommand{\armadillo}[0]{\textit{D. novemcinctus}}
+\newcommand{\horse}[0]{\textit{E. galili}}
+\newcommand{\elephant}[0]{\textit{L. africana}}
+\newcommand{\human}[0]{\textit{H. sapiens}}
+\newcommand{\opossum}[0]{\textit{M. domestica}}
+\newcommand{\mouse}[0]{\textit{M. musculus}}
+\newcommand{\galili}[0]{\textit{N. galili}}
+\newcommand{\sheep}[0]{\textit{O. aries}}
+\newcommand{\bonobo}[0]{\textit{P. paniscus}}
+\newcommand{\carmeli}[0]{\textit{S. carmeli}}
+\newcommand{\boar}[0]{\textit{S. scrofa}}
+
 \begin{document}
 \author[1,2]{Michael R. McGowen}
 \author[1]{Don Armstrong}

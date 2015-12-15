@@ -969,7 +969,7 @@ mitochondrial, or whose human ortholog is a housekeeping gene in
 \end{table}
 
 
-\subsection{Dog Placenta Transcriptome}
+\subsection{\dog Placenta Transcriptome}
 
 \begin{table}
   \tiny
@@ -989,7 +989,7 @@ mitochondrial, or whose human ortholog is a housekeeping gene in
 
 
 The top 50 non-housekeeping expressed genes as measured by \ac{FPKM}
-in the term placenta of \textit{Canis familiaris} are shown in
+in the term placenta of \dog are shown in
 \cref{tab:top50_dog_placenta} with a list of all genes in Supplemental
 \cref{tab:all_canis_familiaris_placenta}. The gene with the highest
 expression %
@@ -1006,18 +1006,19 @@ inhibition of matrix metalloproteinases (\textit{TIMP2},
 immunosupression during pregnancy
 \cite{Than.ea2008:Emergenceofhormonaland}, is highly expressed %
 (\ac{FPKM}=\Sexpr{gene.expression("canis familiaris","LGALS1")}). %
-In addition, the gene \textit{SSLP1}, a gene expressed in the
-placentas of \textit{Bos tarus} (%
+In addition, an ortholog of SSLP1 (ENSCAFG00000010638) a gene
+expressed in the placentas of \cow (%
 \Sexpr{gene.expression("bos tarus","SSLP1")}, %
-\cref{tab:top50_cow_placenta}) and \textit{Ovis Aries}
+\cref{tab:top50_cow_placenta}) and \sheep
 (\Sexpr{gene.expression("ovis aries","SSLP1")},
 \cref{tab:top50_sheep_placenta}) but is not present in primates
-\cite{Ushizawa.ea2009:Characterizationandexpressionanalysis}, is also
-expressed at high levels
+\cite{Ushizawa.ea2009:Characterizationandexpressionanalysis}
+(\cref{fig:sslp1_evolution_tree}), is also expressed at high levels
 %
-(\ac{FPKM}=\Sexpr{gene.expression("canis familiaris","SSLP1")}). %
+(\ac{FPKM}=\Sexpr{gene.expression("canis familiaris","ENSCAFG00000010638")}). %
 There is no placental expression of the estrogen synthase gene
-(CYP19A1) in dogs, however expression of HSD3B1 is relatively high
+(\textit{CYP19A1}) in \dog (~\ref{fig:estrogen_evolution_tree}), 
+however expression of \textit{HSD3B1} is relatively high
 (\ac{FPKM}=\Sexpr{gene.expression("canis familiaris","HSD3B1")}).
 
 \subsection{Cow Placenta Transcriptome}
@@ -1742,14 +1743,14 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 <<sslp1.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
 
 tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="SSLP1" & species=="homo sapiens",gene_id],tree]
+    genes.to.tree[combined.fpkm[gene_id=="ENSCAFG00000010638" & species=="canis familiaris",gene_id],tree]
 gene.tree.table <- trees[[tree.id]]$table
 gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
 @ 
-\caption{Expression of prolactin receptor}
-\label{fig:prolactin_receptor_evolution_tree}
+\caption{Expression of SSLP1}
+\label{fig:sslp1_evolution_tree}
 \end{figure}
 
 

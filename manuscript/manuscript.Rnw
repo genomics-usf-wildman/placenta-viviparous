@@ -42,7 +42,7 @@
 \usepackage{zref-xr,zref-user}
 \zxrsetup{toltxlabel}
 \zexternaldocument*{supplemental_material}
-\usepackage{cleveref}
+\usepackage[capitalize]{cleveref}
 \newenvironment{narrow}[2]{%
   \begin{list}{}{%
       \setlength{\topsep}{0pt}%

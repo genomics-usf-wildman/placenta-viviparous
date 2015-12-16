@@ -17,8 +17,8 @@ combined.fpkm.wide <-
 
 ### ignore genes which aren't expressed at least 10 FPKM in some
 ### tissue
-evolution.of.expression <-
-    combined.fpkm.wide[apply(combined.fpkm.wide[,-1,with=FALSE],1,max) >= 100,]
+placenta.lineage.specific <-
+    combined.fpkm.wide[apply(combined.fpkm.wide[,-1,with=FALSE],1,max) >= 100 & !is.na(human_name),]
 
 species <- c("ateles fusciceps", "homo sapiens", "pan paniscus", "mus musculus", 
              "nannospalax galili", "spalax carmeli", "bos taurus", "ovis aries", 
@@ -41,6 +41,9 @@ laurasiatheria <- species[7:11]
 primates <- species[1:3]
 rodentia <- species[4:6]
 
+new.world.monkey <- species[1]
+old.world.monkey <- species[2:3]
+
 
 calculate.t.test <- function(x,g1,g2){
     p.value <- NA;
@@ -49,6 +52,19 @@ calculate.t.test <- function(x,g1,g2){
         silent=TRUE);
     return(p.value)
 }
+
+
+calculate.fc <- function(x,g1,g2){
+    fc <- NA
+    try({fc <- mean(as.numeric(x[g1]))/mean(as.numeric(x[g2]))
+        if (fc < 1) {fc <- -1/fc}
+        if (any(!is.finite(fc))) {
+            fc <- max(c(mean(as.numeric(x[g1])),mean(as.numeric(x[g2])),na.rm=TRUE))
+        }},
+        silent=TRUE)
+    return(fc)
+}
+    
 
 calculate.z.test <- function(x,g1,g2){
     p.value <- NA;
@@ -59,21 +75,99 @@ calculate.z.test <- function(x,g1,g2){
     return(p.value)
 }
 
-evolution.of.expression[,bor.atl.p:=apply(evolution.of.expression,1,
-                             calculate.t.test,boreoeutharians,atlantogenata)]
-evolution.of.expression[,bor.atl.fdr:=p.adjust(bor.atl.p,method="BH")]
+comparisons <- list("bor.atl"=list(group1=boreoeutharians,
+                                   group1.name="boreoeutharians",
+                                   group2=atlantogenata,
+                                   group2.name="atlantogenata"
+                                   ),
+                    "eua.lau"=list(group1=euarchontoglires,
+                                   group1.name="euarchontoglires",
+                                   group2=laurasiatheria,
+                                   group2.name="laurasiatheria"),
+                    "rod.pri"=list(group1=rodentia,
+                                   group1.name="rodentia",
+                                   group2=primates,
+                                   group2.name="primates"),
+                    "new.old"=list(group1=new.world.monkey,
+                                   group1.name="new.world.monkey",
+                                   group2=old.world.monkey,
+                                   group2.name="old.world.monkey"),
+                    "old.all"=list(group1=old.world.monkey,
+                                   group1.name="old.world.monkey",
+                                   group2=species[!species %in% old.world.monkey],
+                                   group2.name="not old.world.monkey"),
+                    "rod.all"=list(group1=rodentia,
+                                   group1.name="rodentia",
+                                   group2=species[!species %in% rodentia],
+                                   group2.name="not rodentia"),
+                    "pri.all"=list(group1=primates,
+                                   group1.name="primates",
+                                   group2=species[!species %in% primates],
+                                   group2.name="not primates"),
+                    "eua.all"=list(group1=euarchontoglires,
+                                   group1.name="euarchontoglires",
+                                   group2=species[!species %in% euarchontoglires],
+                                   group2.name="not euarchontoglires"),
+                    "lau.all"=list(group1=laurasiatheria,
+                                   group1.name="laurasiatheria",
+                                   group2=species[!species %in% laurasiatheria],
+                                   group2.name="not laurasiatheria"),
+                    "met.eut"=list(group1=metatheria,
+                                   group1.name="metatheria",
+                                   group2=eutharians,
+                                   group2.name="eutharians")
+                    )
 
-evolution.of.expression[,eua.lau.p:=apply(evolution.of.expression,1,
-                             calculate.t.test,euarchontoglires,laurasiatheria)]
-evolution.of.expression[,eua.lau.fdr:=p.adjust(eua.lau.p,method="BH")]
+placenta.lineage.specific.analysis <- list()
+for (c.n in names(comparisons)) {
+    results <- data.table(placenta.lineage.specific[,human_name])
+    setnames(results,"human_name")
+    if (length(comparisons[[c.n]]$group1) > 1 &
+        length(comparisons[[c.n]]$group2) > 1) {
+        results[,p.value:=apply(placenta.lineage.specific,1,
+                                      calculate.t.test,
+                                      comparisons[[c.n]]$group1,
+                                      comparisons[[c.n]]$group2
+                                      )]
+    } else {
+        results[,p.value:=apply(placenta.lineage.specific,1,
+                                      calculate.z.test,
+                                      comparisons[[c.n]]$group1,
+                                      comparisons[[c.n]]$group2
+                                      )]
+    }
+    results[,fdr:=p.adjust(results[,p.value],method="BH")]
+    results[,group1.name:=comparisons[[c.n]]$group1.name]
+    results[,group2.name:=comparisons[[c.n]]$group2.name]
+    results[,fc:=apply(placenta.lineage.specific,1,
+                       calculate.fc,
+                       comparisons[[c.n]]$group1,
+                       comparisons[[c.n]]$group2
+                       )
+            ]
+    results[,group1.mean:=apply(placenta.lineage.specific[,comparisons[[c.n]]$group1,with=FALSE],
+                                1,
+                                mean,
+                                na.rm=TRUE)]
+    results[,group1.sd:=apply(placenta.lineage.specific[,comparisons[[c.n]]$group1,with=FALSE],
+                              1,
+                              sd,
+                              na.rm=TRUE)]
+    results[,group2.mean:=apply(placenta.lineage.specific[,comparisons[[c.n]]$group2,with=FALSE],
+                                1,
+                                mean,
+                                na.rm=TRUE)]
+    results[,group2.sd:=apply(placenta.lineage.specific[,comparisons[[c.n]]$group2,with=FALSE],
+                              1,
+                              sd,
+                              na.rm=TRUE)]
+    results[(group2.mean < 50 & group1.mean < 50),p.value:=NA]
+    results[,fdr:=p.adjust(results[,p.value],method="BH")]
+    results[,analysis.name:=c.n]
+    placenta.lineage.specific.analysis[[c.n]] <- results
+}
+placenta.lineage.specific.analysis <- rbindlist(placenta.lineage.specific.analysis)
 
-evolution.of.expression[,rod.pri.p:=apply(evolution.of.expression,1,
-                             calculate.t.test,rodentia,primates)]
-evolution.of.expression[,rod.pri.fdr:=p.adjust(rod.pri.p,method="BH")]
-
-evolution.of.expression[,met.eut.p:=apply(evolution.of.expression,1,
-                             calculate.z.test,metatheria,eutharians)]
-evolution.of.expression[,met.eut.fdr:=p.adjust(met.eut.p,method="BH")]
-
-save(evolution.of.expression,
+save(placenta.lineage.specific.analysis,
+     placenta.lineage.specific,
      file=args[length(args)])

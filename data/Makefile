@@ -83,6 +83,13 @@ gene_trees: parse_tree.R Compara.80.protein.nhx.emf.gz
 %.txt: %.xlsx
 	$(SSCONVERT) --export-type Gnumeric_stf:stf_assistant -O 'separator="	" quote="" eol="unix"' $< $@
 
+### placenta lineage specific
+placenta_lineage_specific: placenta_lineage_specific.R combined_fpkm housekeeping_genes_superset
+	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
+
+placenta_lineage_specific.txt: ../common_r_code/array_to_text.R placenta_lineage_specific
+	$(R) $(ROPTS) -f $< --args placenta_lineage_specific placenta.lineage.specific.analysis $@
+
 
 ### placenta specific transcripts and go analysis of them
 placenta_core_transcriptome: placenta_core_transcriptome.R combined_fpkm housekeeping_genes_superset

@@ -43,6 +43,7 @@ oma.groups <- fread(args[3])
 oma.groups[,species:=gsub("\\d+","",oma_entry)]
 setkey(oma.groups,"ensembl")
 oma.groups.human <- oma.groups[species=="HUMAN"]
+setkey(oma.groups.human,"group_num")
 
 oma.homolog <- function(ensembl.id){
     gene.fpkms[tracking_id %in% oma.groups.human[group_num==oma.groups[ensembl.id,group_num],
@@ -82,11 +83,13 @@ gene.fpkms[grepl(" ",human_name),
 ### gene.fpkms[species=="pan paniscus" & is.na(human_name),
 ###               human_name := mcmapply(function(x){human.homolog(x,species="chimpanzee")},gene_short_name)]
 
-gene.fpkms[is.na(human_name),
-           human_name := mcmapply(ensembl.homolog,gene_id)]
-
+### reverse these because the human_name is wrong in some cases in the
+### ensembl homolog file.
+setkey(gene.fpkms,"tracking_id")
 gene.fpkms[is.na(human_name),
               human_name := mcmapply(oma.homolog,gene_id)]
+gene.fpkms[is.na(human_name),
+           human_name := mcmapply(ensembl.homolog,gene_id)]
 
 ### this shouldn't be required, but I've triggered some bug in the
 ### data.table code
@@ -111,6 +114,10 @@ combined.fpkm[,c("class_code","nearest_ref_id",
 combined.fpkm[,name_or_id:=gene_short_name]
 combined.fpkm[is.null(name_or_id),name_or_id:=gene_id]
 combined.fpkm[name_or_id=="-" | name_or_id=="",name_or_id:=gene_id]
+
+### this is wrong for pan paniscus, so fixing it here
+combined.fpkm[human_name=="GH1" & oma_group_name=="GH2",human_name:=NA]
+
 
 if (!all(grepl("_per_sample",output.file))) {
     combined.fpkm <-

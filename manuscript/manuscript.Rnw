@@ -96,7 +96,7 @@
 \newcommand{\sheep}[0]{\textit{O. aries}\xspace}
 \newcommand{\bonobo}[0]{\textit{P. paniscus}\xspace}
 \newcommand{\carmeli}[0]{\textit{S. carmeli}\xspace}
-\newcommand{\boar}[0]{\textit{S. scrofa}\xspace}
+\newcommand{\pig}[0]{\textit{S. scrofa}\xspace}
 
 \begin{document}
 \author[1,2]{Michael R. McGowen}
@@ -411,7 +411,7 @@ recognized Pan species is generally perceived to be $\approx 1$ Mya
     \textit{Ovis aries}           & Sheep              & Oar\_v3.1   & 151 \\
     \textit{Pan paniscus}         & Bonobo             & CHIMP2.1.4 & 150 \\
     \textit{Spalax carmeli}       & Blind mole rat     & \textit{Mus musculus} & 100 \\
-    \textit{Sus scrofa}           & Wild Boar          & Sscrofa10.2 & 51 \\
+    \textit{Sus scrofa}           & Duroc (pig)        & Sscrofa10.2 & 51 \\
     \bottomrule
   \end{tabular}
   \caption{Reference genomes for aligned species}

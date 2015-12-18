@@ -181,6 +181,11 @@ setnames(star.logs.wide,
 setnames(star.logs.wide,
          "Uniquely mapped reads number",
          "unique.map.reads")
+star.logs.wide[,`% bad reads`:=(as.numeric(`% of reads mapped to too many loci`)+
+                            as.numeric(`% of reads unmapped: other`)+
+                            as.numeric(`% of reads unmapped: too many mismatches`)+
+                            as.numeric(`% of reads unmapped: too short`))]
+star.logs.wide[,`% good reads`:=100-`% bad reads`]
 setkey(hugo.nomenclature,"Approved Symbol")
 @ 
 
@@ -631,7 +636,10 @@ print(ggplot(star.logs.wide,
 
 
 
-For transcriptomes sequenced with 75 bp, %
+\Cref{fig:transcriptome_statistics} shows the RNAseq read and
+alignment statistics for all species. For transcriptomes sequenced
+with 75 bp %
+%
 (\Sexpr{species(star.logs.wide[input.read.length > 70 & input.read.length < 80,unique(species)])})
 %
 ,
@@ -640,7 +648,7 @@ the number of trimmed reads ranged from %
 %
 to %
 \Sexpr{star.logs.wide[input.read.length > 70 & input.read.length < 80,max(as.numeric(input.reads))]}
-with at least 96\% of reads \DLA{This is wrong}
+with an average of \Sexpr{star.logs.wide[input.read.length > 70 & input.read.length < 80,mean(`% good reads`)]}\% of reads 
 mapping to the respective reference genome (\cref{tab:ref_genome_aligned_species}). 
 %
 For transcriptomes sequenced with 150 bp, %
@@ -655,8 +663,9 @@ the number of trimmed reads ranged from %
 to %
 \Sexpr{star.logs.wide[input.read.length  > 120 & input.read.length < 160,max(as.numeric(input.reads))]}
 %
-with at least 99\% of reads mapping to the
-respective reference genome \DLA{This is also wrong}.
+with an average of \Sexpr{star.logs.wide[input.read.length > 120 & input.read.length < 160,mean(`% good reads`)]}\% %
+of reads mapping to the
+respective reference genome (cref{tab:ref_genome_aligned_species}).
 %
 %
 For transcriptomes sequenced with 35 bp, %

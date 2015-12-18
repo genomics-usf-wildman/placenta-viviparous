@@ -894,7 +894,7 @@ cgb.sum.expression <-
 @ 
 
 The top 50 expressed genes as measured by \ac{FPKM} in the term
-placenta of \textit{Homo sapiens} are shown in
+placenta of \human are shown in
 \cref{tab:top50_human_placenta} with all genes with \ac{FPKM} $\ge 50$
 in Supplemental \cref{tab:all_homo_sapiens_placenta}. The gene with by far
 the highest \ac{FPKM} value
@@ -910,7 +910,7 @@ is also expressed to a high degree in the human placenta
 (\cref{tab:top50_human_placenta}).
 % 
 Eleven pregnancy-specific beta-1-glycoprotein genes are highly-expressed
-(\ac{FPKM}$\ge 100$) in the term placenta of humans, with \textit{PSG1} showing the
+(\ac{FPKM}$\ge 100$) in the term placenta of \human, with \textit{PSG1} showing the
 greatest degree of expression %
 (\ac{FPKM}=\Sexpr{gene.expression(species.name="homo sapiens",gene="PSG1")}) % 
 and the pseudogene \textit{PSG10P} showing the least %
@@ -973,7 +973,7 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 \end{figure}
 
 
-\subsection{Bonobo Placenta Transcriptome}
+\subsubsection{\bonobo Placenta Transcriptome}
 
 \begin{table}
   \tiny
@@ -1039,7 +1039,7 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 \end{figure}
 
 
-\subsection{Spider Monkey Transcriptome}
+\subsubsection{\smonkey Transcriptome}
 
 \begin{table}
   \tiny
@@ -1051,9 +1051,8 @@ print(xtable(top.spider.monkey.genes),
       sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
 setkey(top.spider.monkey.genes,"Gene symbol")
 @ 
-\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
-mitochondrial, or whose human ortholog is a housekeeping gene in
-  \textit{Ateles fusciceps}}
+\caption{Expression in \ac{FPKM} of top 50 genes in \smonkey which are not ribosomal, 
+mitochondrial, or whose human ortholog is a housekeeping gene}
 \label{tab:top50_spider_monkey_placenta}
 \end{table}
 
@@ -1070,9 +1069,9 @@ print(xtable(top.dog.genes),
       sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
 setkey(top.dog.genes,"Gene symbol")
 @ 
-\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
-mitochondrial, or whose human ortholog is a housekeeping gene in
-  \textit{Canis familiaris}}
+\caption{Expression in \ac{FPKM} of the top 50 genes in \dog which are
+  not ribosomal, mitochondrial, or whose human ortholog is a
+  housekeeping gene}
 \label{tab:top50_dog_placenta}
 \end{table}
 
@@ -1082,6 +1081,9 @@ in the term placenta of \dog are shown in
 \cref{tab:top50_dog_placenta} with a list of all genes in Supplemental
 \cref{tab:all_canis_familiaris_placenta}. The gene with the highest
 expression %
+(\ac{FPKM}=%
+\Sexpr{gene.expression("canis familiaris","TMSB10")}) is the thymosin 
+is 
 (\ac{FPKM}=%
 \Sexpr{gene.expression("canis familiaris","ENSCAFG00000002115")}) %
 is the hormone relaxin (\textit{RLN2}). Other highly expressed genes
@@ -1267,9 +1269,9 @@ mitochondrial, or whose human ortholog is a housekeeping gene in
 \end{table}
 
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
-in the term placenta of \textit{Mus musculus} are shown in
+in the term placenta of \mouse are shown in
 \cref{tab:top50_mouse_placenta} with a list of all highly expressed
-genes in Supplemental \cref{tab:all_mouse_placenta}.
+genes in Supplemental \cref{tab:all_mus_musculus_placenta}.
 
 % No idea what mir-6236 is doing
 
@@ -1328,7 +1330,7 @@ mitochondrial, or whose human ortholog is a housekeeping gene in
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
 in the term placenta of \textit{Spalax carmeli} are shown in
 \cref{tab:top50_s_carmeli_placenta} with a list of all highly expressed
-genes in Supplemental \cref{tab:all_s_carmeli_placenta}.
+genes in Supplemental \cref{tab:all_spalax_carmeli_placenta}.
 
 \subsection{Wild Boar Placenta Transcriptome}
 
@@ -1353,7 +1355,7 @@ in the term placenta of \textit{Sus scrofa} are shown in
 \cref{tab:top50_pig_placenta} with a list of all highly expressed
 genes in Supplemental \cref{tab:all_pig_placenta}.
 
-\subsection{Horse Placenta Transcriptome}
+\subsection{\horse Placenta Transcriptome}
 
 \begin{table}[h]
   \tiny
@@ -1365,18 +1367,18 @@ print(xtable(top.horse.genes),
       sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
 setkey(top.horse.genes,"Gene symbol")
 @ 
-\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
-mitochondrial, or whose human ortholog is a housekeeping gene in
-  \textit{Equus caballus}}
+\caption{Expression in \ac{FPKM} of top 50 genes in \horse which are
+  not ribosomal, mitochondrial, or whose human ortholog is a
+  housekeeping gene}
 \label{tab:top50_horse_placenta}
 \end{table}
 
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
 in the term placenta of \textit{Equus Caballus} are shown in
 \cref{tab:top50_horse_placenta} with a list of all highly expressed
-genes in Supplemental \cref{tab:all_horse_placenta}.
+genes in Supplemental \cref{tab:all_equus_caballus_placenta}.
 
-\subsection{Sheep Placenta Transcriptome}
+\subsection{\sheep Placenta Transcriptome}
 
 \begin{table}[h]
   \tiny
@@ -1388,16 +1390,16 @@ print(xtable(top.sheep.genes),
       sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
 setkey(top.sheep.genes,"Gene symbol")
 @ 
-\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
-mitochondrial, or whose human ortholog is a housekeeping gene in
-  \textit{Ovis aries}}
+\caption{Expression in \ac{FPKM} of top 50 genes in \sheep which are
+  not ribosomal, mitochondrial, or whose human ortholog is a
+  housekeeping gene}
 \label{tab:top50_sheep_placenta}
 \end{table}
 
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
-in the term placenta of \textit{Ovis aries} are shown in
+in the term placenta of \sheep are shown in
 \cref{tab:top50_sheep_placenta} with a list of all highly expressed
-genes in Supplemental \cref{tab:all_sheep_placenta}.
+genes in Supplemental \cref{tab:all_ovis_aries_placenta}.
 
 
 \subsection{Core Placenta Transcriptome}

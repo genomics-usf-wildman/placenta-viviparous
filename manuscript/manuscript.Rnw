@@ -342,7 +342,7 @@ portion for \human, \bonobo, \dog, and \elephant; cotyledon for \cow;
 diffuse placenta for \opossum). All tissues were collected and stored
 in RNAlater (Life Technologies, Carlsbad, CA) until RNA isolation
 could be performed. Tissues were homogenized in Trizol, and total RNA
-was isolated following the manufacturer’s instructions. RNA was
+was isolated following the manufacturer's instructions. RNA was
 further purified using RNeasy Midi Kit (Qiagen, Valencia, CA), in
 conjunction with the RNase-Free DNase Set (Qiagen, Valencia, CA),
 following the manufacturer’s protocol to remove any contaminating DNA
@@ -359,18 +359,21 @@ absorbance values.
 All RNA-Seq mRNA isolation, library construction, and Illumina
 sequencing was performed by the Applied Genomics Technology Center
 (AGTC) at Wayne State University School of Medicine using 2.5-5 µg of
-total RNA and standard Illumina protocol. Paired-end sequencing was
-performed using the Illumina Genome Analyzer II with an insert size of
-230 base pairs (bp). Read lengths for species are shown in
+total RNA and the standard Illumina protocol. Paired-end sequencing
+was performed using the Illumina Genome Analyzer II with an insert
+size of 230 base pairs (bp). Read lengths for species are shown in
 \cref{tab:ref_genome_aligned_species}.
 
 \subsubsection{Additional Sequences}
 
-For more complete comparisons additional sequences of placenta in
-\mouse \cite{Wang.ea2011:surveyfornovelimprinted}, \human
+For more complete evolutionary comparisons additional sequences of
+placenta in \mouse \cite{Wang.ea2011:surveyfornovelimprinted}, \human
 \cite{Hughes.ea2015:Evaluatingintra-andinter-individual} \horse
-\DLA{citation}, \sheep \DLA{citation}, and \boar \DLA{citation} were
-obtained from the \ac{SRA} (Supplemental \cref{tab:srr_numbers}).
+\cite{Coleman.ea2010:Structuralannotationofequine}, \sheep
+\DLA{citation; e-mailed Alec Archibald from the ISGC about what the
+  right one should be}, and \pig
+\cite{Ahanda.ea2012:Predictionofaltered3-} were obtained from the
+\ac{SRA} (Supplemental \cref{tab:srr_numbers}).
 
 \subsection{Transcriptome Assembly, Alignment, and Quantification}
 
@@ -682,41 +685,29 @@ the number of trimmed reads ranged from %
 to %
 \Sexpr{star.logs.wide[input.read.length  < 40  ,max(as.numeric(input.reads))]}
 %
-with at least 99\% of reads mapping to the
-respective reference genome \DLA{This is also wrong}.
-%
-All reads were submitted to the NCBI Sequence Read Archive (SRA)
-(Accession Number XXX-YYY).
-
-\DLA{Need to do an embargoed submission to SRA}
-
-The percentage of bases that mapped to Ensembl annotated mRNA ranged
-from ~35\% in elephant to ~85\% in human, with percentages of bases
-mapping to annotated protein-coding segments of genes ranging from
-~34\% (elephant) to ~54\% (human), untranslated regions (UTRs) ranging
-from ~0.6\% (elephant) to ~31\% (human), and known introns ranging
-from ~5.5\% (dog) to 11\% (bonobo). Median percent genomic coverage
-ranged from ~43\% in elephant to 80\% in bonobo. The number of
-annotated transcripts to which reads mapped in each respective genomes
-ranged from 4119 (bonobo) to 6506 (human) for transcripts with \ac{FPKM}>10
-and 11689 (dog) to 30733 (human) for transcripts with \ac{FPKM}>1. The
-greater degree of mapping to annotated protein-coding sequences in
-humans corresponds to the greater number of Ensembl annotated
-sequences in the human genome compared to the other five reference
-genomes (Flicek, 2012).
-
-\DLA{Summarize all of this in a table}
-
+with an average of \Sexpr{star.logs.wide[input.read.length < 40, mean(`% good reads`)]}\%
+of reads mapping to the
+respective reference genome (cref{tab:ref_genome_aligned_species}).
 The top 50 expressed genes in each genome analyzed are shown in
-\DLA{Tables 2-7}, and all genes for each transcriptome are listed in
-\DLA{Supplementary Tables X-XX} [These are large Excel files to be
-included with the Supplemental Material]. In addition, specific genes
-including placental hormones and hormone-related genes, galectins, and
-insulin-like growth factor related genes are shown with \ac{FPKM} values
-side to side for all transcriptomes including the reanalysis of mouse
-from \cite{Wang.ea2011:surveyfornovelimprinted} in \DLA{Table 8}.
-Below we describe each transcriptome separately, specifically
-concentrating on highly-expressed genes.
+\cref{tab:top50_human_placenta,tab:top50_bonobo_placenta,tab:top50_spider_monkey_placenta,tab:top50_dog_placenta,tab:top50_cow_placenta,tab:top50_elphant_placenta,tab:top50_opossum_placenta,tab:top50_mouse_placenta,tab:top50_n_galili_placenta,tab:top50_s_carmeli_placenta,tab:top50_pig_placenta,tab:top50_horse_placenta,tab:top50_sheep_placenta}
+and all genes in Supplemental
+\cref{tab:all_ateles_fusciceps_placenta,tab:all_homo_sapiens_placenta,tab:all_pan_paniscus_placenta,tab:all_mus_musculus_placenta,tab:all_nannospalax_galili_placenta,tab:all_spalax_carmeli_placenta,tab:all_bos_taurus_placenta,tab:all_ovis_aries_placenta,tab:all_sus_scrofa_placenta,tab:all_equus_caballus_placenta,tab:all_canis_familiaris_placenta,tab:all_loxodonta_africana_placenta,tab:all_dasypus_novemcinctus_placenta,tab:all_monodelphis_domestica_placenta}.
+
+% The percentage of bases that mapped to Ensembl annotated mRNA ranged
+% from ~35\% in elephant to ~85\% in human, with percentages of bases
+% mapping to annotated protein-coding segments of genes ranging from
+% ~34\% (elephant) to ~54\% (human), untranslated regions (UTRs) ranging
+% from ~0.6\% (elephant) to ~31\% (human), and known introns ranging
+% from ~5.5\% (dog) to 11\% (bonobo). Median percent genomic coverage
+% ranged from ~43\% in elephant to 80\% in bonobo. The number of
+% annotated transcripts to which reads mapped in each respective genomes
+% ranged from 4119 (bonobo) to 6506 (human) for transcripts with \ac{FPKM}>10
+% and 11689 (dog) to 30733 (human) for transcripts with \ac{FPKM}>1. The
+% greater degree of mapping to annotated protein-coding sequences in
+% humans corresponds to the greater number of Ensembl annotated
+% sequences in the human genome compared to the other five reference
+% genomes (Flicek, 2012).
+
 
 <<top.genes.function,echo=FALSE,results="hide">>=
 top.genes.table <- function(species.name,n=50) {

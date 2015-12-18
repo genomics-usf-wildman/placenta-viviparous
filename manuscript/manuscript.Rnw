@@ -433,6 +433,8 @@ edgelabels("Euarchontoglires",16,frame="none",bg="white",font=1,adj=c(0.5,0),cex
 edgelabels("Laurasiatheria",7,frame="none",bg="white",font=1,adj=c(0.5,0),cex=0.9)
 edgelabels("Atlantogenata",3,frame="none",bg="white",font=1,adj=c(0.5,0),cex=0.9)
 edgelabels("Boreoeutheria",6,frame="none",bg="white",font=1,adj=c(0.7,0),cex=0.9)
+edgelabels("Primates",22,frame="none",bg="white",font=1,adj=c(0.5,0),cex=0.9)
+edgelabels("Rodentia",17,frame="none",bg="white",font=1,adj=c(0.7,0),cex=0.9)
 @ 
 \caption{Species tree for organisms studied}
 \label{fig:species_tree}
@@ -787,7 +789,93 @@ gene.expression <- function(species.name,gene,complete=FALSE) {
     
 @ 
 
-\subsection{Human Placenta Transcriptome}
+<<load.placenta.lineage.specific,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../data/",c("placenta_lineage_specific")))>>=
+load("../data/placenta_lineage_specific")
+source("/home/don/projects/xtable/pkg/R/print.xtable.R")
+
+placenta.lineage.specific.table <- function(analysis,output=TRUE) {
+    temp.table <- 
+        head(placenta.lineage.specific.analysis[analysis.name==analysis &
+                                                p.value <= 0.05][order(p.value),
+                                                                 list(human_name,p.value,fdr,fc),],
+             n=5)
+    temp.table <- data.table(temp.table)
+    setkey(temp.table,"human_name")
+    temp.table <- 
+        hugo.nomenclature[temp.table][,list(`Approved Symbol`,
+                                            `Approved Name`,p.value,fdr,fc)]
+    setkey(temp.table,"Approved Symbol")
+    setnames(temp.table,
+              c("Human Symbol","Human Name","p (t-test)","FDR","Fold Change")
+              )
+    if (output) {
+        print(xtable(temp.table[order(p.value),],
+                     display=c("s","s","s","e","g","f"),
+                     ),
+              booktabs=TRUE,
+              floating=FALSE,
+              math.style.exponents=TRUE,
+              sanitize.text.function=genes.table.sanitize,
+              include.rownames=FALSE)
+        
+    }
+    return(invisible(temp.table[order(p.value),]))
+}
+@ 
+
+\subsection{Primate Placenta Transcriptomes}
+
+\begin{table}
+  \tiny
+<<primate.lineage.specific,echo=FALSE,results="asis">>=
+pri.all.lin.spec <- NULL
+pri.all.lin.spec <- placenta.lineage.specific.table("pri.all")
+@ 
+\caption{Genes whose expression changed significantly in the primate
+  order as compared to all other analyzed species.}
+\label{tab:primate_lineage_specific}
+\end{table}
+
+We examined the expression of three primates, \human, \bonobo, and
+\smonkey. The genes whose expressions are different on the primate
+lineage in comparison to all other analyzed species are listed in
+\cref{tab:primate_lineage_specific}. \textit{FSTL1} has significantly
+higher expression in the primate lineage
+(\cref{fig:fstl1_evolution_tree},
+$\mathrm{FDR}=\Sexpr{pri.all.lin.spec["FSTL1","FDR"]}$), is implicated
+in BMP signaling, and has previously been implicated in inflammation
+and invasiveness
+\cite{Mouillet.ea2015:expressionandpost-transcriptionalregulation}. Of
+non-primates, \horse shows the highest expression
+%
+\Sexpr{gene.expression(species.name="equus caballus",gene="FSTL1",complete=TRUE)}, 
+%
+which is still lower than the lowest primate, \smonkey
+%
+(\Sexpr{gene.expression(species.name="ateles fusciceps",gene="FSTL1",complete=TRUE)}. 
+%
+No other genes were significantly differentially expressed on this
+lineage by t-test.
+
+
+\begin{figure}
+<<fstl1.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="FSTL1" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,min.fpkm=5)
+@ 
+\caption{Expression of follistatin-like 1 \textit{FSTLl1} and related
+  genes.}
+\label{fig:fstl1_evolution_tree}
+\end{figure}
+
+
+\subsubsection{\human Placenta Transcriptome}
+\label{sec:human_placenta}
 
 \begin{table}
   \tiny

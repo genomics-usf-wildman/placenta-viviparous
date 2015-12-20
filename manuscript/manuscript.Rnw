@@ -992,25 +992,25 @@ mitochondrial, or whose human ortholog is a housekeeping gene in
 \end{table}
 
 The top 50 expressed genes as measured by \ac{FPKM} in the term
-placenta of the bonobo are shown in \cref{tab:top50_bonobo_placenta}
+placenta of the \bonobo are shown in \cref{tab:top50_bonobo_placenta}
 with a list of all genes in Supplemental
-\cref{tab:all_pan_paniscus_placenta}. Expression in the bonobo
-placenta differs somewhat from that of the human, as evidenced by the
+\cref{tab:all_pan_paniscus_placenta}. Expression in the \bonobo
+placenta differs somewhat from that of the \human, as evidenced by the
 makeup of the top 50 genes (\cref{tab:top50_bonobo_placenta}). The highest expression
-(\ac{FPKM}=%
-\Sexpr{gene.expression("pan paniscus","PRG2")}%
+ in \bonobo is %
+\Sexpr{gene.expression("pan paniscus","PRG2",complete=TRUE)}, %
 %
-) in bonobo is \textit{PRG2}, which is involved in insulin
+ which is involved in insulin
 growth factor signaling and angiogenesis during pregnancy \cite{Weyer.ea2011:Placentalregulationofpeptide}. \textit{PRG2} is also expressed at relatively high levels in the
 human placenta (\ac{FPKM}=\Sexpr{gene.expression("homo sapiens","PRG2")}; Supplemental \cref{tab:all_homo_sapiens_placenta}), although at
-comparatively much lower levels than the bonobo. A bonobo gene closely
+comparatively much lower levels than the \bonobo. A \bonobo gene closely
 related to the chorionic somatomammotropins (Q95MK7\_PANTR) is also
 expressed at high levels (\ac{FPKM}=1232.56; \cref{tab:top50_bonobo_placenta}). Two other Pan genes
 included within this family (ENSPTRG00000030805 which shows similarity
 to GH2 and ENSPTRG00000034560) show expression levels of \ac{FPKM}>89. Six
 pregnancy-specific beta-1-glycoprotein genes were expressed in the
-bonobo placenta with \ac{FPKM} ranging from 20.885-167.961 (Supplemental
-Table X). Placental expression of the genes involved in estrogen and
+\bonobo placenta with \ac{FPKM} ranging from 20.885-167.961 (Supplemental
+\cref{tab:all_pan_paniscus_placenta}). Placental expression of the genes involved in estrogen and
 progesterone production (CYP19A1, HSD3B1 respectively) show lower
 expression in the bonobo as compared to humans (CYP19A1 \ac{FPKM}= 48.6877;
 HSD3B1 \ac{FPKM}= 54.5301; Table 8). In addition, CGA is expressed in the

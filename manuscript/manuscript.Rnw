@@ -795,12 +795,12 @@ placenta.lineage.specific.table <- function(analysis,output=TRUE) {
     temp.table <- 
         hugo.nomenclature[temp.table][,list(`Approved Symbol`,
                                             `Approved Name`,p.value,fdr,fc)]
-    setkey(temp.table,"Approved Symbol")
     setnames(temp.table,
               c("Human Symbol","Human Name","p (t-test)","FDR","Fold Change")
               )
+    setkey(temp.table,"Human Symbol")
     if (output) {
-        print(xtable(temp.table[order(p.value),],
+        print(xtable(temp.table[order(`p (t-test)`),],
                      display=c("s","s","s","e","g","f"),
                      ),
               booktabs=TRUE,
@@ -810,7 +810,7 @@ placenta.lineage.specific.table <- function(analysis,output=TRUE) {
               include.rownames=FALSE)
         
     }
-    return(invisible(temp.table[order(p.value),]))
+    return(invisible(temp.table[order(`p (t-test)`),]))
 }
 @ 
 
@@ -819,8 +819,8 @@ placenta.lineage.specific.table <- function(analysis,output=TRUE) {
 \begin{table}
   \tiny
 <<primate.lineage.specific,echo=FALSE,results="asis">>=
-pri.all.lin.spec <- NULL
 pri.all.lin.spec <- placenta.lineage.specific.table("pri.all")
+setkey(pri.all.lin.spec,"Human Symbol")
 @ 
 \caption{Genes whose expression changed significantly in the primate
   order as compared to all other analyzed species.}

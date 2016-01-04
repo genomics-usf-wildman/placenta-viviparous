@@ -670,7 +670,7 @@ to %
 %
 with an average of \Sexpr{star.logs.wide[input.read.length > 120 & input.read.length < 160,mean(`% good reads`)]}\% %
 of reads mapping to the
-respective reference genome (cref{tab:ref_genome_aligned_species}).
+respective reference genome (\cref{tab:ref_genome_aligned_species}).
 %
 %
 For transcriptomes sequenced with 35 bp, %
@@ -687,7 +687,7 @@ to %
 %
 with an average of \Sexpr{star.logs.wide[input.read.length < 40, mean(`% good reads`)]}\%
 of reads mapping to the
-respective reference genome (cref{tab:ref_genome_aligned_species}).
+respective reference genome (\cref{tab:ref_genome_aligned_species}).
 The top 50 expressed genes in each genome analyzed are shown in
 \cref{tab:top50_human_placenta,tab:top50_bonobo_placenta,tab:top50_spider_monkey_placenta,tab:top50_dog_placenta,tab:top50_cow_placenta,tab:top50_elphant_placenta,tab:top50_opossum_placenta,tab:top50_mouse_placenta,tab:top50_n_galili_placenta,tab:top50_s_carmeli_placenta,tab:top50_pig_placenta,tab:top50_horse_placenta,tab:top50_sheep_placenta}
 and all genes in Supplemental

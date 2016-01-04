@@ -87,7 +87,7 @@
 \newcommand{\cow}[0]{\textit{B. taurus}\xspace}
 \newcommand{\dog}[0]{\textit{C. familiaris}\xspace}
 \newcommand{\armadillo}[0]{\textit{D. novemcinctus}\xspace}
-\newcommand{\horse}[0]{\textit{E. galili}\xspace}
+\newcommand{\horse}[0]{\textit{E. caballus}\xspace}
 \newcommand{\elephant}[0]{\textit{L. africana}\xspace}
 \newcommand{\human}[0]{\textit{H. sapiens}\xspace}
 \newcommand{\opossum}[0]{\textit{M. domestica}\xspace}

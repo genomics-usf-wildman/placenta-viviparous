@@ -844,7 +844,7 @@ non-primates, \horse shows the highest expression
 %
 which is still lower than the lowest primate, \smonkey
 %
-(\Sexpr{gene.expression(species.name="ateles fusciceps",gene="FSTL1",complete=TRUE)}. 
+(\Sexpr{gene.expression(species.name="ateles fusciceps",gene="FSTL1",complete=TRUE)}). 
 %
 No other genes were significantly differentially expressed on this
 lineage by t-test.

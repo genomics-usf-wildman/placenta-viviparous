@@ -99,6 +99,19 @@
 \newcommand{\carmeli}[0]{\textit{S. carmeli}\xspace}
 \newcommand{\pig}[0]{\textit{S. scrofa}\xspace}
 
+% top 50 gene table explanation. Note that if you modify this, you
+% should probably also modify the human table explanation, which is
+% slightly different.
+\newcommand{\tableexplanation}[2]{The top 50 genes by \ac{FPKM} in #1
+  which are not annotated as Mt\_rRNA, Mt\_tRNA, rRNA or whose \human
+  ortholog is a housekeeping gene. Gene symbol is the gene symbol or
+  Ensembl gene id. Human Symbol is the 1:1 human ortholog or the best
+  human alignment when enclosed in parenthesis. Human Name is the HUGO
+  name corresponding to the human symbol. A complete list of all genes
+  is in \cref{#2}.}
+
+
+
 \begin{document}
 \author[1,2]{Michael R. McGowen}
 \author[1]{Don Armstrong}
@@ -880,9 +893,11 @@ print(xtable(top.human.genes),
       sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
 setkey(top.human.genes,"Gene symbol")
 @ 
-\caption{Expression in \ac{FPKM} of top 50 genes which are not
-  ribosomal, mitochondrial, or a housekeeping gene in \textit{Homo
-    sapiens}}
+\caption{The top 50 genes by \ac{FPKM} in \human which are not
+  annotated as Mt\_rRNA, Mt\_tRNA, rRNA or a housekeeping gene. Gene
+  symbol is the gene symbol or Ensembl gene id. Human Name is the HUGO
+  name corresponding to the human symbol. A complete list of all genes
+  is in \cref{tab:all_homo_sapiens_placenta}.}
 \label{tab:top50_human_placenta}
 \end{table}
 
@@ -987,8 +1002,7 @@ print(xtable(top.bonobo.genes),
       sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
 setkey(top.bonobo.genes,"Gene symbol")
 @ 
-\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
-mitochondrial, or whose \human ortholog is a housekeeping gene in \bonobo }
+\caption{\tableexplanation{\bonobo}{tab:all_pan_paniscus_placenta}}
 \label{tab:top50_bonobo_placenta}
 \end{table}
 

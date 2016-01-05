@@ -14,3 +14,13 @@ This directory contains the rules to make various data files
    orthologs in all species
 
 Examine [Makefile](Makefile) for details about them.
+
+### diamond_against_human subdirectory
+
+This directory contains rules to generate a blast of all species
+against human, primarily useful for annotating un-annotated proteins
+to get an idea of what they might actually do.
+
+The important file is `diamond_against_human/gene_to_human_gene.txt`
+which is combined into combined_fpkm.
+

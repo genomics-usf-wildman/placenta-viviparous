@@ -21,7 +21,7 @@ while (<$p2g_fh>) {
     next unless /^ENS/;
     chomp;
     my ($prot,$gene,$name) = split /\t/;
-    $p2g{$prot} = $gene;
+    $p2g{$prot} = "$gene\t$name";
 }
 
 sub print_match {
@@ -29,7 +29,7 @@ sub print_match {
     print join("\t",$gene,$prot,$p2g{$human_prot},$human_prot)."\n";
 }
 
-print join("\t","gene_id","protein_id","human_gene_id","human_protein")."\n";
+print join("\t","gene_id","protein_id","human_gene_id","human_gene_symbol","human_protein")."\n";
 for my $alignment_fh (map {open_file($_)} @alignment_files) {
     my $previous_id_cont = '';
     my $previous_gene_id;

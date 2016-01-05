@@ -726,33 +726,51 @@ and all genes in Supplemental
 
 <<top.genes.function,echo=FALSE,results="hide">>=
 top.genes.table <- function(species.name,n=50) {
+    alignment.species <- species.name
+    if (alignment.species=="pan paniscus") {
+        alignment.species <- "pan troglodytes"
+    } else if (alignment.species=="ateles fusciceps") {
+        alignment.species <- "homo sapiens"
+    } else if (grepl("spalax",alignment.species)) {
+        alignment.species <- "mus musculus"
+    }
     temp <- 
         combined.fpkm[species==species.name &
-                           !(!is.na(human_name) & 
-                                 human_name %in% housekeeping.genes.superset[,gene_short_name]) &
-                               !grepl("((RNA\\d|MT)-|^RP[SL]\\d+$)",human_name) &
-                                   !grepl("(^[Mm][Tt]-|^R[pP][lsLS]\\d+[abcdABCD]?[l]?(?:-.+)?$|rRNA$)",gene_short_name)
+                      !(!is.na(human_name) & 
+                        human_name %in% housekeeping.genes.superset[,gene_short_name]) &
+                      ! (gene_biotype %in% c("Mt_tRNA","Mt_rRNA","rRNA")) &
+                      !grepl("((RNA\\d|MT)-|^RP[SL]P?\\d+[ABCD]?$)",human_name) &
+                      !grepl("((RNA\\d|MT)-|^RP[SL]P?\\d+[ABCD]?$)",human_alignment_symbol) &
+                      !grepl("(^[Mm][Tt]-|^R[pP][lsLS]\\d+[abcdABCD]?[l]?(?:-.+)?$|rRNA$)",
+                             gene_short_name)
                       ][order(-mean_fpkm)][,list(name_or_id,
+                                                 human_alignment_symbol,
                                                  human_name,mean_fpkm)]
     ## remove any genes which have a null name_or_id; they are probably from unassembled contigs
     temp <- temp[!(is.na(name_or_id)|name_or_id==""),]
     temp <- temp[!duplicated(name_or_id)][1:n]
+    temp[,used_alignment:=FALSE]
+    temp[is.na(human_name) & !is.na(human_alignment_symbol),
+                    used_alignment:=TRUE]
+    temp[is.na(human_name),human_name:=human_alignment_symbol]
     setkey(temp,"human_name")
     temp <- 
         hugo.nomenclature[temp][order(-mean_fpkm),
-                                list(name_or_id,`Approved Symbol`,`Approved Name`,mean_fpkm)]
+                                list(name_or_id,used_alignment,`Approved Symbol`,`Approved Name`,mean_fpkm)]
+    temp[!is.na(name_or_id),
+         name_or_id:=paste0("\\href{http://www.ensembl.org/",
+                             capfirst(gsub(" ","_",alignment.species)),
+                             "/Gene/Summary?g=",name_or_id,"}{",
+                             xtable.sanitize.text(name_or_id),"}")]
     temp[!is.na(`Approved Name`),
          `Approved Name`:=paste0("\\href{http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=",`Approved Symbol`,"}{",xtable.sanitize.text(`Approved Name`),"}")]
     temp[!is.na(`Approved Symbol`),
          `Approved Symbol`:=paste0("\\href{http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=",`Approved Symbol`,"}{",xtable.sanitize.text(`Approved Symbol`),"}")]
-    if (species.name=="homo sapiens") {
-        temp[,name_or_id:=paste0("\\href{http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=",name_or_id,"}{",xtable.sanitize.text(name_or_id),"}")]
-    } else {
-        temp[,name_or_id:=xtable.sanitize.text(name_or_id)]
-    }
+    temp[used_alignment==TRUE,`Approved Symbol`:=paste0("(",`Approved Symbol`,")")]
+    temp[,used_alignment:=NULL]
     setnames(temp,c("Gene symbol","Human Symbol","Human Name","FPKM"))
-    if (species.name=="homo sapiens") {
-        temp <- temp[,-2,with=FALSE]
+    if (species.name=="homo sapiens" || species.name=="ateles fusciceps") {
+        temp[,`Human Symbol`:=NULL]
     }
     return(temp)
 }
@@ -780,14 +798,20 @@ xtable.sanitize.text <- function(str){
 }
 gene.expression <- function(species.name,gene,complete=FALSE) {
     fpkm <- combined.fpkm[species==species.name &
-                              gene_short_name==gene,
+                              (gene_short_name==gene | 
+                               gene_id==gene),
                           mean_fpkm]
-
     if (complete) {
-        return(paste0("\\textit{",gene,"}=",
-                      formatC(fpkm,digits=0,format="f"),
-                      " \\ac{FPKM}"
-                      ))
+        if (any(grepl("^ENS.+G\\d+$",gene))) {
+            return(paste0(gene,
+                          formatC(fpkm,digits=0,format="f"),
+                          " \\ac{FPKM}"))
+        } else {
+            return(paste0("\\textit{",gene,"}=",
+                          formatC(fpkm,digits=0,format="f"),
+                          " \\ac{FPKM}"
+                          ))
+        }
     } else {
         return(fpkm)
     }
@@ -1015,41 +1039,45 @@ makeup of the top 50 genes (\cref{tab:top50_bonobo_placenta}). The highest expre
  in \bonobo is %
 \Sexpr{gene.expression("pan paniscus","PRG2",complete=TRUE)}, %
 %
- which is involved in insulin
-growth factor signaling and angiogenesis during pregnancy \cite{Weyer.ea2011:Placentalregulationofpeptide}. \textit{PRG2} is also expressed at relatively high levels in the
-human placenta (\ac{FPKM}=\Sexpr{gene.expression("homo sapiens","PRG2")}; Supplemental \cref{tab:all_homo_sapiens_placenta}), although at
-comparatively much lower levels than the \bonobo. A \bonobo gene closely
-related to the chorionic somatomammotropins (ENSPTRG00000034560) is also
-expressed at high levels %
+which is involved in insulin growth factor signaling and angiogenesis
+during pregnancy \cite{Weyer.ea2011:Placentalregulationofpeptide}.
+\textit{PRG2} is also expressed at relatively high levels (though
+comparatively much lower) in the human placenta
+(\ac{FPKM}=\Sexpr{gene.expression("homo sapiens","PRG2")};
+Supplemental \cref{tab:all_homo_sapiens_placenta}). Four \bonobo genes
+related to the chorionic somatomammotropins
+are also expressed at relatively high levels (GH1 
+\Sexpr{gene.expression("pan paniscus","ENSPTRG00000034560",complete=TRUE)}, 
+\Sexpr{gene.expression("pan paniscus","ENSPTRG00000034212",complete=TRUE)}, 
+GH2
+\Sexpr{gene.expression("pan paniscus","ENSPTRG00000030805",complete=TRUE)}, 
+\Sexpr{gene.expression("pan paniscus","ENSPTRG00000034209",complete=TRUE)}, 
 %
-(\ac{FPKM}=\Sexpr{gene.expression("pan paniscus","ENSPTRG00000034560")}); %
-%
-\cref{tab:top50_bonobo_placenta}). Two other Pan genes included within
-this family (ENSPTRG00000030805 which shows similarity to GH2 and
-ENSPTRG00000034560) show expression levels of \ac{FPKM}>89. Six
-pregnancy-specific beta-1-glycoprotein genes were expressed in the
-\bonobo placenta with \ac{FPKM} ranging from 20.885-167.961
-(Supplemental \cref{tab:all_pan_paniscus_placenta}). Placental
-expression of the genes involved in estrogen and progesterone
-production (CYP19A1, HSD3B1 respectively) show lower expression in the
-bonobo as compared to humans %
+\cref{tab:all_pan_paniscus_placenta}, \cref{fig:csh1_evolution_tree}).
+Placental expression of the genes involved in estrogen and
+progesterone production (\textit{CYP19A1}, \textit{HSD3B1}
+respectively) show lower expression in \bonobo as compared to \human %
 (\Sexpr{gene.expression("pan paniscus","CYP19A1",complete=TRUE)},
-\cref{fig:estrogen_evolution_tree};
+\cref{fig:estrogen_evolution_tree}; %
 \Sexpr{gene.expression("pan paniscus","HSD3B1",complete=TRUE)},
 \cref{fig:progesterone_evolution_tree} and
-\cref{tab:top50_human_placenta}) although the expression is fairly similar to that of 
-. In addition, \textit{CGA} is
-expressed in the bonobo placenta
+\cref{tab:top50_human_placenta}) although the expression of
+\textit{HSD3B1} is fairly similar to that of \smonkey %
+(\Sexpr{gene.expression("ateles fusciceps","HSD3B1",complete=TRUE)}. %
+In addition, \textit{CGA} is expressed in the bonobo placenta %
 (\ac{FPKM}=\Sexpr{gene.expression("pan paniscus","CGA")}), but at much
-lower levels than \human as well (\cref{tab:top50_human_placenta}). 
+lower levels than \human as well (\cref{tab:top50_human_placenta}).
 %
 Two Ensembl-annotated beta subunits of the chorionic gonadotropin
-genes are expressed in \bonobo, one related to CGB and another related
-to CGB7; both are not highly expressed (Table 8). Among the other top
-50 expressed genes, there is high expression of ribosomal proteins
-(e.g., RPL18, RPL23), keratins (e.g., KRT7, KRT19), heat-shock
-proteins (e.g., HSPA5, HSPA1A), serpins (SERPINE1, SERPINE2), insulin
-growth factor 2 (IGF2) and the hormone adrenomedullin (ADM).
+genes are expressed in \bonobo, one related to \textit{CGB} and
+another related to \textit{CGB7}; both are not highly expressed
+(\cref{fig:chorionic_gonadotropin}). Among the other top 50 expressed
+genes, there is high expression of keratins (e.g., \textit{KRT19},
+\textit{KRT18}), heat-shock proteins (e.g., \textit{HSP90B1},
+\textit{HSPA1A}), serpins (\textit{SERPINE1}, \textit{SERPINE2}),
+insulin growth factor 2 (\textit{IGF2}) and one of its binding
+proteins \textit{IGFBP3}, and the hormone adrenomedullin
+(\textit{ADM}).
 
 \begin{figure}
 <<serpine.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=

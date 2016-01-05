@@ -73,6 +73,7 @@
     \setlength{\itemsep}{0pt}%
     \setlength{\parskip}{0pt}}%
   {\end{itemize}}
+\setcounter{tocdepth}{3}
 \oddsidemargin 0.0in 
 \textwidth 6.5in
 \raggedbottom

@@ -1,0 +1,6 @@
+*.fa
+*.fa.gz
+*_diamond.txt
+*.daa
+homo_sapiens.dmnd
+gene_to_human_gene.txt

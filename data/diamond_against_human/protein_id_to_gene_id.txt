@@ -1,0 +1,1 @@
+../fastq_fpkm/protein_id_to_gene_id.txt

@@ -5,7 +5,9 @@ plot.tree.matrix <- function(gene.tree,gene.tree.table,gene.tree.expression,offs
     gene.tree.table[,species:=capfirst(gsub("_"," ",species))]
     gene.tree.table[,short.species:=gsub("^(.)[^ ]* +([^ ]*)","\\1. \\2",species)]
     gene.tree.table[,symbol_or_id:=ifelse(symbol=="NULL",gene_id,paste0(symbol," ",short.species))]
-    gene.tree.table[duplicated(symbol_or_id),symbol_or_id:=paste0(symbol_or_id," dup")]
+    ## use symbol gene_id for duplicates
+    gene.tree.table[duplicated(symbol_or_id)|duplicated(symbol_or_id,fromLast=TRUE),
+                    symbol_or_id:=paste0(symbol," ",gene_id)]
     gene.tree.expression.subset <- gene.tree.expression
     if (!is.na(min.fpkm)) {
         gene.tree.expression.subset <-

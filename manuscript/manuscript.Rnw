@@ -902,12 +902,12 @@ the highest \ac{FPKM} value
 %
 (\Sexpr{gene.expression(species.name="homo sapiens",gene="CSH1")}) %
 %
-in humans is \textit{CSH1}, followed by \textit{CSH2}, and \textit{CSHL1}, all
+in \human is \textit{CSH1}, followed by \textit{CSH2}, and \textit{CSHL1}, all
 three of which are members of a distinct expansion of the growth
 hormone gene family within hominoids (\cref{fig:galectins_evolution_tree}). Another member of the growth
 hormone gene family, \ac{GH2} (\ac{FPKM}=%
 \Sexpr{gene.expression(species.name="homo sapiens",gene="GH2")}), %
-is also expressed to a high degree in the human placenta
+is also expressed to a high degree in the \human placenta
 (\cref{tab:top50_human_placenta}).
 % 
 Eleven pregnancy-specific beta-1-glycoprotein genes are highly-expressed

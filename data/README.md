@@ -24,3 +24,7 @@ to get an idea of what they might actually do.
 The important file is `diamond_against_human/gene_to_human_gene.txt`
 which is combined into combined_fpkm.
 
+### gtf_types subdirectory
+
+This directory parses GTF files to generate a list of ensembl types of
+different genes so they can be filtered out of the gene lists.

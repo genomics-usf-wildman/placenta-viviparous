@@ -118,6 +118,21 @@ combined.fpkm[name_or_id=="-" | name_or_id=="",name_or_id:=gene_id]
 ### this is wrong for pan paniscus, so fixing it here
 combined.fpkm[human_name=="GH1" & oma_group_name=="GH2",human_name:=NA]
 
+### diamond gene_to_human_gene.txt
+diamond.align <- fread(args[6])
+setkey(diamond.align,"gene_id")
+setnames(diamond.align,"human_gene_symbol","human_alignment_symbol")
+setkey(combined.fpkm,"gene_id")
+combined.fpkm <-
+    diamond.align[,list(gene_id,human_alignment_symbol)][combined.fpkm]
+
+### gtf types
+gtf.types <- fread(args[7])
+setkey(gtf.types,"gene_id")
+setkey(combined.fpkm,"gene_id")
+combined.fpkm <-
+    gtf.types[combined.fpkm]
+setkey(combined.fpkm,"tracking_id")
 
 if (!all(grepl("_per_sample",output.file))) {
     combined.fpkm <-

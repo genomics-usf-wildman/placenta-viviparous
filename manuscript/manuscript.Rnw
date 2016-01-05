@@ -987,16 +987,15 @@ print(xtable(top.bonobo.genes),
 setkey(top.bonobo.genes,"Gene symbol")
 @ 
 \caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
-mitochondrial, or whose human ortholog is a housekeeping gene in
-  \textit{Pan paniscus}}
+mitochondrial, or whose \human ortholog is a housekeeping gene in \bonobo }
 \label{tab:top50_bonobo_placenta}
 \end{table}
 
 The top 50 expressed genes as measured by \ac{FPKM} in the term
-placenta of the \bonobo are shown in \cref{tab:top50_bonobo_placenta}
+placenta of \bonobo are shown in \cref{tab:top50_bonobo_placenta}
 with a list of all genes in Supplemental
 \cref{tab:all_pan_paniscus_placenta}. Expression in the \bonobo
-placenta differs somewhat from that of the \human, as evidenced by the
+placenta differs somewhat from that of \human, as evidenced by the
 makeup of the top 50 genes (\cref{tab:top50_bonobo_placenta}). The highest expression
  in \bonobo is %
 \Sexpr{gene.expression("pan paniscus","PRG2",complete=TRUE)}, %
@@ -1005,25 +1004,37 @@ makeup of the top 50 genes (\cref{tab:top50_bonobo_placenta}). The highest expre
 growth factor signaling and angiogenesis during pregnancy \cite{Weyer.ea2011:Placentalregulationofpeptide}. \textit{PRG2} is also expressed at relatively high levels in the
 human placenta (\ac{FPKM}=\Sexpr{gene.expression("homo sapiens","PRG2")}; Supplemental \cref{tab:all_homo_sapiens_placenta}), although at
 comparatively much lower levels than the \bonobo. A \bonobo gene closely
-related to the chorionic somatomammotropins (Q95MK7\_PANTR) is also
-expressed at high levels (\ac{FPKM}=1232.56; \cref{tab:top50_bonobo_placenta}). Two other Pan genes
-included within this family (ENSPTRG00000030805 which shows similarity
-to GH2 and ENSPTRG00000034560) show expression levels of \ac{FPKM}>89. Six
+related to the chorionic somatomammotropins (ENSPTRG00000034560) is also
+expressed at high levels %
+%
+(\ac{FPKM}=\Sexpr{gene.expression("pan paniscus","ENSPTRG00000034560")}); %
+%
+\cref{tab:top50_bonobo_placenta}). Two other Pan genes included within
+this family (ENSPTRG00000030805 which shows similarity to GH2 and
+ENSPTRG00000034560) show expression levels of \ac{FPKM}>89. Six
 pregnancy-specific beta-1-glycoprotein genes were expressed in the
-\bonobo placenta with \ac{FPKM} ranging from 20.885-167.961 (Supplemental
-\cref{tab:all_pan_paniscus_placenta}). Placental expression of the genes involved in estrogen and
-progesterone production (CYP19A1, HSD3B1 respectively) show lower
-expression in the bonobo as compared to humans (CYP19A1 \ac{FPKM}= 48.6877;
-HSD3B1 \ac{FPKM}= 54.5301; Table 8). In addition, CGA is expressed in the
-bonobo placenta (\ac{FPKM}=202.629), but at much lower levels than humans
-as well (Table 8). Two Ensembl-annotated beta subunits of the
-chorionic gonadotropin genes are expressed in bonobo, one related to
-CGB and another related to CGB7; both are not highly expressed (Table
-8). Among the other top 50 expressed genes, there is high expression
-of ribosomal proteins (e.g., RPL18, RPL23), keratins (e.g., KRT7,
-KRT19), heat-shock proteins (e.g., HSPA5, HSPA1A), serpins (SERPINE1,
-SERPINE2), insulin growth factor 2 (IGF2) and the hormone
-adrenomedullin (ADM).
+\bonobo placenta with \ac{FPKM} ranging from 20.885-167.961
+(Supplemental \cref{tab:all_pan_paniscus_placenta}). Placental
+expression of the genes involved in estrogen and progesterone
+production (CYP19A1, HSD3B1 respectively) show lower expression in the
+bonobo as compared to humans %
+(\Sexpr{gene.expression("pan paniscus","CYP19A1",complete=TRUE)},
+\cref{fig:estrogen_evolution_tree};
+\Sexpr{gene.expression("pan paniscus","HSD3B1",complete=TRUE)},
+\cref{fig:progesterone_evolution_tree} and
+\cref{tab:top50_human_placenta}) although the expression is fairly similar to that of 
+. In addition, \textit{CGA} is
+expressed in the bonobo placenta
+(\ac{FPKM}=\Sexpr{gene.expression("pan paniscus","CGA")}), but at much
+lower levels than \human as well (\cref{tab:top50_human_placenta}). 
+%
+Two Ensembl-annotated beta subunits of the chorionic gonadotropin
+genes are expressed in \bonobo, one related to CGB and another related
+to CGB7; both are not highly expressed (Table 8). Among the other top
+50 expressed genes, there is high expression of ribosomal proteins
+(e.g., RPL18, RPL23), keratins (e.g., KRT7, KRT19), heat-shock
+proteins (e.g., HSPA5, HSPA1A), serpins (SERPINE1, SERPINE2), insulin
+growth factor 2 (IGF2) and the hormone adrenomedullin (ADM).
 
 \begin{figure}
 <<serpine.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
@@ -1413,8 +1424,7 @@ print(ggplot(core.placenta.transcriptome.long[!grepl("(min|median|max)_expressio
       + geom_tile(aes(fill=log10(FPKM)))
       + scale_x_discrete(expand=c(0,0))
       + scale_y_discrete(expand=c(0,0))
-      + scale_fill_gradient(low="white",
-                            high="blue",
+      + scale_fill_gradient(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = "grey50",
                             limits=c(0,4),
                             guide=guide_colorbar(title=expression(log[10](FPKM)))
                             )

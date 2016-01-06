@@ -1112,6 +1112,27 @@ mitochondrial, or whose human ortholog is a housekeeping gene}
 \label{tab:top50_spider_monkey_placenta}
 \end{table}
 
+For the term placenta of \smonkey, assembled contigs from RNA-seq were
+aligned using against \human and the best alignment was chosen as the
+annotation for each assembled contig. In the term placenta of
+\smonkey, the top 50 non-housekeeping genes
+(\cref{tab:top50_spider_monkey_placenta}) include a possible regulator
+of androgen receptor signaling
+\cite{Sampson.ea2012:PAGE4positivityisassociated}, \textit{PAGE4} %
+(\ac{FPKM}=\Sexpr{gene.expression("ateles fusciceps","PAGE4")}), %
+the pregnancy specific glycoprotein \textit{PSG8}
+(\ac{FPKM}=\Sexpr{gene.expression("ateles fusciceps","PSG8")}), %
+a member of the chorionic somatotropins, \textit{GH1} %
+(\ac{FPKM}=\Sexpr{gene.expression("ateles fusciceps","GH1")}), %
+a few HLA genes (\textit{HLA-A}, \textit{HLA-F},
+\cref{tab:top50_spider_monkey_placenta}), and multiple components of
+the annexin complex %
+(\Sexpr{gene.expression("ateles fusciceps","ANXA2",complete=TRUE)}, %
+\Sexpr{gene.expression("ateles fusciceps","S100P",complete=TRUE)}, %
+\Sexpr{gene.expression("ateles fusciceps","S100A11",complete=TRUE)}) %
+which may play a role in angiogenesis, and certainly regulate
+cell-cell interaction in the developing placenta
+\cite{Liu.ea2015:AnnexinA2complexeswith}.
 
 \subsection{\dog Placenta Transcriptome}
 

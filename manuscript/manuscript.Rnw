@@ -1072,7 +1072,7 @@ lower levels than \human as well (\cref{tab:top50_human_placenta}).
 Two Ensembl-annotated beta subunits of the chorionic gonadotropin
 genes are expressed in \bonobo, one related to \textit{CGB} and
 another related to \textit{CGB7}; both are not highly expressed
-(\cref{fig:chorionic_gonadotropin}). Among the other top 50 expressed
+(\cref{fig:cgb_evolution_tree}). Among the other top 50 expressed
 genes, there is high expression of keratins (e.g., \textit{KRT19},
 \textit{KRT18}), heat-shock proteins (e.g., \textit{HSP90B1},
 \textit{HSPA1A}), serpins (\textit{SERPINE1}, \textit{SERPINE2}),

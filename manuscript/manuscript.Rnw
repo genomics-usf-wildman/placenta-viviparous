@@ -1121,7 +1121,94 @@ which may play a role in angiogenesis, and certainly regulate
 cell-cell interaction in the developing placenta
 \cite{Liu.ea2015:AnnexinA2complexeswith}.
 
-\subsection{\dog Placenta Transcriptome}
+\subsection{Rodentia}
+
+\subsubsection{Mouse Placenta Transcriptome}
+
+\begin{table}[h]
+  \tiny
+<<top.50.mouse.expressed.genes,echo=FALSE,results="asis">>=
+top.mouse.genes <- top.genes.table(species.name="mus musculus")
+print(xtable(top.mouse.genes),
+      booktabs=TRUE,
+      floating=FALSE,
+      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
+setkey(top.mouse.genes,"Gene symbol")
+@ 
+\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
+mitochondrial, or whose human ortholog is a housekeeping gene in
+  \textit{Mus musculus}}
+\label{tab:top50_mouse_placenta}
+\end{table}
+
+The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
+in the term placenta of \mouse are shown in
+\cref{tab:top50_mouse_placenta} with a list of all highly expressed
+genes in Supplemental \cref{tab:all_mus_musculus_placenta}.
+
+% No idea what mir-6236 is doing
+
+% AC099934.1 probably overlaps with Rn7sl (part of SRP?)
+
+% AC157822.1 overlaps with Rn7s2
+
+% AC122546.1 = no idea
+
+% Gm3788 = psuedogene (Thymosin beta 10)
+
+\DLA{Why are there so many psuedogenes in the mouse? Maybe because of
+  the short read length?}
+
+\subsubsection{\textit{Nannospalax galili} (Blind Mole Rat) Placenta Transcriptome}
+
+\begin{table}[h]
+  \tiny
+<<top.50.n.galili.expressed.genes,echo=FALSE,results="asis">>=
+top.galili.genes <- top.genes.table(species.name="nannospalax galili")
+print(xtable(top.galili.genes),
+      booktabs=TRUE,
+      floating=FALSE,
+      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
+setkey(top.galili.genes,"Gene symbol")
+@ 
+\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
+mitochondrial, or whose human ortholog is a housekeeping gene in
+  \textit{Nannospalax galili}}
+\label{tab:top50_n_galili_placenta}
+\end{table}
+
+The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
+in the term placenta of \textit{Nannospalax galili} are shown in
+\cref{tab:top50_n_galili_placenta} with a list of all highly expressed
+genes in Supplemental \cref{tab:all_nannospalax_galili_placenta}.
+
+\subsubsection{\textit{Spalax carmeli} (Blind Mole Rat) Placenta Transcriptome}
+
+\begin{table}[h]
+  \tiny
+<<top.50.s.carmeli.expressed.genes,echo=FALSE,results="asis">>=
+top.carmeli.genes <- top.genes.table(species.name="spalax carmeli")
+print(xtable(top.carmeli.genes),
+      booktabs=TRUE,
+      floating=FALSE,
+      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
+setkey(top.carmeli.genes,"Gene symbol")
+@ 
+\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
+mitochondrial, or whose human ortholog is a housekeeping gene in
+  \textit{Spalax carmeli}}
+\label{tab:top50_s_carmeli_placenta}
+\end{table}
+
+The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
+in the term placenta of \textit{Spalax carmeli} are shown in
+\cref{tab:top50_s_carmeli_placenta} with a list of all highly expressed
+genes in Supplemental \cref{tab:all_spalax_carmeli_placenta}.
+
+
+\subsection{Laurasiatheria}
+
+\subsubsection{\dog Placenta Transcriptome}
 
 \begin{table}
   \tiny
@@ -1138,7 +1225,6 @@ setkey(top.dog.genes,"Gene symbol")
   housekeeping gene}
 \label{tab:top50_dog_placenta}
 \end{table}
-
 
 The top 50 non-housekeeping expressed genes as measured by \ac{FPKM}
 in the term placenta of \dog are shown in
@@ -1177,7 +1263,7 @@ and expression of \textit{HSD3B7} is also low
 (\Sexpr{gene.expression("canis familiaris","HSD3B7")}, 
 \cref{fig:progesterone_evolution_tree}).
 
-\subsection{\cow Placenta Transcriptome}
+\subsubsection{\cow Placenta Transcriptome}
 
 \begin{table}
   \tiny
@@ -1273,8 +1359,78 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
 \label{fig:pag2_evolution_tree}
 \end{figure}
 
+\subsubsection{\pig Placenta Transcriptome}
 
-\subsection{\elephant Placenta Transcriptome}
+\begin{table}[h]
+  \tiny
+<<top.50.pig.expressed.genes,echo=FALSE,results="asis">>=
+top.pig.genes <- top.genes.table(species.name="sus scrofa")
+print(xtable(top.pig.genes),
+      booktabs=TRUE,
+      floating=FALSE,
+      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
+setkey(top.pig.genes,"Gene symbol")
+@ 
+\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
+mitochondrial, or whose human ortholog is a housekeeping gene in
+  \pig}
+\label{tab:top50_pig_placenta}
+\end{table}
+
+The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
+in the term placenta of \textit{Sus scrofa} are shown in
+\cref{tab:top50_pig_placenta} with a list of all highly expressed
+genes in Supplemental \cref{tab:all_sus_scrofa_placenta}.
+
+\subsubsection{\horse Placenta Transcriptome}
+
+\begin{table}[h]
+  \tiny
+<<top.50.horse.expressed.genes,echo=FALSE,results="asis">>=
+top.horse.genes <- top.genes.table(species.name="equus caballus")
+print(xtable(top.horse.genes),
+      booktabs=TRUE,
+      floating=FALSE,
+      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
+setkey(top.horse.genes,"Gene symbol")
+@ 
+\caption{Expression in \ac{FPKM} of top 50 genes in \horse which are
+  not ribosomal, mitochondrial, or whose human ortholog is a
+  housekeeping gene}
+\label{tab:top50_horse_placenta}
+\end{table}
+
+The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
+in the term placenta of \textit{Equus Caballus} are shown in
+\cref{tab:top50_horse_placenta} with a list of all highly expressed
+genes in Supplemental \cref{tab:all_equus_caballus_placenta}.
+
+\subsubsection{\sheep Placenta Transcriptome}
+
+\begin{table}[h]
+  \tiny
+<<top.50.sheep.expressed.genes,echo=FALSE,results="asis">>=
+top.sheep.genes <- top.genes.table(species.name="ovis aries")
+print(xtable(top.sheep.genes),
+      booktabs=TRUE,
+      floating=FALSE,
+      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
+setkey(top.sheep.genes,"Gene symbol")
+@ 
+\caption{Expression in \ac{FPKM} of top 50 genes in \sheep which are
+  not ribosomal, mitochondrial, or whose human ortholog is a
+  housekeeping gene}
+\label{tab:top50_sheep_placenta}
+\end{table}
+
+The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
+in the term placenta of \sheep are shown in
+\cref{tab:top50_sheep_placenta} with a list of all highly expressed
+genes in Supplemental \cref{tab:all_ovis_aries_placenta}.
+
+
+\subsection{Atlantogenata}
+\subsubsection{\elephant Placenta Transcriptome}
 
 \begin{table}
 \tiny
@@ -1385,7 +1541,7 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 \end{figure}
 
 
-\subsection{\armadillo Placenta Transcriptome}
+\subsubsection{\armadillo Placenta Transcriptome}
 
 \begin{table}
 \tiny
@@ -1406,7 +1562,9 @@ mitochondrial, or whose human ortholog is a housekeeping gene in
 The top 50 expressed genes in the term placenta of \armadillo are in
 \cref{tab:top50_armadillo_placenta}.
 
-\subsection{Opossum Placenta Transcriptome}
+\subsection{Metatherians}
+
+\subsubsection{\opossum Placenta Transcriptome}
 
 \begin{table}
   \tiny
@@ -1450,156 +1608,7 @@ involved in retinol binding (RBP4), growth (IGFBP3), lipid metabolism
 little production of CYP19A1 and HSD3B1 (FPKM<2), and moderate
 expression of relaxin RLN1 (\ac{FPKM}= 41.3949).
 
-\subsection{Mouse Placenta Transcriptome}
 
-\begin{table}[h]
-  \tiny
-<<top.50.mouse.expressed.genes,echo=FALSE,results="asis">>=
-top.mouse.genes <- top.genes.table(species.name="mus musculus")
-print(xtable(top.mouse.genes),
-      booktabs=TRUE,
-      floating=FALSE,
-      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
-setkey(top.mouse.genes,"Gene symbol")
-@ 
-\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
-mitochondrial, or whose human ortholog is a housekeeping gene in
-  \textit{Mus musculus}}
-\label{tab:top50_mouse_placenta}
-\end{table}
-
-The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
-in the term placenta of \mouse are shown in
-\cref{tab:top50_mouse_placenta} with a list of all highly expressed
-genes in Supplemental \cref{tab:all_mus_musculus_placenta}.
-
-% No idea what mir-6236 is doing
-
-% AC099934.1 probably overlaps with Rn7sl (part of SRP?)
-
-% AC157822.1 overlaps with Rn7s2
-
-% AC122546.1 = no idea
-
-% Gm3788 = psuedogene (Thymosin beta 10)
-
-\DLA{Why are there so many psuedogenes in the mouse? Maybe because of
-  the short read length?}
-
-\subsection{\textit{Nannospalax galili} (Blind Mole Rat) Placenta Transcriptome}
-
-\begin{table}[h]
-  \tiny
-<<top.50.n.galili.expressed.genes,echo=FALSE,results="asis">>=
-top.galili.genes <- top.genes.table(species.name="nannospalax galili")
-print(xtable(top.galili.genes),
-      booktabs=TRUE,
-      floating=FALSE,
-      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
-setkey(top.galili.genes,"Gene symbol")
-@ 
-\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
-mitochondrial, or whose human ortholog is a housekeeping gene in
-  \textit{Nannospalax galili}}
-\label{tab:top50_n_galili_placenta}
-\end{table}
-
-The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
-in the term placenta of \textit{Nannospalax galili} are shown in
-\cref{tab:top50_n_galili_placenta} with a list of all highly expressed
-genes in Supplemental \cref{tab:all_nannospalax_galili_placenta}.
-
-\subsection{\textit{Spalax carmeli} (Blind Mole Rat) Placenta Transcriptome}
-
-\begin{table}[h]
-  \tiny
-<<top.50.s.carmeli.expressed.genes,echo=FALSE,results="asis">>=
-top.carmeli.genes <- top.genes.table(species.name="spalax carmeli")
-print(xtable(top.carmeli.genes),
-      booktabs=TRUE,
-      floating=FALSE,
-      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
-setkey(top.carmeli.genes,"Gene symbol")
-@ 
-\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
-mitochondrial, or whose human ortholog is a housekeeping gene in
-  \textit{Spalax carmeli}}
-\label{tab:top50_s_carmeli_placenta}
-\end{table}
-
-The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
-in the term placenta of \textit{Spalax carmeli} are shown in
-\cref{tab:top50_s_carmeli_placenta} with a list of all highly expressed
-genes in Supplemental \cref{tab:all_spalax_carmeli_placenta}.
-
-\subsection{Wild Boar Placenta Transcriptome}
-
-\begin{table}[h]
-  \tiny
-<<top.50.pig.expressed.genes,echo=FALSE,results="asis">>=
-top.pig.genes <- top.genes.table(species.name="sus scrofa")
-print(xtable(top.pig.genes),
-      booktabs=TRUE,
-      floating=FALSE,
-      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
-setkey(top.pig.genes,"Gene symbol")
-@ 
-\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
-mitochondrial, or whose human ortholog is a housekeeping gene in
-  \textit{Sus scrofa}}
-\label{tab:top50_pig_placenta}
-\end{table}
-
-The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
-in the term placenta of \textit{Sus scrofa} are shown in
-\cref{tab:top50_pig_placenta} with a list of all highly expressed
-genes in Supplemental \cref{tab:all_sus_scrofa_placenta}.
-
-\subsection{\horse Placenta Transcriptome}
-
-\begin{table}[h]
-  \tiny
-<<top.50.horse.expressed.genes,echo=FALSE,results="asis">>=
-top.horse.genes <- top.genes.table(species.name="equus caballus")
-print(xtable(top.horse.genes),
-      booktabs=TRUE,
-      floating=FALSE,
-      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
-setkey(top.horse.genes,"Gene symbol")
-@ 
-\caption{Expression in \ac{FPKM} of top 50 genes in \horse which are
-  not ribosomal, mitochondrial, or whose human ortholog is a
-  housekeeping gene}
-\label{tab:top50_horse_placenta}
-\end{table}
-
-The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
-in the term placenta of \textit{Equus Caballus} are shown in
-\cref{tab:top50_horse_placenta} with a list of all highly expressed
-genes in Supplemental \cref{tab:all_equus_caballus_placenta}.
-
-\subsection{\sheep Placenta Transcriptome}
-
-\begin{table}[h]
-  \tiny
-<<top.50.sheep.expressed.genes,echo=FALSE,results="asis">>=
-top.sheep.genes <- top.genes.table(species.name="ovis aries")
-print(xtable(top.sheep.genes),
-      booktabs=TRUE,
-      floating=FALSE,
-      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
-setkey(top.sheep.genes,"Gene symbol")
-@ 
-\caption{Expression in \ac{FPKM} of top 50 genes in \sheep which are
-  not ribosomal, mitochondrial, or whose human ortholog is a
-  housekeeping gene}
-\label{tab:top50_sheep_placenta}
-\end{table}
-
-The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
-in the term placenta of \sheep are shown in
-\cref{tab:top50_sheep_placenta} with a list of all highly expressed
-genes in Supplemental \cref{tab:all_ovis_aries_placenta}.
 
 
 \subsection{Core Placenta Transcriptome}
@@ -1780,7 +1789,7 @@ up-regulation)
 SERPINH1? with TIMP3 
 % http://www.proteinatlas.org/ENSG00000149257-SERPINH1/tissue/placenta
 
-\subsection{\ac{GSE} Analyses of Individual Transcriptomes}
+\subsubsection{\ac{GSE} Analyses of Individual Transcriptomes}
 
 In order to identify major functional categories of genes expressed in
 the individual transcriptomes, we examined \ac{GSE} in 1:1 human

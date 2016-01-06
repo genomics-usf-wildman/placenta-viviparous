@@ -1157,21 +1157,24 @@ inhibition of matrix metalloproteinases (\textit{TIMP2},
 \textit{HTRA1}). The gene \textit{LGALS1}, which shows evidence of
 immunosupression during pregnancy
 \cite{Than.ea2008:Emergenceofhormonaland}, is highly expressed %
-(\ac{FPKM}=\Sexpr{gene.expression("canis familiaris","LGALS1")}). %
-In addition, an ortholog of SSLP1 (ENSCAFG00000010638) a gene
+(\Sexpr{gene.expression("canis familiaris","LGALS1")}). %
+In addition, an ortholog of \textit{SSLP1} (ENSCAFG00000010638) a gene
 expressed in the placentas of \cow (%
-\Sexpr{gene.expression("bos tarus","SSLP1")}, %
+\Sexpr{gene.expression("bos taurus","SSLP1",complete=TRUE)}, %
 \cref{tab:top50_cow_placenta}) and \sheep
-(\Sexpr{gene.expression("ovis aries","SSLP1")},
+(\Sexpr{gene.expression("ovis aries","SOLD1",complete=TRUE)},
 \cref{tab:top50_sheep_placenta}) but is not present in primates
 \cite{Ushizawa.ea2009:Characterizationandexpressionanalysis}
 (\cref{fig:sslp1_evolution_tree}), is also expressed at high levels
 %
-(\ac{FPKM}=\Sexpr{gene.expression("canis familiaris","ENSCAFG00000010638")}). %
+(\Sexpr{gene.expression("canis familiaris","ENSCAFG00000010638")}). %
 There is no placental expression of the estrogen synthase gene
-(\textit{CYP19A1}) in \dog (\cref{fig:estrogen_evolution_tree}), 
-however expression of \textit{HSD3B1} is relatively high
-(\ac{FPKM}=\Sexpr{gene.expression("canis familiaris","HSD3B1")}).
+(\textit{CYP19A1}) in \dog 
+(\Sexpr{gene.expression("canis familiaris","CYP19A1")}
+\cref{fig:estrogen_evolution_tree}), 
+and expression of \textit{HSD3B7} is also low
+(\Sexpr{gene.expression("canis familiaris","HSD3B7")}, 
+\cref{fig:progesterone_evolution_tree}).
 
 \subsection{Cow Placenta Transcriptome}
 

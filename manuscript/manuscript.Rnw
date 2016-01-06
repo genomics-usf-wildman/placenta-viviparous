@@ -709,7 +709,7 @@ with an average of \Sexpr{star.logs.wide[input.read.length < 40, mean(`% good re
 of reads mapping to the
 respective reference genome (\cref{tab:ref_genome_aligned_species}).
 The top 50 expressed genes in each genome analyzed are shown in
-\cref{tab:top50_human_placenta,tab:top50_bonobo_placenta,tab:top50_spider_monkey_placenta,tab:top50_dog_placenta,tab:top50_cow_placenta,tab:top50_elphant_placenta,tab:top50_opossum_placenta,tab:top50_mouse_placenta,tab:top50_n_galili_placenta,tab:top50_s_carmeli_placenta,tab:top50_pig_placenta,tab:top50_horse_placenta,tab:top50_sheep_placenta}
+\cref{tab:top50_human_placenta,tab:top50_bonobo_placenta,tab:top50_spider_monkey_placenta,tab:top50_dog_placenta,tab:top50_cow_placenta,tab:top50_elephant_placenta,tab:top50_opossum_placenta,tab:top50_mouse_placenta,tab:top50_n_galili_placenta,tab:top50_s_carmeli_placenta,tab:top50_pig_placenta,tab:top50_horse_placenta,tab:top50_sheep_placenta}
 and all genes in Supplemental
 \cref{tab:all_ateles_fusciceps_placenta,tab:all_homo_sapiens_placenta,tab:all_pan_paniscus_placenta,tab:all_mus_musculus_placenta,tab:all_nannospalax_galili_placenta,tab:all_spalax_carmeli_placenta,tab:all_bos_taurus_placenta,tab:all_ovis_aries_placenta,tab:all_sus_scrofa_placenta,tab:all_equus_caballus_placenta,tab:all_canis_familiaris_placenta,tab:all_loxodonta_africana_placenta,tab:all_dasypus_novemcinctus_placenta,tab:all_monodelphis_domestica_placenta}.
 
@@ -1289,7 +1289,7 @@ setkey(top.elephant.genes,"Gene symbol")
 \caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
 mitochondrial, or whose human ortholog is a housekeeping gene in
   \textit{Loxodonta africana}}
-\label{tab:top50_elphant_placenta}
+\label{tab:top50_elephant_placenta}
 \end{table}
 
 

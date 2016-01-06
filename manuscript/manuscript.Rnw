@@ -1176,7 +1176,7 @@ and expression of \textit{HSD3B7} is also low
 (\Sexpr{gene.expression("canis familiaris","HSD3B7")}, 
 \cref{fig:progesterone_evolution_tree}).
 
-\subsection{Cow Placenta Transcriptome}
+\subsection{\cow Placenta Transcriptome}
 
 \begin{table}
   \tiny
@@ -1188,41 +1188,90 @@ print(xtable(top.cow.genes),
       sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
 setkey(top.cow.genes,"Gene symbol")
 @ 
-\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
-mitochondrial, or whose human ortholog is a housekeeping gene in
-  \textit{Bos taurus}}
+\caption{\tableexplanation{\cow}{tab:all_bos_taurus_placenta}}
 \label{tab:top50_cow_placenta}
 \end{table}
 
-The top 50 expressed genes as measured by \ac{FPKM} in the term placenta of
-the dog are shown in Table 5 with a list of all genes in Supplemental
-Table X. The gene with the highest expression (\ac{FPKM}=12488.8) was the
-miRNA gene bta-mir-2887-1. This gene occurs in several copies in the
-cow genome, and it was unclear as to how many or to which of 12
-bta-mir-2887 genes this mapped (Supplemental Table X). A previous
-study indicated that this miRNA gene was expressed in the bovine ovary
-(Hossain et al., 2009). Several members of the ruminant-specific
-pregnancy-associated glycoprotein family show especially high
-expression in the cow placenta (Table 4, Supplemental Table X)
-including PAG2 (\ac{FPKM}=7255.34), PAG10 (2076.42), BT.83780 (1793.72),
-PAG11 (962.19), PAG12 (469.751), BT.88769 (408.584), PAG1 (301.61),
-PAG4 (186.496), PAG6 (157.348), PAG8 (153.225), and PAG16 (103.573).
-In addition, 14 other PAGs were expressed with \ac{FPKM}<40 (Supplemental
-Table X). Other genes with high expression include genes involved with
-regulation of growth (IGF2, PHLDA2), imprinted genes (GNAS, DLK1,
-PHLDA2), and CSH1, a gene that is a member of a ruminant specific
+The top 50 expressed genes as measured by \ac{FPKM} in the term
+placenta of the \cow are shown in \cref{tab:top50_cow_placenta} with a
+list of all genes in Supplemental \cref{tab:all_bos_taurus_placenta}.
+The gene with the highest expression was \textit{TMSB10} %
+(\Sexpr{gene.expression("bos taurus","TMSB10")}), and
+\textit{TMSB10} was also highly expressed %
+(\Sexpr{gene.expression("bos taurus","TMSB4")}). As in
+\dog{}, members of the annexin complex were also highly expressed
+(\Sexpr{gene.expression("bos taurus","S100G",complete=TRUE)}, %
+\Sexpr{gene.expression("bos taurus","ANXA2",complete=TRUE)}, %
+\Sexpr{gene.expression("bos taurus","S100A2",complete=TRUE)}, and %
+\Sexpr{gene.expression("bos taurus","S100A11",complete=TRUE)}), as well as %
+at least one of a set of four miRNA with 100\% identity
+(\Sexpr{gene.expression("bos taurus","ENSBTAG00000047046",complete=TRUE)}, %
+\Sexpr{gene.expression("bos taurus","ENSBTAG00000047154",complete=TRUE)}, %
+\Sexpr{gene.expression("bos taurus","ENSBTAG00000045710",complete=TRUE)}, and %
+\Sexpr{gene.expression("bos taurus","ENSBTAG00000046351",complete=TRUE)}). 
+%
+As these are novel miRNA, there is a possibility that the assignment
+of the short reads to these four miRNA is due to miss-annotation of
+the \cow genome.
+% 
+Several members of the ruminant-specific pregnancy-associated
+glycoprotein family show especially high expression in \cow placenta
+(\cref{tab:top50_cow_placenta}, \cref{fig:pag2_evolution_tree}, and
+Supplemental \cref{tab:all_bos_taurus_placenta}) including
+%
+\Sexpr{gene.expression("bos taurus","PAG2",complete=TRUE)}, %
+\Sexpr{gene.expression("bos taurus","PAG10",complete=TRUE)}, %
+\Sexpr{gene.expression("bos taurus","ENSBTAG00000022759",complete=TRUE)}, %
+\Sexpr{gene.expression("bos taurus","ENSBTAG00000013214",complete=TRUE)}, %
+\Sexpr{gene.expression("bos taurus","ENSBTAG00000019226",complete=TRUE)}, %
+\Sexpr{gene.expression("bos taurus","ENSBTAG00000024611",complete=TRUE)}, %
+\Sexpr{gene.expression("bos taurus","PAG12",complete=TRUE)}. %
+%
+28 members of this family have $FPKM \ge 1$, and this family of
+genes has greatly expanded in ruminants (\cow and \sheep{}) although
+the expression levels of this family are higher in \cow than in \sheep
+\cref{fig:pag2_evolution_tree}. Other genes with high expression
+include genes involved with regulation of growth (\textit{IGF2},
+\textit{PHLDA2}), imprinted genes (\textit{DLK1}, \textit{PHLDA2}),
+and \textit{CSH1}, a gene that is a member of a ruminant specific
 expansion of placental prolactins and not directly related to the gene
-of the same name in hominids. Other ruminant-specific placental
-prolactins also show high expression in the cow placenta including
-PRP1 (632.766), PRP5 (396.832), PRP6 (345.296), PRP2 (195.771), in
-addition to 7 other placental prolactins with expression of \ac{FPKM}<51
-(Table 5; Supplemental Table X). SSLP1 (also called SOLD1), a gene
-expressed in the cotyledonary villi of the ruminiant placenta and
-involved in cell proliferation (Ushizawa et al., 2009, 2010), also
-shows evidence of high expression (\ac{FPKM}=1001.45). There is some
-placental expression of the estrogen synthase gene (CYP19A1) in cows
-(75.1346), and comparatively greater expression of HSD3B1 (\ac{FPKM}=
-157.622).
+of the same name in hominids \ref{fig:prolactin_evolution_tree}. Other
+ruminant-specific placental prolactins also show high expression in
+the cow placenta including %
+\Sexpr{gene.expression("bos taurus","PRP1",complete=TRUE)}, %
+\Sexpr{gene.expression("bos taurus","PRP5",complete=TRUE)}, %
+\Sexpr{gene.expression("bos taurus","PRP6",complete=TRUE)}, %
+\Sexpr{gene.expression("bos taurus","PRP8",complete=TRUE)}, and %
+\Sexpr{gene.expression("bos taurus","PRP7",complete=TRUE)}, %
+with a total of 14 with $\mathrm{FPKM} \ge 1$.
+%
+\textit{SSLP1} (\textit{SOLD1} in \sheep{}), a gene expressed in the
+cotyledonary villi of the ruminiant placenta and involved in cell
+proliferation
+\cite{Ushizawa.ea2009:Characterizationandexpressionanalysis}, also
+shows evidence of high expression %
+(\Sexpr{gene.expression("bos taurus","SSLP1")}). %
+There is some placental expression of the estrogen synthase gene
+(\textit{CYP19A1}) in cows %
+(\Sexpr{gene.expression("bos taurus","CYP19A1")}), and
+comparatively greater expression of \textit{HSD3B1} %
+(\Sexpr{gene.expression("bos taurus","HSD3B1")}).
+
+\begin{figure}
+<<pag2.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="PAG2" & species=="bos taurus",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
+                 gene.tree.table,gene.tree.expression,min.fpkm=1)
+@ 
+\caption{Expression of genes related to \cow \textit{PAG2} with $\mathrm{FPKM} \ge 1$}
+\label{fig:pag2_evolution_tree}
+\end{figure}
+
 
 \subsection{\elephant Placenta Transcriptome}
 

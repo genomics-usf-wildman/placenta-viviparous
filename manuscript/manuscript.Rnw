@@ -779,25 +779,29 @@ top.genes.table <- function(species.name,n=50) {
     }
     return(temp)
 }
-gene.expression <- function(species.name,gene,complete=FALSE) {
+gene.expression <- function(species.name,gene,complete=FALSE,units=TRUE) {
     fpkm <- combined.fpkm[species==species.name &
                               (gene_short_name==gene | 
                                gene_id==gene),
                           mean_fpkm]
+    fpkm <- formatC(fpkm,digits=0,format="f")
+    if (units) {
+        fpkm <- paste0(fpkm,
+                       "\\ \\mathrm{FPKM}")
+    }
     if (complete) {
         if (any(grepl("^ENS.+G\\d+$",gene))) {
-            return(paste0(gene,
-                          formatC(fpkm,digits=0,format="f"),
-                          " \\ac{FPKM}"))
+            fpkm <- paste0("\\mathrm{",gene,"}",
+                           fpkm)
         } else {
-            return(paste0("\\textit{",gene,"}=",
-                          formatC(fpkm,digits=0,format="f"),
-                          " \\ac{FPKM}"
-                          ))
+            fpkm <- paste0("\\mathit{",gene,"}$=$",
+                           fpkm)
         }
-    } else {
-        return(fpkm)
     }
+    if (units || complete) {
+        fpkm <- paste0("$",fpkm,"$")
+    }
+    return(fpkm)
 }
     
 @ 
@@ -936,9 +940,9 @@ is also expressed to a high degree in the \human placenta
 Eleven pregnancy-specific beta-1-glycoprotein genes are highly-expressed
 (\ac{FPKM}$\ge 100$) in the term placenta of \human, with \textit{PSG1} showing the
 greatest degree of expression %
-(\ac{FPKM}=\Sexpr{gene.expression(species.name="homo sapiens",gene="PSG1")}) % 
+(\Sexpr{gene.expression(species.name="homo sapiens",gene="PSG1")}) % 
 and the pseudogene \textit{PSG10P} showing the least %
-(\ac{FPKM}=\Sexpr{gene.expression(species.name="homo sapiens",gene="PSG10P")}, \cref{fig:psg_evolution_tree}) . %
+(\Sexpr{gene.expression(species.name="homo sapiens",gene="PSG10P")}, \cref{fig:psg_evolution_tree}) . %
 These
 genes are members of a hominoid-specific expansion of the \ac{CEA} family
 and known to be expressed by the syncytiotrophoblast
@@ -1026,7 +1030,7 @@ which is involved in insulin growth factor signaling and angiogenesis
 during pregnancy \cite{Weyer.ea2011:Placentalregulationofpeptide}.
 \textit{PRG2} is also expressed at relatively high levels (though
 comparatively much lower) in the human placenta
-(\ac{FPKM}=\Sexpr{gene.expression("homo sapiens","PRG2")};
+(\Sexpr{gene.expression("homo sapiens","PRG2")};
 Supplemental \cref{tab:all_homo_sapiens_placenta}). Four \bonobo genes
 related to the chorionic somatomammotropins
 are also expressed at relatively high levels (GH1 
@@ -1048,7 +1052,7 @@ respectively) show lower expression in \bonobo as compared to \human %
 \textit{HSD3B1} is fairly similar to that of \smonkey %
 (\Sexpr{gene.expression("ateles fusciceps","HSD3B1",complete=TRUE)}. %
 In addition, \textit{CGA} is expressed in the bonobo placenta %
-(\ac{FPKM}=\Sexpr{gene.expression("pan paniscus","CGA")}), but at much
+(\Sexpr{gene.expression("pan paniscus","CGA")}), but at much
 lower levels than \human as well (\cref{tab:top50_human_placenta}).
 %
 Two Ensembl-annotated beta subunits of the chorionic gonadotropin
@@ -1101,11 +1105,11 @@ annotation for each assembled contig. In the term placenta of
 (\cref{tab:top50_spider_monkey_placenta}) include a possible regulator
 of androgen receptor signaling
 \cite{Sampson.ea2012:PAGE4positivityisassociated}, \textit{PAGE4} %
-(\ac{FPKM}=\Sexpr{gene.expression("ateles fusciceps","PAGE4")}), %
+(\Sexpr{gene.expression("ateles fusciceps","PAGE4")}), %
 the pregnancy specific glycoprotein \textit{PSG8}
-(\ac{FPKM}=\Sexpr{gene.expression("ateles fusciceps","PSG8")}), %
+(\Sexpr{gene.expression("ateles fusciceps","PSG8")}), %
 a member of the chorionic somatotropins, \textit{GH1} %
-(\ac{FPKM}=\Sexpr{gene.expression("ateles fusciceps","GH1")}), %
+(\Sexpr{gene.expression("ateles fusciceps","GH1")}), %
 a few HLA genes (\textit{HLA-A}, \textit{HLA-F},
 \cref{tab:top50_spider_monkey_placenta}), and multiple components of
 the annexin complex %
@@ -1140,11 +1144,9 @@ in the term placenta of \dog are shown in
 \cref{tab:top50_dog_placenta} with a list of all genes in Supplemental
 \cref{tab:all_canis_familiaris_placenta}. The gene with the highest
 expression %
-(\ac{FPKM}=%
-\Sexpr{gene.expression("canis familiaris","TMSB10")}) is the thymosin 
-is 
-(\ac{FPKM}=%
-\Sexpr{gene.expression("canis familiaris","ENSCAFG00000002115")}) %
+(\Sexpr{gene.expression("canis familiaris","TMSB10")}) is the thymosin 
+\textit{TMSB10} %
+(\Sexpr{gene.expression("canis familiaris","ENSCAFG00000002115")}) %
 is the hormone relaxin (\textit{RLN2}). Other highly expressed genes
 among the top 50 (\cref{tab:top50_dog_placenta}) include genes
 involved in the cytoskeleton (\textit{TMSB10}, \textit{TMSB4X}),

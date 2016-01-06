@@ -1293,30 +1293,96 @@ mitochondrial, or whose human ortholog is a housekeeping gene in
 \end{table}
 
 
-The top 50 expressed genes as measured by \ac{FPKM} in the term placenta of
-the elephant are shown in Table 6 with a list of all genes in
-Supplemental Table X. The gene with the highest expression
-(\ac{FPKM}=33439.5) was the natriuretic peptide precursor B (NPPB). The
-gene with the second highest expression (\ac{FPKM}=20233) was the microRNA
-miR-675, which is imbedded in the first exon of the maternally
-imprinted long non-coding RNA gene H19 (Keniry et al., 2012), a gene
-also highly expressed in the elephant placenta (\ac{FPKM}=7164.3). Five
-uncharacterized genes are expressed to a high degree in the elephant
-placenta (Table 6), three of which are a member of an
-elephant-specific expansion of 11 genes closely related to the
-thymus-specific serine protease gene PRSS16. The other 8 PRSS16-like
-genes are also expressed to a lesser degree (FPKM<284.014). Two other
-novel genes with high expression are related to the gene SSLP1 (Table
-6), which is also expressed in the cow and dog placentas (Tables 4 and
-5). Placental expression of the hormones relaxin (RLN1) and prolactin
-(PRL) are exceptionally high in the elephant when compared to other
-mammals (Tables 6 and 8). There is little to no placental expression
-of the estrogen synthase gene, CYP19A1, (FPKM<1) and the enzyme that
-produces progesterone HSD3B1 (\ac{FPKM}=0). Other genes with high
-expression in the elephant placenta include genes involved in
-oxidative stress (TXN), growth (IGF2), and PAEP, a gene usually
-expressed in the endometrium of the uterus in humans (Rutanen et al.,
-1987).
+The top 50 expressed genes as measured by \ac{FPKM} in the term
+placenta of \elephant are shown in \cref{tab:top50_elephant_placenta}
+with a list of all genes in
+\cref{tab:all_loxodonta_africana_placenta}. The gene with the
+highest expression was the natriuretic peptide precursor B
+(\Sexpr{gene.expression("loxodonta africana","NPPB",complete=TRUE)}).
+Two thymosins, %
+\Sexpr{gene.expression("loxodonta africana","TMSB10",complete=TRUE)} %
+and %
+\Sexpr{gene.expression("loxodonta africana","TMSB4Y",complete=TRUE)}
+were also also was highly expressed. The miRNA mir-675
+(\Sexpr{gene.expression("loxodonta
+  africana","ENSLAFG00000027406",complete=TRUE)}). which is imbedded
+in the first exon of the maternally imprinted long non-coding RNA gene
+\textit{H19} \cite{Keniry.ea2012:H19lincRNAisdevelopmental}, a gene
+which is currently un-annotated in \elephant{}. %
+\DLA{Probably consider fixing the unannotation of H19; it seems pretty
+  obvious to me, though it would require fixing the GTF file for
+  elephant with the right 
+  \href{http://useast.ensembl.org/Loxodonta_africana/Transcript/Summary?db=core;pt=GENSCAN00000034833;r=scaffold_145:855987-899506}{genscan prediction} for this region}
+Five uncharacterized genes are expressed to a high degree in the
+\elephant placenta (\cref{tab:top50_elephant_placenta}), three of
+which %
+%
+(\Sexpr{gene.expression("loxodonta africana","ENSLAFG00000028493",complete=TRUE)},
+\Sexpr{gene.expression("loxodonta africana","ENSLAFG00000032011",complete=TRUE)},
+\Sexpr{gene.expression("loxodonta africana","ENSLAFG00000031933",complete=TRUE)}) %
+%
+are members of an \elephant{}-specific expansion of 11 genes closely
+related to the thymus-specific serine protease gene \textit{PRSS16}
+\cref{fig:prss16_evolution_tree} The other 8 \textit{PRSS16}-like
+genes are also expressed to a lesser degree %
+(\Sexpr{gene.expression("loxodonta africana","ENSLAFG00000026505",complete=TRUE)}). %
+%
+Two other novel genes with high expression are related to the gene
+\textit{SSLP1} %
+%
+(\Sexpr{gene.expression("loxodonta africana","ENSLAFG00000032659",complete=TRUE)} %
+and %
+%
+\Sexpr{gene.expression("loxodonta africana","ENSLAFG00000029551",complete=TRUE)},
+%
+\cref{fig:sslp1_evolution_tree}), which is also expressed in \cow and
+\dog placentas (\cref{tab:top50_dog_placenta,tab:top50_cow_placenta}).
+Placental expression of the hormones relaxin (\textit{RLN}, %
+\Sexpr{gene.expression("loxodonta africana","ENSLAFG00000036090")})
+and prolactin (\textit{PRL}) are exceptionally high in the elephant
+when compared to other mammals
+(\cref{fig:rln2_evolution_tree,fig:prolactin_evolution_tree}). There
+is little to no placental expression of the estrogen synthase gene,
+\textit{CYP19A1} %
+(\Sexpr{gene.expression("loxodonta africana","CYP19A1")}) and the
+enzyme that produces progesterone HSD3B1 %
+(\Sexpr{gene.expression("loxodonta africana","HSD3B")}). Other genes
+with high expression in the elephant placenta include genes involved
+in oxidative stress %
+(\Sexpr{gene.expression("loxodonta africana","TXN",complete=TRUE)}),
+growth %
+(\Sexpr{gene.expression("loxodonta africana","IGF2",complete=TRUE)})
+and %
+\Sexpr{gene.expression("loxodonta africana","PAEP",complete=TRUE)}, %
+a gene usually expressed in the endometrium of the uterus in humans
+\cite{Rutanen.ea1987:Progesterone-associatedproteinsPP12and}.
+
+\begin{figure}
+<<prss16.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="PRSS16" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+@ 
+\caption{Expression of \textit{PRSS16} and related genes}
+\label{fig:prss16_evolution_tree}
+\end{figure}
+
+<<rln2.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="RLN2" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+@ 
+\caption{Expression of \textit{RLN2} and related genes}
+\label{fig:rln2_evolution_tree}
+\end{figure}
 
 
 \subsection{\armadillo Placenta Transcriptome}
@@ -2300,19 +2366,6 @@ verified expression in cow, however its abundant expression was also
 identified in dog. This gene is not found in primates. Expansion of
 these genes in elephants may indicate an elaboration of this system.
 
-\begin{figure}
-<<prss16.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="PRSS16" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
-@ 
-\caption{Expression of \textit{PRSS16} and related genes}
-\label{fig:prss16_evolution_tree}
-\end{figure}
 
 \subsection{Human Specific Expression Shifts and the Evolution of Preeclampsia}
 

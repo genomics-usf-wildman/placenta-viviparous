@@ -25,7 +25,7 @@
 \usepackage[backend=biber,natbib=true,hyperref=true,style=reading,autocite=inline]{biblatex}
 \addbibresource{references.bib}
 \usepackage[noblocks,auth-sc]{authblk}
-\usepackage[hyperfigures,bookmarks,colorlinks]{hyperref}
+\usepackage[hyperfigures,bookmarks,colorlinks,linkcolor=black,urlcolor=black]{hyperref}
 %\usepackage[hyperfigures,bookmarks,colorlinks,citecolor=black,filecolor=black,linkcolor=black,urlcolor=black]{hyperref}
 % Floats at end for journals
 % \usepackage[nolists,figuresfirst,nomarkers,heads,nofighead,notabhead]{endfloat}
@@ -125,13 +125,14 @@ for (a in paste0("../common_r_code/",c("to_latex.R","plot_tree_matrix.R","utilit
 }
 @ 
 
-<<load.data,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../data/",c("combined_fpkm","gene_trees","housekeeping_genes_superset","placenta_core_transcriptome","placenta_go_results_bp","palcenta_go_results_mf","hugo_nomenclature")))>>=
+<<load.data,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../data/",c("combined_fpkm","gene_trees","housekeeping_genes_superset","placenta_core_transcriptome","placenta_go_results_bp","palcenta_go_results_mf","hugo_nomenclature","gene_annotation")))>>=
 for (a in paste0("../data/",c("combined_fpkm","gene_trees",
                               "housekeeping_genes_superset",
                               "placenta_core_transcriptome",
                               "placenta_go_results_bp",
                               "placenta_go_results_mf",
-                              "hugo_nomenclature"
+                              "hugo_nomenclature",
+                              "gene_annotation"
                               ))) {
     load(a)
 }
@@ -148,6 +149,7 @@ setnames(star.logs.wide,
 setnames(star.logs.wide,
          "Uniquely mapped reads number",
          "unique.map.reads")
+setkey(hugo.nomenclature,"Approved Symbol")
 @ 
 
 <<load.go.results,echo=FALSE,results="hide",cache.extra=tools::md5sum("../go_annotation/go_tissue_analysis")>>=
@@ -362,13 +364,44 @@ for (this.species in names(species.names)) {
 
 <<genes.expression,echo=FALSE,results="hide">>=
 genes.expression.table <- function(species.name,min.fpkm=50) {
+    alignment.species <- species.name
+    if (alignment.species=="pan paniscus") {
+        alignment.species <- "pan troglodytes"
+    } else if (alignment.species=="ateles fusciceps") {
+        alignment.species <- "homo sapiens"
+    } else if (grepl("spalax",alignment.species)) {
+        alignment.species <- "mus musculus"
+    }
+
     temp <- 
-        combined.fpkm[species==species.name][order(-mean_fpkm)][,list(name_or_id,
-                          human_name,mean_fpkm)]
+        combined.fpkm[species==species.name
+                      ][order(-mean_fpkm)
+                        ][,list(name_or_id,
+                                human_alignment_symbol,
+                                human_name,mean_fpkm)]
     temp <- temp[!duplicated(name_or_id)][mean_fpkm>=min.fpkm]
-    setnames(temp,c("Gene name","Human Name","FPKM"))
-    if (species.name=="homo sapiens") {
-        temp <- temp[,-2,with=FALSE]
+    temp[,used_alignment:=FALSE]
+    temp[is.na(human_name) & !is.na(human_alignment_symbol),
+         used_alignment:=TRUE]
+    temp[is.na(human_name),human_name:=human_alignment_symbol]
+    setkey(temp,"human_name")
+    temp <- 
+        hugo.nomenclature[temp][order(-mean_fpkm),
+                                list(name_or_id,used_alignment,`Approved Symbol`,`Approved Name`,mean_fpkm)]
+    temp[!is.na(name_or_id),
+         name_or_id:=paste0("\\href{http://www.ensembl.org/",
+                            capfirst(gsub(" ","_",alignment.species)),
+                            "/Gene/Summary?g=",name_or_id,"}{",
+                            xtable.sanitize.text(name_or_id),"}")]
+    temp[!is.na(`Approved Name`),
+         `Approved Name`:=paste0("\\href{http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=",`Approved Symbol`,"}{",xtable.sanitize.text(`Approved Name`),"}")]
+    temp[!is.na(`Approved Symbol`),
+         `Approved Symbol`:=paste0("\\href{http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=",`Approved Symbol`,"}{",xtable.sanitize.text(`Approved Symbol`),"}")]
+    temp[used_alignment==TRUE,`Approved Symbol`:=paste0("(",`Approved Symbol`,")")]
+    temp[,used_alignment:=NULL]
+    setnames(temp,c("Gene symbol","Human Symbol","Human Name","FPKM"))
+    if (species.name=="homo sapiens" || species.name=="ateles fusciceps") {
+        temp[,`Human Symbol`:=NULL]
     }
     return(temp)
 }
@@ -377,8 +410,8 @@ genes.expression.table <- function(species.name,min.fpkm=50) {
 \section{Gene Expression}
 <<top.expressed.genes,echo=FALSE,results="asis">>=
 for (this.species in names(species.names)) {
-    this.caption <- paste0("Expression of all genes with FPKM $\\ge 50$ in \\textit{",
-                           capfirst(this.species),"}")
+    this.caption <- paste0("\\textit{",
+                           capfirst(this.species),"} Placental Gene Expression of all genes with FPKM $\\ge 50$")
     cat(paste0("\\subsection{",this.caption,"}\n\n"))
     print(xtable(genes.expression.table(species.name=this.species),
                  caption=this.caption,
@@ -388,6 +421,7 @@ for (this.species in names(species.names)) {
           tabular.environment="longtable",
           floating=FALSE,
           caption.placement="top",
+          sanitize.text.function=genes.table.sanitize,
           size="\\tiny"
           )
 }

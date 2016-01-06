@@ -784,7 +784,8 @@ gene.expression <- function(species.name,gene,complete=FALSE,units=TRUE) {
                               (gene_short_name==gene | 
                                gene_id==gene),
                           mean_fpkm]
-    fpkm <- formatC(fpkm,digits=0,format="f")
+    if (units || complete)
+        fpkm <- formatC(fpkm,digits=0,format="f")
     if (units) {
         fpkm <- paste0(fpkm,
                        "\\ \\mathrm{FPKM}")
@@ -912,13 +913,13 @@ setkey(top.human.genes,"Gene symbol")
 \label{tab:top50_human_placenta}
 \end{table}
 
-  <<cgb.min.expression,results="hide",echo=FALSE,warnings=FALSE>>=
+<<cgb.min.expression,results="hide",echo=FALSE,warnings=FALSE>>=
 cgb.min.expression <- 
     min(sapply(paste0("CGB",c("","1","2","5","7","8")),
-               function(x){gene.expression(species.name="homo sapiens",gene=x)}))
+               function(x){gene.expression(species.name="homo sapiens",gene=x,units=FALSE)}))
 cgb.sum.expression <- 
     sum(sapply(paste0("CGB",c("","1","2","5","7","8")),
-               function(x){gene.expression(species.name="homo sapiens",gene=x)}))
+               function(x){gene.expression(species.name="homo sapiens",gene=x,units=FALSE)}))
 @ 
 
 The top 50 expressed genes as measured by \ac{FPKM} in the term

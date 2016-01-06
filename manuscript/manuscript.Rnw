@@ -1198,7 +1198,7 @@ placenta of the \cow are shown in \cref{tab:top50_cow_placenta} with a
 list of all genes in Supplemental \cref{tab:all_bos_taurus_placenta}.
 The gene with the highest expression was \textit{TMSB10} %
 (\Sexpr{gene.expression("bos taurus","TMSB10")}), and
-\textit{TMSB10} was also highly expressed %
+\textit{TMSB4} was also highly expressed %
 (\Sexpr{gene.expression("bos taurus","TMSB4")}). As in
 \dog{}, members of the annexin complex were also highly expressed
 (\Sexpr{gene.expression("bos taurus","S100G",complete=TRUE)}, %

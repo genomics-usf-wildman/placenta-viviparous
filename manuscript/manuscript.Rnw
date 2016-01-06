@@ -1255,8 +1255,8 @@ shows evidence of high expression %
 There is some placental expression of the estrogen synthase gene
 (\textit{CYP19A1}) in cows %
 (\Sexpr{gene.expression("bos taurus","CYP19A1")}), and
-comparatively greater expression of \textit{HSD3B1} %
-(\Sexpr{gene.expression("bos taurus","HSD3B1")}).
+comparatively greater expression of \textit{HSD3B} %
+(\Sexpr{gene.expression("bos taurus","HSD3B")}).
 
 \begin{figure}
 <<pag2.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=

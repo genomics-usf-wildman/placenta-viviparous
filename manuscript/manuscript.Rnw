@@ -39,6 +39,8 @@
 \usepackage{tikz}
 \usepackage{nameref}
 \usepackage{xspace}
+% this package will stretch the font slightly if necessary.
+\usepackage{microtype}
 \usepackage{zref-xr,zref-user}
 \zxrsetup{toltxlabel}
 \zexternaldocument*{supplemental_material}
@@ -79,6 +81,8 @@
 \raggedbottom
 \clubpenalty = 10000
 \widowpenalty = 10000
+% set a large emergency stretch to avoid issues with overfull boxes
+\setlength{\emergencystretch}{20em}
 % make the afill smaller
 \renewcommand\Affilfont{\itshape\small}
 \renewcommand\cite[1]{\autocite{#1}}

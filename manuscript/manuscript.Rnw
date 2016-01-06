@@ -783,7 +783,7 @@ gene.expression <- function(species.name,gene,complete=FALSE,units=TRUE) {
     fpkm <- combined.fpkm[species==species.name &
                               (gene_short_name==gene | 
                                gene_id==gene),
-                          mean_fpkm]
+                          mean_fpkm][1]
     if (units || complete)
         fpkm <- formatC(fpkm,digits=0,format="f")
     if (units) {
@@ -792,10 +792,10 @@ gene.expression <- function(species.name,gene,complete=FALSE,units=TRUE) {
     }
     if (complete) {
         if (any(grepl("^ENS.+G\\d+$",gene))) {
-            fpkm <- paste0("\\mathrm{",gene,"}",
+            fpkm <- paste0("\\mathrm{",gene,"} = ",
                            fpkm)
         } else {
-            fpkm <- paste0("\\mathit{",gene,"}$=$",
+            fpkm <- paste0("\\mathit{",gene,"} = ",
                            fpkm)
         }
     }

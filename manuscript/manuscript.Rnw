@@ -1440,7 +1440,7 @@ mitochondrial, or whose human ortholog is a housekeeping gene in
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
 in the term placenta of \textit{Nannospalax galili} are shown in
 \cref{tab:top50_n_galili_placenta} with a list of all highly expressed
-genes in Supplemental \cref{tab:all_n_galili_placenta}.
+genes in Supplemental \cref{tab:all_nannospalax_galili_placenta}.
 
 \subsection{\textit{Spalax carmeli} (Blind Mole Rat) Placenta Transcriptome}
 
@@ -1486,7 +1486,7 @@ mitochondrial, or whose human ortholog is a housekeeping gene in
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
 in the term placenta of \textit{Sus scrofa} are shown in
 \cref{tab:top50_pig_placenta} with a list of all highly expressed
-genes in Supplemental \cref{tab:all_pig_placenta}.
+genes in Supplemental \cref{tab:all_sus_scrofa_placenta}.
 
 \subsection{\horse Placenta Transcriptome}
 

@@ -20,6 +20,10 @@ combined.fpkm.wide <-
 placenta.lineage.specific <-
     combined.fpkm.wide[apply(combined.fpkm.wide[,-1,with=FALSE],1,max) >= 100 & !is.na(human_name),]
 
+### ignore genes which are housekeeping genes
+placenta.lineage.specific <-
+    placenta.lineage.specific[!(human_name %in% housekeeping.genes.superset[,gene_short_name]),]
+
 species <- c("ateles fusciceps", "homo sapiens", "pan paniscus", "mus musculus", 
              "nannospalax galili", "spalax carmeli", "bos taurus", "ovis aries", 
              "sus scrofa", "equus caballus", "canis familiaris", "loxodonta africana", 

@@ -745,9 +745,9 @@ top.genes.table <- function(species.name,n=50) {
                       !(!is.na(human_name) & 
                         human_name %in% housekeeping.genes.superset[,gene_short_name]) &
                       ! (gene_biotype %in% c("Mt_tRNA","Mt_rRNA","rRNA")) &
-                      !grepl("((RNA\\d|MT)-|^RP[SL]P?\\d+[ABCD]?$)",human_name) &
-                      !grepl("((RNA\\d|MT)-|^RP[SL]P?\\d+[ABCD]?$)",human_alignment_symbol) &
-                      !grepl("(^[Mm][Tt]-|^R[pP][lsLS]\\d+[abcdABCD]?[l]?(?:-.+)?$|rRNA$)",
+                      !grepl("((RNA\\d|MT)-|^RP[SL]P?\\d+[ABCD]?[L]?$)",human_name) &
+                      !grepl("((RNA\\d|MT)-|^RP[SL]P?\\d+[ABCD]?[L]?$)",human_alignment_symbol) &
+                      !grepl("(^[Mm][Tt]-|^R[pP][lsLS]\\d+[abcdABCD]?[lL]?(?:-.+)?$|rRNA$)",
                              gene_short_name)
                       ][order(-mean_fpkm)][,list(name_or_id,
                                                  human_alignment_symbol,

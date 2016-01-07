@@ -788,6 +788,7 @@ top.genes.table <- function(species.name,n=50) {
     return(temp)
 }
 gene.expression <- function(species.name,gene,complete=FALSE,units=TRUE) {
+    species.name <- gsub("_"," ",species.name)
     fpkm <- combined.fpkm[species==species.name &
                               (gene_short_name==gene | 
                                gene_id==gene),
@@ -1167,21 +1168,71 @@ mitochondrial, or whose human ortholog is a housekeeping gene in
 
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
 in the term placenta of \mouse are shown in
-\cref{tab:top50_mouse_placenta} with a list of all highly expressed
-genes in Supplemental \cref{tab:all_mus_musculus_placenta}.
+\cref{tab:top50_mouse_placenta} with a list of all genes with
+$\mathrm{FPKM} \ge 50$ in Supplemental
+\cref{tab:all_mus_musculus_placenta}. The top expressed genes include
+\Sexpr{gene.expression("mus_musculus","Mir6236",complete=TRUE)}, whose
+target \textit{in silico} is the orphan G-coupled receptor
+\textit{Mrgprg},
+\Sexpr{gene.expression("mus_musculus","H19",complete=TRUE)} and
+\Sexpr{gene.expression("mus_musculus","Gm27786",complete=TRUE)}, both
+of which are maternally imprinted (the later of which is a homolog of
+human \textit{H19\_2}),
+\Sexpr{gene.expression("mus_musculus","IGF2",complete=TRUE)}, numerous
+cathepsins and a rodentia specific expansion of prolactin related
+genes. There are also two miRNA which overlap with the of the 7S
+signal recognition particle
+(\Sexpr{gene.expression("mus_musculus","AC157822.1",complete=TRUE)}
+and
+\Sexpr{gene.expression("mus_musculus","AC099934.1",complete=TRUE)})
+and numerous pseudogenes
+(\Sexpr{gene.expression("mus_musculus","Gm11966",complete=TRUE)}
+\Sexpr{gene.expression("mus_musculus","Gm10736",complete=TRUE)}
+\Sexpr{gene.expression("mus_musculus","Gm10180",complete=TRUE)}
+\Sexpr{gene.expression("mus_musculus","Gm29216",complete=TRUE)}) which
+appear to be highly expressed, however, the short read length (34--44)
+in many samples is likely preventing unambiguous assignment of all
+reads to the more lengthy complete transcript, so these shorter
+transcripts should be treated with suspicion, and we will ignore them
+in further discussion. The prolactin-related genes
+(\Sexpr{gene.expression("mus_musculus","Prl3b1",complete=TRUE)},
+\Sexpr{gene.expression("mus_musculus","Prl2b1",complete=TRUE)},
+\Sexpr{gene.expression("mus_musculus","Prl8a9",complete=TRUE)}, and
+\Sexpr{gene.expression("mus_musculus","Prl8a6",complete=TRUE)}) are
+very highly expressed in \mouse in, with %
+\Sexpr{combined.fpkm[species=="mus musculus" &
+  grepl("Prl(\\d.\\d)?",gene_short_name), sum(mean_fpkm >= 1)]}
+prolactin related genes having $\mathrm{FPKM} \ge 1$
+(\cref{fig:prolactin_evolution_tree}). The cathespins have also
+expanded in rodents, with six showing high expression
+(\Sexpr{gene.expression("mus_musculus","Ctsj",complete=TRUE)},
+\Sexpr{gene.expression("mus_musculus","Cts6",complete=TRUE)},
+\Sexpr{gene.expression("mus_musculus","Ctsr",complete=TRUE)},
+\Sexpr{gene.expression("mus_musculus","Ctsq",complete=TRUE)},
+\Sexpr{gene.expression("mus_musculus","Cts3",complete=TRUE)}, and
+\Sexpr{gene.expression("mus_musculus","Ctsm",complete=TRUE)},
+\cref{tab:top50_mouse_placenta,fig:cathespin_evolution_tree}).
+Finally, \textit{Peg10}, an imprinted gene required for proper
+formation of the placenta in mice is also highly expressed
+(\Sexpr{gene.expression("mus_musculus","Peg10")}), as previously
+reported \cite{Ono.ea2006:DeletionofPeg10imprinted}.
 
-% No idea what mir-6236 is doing
 
-% AC099934.1 probably overlaps with Rn7sl (part of SRP?)
 
-% AC157822.1 overlaps with Rn7s2
+\begin{figure}
+<<cathespin.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
 
-% AC122546.1 = no idea
-
-% Gm3788 = psuedogene (Thymosin beta 10)
-
-\DLA{Why are there so many psuedogenes in the mouse? Maybe because of
-  the short read length?}
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="CTSL" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(gene.tree,gene.tree.table,gene.tree.expression,min.fpkm=1,
+                 subtree=c("ENSMODG00000002844","ENSMUSG00000055679"))
+@ 
+\caption{Expression of cathespins related to \textit{CTSL} with $\mathrm{FPKM} \ge 1$}
+\label{fig:cathespin_evolution_tree}
+\end{figure}
 
 \subsubsection{\textit{Nannospalax galili} (Blind Mole Rat) Placenta Transcriptome}
 

@@ -23,6 +23,7 @@
 \usepackage{adjustbox}
 \usepackage{longtable}
 \usepackage{pdflscape}
+\usepackage{amsmath}
 \usepackage[backend=biber,natbib=true,hyperref=true,style=reading,autocite=inline]{biblatex}
 \addbibresource{references.bib}
 \usepackage[noblocks,auth-sc]{authblk}
@@ -797,14 +798,14 @@ gene.expression <- function(species.name,gene,complete=FALSE,units=TRUE) {
         fpkm <- formatC(fpkm,digits=0,format="f")
     if (units) {
         fpkm <- paste0(fpkm,
-                       "\\ \\mathrm{FPKM}")
+                       "\\ \\text{FPKM}")
     }
     if (complete) {
         if (any(grepl("^ENS.+G\\d+$",gene))) {
-            fpkm <- paste0("\\mathrm{",gene,"} = ",
+            fpkm <- paste0("\\text{",gene,"} = ",
                            fpkm)
         } else {
-            fpkm <- paste0("\\mathit{",gene,"} = ",
+            fpkm <- paste0("\\text{\\textit{",gene,"}} = ",
                            fpkm)
         }
     }

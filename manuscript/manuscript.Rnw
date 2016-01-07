@@ -1559,9 +1559,7 @@ print(xtable(top.horse.genes),
       sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
 setkey(top.horse.genes,"Gene symbol")
 @ 
-\caption{Expression in \ac{FPKM} of top 50 genes in \horse which are
-  not ribosomal, mitochondrial, or whose human ortholog is a
-  housekeeping gene}
+\caption{\tableexplanation{\horse}{tab:all_equus_caballus_placenta}}
 \label{tab:top50_horse_placenta}
 \end{table}
 

@@ -1,6 +1,7 @@
 library("magrittr")
 library("tidyr")
-plot.tree.matrix <- function(gene.tree,gene.tree.table,gene.tree.expression,offset.ratio=0.5,min.fpkm=NA) {
+library("geiger")
+plot.tree.matrix <- function(gene.tree,gene.tree.table,gene.tree.expression,offset.ratio=0.5,min.fpkm=NA,subtree=NULL) {
     gene.tree$tip.label <- gsub("^(ENS.+)\\1$","\\1",gene.tree$tip.label)
     gene.tree.table[,species:=capfirst(gsub("_"," ",species))]
     gene.tree.table[,short.species:=gsub("^(.)[^ ]* +([^ ]*)","\\1. \\2",species)]
@@ -20,8 +21,17 @@ plot.tree.matrix <- function(gene.tree,gene.tree.table,gene.tree.expression,offs
         drop.tip(gene.tree,
                  gene.tree$tip.label[!(gene.tree$tip.label %in%
                                        gene.tree.expression.subset[,gene_id])])
+    if (!is.null(subtree)) {
+        gene.tree.mrca <- mrca(gene.tree.subset)
+        top.node <- gene.tree.mrca[subtree[1],subtree[2]]
+        gene.tree.subset <-
+            drop.tip(gene.tree.subset,
+                     gene.tree.subset$tip.label[!(gene.tree.subset$tip.label %in%
+                                                  tips(gene.tree.subset,
+                                                       top.node))])
+    }
     gene.tree.expression <-
-        gene.tree.expression[gene_id %in% gene.tree$tip.label,]
+        gene.tree.expression[gene_id %in% gene.tree.subset$tip.label,]
     gene.tree.expression[,mean_fpkm_log:=log10(mean_fpkm+1)]
     gene.tree.expression.matrix <-
         dcast(gene.tree.expression,

@@ -1129,9 +1129,25 @@ which may play a role in angiogenesis, and certainly regulate
 cell-cell interaction in the developing placenta
 \cite{Liu.ea2015:AnnexinA2complexeswith}.
 
-\subsection{Rodentia}
+\subsection{Rodentia Placenta Transcriptomes}
 
-\subsubsection{Mouse Placenta Transcriptome}
+\begin{table}
+  \tiny
+<<rodentia.lineage.specific,echo=FALSE,results="asis">>=
+rod.all.lin.spec <- placenta.lineage.specific.table("rod.all")
+setkey(rod.all.lin.spec,"Human Symbol")
+@ 
+\caption{Genes whose expression changed significantly in the Rodentia
+  order as compared to all other analyzed species.}
+\label{tab:rodentia_lineage_specific}
+\end{table}
+
+We examined the expression of three rodentia, \mouse, \carmeli, and
+\galili{}. We lacked sufficient power to detect any significant
+changes on the Rodentia lineage in comparison to all other analyzed
+species (\cref{tab:rodentia_lineage_specific}).
+
+\subsubsection{\mouse Placenta Transcriptome}
 
 \begin{table}[h]
   \tiny

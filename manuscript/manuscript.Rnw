@@ -750,7 +750,7 @@ top.genes.table <- function(species.name,n=50) {
                              gene_short_name)
                       ][order(-mean_fpkm)][,list(name_or_id,
                                                  human_alignment_symbol,
-                                                 human_name,mean_fpkm)]
+                                                 human_name,mean_fpkm,sd_fpkm,n_fpkm)]
     ## remove any genes which have a null name_or_id; they are probably from unassembled contigs
     temp <- temp[!(is.na(name_or_id)|name_or_id==""),]
     temp <- temp[!duplicated(name_or_id)][1:n]
@@ -761,7 +761,8 @@ top.genes.table <- function(species.name,n=50) {
     setkey(temp,"human_name")
     temp <- 
         hugo.nomenclature[temp][order(-mean_fpkm),
-                                list(name_or_id,used_alignment,`Approved Symbol`,`Approved Name`,mean_fpkm)]
+                                list(name_or_id,used_alignment,`Approved Symbol`,`Approved Name`,
+                                     mean_fpkm,sd_fpkm,n_fpkm)]
     temp[!is.na(name_or_id),
          name_or_id:=paste0("\\href{http://www.ensembl.org/",
                              capfirst(gsub(" ","_",alignment.species)),
@@ -773,7 +774,14 @@ top.genes.table <- function(species.name,n=50) {
          `Approved Symbol`:=paste0("\\href{http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=",`Approved Symbol`,"}{",xtable.sanitize.text(`Approved Symbol`),"}")]
     temp[used_alignment==TRUE,`Approved Symbol`:=paste0("(",`Approved Symbol`,")")]
     temp[,used_alignment:=NULL]
-    setnames(temp,c("Gene symbol","Human Symbol","Human Name","FPKM"))
+    temp[,sem_fpkm:=as.numeric(NA)]
+    temp[n_fpkm>1,sem_fpkm:=sd_fpkm/sqrt(n_fpkm)]
+    temp[,sd_fpkm:=NULL]
+    temp[,n_fpkm:=NULL]
+    setnames(temp,c("Gene symbol","Human Symbol","Human Name","FPKM","FPKM SEM"))
+    if (temp[,all(is.na(`FPKM SEM`))]) {
+        temp[,`FPKM SEM`:=NULL]
+    }
     if (species.name=="homo sapiens" || species.name=="ateles fusciceps") {
         temp[,`Human Symbol`:=NULL]
     }

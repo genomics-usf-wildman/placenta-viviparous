@@ -868,7 +868,7 @@ lineage in comparison to all other analyzed species are listed in
 \cref{tab:primate_lineage_specific}. \textit{FSTL1} has significantly
 higher expression in the primate lineage
 (\cref{fig:fstl1_evolution_tree},
-$\mathrm{FDR}=\Sexpr{pri.all.lin.spec["FSTL1","FDR"]}$), is implicated
+$\mathrm{FDR}=\Sexpr{pri.all.lin.spec["FSTL1",`FDR`]}$), is implicated
 in BMP signaling, and has previously been implicated in inflammation
 and invasiveness
 \cite{Mouillet.ea2015:expressionandpost-transcriptionalregulation}. Of

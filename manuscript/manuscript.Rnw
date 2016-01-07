@@ -1734,14 +1734,14 @@ print(xtable(top.armadillo.genes),
       sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
 setkey(top.armadillo.genes,"Gene symbol")
 @ 
-\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
-mitochondrial, or whose human ortholog is a housekeeping gene in
-  \armadillo}
+\caption{\tableexplanation{\armadillo}{tab:all_dasypus_novemcinctus_placenta}}
 \label{tab:top50_armadillo_placenta}
 \end{table}
 
-The top 50 expressed genes in the term placenta of \armadillo are in
-\cref{tab:top50_armadillo_placenta}.
+The top 50 expressed genes in the term placenta of \armadillo are
+shown in \cref{tab:top50_armadillo_placenta} with a list of all genes
+with $\mathrm{FPKM}\ge 50$ in Supplemental
+\cref{tab:all_dasypus_novemcinctus_placenta}.
 
 \subsection{Metatherians}
 
@@ -1757,39 +1757,77 @@ print(xtable(top.opossum.genes),
       sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
 setkey(top.opossum.genes,"Gene symbol")
 @ 
-\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
-mitochondrial, or whose human ortholog is a housekeeping gene in
-  \textit{Monodelphis domestica}}
+\caption{\tableexplanation{\opossum}{tab:all_monodelphis_domestica}}
 \label{tab:top50_opossum_placenta}
 \end{table}
 
-The top 50 expressed genes as measured by \ac{FPKM} in the term placenta of
-the opossum are shown in Table 7 with a list of all genes in
-Supplemental Table X. The gene with the highest expression
-(\ac{FPKM}=41740.6) was hemoglobin, epsilon (HBE), which is expressed at
-the embryonic stage of development in marsupials, as in other mammals
-(Holland and Gooley, 1997). HBE subunits link up with protein products
-of two hemoglobin, zeta (HBZ) genes, which are also expressed to a
-high degree in the opossum placenta (\ac{FPKM}=2452.19 and \ac{FPKM}=1139.25).
-In addition, there is high expression (\ac{FPKM}=5827.37) of the gene
-hemoglobin, omega (HBO), a hemoglobin found only in marsupials and
-monotremes (Opazo et al., 2008). The hemoglobin gene HBA is also
-expressed in the placenta (\ac{FPKM}=456.978). The gene with the second
-highest expression (\ac{FPKM}=22854.8) is superoxide dismutase 3,
-extracellular (SOD3), which functions as an antioxidant. Four cystatin
-genes (CSTB, CST3, two CSTA-like genes) are expressed to a high
-degree, along with two cathepsin-L related genes (Table 7), which are
-known to interact with cystatins (Turk et al., 2001). The
-uncharacterized gene XM\_001364916.1 also shows high expression in the
-opossum placenta (\ac{FPKM}=13572.8). The gene WFDC2, a member of the whey
-acidic protein (WAP) family is also expressed to a high degree in the
-opossum placenta. Other genes with high expression include genes
-involved in retinol binding (RBP4), growth (IGFBP3), lipid metabolism
-(APOA1, APOA2), and immunosupression (LGALS1). In addition, there was
-little production of CYP19A1 and HSD3B1 (FPKM<2), and moderate
-expression of relaxin RLN1 (\ac{FPKM}= 41.3949).
+The top 50 expressed genes as measured by \ac{FPKM} in the term
+placenta of the \opossum are shown in
+\cref{tab:top50_opossum_placenta} with a list of all genes in
+Supplemental \cref{tab:all_monodelphis_domestica}. The gene with the
+second highest expression is superoxide dismutase 3, extracellular
+(\Sexpr{gene.expression("monodelphis_domestica","SOD3",complete=TRUE)}),
+which functions as an antioxidant. The gene with the second highest
+expression is the hemoglobin subunit epsilon
+(\Sexpr{gene.expression("monodelphis_domestica","ENSMODG00000011325",complete=TRUE)}),
+which is expressed at the embryonic stage of development in
+marsupials, as in other mammals
+\cite{Holland.ea1997:Characterizationofembryonicglobin}. \textit{HBE}
+subunits link up with protein products of two hemoglobin, zeta
+(\textit{HBZ}) genes, which are also expressed to a high degree in the
+opossum placenta
+(\Sexpr{gene.expression("monodelphis_domestica","ENSMODG00000016635",complete=TRUE)}
+and
+\Sexpr{gene.expression("monodelphis_domestica","ENSMODG00000016631",complete=TRUE)}).
+In addition, there is high expression of the gene hemoglobin, omega
+(\textit{HBO},
+\Sexpr{gene.expression("monodelphis_domestica","ENSMODG00000016637",complete=TRUE)}),
+% this is LOC_1000016060 which I figured out by tblastn'ing AAK11486.1
+% against Monodelphis domestica
+a hemoglobin found only in marsupials and monotremes
+\cite{Opazo.ea2008:Genomicevidenceforindependent}. The hemoglobin gene
+\textit{HBA} is also expressed in the placenta
+(\Sexpr{gene.expression("monodelphis_domestica","ENSMODG00000016633",complete=TRUE)}).
+Two cystatin genes
+(\Sexpr{gene.expression("monodelphis_domestica","ENSMODG00000018295",complete=TRUE)}
+and
+\Sexpr{gene.expression("monodelphis_domestica","ENSMODG00000018296",complete=TRUE)})
+are expressed to a high degree, along with one \textit{CTSL} related
+gene
+(\Sexpr{gene.expression("monodelphis_domestica","ENSMODG00000002844",complete=TRUE)},
+\cref{fig:cathespin_evolution_tree}), which are known to interact with
+cystatins \cite{Turk.ea2001:Lysosomalcysteineproteasesfacts}. The
+uncharacterized gene \textit{LOC10001195}
+(\Sexpr{gene.expression("monodelphis_domestica","ENSMODG00000006547",complete=TRUE)})
+also shows high expression in the opossum placenta. The gene \textit{WFDC2}, a
+member of the whey acidic protein (WAP) family is also expressed to a
+high degree in the opossum placenta
+(\Sexpr{gene.expression("monodelphis_domestica","WFDC2",complete=TRUE)}).
+Other genes with high expression include members of the annexin
+complex
+(\Sexpr{gene.expression("monodelphis_domestica","S100A6",complete=TRUE)},
+\Sexpr{gene.expression("monodelphis_domestica","ANXA2",complete=TRUE)}).
+In addition, there was little production of CYP19A1 and HSD3B1
+(\Sexpr{gene.expression("monodelphis_domestica","CYP19A1",complete=TRUE)}
+and
+\Sexpr{gene.expression("monodelphis_domestica","ENSMODG00000005385",complete=TRUE)},
+respectively).
 
 
+
+\begin{figure}
+<<hbe1.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="HBE1" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+@ 
+\caption{Expression of \textit{HBE1} and related genes}
+\label{fig:hbe1_evolution_tree}
+\end{figure}
 
 
 \subsection{Core Placenta Transcriptome}

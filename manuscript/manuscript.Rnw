@@ -1313,6 +1313,36 @@ expansion seen in \mouse.
 
 \subsection{Laurasiatheria}
 
+\begin{table}
+  \tiny
+<<lau.lineage.specific,echo=FALSE,results="asis">>=
+lau.all.lin.spec <- placenta.lineage.specific.table("lau.all")
+setkey(lau.all.lin.spec,"Human Symbol")
+@ 
+\caption{Genes whose expression changed in the Laurasiatheria
+  superorder as compared to all other analyzed species.}
+\label{tab:laurasiatheria_lineage_specific}
+\end{table}
+
+\begin{table}
+  \tiny
+<<eua.lau.lineage.specific,echo=FALSE,results="asis">>=
+eua.lau.lin.spec <- placenta.lineage.specific.table("eua.lau")
+setkey(eua.lau.lin.spec,"Human Symbol")
+@ 
+\caption{Genes whose expression changed between the
+  Euasiatherian and Laurasiatherian superorder.}
+\label{tab:laurasiatheria_eurasiatherian_lineage_specific}
+\end{table}
+
+We examined the expression of five Laurasiatherians: \cow, \sheep,
+\pig, \horse, and \dog. We were unable to detect any significant
+differences after correcting for multiple testing between
+Laurasiatherians and all other analyzed species
+(\cref{tab:laurasiatheria_lineage_specific}) or between
+Laurasiatherians and Euasiatherians
+(\cref{tab:laurasiatheria_eurasiatherian_lineage_specific}).
+
 \subsubsection{\dog Placenta Transcriptome}
 
 \begin{table}
@@ -1476,16 +1506,44 @@ print(xtable(top.pig.genes),
       sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
 setkey(top.pig.genes,"Gene symbol")
 @ 
-\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
-mitochondrial, or whose human ortholog is a housekeeping gene in
-  \pig}
+\caption{\tableexplanation{\pig}{tab:all_sus_scrofa_placenta}}
 \label{tab:top50_pig_placenta}
 \end{table}
 
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
 in the term placenta of \textit{Sus scrofa} are shown in
 \cref{tab:top50_pig_placenta} with a list of all highly expressed
-genes in Supplemental \cref{tab:all_sus_scrofa_placenta}.
+genes in Supplemental \cref{tab:all_sus_scrofa_placenta}. The top two
+expressed transcripts,
+\Sexpr{gene.expression("sus_scrofa","ENSSSCG00000025162",complete=TRUE)}
+and
+\Sexpr{gene.expression("sus_scrofa","ENSSSCG00000021356",complete=TRUE)},
+are miRNA which correspond to the \cow miRNA
+\href{http://www.mirbase.org/cgi-bin/mirna_entry.pl?acc=MI0013080}{bta-mir-2904-1}
+and
+\href{http://www.mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0013845}{bta-mir-2887-1},
+respectively, both of which are also expressed in \cow ovary
+\cite{Hossain.ea2009:Identificationandcharacterizationof}, although
+neither of which have an obvious target gene on the basis of
+\textit{in silico} analysis
+\cite{Agarwal.ea2015:PredictingeffectivemicroRNAtarget}. Other highly
+expressed genes include members of the insulin growth factor family
+(\Sexpr{gene.expression("sus_scrofa","IGF2",complete=TRUE)} and
+\Sexpr{gene.expression("sus_scrofa","IGFBP3",complete=TRUE)}), members
+of the annexin complex
+(\Sexpr{gene.expression("sus_scrofa","S100A1",complete=TRUE)},
+\Sexpr{gene.expression("sus_scrofa","ANXA2",complete=TRUE)},
+\Sexpr{gene.expression("sus_scrofa","S100A12",complete=TRUE)},
+\Sexpr{gene.expression("sus_scrofa","S100A10",complete=TRUE)}, and
+\Sexpr{gene.expression("sus_scrofa","S100A1",complete=TRUE)}), the
+galectin \Sexpr{gene.expression("sus_scrofa","LGALS3",complete=TRUE)}
+and multiple cytoskeleton and extracellular matrix proteins
+(\Sexpr{gene.expression("sus_scrofa","KRT19",complete=TRUE)},
+\Sexpr{gene.expression("sus_scrofa","COL1A1",complete=TRUE)},
+\Sexpr{gene.expression("sus_scrofa","BETA-ACTIN",complete=TRUE)},
+\Sexpr{gene.expression("sus_scrofa","KRT9",complete=TRUE)},
+\Sexpr{gene.expression("sus_scrofa","CLDN4",complete=TRUE)}, and
+\Sexpr{gene.expression("sus_scrofa","KRT9",complete=TRUE)}).
 
 \subsubsection{\horse Placenta Transcriptome}
 

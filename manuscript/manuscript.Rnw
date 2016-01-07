@@ -1172,7 +1172,8 @@ $\mathrm{FPKM} \ge 50$ in Supplemental
 \cref{tab:all_mus_musculus_placenta}. The top expressed genes include
 \Sexpr{gene.expression("mus_musculus","Mir6236",complete=TRUE)}, whose
 target \textit{in silico} is the orphan G-coupled receptor
-\textit{Mrgprg},
+\textit{Mrgprg}
+\cite{Agarwal.ea2015:PredictingeffectivemicroRNAtarget},
 \Sexpr{gene.expression("mus_musculus","H19",complete=TRUE)} and
 \Sexpr{gene.expression("mus_musculus","Gm27786",complete=TRUE)}, both
 of which are maternally imprinted (the later of which is a homolog of
@@ -1567,7 +1568,24 @@ setkey(top.horse.genes,"Gene symbol")
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
 in the term placenta of \textit{Equus Caballus} are shown in
 \cref{tab:top50_horse_placenta} with a list of all highly expressed
-genes in Supplemental \cref{tab:all_equus_caballus_placenta}.
+genes in Supplemental \cref{tab:all_equus_caballus_placenta}. The gene
+with the highest expression was the relaxin,
+\Sexpr{gene.expression("equus_caballus","RLN",complete=TRUE)},
+followed by two miRNA
+(\Sexpr{gene.expression("equus_caballus","ENSECAG00000025328",complete=TRUE)}
+and
+\Sexpr{gene.expression("equus_caballus","ENSECAG00000027056",complete=TRUE)})
+with no known \textit{in silico} targets
+\cite{Agarwal.ea2015:PredictingeffectivemicroRNAtarget}, the thymosin
+\Sexpr{gene.expression("equus_caballus","TMSB4",complete=TRUE)},
+members of the insulin growth factor family
+(\Sexpr{gene.expression("equus_caballus","IGF2",complete=TRUE)} and
+\Sexpr{gene.expression("equus_caballus","IGFBP3",complete=TRUE)}) and
+multiple members of the annexin complex
+(\Sexpr{gene.expression("equus_caballus","S100A6",complete=TRUE)},
+\Sexpr{gene.expression("equus_caballus","S100A1",complete=TRUE)}, and
+\Sexpr{gene.expression("equus_caballus","ANXA2",complete=TRUE)}),
+similar to the pattern of expression seen in \pig and \dog.
 
 \subsubsection{\sheep Placenta Transcriptome}
 

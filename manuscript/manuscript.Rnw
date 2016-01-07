@@ -1160,9 +1160,7 @@ print(xtable(top.mouse.genes),
       sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
 setkey(top.mouse.genes,"Gene symbol")
 @ 
-\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
-mitochondrial, or whose human ortholog is a housekeeping gene in
-  \textit{Mus musculus}}
+\caption{\tableexplanation{\mouse}{tab:all_mus_musculus_placenta}}
 \label{tab:top50_mouse_placenta}
 \end{table}
 
@@ -1234,7 +1232,7 @@ plot.tree.matrix(gene.tree,gene.tree.table,gene.tree.expression,min.fpkm=1,
 \label{fig:cathespin_evolution_tree}
 \end{figure}
 
-\subsubsection{\textit{Nannospalax galili} (Blind Mole Rat) Placenta Transcriptome}
+\subsubsection{\galili Placenta Transcriptome}
 
 \begin{table}[h]
   \tiny
@@ -1246,18 +1244,35 @@ print(xtable(top.galili.genes),
       sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
 setkey(top.galili.genes,"Gene symbol")
 @ 
-\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
-mitochondrial, or whose human ortholog is a housekeeping gene in
-  \textit{Nannospalax galili}}
+\caption{\tableexplanation{\galili}{tab:all_nannospalax_galili_placenta}}
 \label{tab:top50_n_galili_placenta}
 \end{table}
 
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
-in the term placenta of \textit{Nannospalax galili} are shown in
+in the term placenta of \galili are shown in
 \cref{tab:top50_n_galili_placenta} with a list of all highly expressed
 genes in Supplemental \cref{tab:all_nannospalax_galili_placenta}.
+Components of the annexin complex are highly expressed
+(\Sexpr{gene.expression("nannospalax_galili","S100a6",complete=TRUE)},
+\Sexpr{gene.expression("nannospalax_galili","S100a11",complete=TRUE)},
+\Sexpr{gene.expression("nannospalax_galili","S100a10",complete=TRUE)},
+and
+\Sexpr{gene.expression("nannospalax_galili","Anxa2",complete=TRUE)}),
+as are members of the thymosin family
+(\Sexpr{gene.expression("nannospalax_galili","Tmsb4x",complete=TRUE)}
+and
+\Sexpr{gene.expression("nannospalax_galili","Tmsb10",complete=TRUE)}),
+various cytoskeleton related proteins
+(\Sexpr{gene.expression("nannospalax_galili","Actc1",complete=TRUE)},
+\Sexpr{gene.expression("nannospalax_galili","Actg2",complete=TRUE)},
+\Sexpr{gene.expression("nannospalax_galili","Acta2",complete=TRUE)},
+\Sexpr{gene.expression("nannospalax_galili","Myl9",complete=TRUE)},
+\Sexpr{gene.expression("nannospalax_galili","Vim",complete=TRUE)}), and
+transmembrane protein of currently unknown function, 
+\Sexpr{gene.expression("nannospalax_galili","Gm10134",complete=TRUE)}.
 
-\subsubsection{\textit{Spalax carmeli} (Blind Mole Rat) Placenta Transcriptome}
+
+\subsubsection{\carmeli Placenta Transcriptome}
 
 \begin{table}[h]
   \tiny

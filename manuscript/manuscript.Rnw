@@ -367,22 +367,22 @@ expression that may be related to obstetrical disorders such as
 preeclampsia.
 
 \begin{table}
-  \begin{tabular}{c c c c}
+  \begin{tabular}{c c c p{3in}}
     \toprule
     Species                       & Gestation (days) & Litter Size  & Source \\
     \midrule
-    \textit{Ateles fusciceps}     & 224 & 1 & \cite{Ernest2003:lifehistorycharacteristicsofplacental}\\
+    \textit{Ateles fusciceps}     & 224 & 1 & \citet{Ernest2003:lifehistorycharacteristicsofplacental}\\
     \textit{Bos taurus}           & 278 & 1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
     \textit{Canis familiaris}     & 61 & 4 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
     \textit{Dasypus novemcinctus} & 135 & 4 & \DLA{Cite Amazing Armadillo: geography book}\\
     \textit{Equus caballus}       & 336 & 1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation}\\
-    \textit{Loxodonta africana}   & 644 & 1 & \cite{Ernest2003:lifehistorycharacteristicsofplacental}\\
+    \textit{Loxodonta africana}   & 644 & 1 & \citet{Ernest2003:lifehistorycharacteristicsofplacental}\\
     \textit{Homo sapiens}         & 270 & 1.1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
     \textit{Monodelphis domestica}& 15 & 7.1 & \citet{Harder.ea1993:Gestationandplacentationin} \\
     \textit{Mus musculus}         & 20 & 6.1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
     \textit{Nannospalax galili}   & 28-42 & 4 & \citet{Nevo1997:mosiacevolutionofsubterranianmammals} \\
     \textit{Ovis aries}           & 151 & 1.35 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
-    \textit{Pan paniscus}         & 223 & 1 & \cite{Ernest2003:lifehistorycharacteristicsofplacental} \\
+    \textit{Pan paniscus}         & 223 & 1 & \citet{Ernest2003:lifehistorycharacteristicsofplacental} \\
     \textit{Spalax carmeli}       & 28-42 & 4 & \citet{Nevo1997:mosiacevolutionofsubterranianmammals}\\
     \textit{Sus scrofa}           & 114 & 5.8 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
     \bottomrule

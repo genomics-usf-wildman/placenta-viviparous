@@ -267,13 +267,14 @@ a group that includes both marsupials and eutherian or “placental”
 mammals. The term “placental mammals” is misleading, as marsupials
 also possess a placenta, although its direct apposition to maternal
 tissues lasts for a proportionally shorter time during gestation
-\cite{Renfree2010:ReviewMarsupialsplacentalmammals}. Marsupials also differ from eutherian mammals in
-that most possess only a choriovitelline placenta, produced from the
-fusion of the chorion and yolk sac, during most of gestation. Although
-some eutherian mammals may possess a choriovitelline placenta at some
-point in development, the major site of nutrient exchange in
-placentals occurs via the chorioallantoic placenta, produced from the
-fusion of the chorion and allantois \cite{Mossman.1987:vertebratefetalmembranes}. It is unclear
+\cite{Renfree2010:ReviewMarsupialsplacentalmammals}. Marsupials also
+differ from eutherian mammals in that most possess only a
+choriovitelline placenta, produced from the fusion of the chorion and
+yolk sac, during most of gestation. Although some eutherian mammals
+may possess a choriovitelline placenta at some point in development,
+the major site of nutrient exchange in placentals occurs via the
+chorioallantoic placenta, produced from the fusion of the chorion and
+allantois \cite{Mossman.1987:vertebratefetalmembranes}. It is unclear
 whether the first placenta was more like that of marsupials or
 eutherians; however, using phylogenetic methods, the ancestral
 eutherian was reconstructed as possessing a relatively invasive
@@ -282,73 +283,113 @@ separated by one tissue layer, as in humans and mouse
 \cite{Elliot.ea2009:Phylogeneticevidenceforearly,Wildman.ea2006:Evolutionofmammalianplacenta}.
 
 Although the morphology of the mammalian placenta has been well
-characterized in a number of species \cite{Mossman.1987:vertebratefetalmembranes}, the diversity of
-the molecular environment is only beginning to be understood from a
-genetic perspective \cite{Carter2012:Evolutionofplacentalfunction}. Studies of certain model species
-(i.e., humans, mice, cattle) have revealed a stunning divergence in
-the genetics of the placenta, especially in later stages of pregnancy
+characterized in a number of species
+\cite{Mossman.1987:vertebratefetalmembranes}, the diversity of the
+molecular environment is only beginning to be understood from a
+genetic perspective \cite{Carter2012:Evolutionofplacentalfunction}.
+Studies of certain model species (i.e., humans, mice, cattle) have
+revealed a stunning divergence in the genetics of the placenta,
+especially in later stages of pregnancy
 \cite{Carter2012:Evolutionofplacentalfunction,Hou.ea2012:Elephanttranscriptomeprovidesinsights,Knox.ea2008:Genomicevolutionofplacenta,Su.ea2002:Large-scaleanalysisofhuman}.
-For example, each lineage has evolved expansive
-placenta-specific gene families with expression patterns that can vary
-in space and time \cite{Green.ea2000:Pregnancy-associatedbovineandovine,Simmons.ea2008:Spatialandtemporalexpression}. These
-include independent expansions of the prolactins in mouse and cow,
-pregnancy-specific glycoproteins (PSGs) in humans and mouse,
+For example, each lineage has evolved expansive placenta-specific gene
+families with expression patterns that can vary in space and time
+\cite{Green.ea2000:Pregnancy-associatedbovineandovine,Simmons.ea2008:Spatialandtemporalexpression}.
+These include independent expansions of the prolactins in mouse and
+cow, pregnancy-specific glycoproteins (PSGs) in humans and mouse,
 pregnancy-associated glycoproteins (PAGs) in cow, and the expansion of
 the growth hormone and chorionic gonadotropin beta genes in hominoid
-primates \cite{Haig2008:Placentalgrowthhormone-relatedproteins,Rawn.ea2008:evolutionregulationandfunction}. Expression patterns of
-specific genes also can vary widely between species. For example, the
-expression of orthologous genes in the placenta have been found to
-vary substantially between humans and mice \cite{Su.ea2002:Large-scaleanalysisofhuman}, and the
-recruitment of SIGLEC6 to placental expression in humans differs from
-both chimpanzees and mice \cite{Linden.ea2007:Human-specificexpressionofSiglec-6}.
+primates
+\cite{Haig2008:Placentalgrowthhormone-relatedproteins,Rawn.ea2008:evolutionregulationandfunction}.
+Expression patterns of specific genes also can vary widely between
+species. For example, the expression of orthologous genes in the
+placenta have been found to vary substantially between humans and mice
+\cite{Su.ea2002:Large-scaleanalysisofhuman}, and the recruitment of
+\textit{SIGLEC6} to placental expression in humans differs from both
+chimpanzees and mice
+\cite{Linden.ea2007:Human-specificexpressionofSiglec-6}.
 
 One explanation for the divergent paths of the placental interface is
 the distinct evolutionary interplay between maternal and fetal
-strategies during pregnancy \cite{Haig1993:Geneticconflictsinhuman}. The maternal strategy is to
-requisition an adequate degree of nutrients to the fetus without
-risking the health of the mother, while the fetal strategy via
-paternal genes is to extract as many resources from the mother as
-possible. Therefore, an interplay between these extremes can set up an
-intricate “arms race”, involving the imprinting of parental alleles,
-production of new genes, and enlistment of existing genes to
-expression at the maternal-fetal interface \cite{Haig1993:Geneticconflictsinhuman}.
+strategies during pregnancy \cite{Haig1993:Geneticconflictsinhuman}.
+The maternal strategy is to requisition an adequate degree of
+nutrients to the fetus without risking the health of the mother, while
+the fetal strategy via paternal genes is to extract as many resources
+from the mother as possible. Therefore, an interplay between these
+extremes can set up an intricate “arms race”, involving the imprinting
+of parental alleles, production of new genes, and enlistment of
+existing genes to expression at the maternal-fetal interface
+\cite{Haig1993:Geneticconflictsinhuman}.
 
-One symptom
-of this maternal-fetal conflict is its potential affect on human
-health \cite{Hollegaard.ea2013:Parent-offspringconflictandpersistence}. 
-In addition to having an invasive
-hemochorial placenta, humans possess a deeply invasive trophoblast
-layer that can penetrate the myometrium of the uterus 
-\cite{Carter.ea2011:Evolutionofinvasiveplacentation}.
- Defects in placental growth are known to be
-associated with the devastating condition of preeclampsia, which can
-cause hypertension, proteinuria, and has the potential to lead to
-death of the mother and/or infant \DLA{(citation)}. Although cases have been
-documented in chimpanzees and gorillas \DLA{(citation)}, preeclampsia has a
-far higher incidence in human pregnancies with as much as 4\% of
-pregnancies being affected in the United States \DLA{(citation)}.
-Chimpanzees and gorillas also have deeply invasive trophoblasts,
-although the progression of invasion in great apes may be slower than
-humans \cite{Carter.ea2011:Evolutionofinvasiveplacentation}; however, large-scale expression
-studies of great ape placentas have not been conducted. The increasing
-affordability of next-generation sequencing technology has enabled the
-large-scale study of specific tissues from a wide array of species to
-address broader phylogenetic questions in the evolution of gene
-expression \cite{Brawand.ea2011:evolutionofgeneexpression}. Here we use Illumina RNA-Seq
-technology to sequence and quantify the mRNA environment of six
-mammalian placentas at term, including that of the \human, \bonobo (the
-sister species to the chimpanzee), \dog, \cow, \elephant, and
-\opossum, representing marsupials as well as three major branches of
-eutherian mammals (Euarchontoglires, Laurasiatheria, Afrotheria).
-These placentas also represent a wide array of placental morphologies
-as well as traits such as number and size of offspring and length of
-gestation \DLA{(Table 1)}. We use this data, along with existing RNA-Seq
-data from mouse \cite{Wang.ea2011:surveyfornovelimprinted}, to address the major differences
-between expression in marsupial and eutherian mammals at term,
-identify the evolution of expression in important placental genes such
-as hormones and galectins, identify novel lineage-specific expression
-patterns, and quantify human specific differences in gene expression
-that may be related to obstetrical disorders such as preeclampsia.
+One symptom of this maternal-fetal conflict is its potential affect on
+human health
+\cite{Hollegaard.ea2013:Parent-offspringconflictandpersistence}. In
+addition to having an invasive hemochorial placenta, humans possess a
+deeply invasive trophoblast layer that can penetrate the myometrium of
+the uterus \cite{Carter.ea2011:Evolutionofinvasiveplacentation}.
+Defects in placental growth are known to be associated with the
+devastating condition of preeclampsia, which can cause hypertension,
+proteinuria, and has the potential to lead to death of the mother
+and/or infant \cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current}.
+Although cases have been documented in chimpanzees
+\cite{Stout.ea1969:Glomerularcapillaryendothelialswelling}, and
+gorillas \cite{Thornton.ea1992:Convulsionsinpregnancyin}, preeclampsia
+has a far higher incidence in human pregnancies with as much as 4\% of
+pregnancies being affected in the United States
+\cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current}. Chimpanzees
+and gorillas also have deeply invasive trophoblasts, although the
+progression of invasion in great apes may be slower than humans
+\cite{Carter.ea2011:Evolutionofinvasiveplacentation}; however,
+large-scale expression studies of great ape placentas have not been
+conducted. The increasing affordability of next-generation sequencing
+technology has enabled the large-scale study of specific tissues from
+a wide array of species to address broader phylogenetic questions in
+the evolution of gene expression
+\cite{Brawand.ea2011:evolutionofgeneexpression}. Here we use RNA-Seq
+technology to sequence and quantify the mRNA environment of mammalian
+placentas at term, including that of the \human, \bonobo (the sister
+species to the chimpanzee), \smonkey, \mouse, \galili, \carmeli, \dog,
+\cow, \elephant, \armadillo, and \opossum, representing marsupials as
+well as three major branches of eutherian mammals (Euarchontoglires,
+Laurasiatheria, Afrotheria). These placentas also represent a wide
+array of placental morphologies as well as traits such as number and
+size of offspring and length of gestation
+\cref{tab:gestational_periods}. We use this data, along with existing
+RNA-Seq data from \mouse \cite{Wang.ea2011:surveyfornovelimprinted},
+\human \cite{Hughes.ea2015:Evaluatingintra-andinter-individual},
+\horse \cite{Coleman.ea2010:Structuralannotationofequine}, \sheep
+\cite{Archibald.ea2010:sheepgenomereferencesequence}, and \pig
+\cite{Ahanda.ea2012:Predictionofaltered3-} to address the major
+differences between expression in marsupial and eutherian mammals at
+term, identify the evolution of expression in important placental
+genes such as hormones and galectins, identify novel lineage-specific
+expression patterns, and quantify human specific differences in gene
+expression that may be related to obstetrical disorders such as
+preeclampsia.
+
+\begin{table}
+  \begin{tabular}{c c c c}
+    \toprule
+    Species                       & Gestation (days) & Litter Size  & Source \\
+    \midrule
+    \textit{Ateles fusciceps}     & 224 & 1 & \cite{Ernest2003:lifehistorycharacteristicsofplacental}\\
+    \textit{Bos taurus}           & 278 & 1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
+    \textit{Canis familiaris}     & 61 & 4 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
+    \textit{Dasypus novemcinctus} & 135 & 4 & \DLA{Cite Amazing Armadillo: geography book}\\
+    \textit{Equus caballus}       & 336 & 1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation}\\
+    \textit{Loxodonta africana}   & 644 & 1 & \cite{Ernest2003:lifehistorycharacteristicsofplacental}\\
+    \textit{Homo sapiens}         & 270 & 1.1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
+    \textit{Monodelphis domestica}& 15 & 7.1 & \citet{Harder.ea1993:Gestationandplacentationin} \\
+    \textit{Mus musculus}         & 20 & 6.1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
+    \textit{Nannospalax galili}   & 28-42 & 4 & \citet{Nevo1997:mosiacevolutionofsubterranianmammals} \\
+    \textit{Ovis aries}           & 151 & 1.35 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
+    \textit{Pan paniscus}         & 223 & 1 & \cite{Ernest2003:lifehistorycharacteristicsofplacental} \\
+    \textit{Spalax carmeli}       & 28-42 & 4 & \citet{Nevo1997:mosiacevolutionofsubterranianmammals}\\
+    \textit{Sus scrofa}           & 114 & 5.8 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
+    \bottomrule
+  \end{tabular}
+  \caption{Gestational periods in days and average liter sizes for studied species.}
+  \label{tab:gestational_periods}
+\end{table}
 
 \section{Methods}
 
@@ -357,7 +398,8 @@ that may be related to obstetrical disorders such as preeclampsia.
 Fetal tissue was collected from the placenta of six mammalian species
 (\human [human], \bonobo [bonobo], \dog [domestic dog], \cow [domestic
 cow], \elephant [African savanna elephant], \opossum [gray
-short-tailed opossum], \gallili [?], \carmelli [?]). Information on
+short-tailed opossum], \gallili [blind mole rat from Upper Galilee],
+\carmelli [blind mole rat from northern Israel]). Information on
 specimen ID, place and time of collection, and collector is shown for
 each sample in \DLA{Supplemental Table 1}. In the case of \bonobo,
 \cow, and \elephant, the placenta was collected at term upon expulsion
@@ -399,8 +441,7 @@ For more complete evolutionary comparisons additional sequences of
 placenta in \mouse \cite{Wang.ea2011:surveyfornovelimprinted}, \human
 \cite{Hughes.ea2015:Evaluatingintra-andinter-individual} \horse
 \cite{Coleman.ea2010:Structuralannotationofequine}, \sheep
-\DLA{citation; e-mailed Alec Archibald from the ISGC about what the
-  right one should be}, and \pig
+\cite{Archibald.ea2010:sheepgenomereferencesequence}, and \pig
 \cite{Ahanda.ea2012:Predictionofaltered3-} were obtained from the
 \ac{SRA} (Supplemental \cref{tab:srr_numbers}).
 
@@ -428,6 +469,7 @@ The genome of the closely-related \textit{Pan troglodytes} was used as
 a reference for \bonobo. The separation between the two
 recognized Pan species is generally perceived to be $\approx 1$ Mya
 \cite{Prüfer.ea2012:bonobogenomecomparedwith}.
+
 
 
 \begin{table}
@@ -2030,17 +2072,18 @@ The
 genes comprising the core placenta transcriptome are shown in
 \cref{fig:core_placenta_transcriptome} ordered by their median
 transcription level in \ac{FPKM}. We considered a gene to be core to
-the transcriptome if an ortholog of that gene was expressed with
-$\mathrm{FPKM} \ge 10$ in all species studied and was not a
-housekeeping gene
-\cite{Eisenberg.ea2013:Humanhousekeepinggenesrevisited}.
+the placenta transcriptome if a 1:1 ortholog of that gene was
+expressed with $\mathrm{FPKM} \ge 10$ in all species studied and was
+not a human housekeeping gene according to
+\citet{Eisenberg.ea2013:Humanhousekeepinggenesrevisited}.
 \Cref{fig:core_placenta_transcriptome_shape} shows the number of genes
-which would be included in the core placenta set if the cutoff was set
-differently.
+which would be included in the core placenta set if the \ac{FPKM}
+cutoff was set differently.
 %
-\textit{ANXA1} is
-involved in the modulation of the inflammatory response \DLA{It does
-  more stuff; read the huthcinson2011 review and fill this in}
+Multiple components of the annexin complex are included in the core
+transcriptome, including \textit{ANXA2}, \textit{ANXA1},
+\textit{S100A11}, \textit{S100A10}. The modulation of  \DLA{It does more stuff; read
+  the huthcinson2011 review and fill this in}
 %
 Another annexin, \textit{ANXA2} 
 %

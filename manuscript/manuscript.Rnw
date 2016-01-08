@@ -1734,7 +1734,55 @@ setkey(top.armadillo.genes,"Gene symbol")
 The top 50 expressed genes in the term placenta of \armadillo are
 shown in \cref{tab:top50_armadillo_placenta} with a list of all genes
 with $\mathrm{FPKM}\ge 50$ in Supplemental
-\cref{tab:all_dasypus_novemcinctus_placenta}.
+\cref{tab:all_dasypus_novemcinctus_placenta}. The gene with the
+highest expression is
+\Sexpr{gene.expression("dasypus_novemcinctus","ENSDNOG00000045029",complete=TRUE)}
+which is most similar to the \mouse \textit{Pga5} is expanded in
+\opossum into three members which are expressed in placenta (the other
+two being
+\Sexpr{gene.expression("dasypus_novemcinctus","ENSDNOG00000033885",complete=TRUE)}
+and
+\Sexpr{gene.expression("dasypus_novemcinctus","ENSDNOG00000040431",complete=TRUE)}),
+though the expansion is less than that seen \cow and \sheep
+(\cref{fig:pag2_evolution_tree}). There is also high expression of
+hemoglobin subunit beta,
+\Sexpr{gene.expression("dasypus_novemcinctus","HBB",complete=TRUE)},
+an un-annotated gene with high similarity to \human and \cow
+\textit{OVOS2}
+\Sexpr{gene.expression("dasypus_novemcinctus","ENSDNOG00000033320",complete=TRUE)}
+(\cref{fig:ovos2_evolution_tree}), the growth factors
+\Sexpr{gene.expression("dasypus_novemcinctus","IGF2",complete=TRUE)}
+and
+\Sexpr{gene.expression("dasypus_novemcinctus","IGFBP4",complete=TRUE)},
+and the thymosin
+\Sexpr{gene.expression("dasypus_novemcinctus","TMSB4X",complete=TRUE)}.
+As has been seen previously, multiple components of the annexin
+complex are also highly expressed, including
+\Sexpr{gene.expression("dasypus_novemcinctus","ENSDNOG00000045634",complete=TRUE)}
+(\textit{ANXA8L1}),
+\Sexpr{gene.expression("dasypus_novemcinctus","ENSDNOG00000017399",complete=TRUE)}
+(\textit{S100B}),
+\Sexpr{gene.expression("dasypus_novemcinctus","ENSDNOG00000048504",complete=TRUE)}
+(\textit{S100A10}), and
+\Sexpr{gene.expression("dasypus_novemcinctus","ENSDNOG00000004237",complete=TRUE)}
+(\textit{ANXA2}).
+
+
+\begin{figure}
+<<ovos2.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree["ENSDNOG00000033320",tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,
+                 subtree=c("ENSDNOG00000033320","ENSMODG00000017988"))
+@ 
+\caption{Expression of \textit{OVOS2} and related genes}
+\label{fig:ovos2_evolution_tree}
+\end{figure}
+
 
 \subsection{Metatherians}
 

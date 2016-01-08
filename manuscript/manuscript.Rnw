@@ -1632,65 +1632,58 @@ mitochondrial, or whose human ortholog is a housekeeping gene in
 The top 50 expressed genes as measured by \ac{FPKM} in the term
 placenta of \elephant are shown in \cref{tab:top50_elephant_placenta}
 with a list of all genes in
-\cref{tab:all_loxodonta_africana_placenta}. The gene with the
-highest expression was the natriuretic peptide precursor B
-(\Sexpr{gene.expression("loxodonta africana","NPPB",complete=TRUE)}).
-Two thymosins, %
-\Sexpr{gene.expression("loxodonta africana","TMSB10",complete=TRUE)} %
-and %
-\Sexpr{gene.expression("loxodonta africana","TMSB4Y",complete=TRUE)}
+\cref{tab:all_loxodonta_africana_placenta}. The gene with the highest
+expression was the natriuretic peptide precursor B
+(\Sexpr{gene.expression("loxodonta_africana","NPPB",complete=TRUE)}).
+Two thymosins,
+\Sexpr{gene.expression("loxodonta_africana","TMSB10",complete=TRUE)}
+and
+\Sexpr{gene.expression("loxodonta_africana","TMSB4Y",complete=TRUE)}
 were also also was highly expressed. The miRNA mir-675
-(\Sexpr{gene.expression("loxodonta
-  africana","ENSLAFG00000027406",complete=TRUE)}). which is imbedded
-in the first exon of the maternally imprinted long non-coding RNA gene
-\textit{H19} \cite{Keniry.ea2012:H19lincRNAisdevelopmental}, a gene
-which is currently un-annotated in \elephant{}. %
-\DLA{Probably consider fixing the unannotation of H19; it seems pretty
-  obvious to me, though it would require fixing the GTF file for
-  elephant with the right 
-  \href{http://useast.ensembl.org/Loxodonta_africana/Transcript/Summary?db=core;pt=GENSCAN00000034833;r=scaffold_145:855987-899506}{genscan prediction} for this region}
-Five uncharacterized genes are expressed to a high degree in the
-\elephant placenta (\cref{tab:top50_elephant_placenta}), three of
-which %
-%
-(\Sexpr{gene.expression("loxodonta africana","ENSLAFG00000028493",complete=TRUE)},
-\Sexpr{gene.expression("loxodonta africana","ENSLAFG00000032011",complete=TRUE)},
-\Sexpr{gene.expression("loxodonta africana","ENSLAFG00000031933",complete=TRUE)}) %
-%
+(\Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000027406",complete=TRUE)}).
+which is imbedded in the first exon of the maternally imprinted long
+non-coding RNA gene \textit{H19}
+\cite{Keniry.ea2012:H19lincRNAisdevelopmental}, a gene which is
+currently un-annotated in \elephant{}. \DLA{Probably consider fixing
+  the unannotation of H19; it seems pretty obvious to me, though it
+  would require fixing the GTF file for elephant with the right
+  \href{http://useast.ensembl.org/Loxodonta_africana/Transcript/Summary?db=core;pt=GENSCAN00000034833;r=scaffold_145:855987-899506}{genscan
+    prediction} for this region} Five uncharacterized genes are
+expressed to a high degree in the \elephant placenta
+(\cref{tab:top50_elephant_placenta}), three of which
+(\Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000028493",complete=TRUE)},
+\Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000032011",complete=TRUE)},
+\Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000031933",complete=TRUE)})
 are members of an \elephant{}-specific expansion of 11 genes closely
 related to the thymus-specific serine protease gene \textit{PRSS16}
 \cref{fig:prss16_evolution_tree} The other 8 \textit{PRSS16}-like
-genes are also expressed to a lesser degree %
-(\Sexpr{gene.expression("loxodonta africana","ENSLAFG00000026505",complete=TRUE)}). %
-%
+genes are also expressed to a lesser degree
+(\Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000026505",complete=TRUE)}).
 Two other novel genes with high expression are related to the gene
-\textit{SSLP1} %
-%
-(\Sexpr{gene.expression("loxodonta africana","ENSLAFG00000032659",complete=TRUE)} %
-and %
-%
-\Sexpr{gene.expression("loxodonta africana","ENSLAFG00000029551",complete=TRUE)},
-%
+\textit{SSLP1}
+(\Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000032659",complete=TRUE)}
+and
+\Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000029551",complete=TRUE)},
 \cref{fig:sslp1_evolution_tree}), which is also expressed in \cow and
 \dog placentas (\cref{tab:top50_dog_placenta,tab:top50_cow_placenta}).
 Placental expression of the hormones relaxin (\textit{RLN}, %
-\Sexpr{gene.expression("loxodonta africana","ENSLAFG00000036090")})
+\Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000036090")})
 and prolactin (\textit{PRL}) are exceptionally high in the elephant
 when compared to other mammals
 (\cref{fig:rln2_evolution_tree,fig:prolactin_evolution_tree}). There
 is little to no placental expression of the estrogen synthase gene,
-\textit{CYP19A1} %
-(\Sexpr{gene.expression("loxodonta africana","CYP19A1")}) and the
-enzyme that produces progesterone HSD3B1 %
-(\Sexpr{gene.expression("loxodonta africana","HSD3B")}). Other genes
+\textit{CYP19A1}
+(\Sexpr{gene.expression("loxodonta_africana","CYP19A1")}) and the
+enzyme that produces progesterone HSD3B1
+(\Sexpr{gene.expression("loxodonta_africana","HSD3B")}). Other genes
 with high expression in the elephant placenta include genes involved
-in oxidative stress %
-(\Sexpr{gene.expression("loxodonta africana","TXN",complete=TRUE)}),
-growth %
-(\Sexpr{gene.expression("loxodonta africana","IGF2",complete=TRUE)})
-and %
-\Sexpr{gene.expression("loxodonta africana","PAEP",complete=TRUE)}, %
-a gene usually expressed in the endometrium of the uterus in humans
+in oxidative stress
+(\Sexpr{gene.expression("loxodonta_africana","TXN",complete=TRUE)}),
+growth
+(\Sexpr{gene.expression("loxodonta_africana","IGF2",complete=TRUE)})
+and
+\Sexpr{gene.expression("loxodonta_africana","PAEP",complete=TRUE)}, a
+gene usually expressed in the endometrium of the uterus in humans
 \cite{Rutanen.ea1987:Progesterone-associatedproteinsPP12and}.
 
 \begin{figure}

@@ -2142,52 +2142,55 @@ print(xtable(go.analysis.wide.table,
 \end{table}
 
 
-\subsection{Comparative Analysis of Gene Expression}
+% Not sure if this is actually worthwhile; I've mentioned some of this
+% already for some of the lineages
 
-We performed a comparative analysis of gene expression by
-reconstructing the evolution of expression values and detecting
-significant shifts in expression along specific lineages. Likelihood
-values for each model for each of the X genes reconstructed, as well
-as likelihood ratio tests, P- and Q-values (after correcting for
-multiple testing) are shown in Supplemental Table X. We identified
-between 4 (Boreoeutheria) and 550 (Mouse) significant shifts (Q <
-0.01) in expression on specific lineages (Table 10). The top 10 genes
-with significant shifts (if applicable) per lineage are shown in Table
-10 and all genes for each branch are shown in Supplemental Tables
-X-XX. Genes that showed shifts on the human lineage were
-overwhelmingly identified as placenta-specific by the
-tissue-specificity index (TSI), with 56 out of 279 genes (20\%) with
-both TSI>0.75 and placenta as one the top two tissues with the highest
-expression. Unsurpisingly, this was not the case with other lineages,
-since we used expression values from a human-derived microarray to
-generate TSI values for each gene. However, this does underscore the
-dynamic nature of expression patterns in the placenta and indeed all
-tissues across mammals.
-
-We then performed DAVID functional annotation clustering analyses on
-each list of genes from each lineage. The top three clusters for each
-lineage are shown in Table 10 and a full list of clusters in
-Supplemental Table X. The top enrichment cluster in the human lineage
-is blood vessel development, followed by extracellular matrix and
-metal ion binding (Table 10). Other significant clusters include those
-related to cell communication/signaling, cytokines, defense response,
-tryptophan metabolism, apoptosis, and skeletal system development
-(Supplemental Table X). The bonobo lineage was enriched in only three
-clusters: apoptosis, Toll-like receptor signalling and apoptosis. The
-mouse displayed enrichment in clusters involved in epigenetic
-modifications such as methyltransferase activity and histone
-modification, as well embryonic morphogeneisis, lipid biosynthesis,
-among others (Supplemental Table X). The top enriched cluster in the
-cow lineage was the response to vitamin A, as well as many clusters
-related to the immune system. The dog showed enrichment in skeletal
-system development, as well as lipid metabolic processes and blood
-circulation. The elephant lineage had only one enriched cluster:
-carbohydrate binding. Genes that showed enrichment on the opossum
-lineage (essentially representing the difference between placental
-mammals and marsupials) were clustered in many categories not seen in
-the other lineages, including clusters related to the mitochondria,
-urea cycle, peroxisome, glycolysis, and transport across the cell
-membrane (Table 10 and Supplemental Table X).
+% \subsection{Comparative Analysis of Gene Expression}
+% 
+% We performed a comparative analysis of gene expression by
+% reconstructing the evolution of expression values and detecting
+% significant shifts in expression along specific lineages. Likelihood
+% values for each model for each of the X genes reconstructed, as well
+% as likelihood ratio tests, P- and Q-values (after correcting for
+% multiple testing) are shown in Supplemental Table X. We identified
+% between 4 (Boreoeutheria) and 550 (Mouse) significant shifts (Q <
+% 0.01) in expression on specific lineages (Table 10). The top 10 genes
+% with significant shifts (if applicable) per lineage are shown in Table
+% 10 and all genes for each branch are shown in Supplemental Tables
+% X-XX. Genes that showed shifts on the human lineage were
+% overwhelmingly identified as placenta-specific by the
+% tissue-specificity index (TSI), with 56 out of 279 genes (20\%) with
+% both TSI>0.75 and placenta as one the top two tissues with the highest
+% expression. Unsurpisingly, this was not the case with other lineages,
+% since we used expression values from a human-derived microarray to
+% generate TSI values for each gene. However, this does underscore the
+% dynamic nature of expression patterns in the placenta and indeed all
+% tissues across mammals.
+% 
+% We then performed DAVID functional annotation clustering analyses on
+% each list of genes from each lineage. The top three clusters for each
+% lineage are shown in Table 10 and a full list of clusters in
+% Supplemental Table X. The top enrichment cluster in the human lineage
+% is blood vessel development, followed by extracellular matrix and
+% metal ion binding (Table 10). Other significant clusters include those
+% related to cell communication/signaling, cytokines, defense response,
+% tryptophan metabolism, apoptosis, and skeletal system development
+% (Supplemental Table X). The bonobo lineage was enriched in only three
+% clusters: apoptosis, Toll-like receptor signalling and apoptosis. The
+% mouse displayed enrichment in clusters involved in epigenetic
+% modifications such as methyltransferase activity and histone
+% modification, as well embryonic morphogeneisis, lipid biosynthesis,
+% among others (Supplemental Table X). The top enriched cluster in the
+% cow lineage was the response to vitamin A, as well as many clusters
+% related to the immune system. The dog showed enrichment in skeletal
+% system development, as well as lipid metabolic processes and blood
+% circulation. The elephant lineage had only one enriched cluster:
+% carbohydrate binding. Genes that showed enrichment on the opossum
+% lineage (essentially representing the difference between placental
+% mammals and marsupials) were clustered in many categories not seen in
+% the other lineages, including clusters related to the mitochondria,
+% urea cycle, peroxisome, glycolysis, and transport across the cell
+% membrane (Table 10 and Supplemental Table X).
 
 \section{Discussion}
 

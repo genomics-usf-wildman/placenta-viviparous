@@ -1590,23 +1590,43 @@ similar to the pattern of expression seen in \pig and \dog.
 \begin{table}[h]
   \tiny
 <<top.50.sheep.expressed.genes,echo=FALSE,results="asis">>=
-top.sheep.genes <- top.genes.table(species.name="ovis aries")
+top.sheep.genes <- top.genes.table(species.name="ovis aries",n=200)
+top.sheep.genes <-
+    top.sheep.genes[!grepl("\\{(7SK|.+_([SM]RP|nuc)|SNOR[AD]\\d+|U\\d+|HIST.*)\\}",
+                           `Gene symbol`) &
+                    !grepl("\\((7SK|.+_([SM]RP|nuc)|SNOR[AD]\\d+|U\\d+|HIST.*)\\)",
+                           `Human Symbol`)
+                   ,][1:50,]
 print(xtable(top.sheep.genes),
       booktabs=TRUE,
       floating=FALSE,
       sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
 setkey(top.sheep.genes,"Gene symbol")
 @ 
-\caption{Expression in \ac{FPKM} of top 50 genes in \sheep which are
-  not ribosomal, mitochondrial, or whose human ortholog is a
-  housekeeping gene}
+\caption{\tableexplanation{\sheep}{tab:all_ovis_aries_placenta}}
 \label{tab:top50_sheep_placenta}
 \end{table}
 
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
 in the term placenta of \sheep are shown in
 \cref{tab:top50_sheep_placenta} with a list of all highly expressed
-genes in Supplemental \cref{tab:all_ovis_aries_placenta}.
+genes in Supplemental \cref{tab:all_ovis_aries_placenta}. The complete
+list of highly expressed genes includes many snRNAs and rRNAs likely
+due to the RNA extraction and library preparation procedure utilized
+for this sample. Ignoring these, notable highly expressed genes
+include members of the annexin complex
+(\Sexpr{gene.expression("ovis_aries","S100G",complete=TRUE)},
+\Sexpr{gene.expression("ovis_aries","ANXA2",complete=TRUE)}),
+hemoglobin subunits
+(\Sexpr{gene.expression("ovis_aries","ENSOARG00000010944",complete=TRUE)}),
+an ortholog of \textit{SSLP1},
+\Sexpr{gene.expression("ovis_aries","SORD1",complete=TRUE)}, two
+cathespins (\Sexpr{gene.expression("ovis_aries","CTSL",complete=TRUE)}
+and \Sexpr{gene.expression("ovis_aries","CTSB",complete=TRUE)}), and
+placentally expressed transcript 1
+\Sexpr{gene.expression("ovis_aries","PLET1",complete=TRUE)} which may
+play a role in cellular migration
+\cite{Raymond.ea2010:Expressionoforphanprotein}.
 
 
 \subsection{Atlantogenata}

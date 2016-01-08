@@ -116,6 +116,14 @@
   name corresponding to the human symbol. A complete list of all genes
   is in \cref{#2}.}
 
+\newcommand{\genetreeexplanation}[1]{Gene tree and heatmap of
+  expression of genes related to #1. The gene tree was obtained from
+  Ensembl~\cite{Cunningham.ea2015:Ensembl2015} and genes from species
+  not included in this study or having expression by \ac{FPKM} less
+  than 1 were excluded from the plotted tree. Heatmap cells in grey
+  are from species where there was no expression of the relevant
+  transcript (or a species where that transcript does not apply).}
+
 
 
 \begin{document}
@@ -896,8 +904,7 @@ gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,min.fpkm=5)
 @ 
-\caption{Expression of follistatin-like 1 \textit{FSTLl1} and related
-  genes.}
+\caption{\genetreeexplanation{follistatin-like 1 \textit{FSTLl1}}}
 \label{fig:fstl1_evolution_tree}
 \end{figure}
 
@@ -1007,7 +1014,7 @@ gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,min.fpkm=1)
 @ 
-\caption{Expression of pregnancy-specific glycoproteins}
+\caption{\genetreeexplanation{pregnancy-specific glycoproteins}}
 \label{fig:psg_evolution_tree}
 \end{figure}
 
@@ -1087,7 +1094,7 @@ gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,min.fpkm=1)
 @ 
-\caption{Expression of \textit{SERPINE2} genes with $\mathrm{FPKM} \ge 1$}
+\caption{\genetreexplanation{\textit{SERPINE2}}}
 \label{fig:serpine_evolution_tree}
 \end{figure}
 
@@ -1104,8 +1111,7 @@ print(xtable(top.spider.monkey.genes),
       sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
 setkey(top.spider.monkey.genes,"Gene symbol")
 @ 
-\caption{Expression in \ac{FPKM} of top 50 genes in \smonkey which are not ribosomal, 
-mitochondrial, or whose human ortholog is a housekeeping gene}
+\caption{\tableexplanation{\smonkey}{tab:all_ateles_fuciceps_placenta}}
 \label{tab:top50_spider_monkey_placenta}
 \end{table}
 
@@ -1129,7 +1135,9 @@ the annexin complex %
 \Sexpr{gene.expression("ateles fusciceps","S100A11",complete=TRUE)}) %
 which may play a role in angiogenesis, and certainly regulate
 cell-cell interaction in the developing placenta
-\cite{Liu.ea2015:AnnexinA2complexeswith}.
+\cite{Liu.ea2015:AnnexinA2complexeswith}. All genes with expression
+greater than 50 \ac{FPKM} are listed in Supplementary
+\cref{tab:all_ateles_fuciceps_placenta}.
 
 \subsection{Rodentia Placenta Transcriptomes}
 
@@ -1357,9 +1365,7 @@ print(xtable(top.dog.genes),
       sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
 setkey(top.dog.genes,"Gene symbol")
 @ 
-\caption{Expression in \ac{FPKM} of the top 50 genes in \dog which are
-  not ribosomal, mitochondrial, or whose human ortholog is a
-  housekeeping gene}
+\caption{\tableexplanation{\dog}{tab:all_canis_familiaris_placenta}}
 \label{tab:top50_dog_placenta}
 \end{table}
 
@@ -1492,7 +1498,7 @@ gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
                  gene.tree.table,gene.tree.expression,min.fpkm=1)
 @ 
-\caption{Expression of genes related to \cow \textit{PAG2} with $\mathrm{FPKM} \ge 1$}
+\caption{\genetreeexplanation{\cow \textit{PAG2}}}
 \label{fig:pag2_evolution_tree}
 \end{figure}
 
@@ -1642,9 +1648,7 @@ print(xtable(top.elephant.genes),
       sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
 setkey(top.elephant.genes,"Gene symbol")
 @ 
-\caption{Expression in \ac{FPKM} of top 50 genes which are not ribosomal, 
-mitochondrial, or whose human ortholog is a housekeeping gene in
-  \textit{Loxodonta africana}}
+\caption{\tableexplanation{\elephant}{tab:top50_elephant_placenta}}
 \label{tab:top50_elephant_placenta}
 \end{table}
 
@@ -1716,7 +1720,7 @@ gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
 @ 
-\caption{Expression of \textit{PRSS16} and related genes}
+\caption{\genetreeexplanation{\textit{PRSS16}}}
 \label{fig:prss16_evolution_tree}
 \end{figure}
 
@@ -1730,7 +1734,7 @@ gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
 @ 
-\caption{Expression of \textit{RLN2} and related genes}
+\caption{\genetreeexplanation{\textit{RLN2}}}
 \label{fig:rln2_evolution_tree}
 \end{figure}
 
@@ -1799,7 +1803,7 @@ gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,
                  subtree=c("ENSDNOG00000033320","ENSMODG00000017988"))
 @ 
-\caption{Expression of \textit{OVOS2} and related genes}
+\caption{\genetreeexplanation{\cow \textit{OVOS2}}}
 \label{fig:ovos2_evolution_tree}
 \end{figure}
 
@@ -2327,7 +2331,7 @@ gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
 @ 
-\caption{Expression of estrogen sythesis genes}
+\caption{\genetreeexplanation{estrogen sythesis genes}}
 \label{fig:estrogen_evolution_tree}
 \end{figure}
 
@@ -2341,7 +2345,7 @@ gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
 @ 
-\caption{Expression of progesterone sythesis genes}
+\caption{\genetreeexplanation{progesterone sythesis genes}}
 \label{fig:progesterone_evolution_tree}
 \end{figure}
 
@@ -2356,7 +2360,7 @@ gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
 @ 
-\caption{Expression of chorionic gonadotropin}
+\caption{\genetreeexplanation{chorionic gonadotropin}}
 \label{fig:cgb_evolution_tree}
 \end{figure}
 
@@ -2371,7 +2375,7 @@ gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
 @ 
-\caption{Expression of chorionic somatomammotropin}
+\caption{\genetreeexplanation{chorionic somatomammotropin}}
 \label{fig:csh1_evolution_tree}
 \end{figure}
 
@@ -2386,7 +2390,7 @@ gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
 @ 
-\caption{Expression of prolactin}
+\caption{\genetreeexplanation{prolactin}}
 \label{fig:prolactin_evolution_tree}
 \end{figure}
 
@@ -2400,7 +2404,7 @@ gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
 @ 
-\caption{Expression of prolactin receptor}
+\caption{\genetreeexplanation{prolactin receptor}}
 \label{fig:prolactin_receptor_evolution_tree}
 \end{figure}
 
@@ -2414,7 +2418,7 @@ gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
 @ 
-\caption{Expression of \textit{TMSB1}}
+\caption{\genetreeexplanation{\textit{TMSB1}}}
 \label{fig:tmsb1_evolution_tree}
 \end{figure}
 
@@ -2429,7 +2433,7 @@ gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
 @ 
-\caption{Expression of SSLP1}
+\caption{\genetreeexplanation{\textit{SSLP1}}}
 \label{fig:sslp1_evolution_tree}
 \end{figure}
 
@@ -2542,7 +2546,7 @@ gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
 @ 
-\caption{Expression of galectins}
+\caption{\genetreeexplanation{galectins}}
 \label{fig:galectins_lgals13_evolution_tree}
 \end{figure}
 

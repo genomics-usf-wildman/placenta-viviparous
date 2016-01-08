@@ -10,7 +10,12 @@ PERL?=perl
 FPKM_FILES=Supplemental_Table_2_Homo_NEW_UPDATED.txt $(patsubst %.xlsx,%.txt,$(filter-out $(wildcard *Homo*), $(wildcard *_fpkm.xlsx)))
 
 
-all: combined_fpkm
+all: combined_fpkm gene_trees housekeeping_genes_superset placenta_core_transcriptome \
+	placenta_go_results_bp placenta_go_results_mf hugo_nomenclature gene_annotation \
+	mammal_lifehistories.txt
+
+mammal_lifehistories.txt:
+	wget -O $@ "http://www.esapubs.org/archive/ecol/E084/093/Mammal_lifehistories_v2.txt"
 
 hugo_nomenclature.txt:
 	wget -O $@ "http://www.genenames.org/cgi-bin/download?col=gd_hgnc_id&col=gd_app_sym&col=gd_app_name&col=gd_status&col=gd_prev_sym&col=gd_aliases&col=gd_pub_chrom_map&col=gd_pub_acc_ids&col=gd_pub_refseq_ids&col=md_ensembl_id&status=Approved&status=Entry+Withdrawn&status_opt=2&where=&order_by=gd_app_sym_sort&format=text&limit=&hgnc_dbtag=on&submit=submit"

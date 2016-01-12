@@ -1538,7 +1538,10 @@ gene.tree.table <- trees[[tree.id]]$table
 gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
-                 gene.tree.table,gene.tree.expression,min.fpkm=1)
+                 gene.tree.table,gene.tree.expression,min.fpkm=1,
+                 subtree=c("ENSSSCG00000006792",
+                           "ENSBTAG00000046085")
+                 )
 @ 
 \caption{\genetreeexplanation{\cow \textit{PAG2}}}
 \label{fig:pag2_evolution_tree}

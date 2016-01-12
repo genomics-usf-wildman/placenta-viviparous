@@ -2518,7 +2518,7 @@ placenta. %
 All afrotherians yet analyzed contain only one prolactin
 gene, and prolactin has undergone adaptive evolution on the elephant
 lineage \cite{Wallis2009:ProlactininAfrotheriacharacterization}.
-\cite{Yamamoto.ea2011:PlacentationinAfricanelephant} noted the
+\citet{Yamamoto.ea2011:PlacentationinAfricanelephant} noted the
 presence of a prolactin in the trophoblast of the elephant placenta
 using immunohistological staining and human derived antibodies. A
 previous analysis of the elephant placenta also detected the

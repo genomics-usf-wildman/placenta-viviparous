@@ -43,8 +43,10 @@ call: $(SPECIES)_genes.fpkm_tracking
 ifdef USE_TRINITY
 $(SPECIES)_genes.fpkm_tracking: $(SPECIES)_placenta_star.bam
 	$(MODULE) load cufflinks/2.2.1; \
-	cufflinks --max-bundle-frags=4000000 -p $(CORES) $<
-	for file in genes.fpkm_tracking isoforms.fpkm_tracking; do \
+	cufflinks --max-bundle-frags=4000000 \
+		--min-frags-per-transfrag 2 \
+		-p $(CORES) $<
+	for file in genes.fpkm_tracking isoforms.fpkm_tracking skipped.gtf transcripts.gtf; do \
 		mv $${file} $(SPECIES)_$${file}; \
 	done;
 else

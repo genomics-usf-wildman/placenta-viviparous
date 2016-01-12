@@ -78,7 +78,7 @@
   {\end{itemize}}
 \setcounter{tocdepth}{3}
 \oddsidemargin 0.0in 
-\textwidth 6.5in
+\textwidth 6in
 \raggedbottom
 \clubpenalty = 10000
 \widowpenalty = 10000
@@ -156,7 +156,8 @@
 \input{acronyms}
 % \twocolumn
 \maketitle
-\onehalfspacing
+% \onehalfspacing
+\doublespacing
 
 <<load.libraries,echo=FALSE,results="hide",warning=FALSE,message=FALSE,error=FALSE,cache=FALSE>>=
 opts_chunk$set(dev="cairo_pdf",out.width="\\textwidth",out.height="0.7\\textheight",out.extra="keepaspectratio")

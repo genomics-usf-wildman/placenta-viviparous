@@ -2498,7 +2498,7 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 \label{fig:prolactin_receptor_evolution_tree}
 \end{figure}
 
-\subsubsection{\ac{GH} family}
+\subsubsection{\Ac{GH} family}
 
 The \ac{GH} family has expanded in anthropoid primates, resulting in
 approximately 5 genes in \human (\textit{GH1}, \textit{GH2},

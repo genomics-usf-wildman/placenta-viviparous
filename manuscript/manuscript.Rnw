@@ -2498,33 +2498,29 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 
 The elephant is strikingly the only mammal analyzed that shows high
 expression of the primarily pituitary hormone prolactin (PRL) in the
-placenta. %
-\DLA{This is totally not true. \textit{A. fusciceps} expresses PRL,
-  and so does \textit{S. carmeli}, and \textit{B. taurus}, \textit{M.
-    musculus}, all have expansions of prolatacin.}
-%
-All afrotherians yet analyzed contain only one prolactin
+placenta. All afrotherians yet analyzed contain only one prolactin
 gene, and prolactin has undergone adaptive evolution on the elephant
 lineage \cite{Wallis2009:ProlactininAfrotheriacharacterization}.
 \citet{Yamamoto.ea2011:PlacentationinAfricanelephant} noted the
 presence of a prolactin in the trophoblast of the elephant placenta
 using immunohistological staining and human derived antibodies. A
 previous analysis of the elephant placenta also detected the
-expression of prolactin (Hou et al., 2012). Here we confirm that the
-sole prolactin in the elephant is not only expressed but highly
-expressed in the placenta, and likely functions both in the
-maintenance of the corpus luteum and as a placental lactogen \cite{Yamamoto.ea2011:PlacentationinAfricanelephant}. PRL is not expressed in the opossum, even though there
-is evidence that it is expressed in the placenta of another marsupial,
-the tammar wallaby \cite{Menzies.ea2011:Placentalexpressionofpituitary}. This suggests that
-placental prolactin expression in marsupials may be as diverse as in
-eutherian mammals. Although, PRL is not expressed to any great degree
-in the placenta other mammals, we see very high expression of genes
-which resulted from duplications of PRL in both the cow \DLA{(Table X)}, as
-well as mouse \DLA{(Supplemental Table X)}. \DLA{Describe these}
+expression of prolactin
+\cite{Hou.ea2012:Elephanttranscriptomeprovidesinsights}. Here we
+confirm that the sole prolactin in the elephant is not only expressed
+but highly expressed in the placenta, and likely functions both in the
+maintenance of the corpus luteum and as a placental lactogen
+\cite{Yamamoto.ea2011:PlacentationinAfricanelephant}. \textit{PRL} is
+not expressed in the opossum, even though there is evidence that it is
+expressed in the placenta of another marsupial, the tammar wallaby
+\cite{Menzies.ea2011:Placentalexpressionofpituitary}. This suggests
+that placental prolactin expression in marsupials may be as diverse as
+in eutherian mammals. Although, \textit{PRL} is not expressed to any
+great degree in the placenta other mammals, we see very high
+expression of genes which resulted from duplications of \textit{PRL}
+in the \mouse, \galili, \carmeli, and \cow
+(\cref{fig:prolactin_evolution_tree}).
 
-
-The human gene CGA codes for the alpha subunit of multiple hormones
-including pituitary hormones (luteinizing hormone,
 The \ac{GH} family has expanded in anthropoid primates, resulting in
 approximately 5 genes in \human (\textit{GH1}, \textit{GH2},
 \textit{CSH1}, \textit{CSH2}, \textit{CSHL1}) and at least three in

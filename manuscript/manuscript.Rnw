@@ -237,15 +237,17 @@ function as well as potentially enrich our knowledge of the biology of
 obstetrical syndromes. We profiled the term placenta by using Illumina
 RNA-Seq technology to sequence the transcriptomes of
 \Sexpr{star.logs[,length(unique(species))]} species of therian (i.e.
-marsupials and “placental”) mammals. We identified significant shifts
-in gene expression along specific evolutionary lineages using a model
-of character evolution. Genes that showed significant elevation in
-expression along the human lineage ($\mathrm{FDR}\le 0.01$) were
-enriched in GO categories such as angiogenesis, tube morphogenesis,
-cell migration, and regulation of inflammatory response. Three of
-these genes (KISS1, ADAM12, GPC3) showed exceptionally high expression
-in humans; these genes are implicated in preeclampsia and may indicate
-that the risk of preeclampsia recently emerged on the human lineage.
+marsupials and “placental”) mammals. 
+
+% We identified significant shifts in gene expression along specific
+% evolutionary lineages using a model of character evolution. Genes that
+% showed significant elevation in expression along the human lineage
+% ($\mathrm{FDR}\le 0.01$) were enriched in GO categories such as
+% angiogenesis, tube morphogenesis, cell migration, and regulation of
+% inflammatory response. Three of these genes (KISS1, ADAM12, GPC3)
+% showed exceptionally high expression in humans; these genes are
+% implicated in preeclampsia and may indicate that the risk of
+% preeclampsia recently emerged on the human lineage.
 
 \textbf{Keywords:} mammal, gene expression, evolution, RNA-seq, placenta
 
@@ -2273,6 +2275,8 @@ print(xtable(go.analysis.wide.table,
 % the other lineages, including clusters related to the mitochondria,
 % urea cycle, peroxisome, glycolysis, and transport across the cell
 % membrane (Table 10 and Supplemental Table X).
+
+\clearpage
 
 \section{Discussion}
 

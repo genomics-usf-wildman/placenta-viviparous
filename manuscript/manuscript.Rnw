@@ -35,6 +35,7 @@
 % \AtBeginTables{\section*{Tables}\renewcommand{\efloatseparator}{\mbox{}}}
 \usepackage[nomargin,inline,draft]{fixme}
 \newcommand{\DLA}[1]{\textcolor{red}{\fxnote{DLA: #1}}}
+\newcommand{\DEW}[1]{\textcolor{purple}{\fxnote{DEW: #1}}}
 \usepackage[x11names,svgnames]{xcolor}
 \usepackage{texshade}
 \usepackage{tikz}

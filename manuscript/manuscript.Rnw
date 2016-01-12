@@ -2269,17 +2269,23 @@ species \cite{Carter2012:Evolutionofplacentalfunction}. Expression and synthesis
 perhaps the most well-documented physiological process in the placenta
 in many species. Here we quantified the extreme disparity in genes
 with hormone products or enzymatic products that directly produce
-hormones in multiple mammalian species (\DLA{Table 8}).
+hormones in multiple mammalian species (\cref{fig:hormone_genes}).
 
 In both ruminants and primates, the placenta is responsible for the
 production of estrogen and progesterone. High relative expression of
-CYP19A1, the enzyme that synthesizes estrogen, and HSD3B1, the enzyme
-that synthesizes progesterone, in the human, bonobo, and cow,
-generally matches the high levels of placental production of estrogen
-and progesterone in humans, other primates, and ruminants in late
-pregnancy. In addition, HSD3B1 shows high levels in dog, which matches
-the high levels of placental production of progesterone at term in
-that species. \DLA{I think we need citations for this}
+\textit{CYP19A1} (\cref{fig:estrogen_evolution_tree}), the enzyme that
+synthesizes estrogen from androstenedione is seen in \human, \bonobo,
+\cow, and \horse, though not in \sheep, \smonkey. %
+%
+\textit{HSD3B1}, one of two enzymes that synthesizes progesterone from
+pregnalone
+(\cite{Simard.ea2005:Molecularbiologyof3beta-hydroxysteroid},
+\cref{fig:progesterone_evolution_tree}) is also highly expressed in
+\human, \bonobo, \cow, \horse, and \dog, but is not highly expressed
+in \smonkey. The diversity of \textit{CYP19A1} and \textit{HSD3B1}
+expression levels in in primates and ungulates seen here points to the
+need for more complete sampling of placentas at different timepoints
+and in different clades.
 
 \begin{figure}
 <<hormone.genes.plot,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=

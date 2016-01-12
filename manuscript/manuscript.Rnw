@@ -2422,22 +2422,6 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 \label{fig:progesterone_evolution_tree}
 \end{figure}
 
-
-\begin{figure}
-<<chorionic.gonadotropin.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="CGB1" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
-@ 
-\caption{\genetreeexplanation{chorionic gonadotropin}}
-\label{fig:cgb_evolution_tree}
-\end{figure}
-
-
 \begin{figure}
 <<chorionic.somatomammotropin.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
 
@@ -2538,35 +2522,72 @@ in the placenta other mammals, we see very high expression of genes
 which resulted from duplications of PRL in both the cow \DLA{(Table X)}, as
 well as mouse \DLA{(Supplemental Table X)}. \DLA{Describe these}
 
-The growth hormone (GH) family has expanded in anthropoid primates,
-resulting in approximately 5 genes in humans (GH1, GH2, CSH1, CSH2,
-CSHL1). All but GH1 show substantial expression in the placenta (Table
-8). There is some evidence that increased expression of these genes
-may be correlated with overall birth weight of offspring in humans
-\DLA{(Mannik et al., 2010)}, and it is possible that the extreme expression
-levels of these genes may be due to high birth weight. Ensembl
-annotations show 4 GH genes present in the chimpanzee genome, and
-three of these genes show high expression in bonobo, although to a
-lesser degree than in human (Table 8). Human placental GH genes are
-involved in increasing blood flow, replacing maternal pituitary
-expression of GH, as well as trophoblast invasion \cite{Alsat.ea1998:Physiologicalroleofhuman,Lacroix.ea2005:Stimulationofhumantrophoblast,Schiessl.ea2007:Roleofplacentalgrowth}, and it is likely that
-they have the same function in the bonobo.
 
 The human gene CGA codes for the alpha subunit of multiple hormones
 including pituitary hormones (luteinizing hormone,
-follicle-stimulating hormone, thyroid-stimulating hormone), as well as
-numerous chorionic gonadotropins with variable beta subunits \cite{Maston.ea2002:Chorionicgonadotropinhasrecent}. The function of the chorionic gonadotropins is to
-prevent the regression of the corpus luteum \cite{Hanson.ea1971:EffectsofHCGand}.
-Among the six placentas we analyzed here, CGA is only expressed in the
-placentas of humans and bonobos (\DLA{Table 8}), which corresponds with the
-emergence of the chorionic gonadotropins in anthropoid primates
-\cite{Maston.ea2002:Chorionicgonadotropinhasrecent}. However, oddly, CGA is expressed at much
-higher levels in both species than the beta subunits with which its
-product dimerizes (\DLA{Table 8}). CGA is one of several genes noted by
-\cite{Uddin.ea2008:Distinctgenomicsignaturesof} to have undergone adaptive evolution of the
-human-chimpanzee stem lineage.
+The \ac{GH} family has expanded in anthropoid primates, resulting in
+approximately 5 genes in \human (\textit{GH1}, \textit{GH2},
+\textit{CSH1}, \textit{CSH2}, \textit{CSHL1}) and at least three in
+\bonobo (two \textit{GH2} and \textit{GH1}; owing to the similarity
+between the two \textit{GH1} in \textit{Pan troglodytes} we cannot
+reliably distinguish transcripts between the two). All but
+\textit{GH1} show substantial expression in the \human placenta
+(\cref{fig:csh1_evolution_tree}). There is some evidence that
+increased expression of these genes may be correlated with overall
+birth weight of offspring in \human
+\cite{Männik.ea2010:Differentialexpressionprofileof}, and it is
+possible that the extreme expression levels of these genes may be due
+to high birth weight. \human placental \ac{GH} genes are involved in
+increasing blood flow, replacing maternal pituitary expression of
+\ac{GH}, as well as trophoblast invasion
+\cite{Alsat.ea1998:Physiologicalroleofhuman,Lacroix.ea2005:Stimulationofhumantrophoblast,Schiessl.ea2007:Roleofplacentalgrowth},
+and it is likely that they have the same function in \bonobo.
 
-Relaxin is a hormone that has multiple effects during pregnancy
+\begin{figure}
+<<chorionic.somatomammotropin.alpha.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="CGA" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+@ 
+\caption{\genetreeexplanation{chorionic gonadotropin, alpha subunit}}
+\label{fig:cga_evolution_tree}
+\end{figure}
+
+\begin{figure}
+<<chorionic.gonadotropin.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="CGB1" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+@ 
+\caption{\genetreeexplanation{chorionic gonadotropin, beta subunit}}
+\label{fig:cgb_evolution_tree}
+\end{figure}
+
+The human gene \textit{CGA} codes for the alpha subunit of multiple
+hormones including pituitary hormones (luteinizing hormone,
+follicle-stimulating hormone, thyroid-stimulating hormone), as well as
+numerous chorionic gonadotropins with variable beta subunits
+\cite{Maston.ea2002:Chorionicgonadotropinhasrecent}. The function of
+the chorionic gonadotropins is to prevent the regression of the corpus
+luteum \cite{Hanson.ea1971:EffectsofHCGand}. Among the six placentas
+we analyzed here, \textit{CGA} is only expressed in the placentas of
+\human and \bonobo (\cref{fig:hormone_genes,fig:cga_evolution_tree}),
+which corresponds with the emergence of the chorionic gonadotropins in
+anthropoid primates
+\cite{Maston.ea2002:Chorionicgonadotropinhasrecent}. However, oddly,
+\textit{CGA} is expressed at much higher levels in both species than
+the beta subunits with which its product dimerizes (\cref{fig:hormone_genes,fig:cga_evolution_tree,fig:cgb_evolution_tree}).
+\textit{CGA} is one of several genes noted by
+\citet{Uddin.ea2008:Distinctgenomicsignaturesof} to have undergone
+adaptive evolution of the \human{}-\textit{P. troglodytes} stem lineage.
 including increasing maternal blood flow, widening the pubic bone and
 relaxing uterine musculature in preparation for labor. In both dogs
 and elephants, there is high expression of relaxin in the term

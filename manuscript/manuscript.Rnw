@@ -127,28 +127,29 @@
 
 
 \begin{document}
-\author[1,2]{Michael R. McGowen}
 \author[1]{Don Armstrong}
+\author[2]{Michael R. McGowen}
 \author[1]{Amy Weckle}
-\author[1]{Jason Caravas}
-\author[3]{Dalen Agnew}
-\author[4]{Kurt Benirschke}
-\author[5]{Sue Savage-Rumbaugh}
-\author[6,7]{Chong Jai Kim}
-\author[8]{Günter P. Wagner}
-\author[6]{Roberto Romero}
-\author[1,6,9,*]{Derek E. Wildman}
+\author[3]{Jason Caravas}
+\author[4]{Dalen Agnew}
+\author[5]{Kurt Benirschke}
+\author[6]{Sue Savage-Rumbaugh}
+\author[7,8]{Chong Jai Kim}
+\author[9]{Günter P. Wagner}
+\author[7]{Roberto Romero}
+\author[1,6,10,*]{Derek E. Wildman}
 \title{The evolution of gene expression in the term placenta of viviparous mammals}
 % These are all wrong, but we'll change them later.
-\affil[1]{Center for Molecular Medicine and Genetics, Wayne State University School of Medicine, Detroit, MI, USA}
+\affil[1]{Institute for Genomic Biology, University of Illinois at Urbana-Champaign, Urbana, IL, USA}
 \affil[2]{School of Biological and Chemical Sciences, Queen Mary, University of London, London, UK}
-\affil[3]{Diagnostic Center for Population and Animal Health, College of Veterinary Medicine, Michigan State University, East Lansing, MI, USA}
-\affil[4]{Department of Pathology, University of California San Diego, La Jolla, CA, USA}
-\affil[5]{Great Ape Trust/Bonobo Hope Sanctuary, Des Moines, IA, USA}
-\affil[6]{Perinatology Research Branch, Eunice Kennedy Shriver National Institute of Child Health and Human Development (NICHD), National Institutes of Health (NIH), Detroit, MI, USA}
-\affil[7]{Department of Pathology, Wayne State University School of Medicine, Detroit, MI, USA}
-\affil[8]{Department of Ecology and Evolutionary Biology and Yale Systems Biology Institute, Yale University, New Haven, CT, USA}
-\affil[9]{Department of Obstetrics and Gynecology, Wayne State University School of Medicine, Detroit, MI, USA}
+\affil[3]{Center for Molecular Medicine and Genetics, Wayne State University School of Medicine, Detroit, MI, USA}
+\affil[4]{Diagnostic Center for Population and Animal Health, College of Veterinary Medicine, Michigan State University, East Lansing, MI, USA}
+\affil[5]{Department of Pathology, University of California San Diego, La Jolla, CA, USA}
+\affil[6]{Great Ape Trust/Bonobo Hope Sanctuary, Des Moines, IA, USA}
+\affil[7]{Perinatology Research Branch, Eunice Kennedy Shriver National Institute of Child Health and Human Development (NICHD), National Institutes of Health (NIH), Detroit, MI, USA}
+\affil[8]{Department of Pathology, Wayne State University School of Medicine, Detroit, MI, USA}
+\affil[9]{Department of Ecology and Evolutionary Biology and Yale Systems Biology Institute, Yale University, New Haven, CT, USA}
+\affil[10]{Department of Molecular and Integrative Physiology, University of Illinois at Urbana-Champaign, Urbana, IL, USA}
 \affil[*]{To whom correspondence should be addressed}
 \date{\today}
 

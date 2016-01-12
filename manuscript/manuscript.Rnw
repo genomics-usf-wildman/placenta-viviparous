@@ -1153,7 +1153,7 @@ print(xtable(top.spider.monkey.genes),
       sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
 setkey(top.spider.monkey.genes,"Gene symbol")
 @ 
-\caption{\tableexplanation{\smonkey}{tab:all_ateles_fuciceps_placenta}}
+\caption{\tableexplanation{\smonkey}{tab:all_ateles_fusciceps_placenta}}
 \label{tab:top50_spider_monkey_placenta}
 \end{table}
 

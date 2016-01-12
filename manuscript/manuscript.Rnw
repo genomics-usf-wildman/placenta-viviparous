@@ -2383,7 +2383,7 @@ gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
 @ 
-\caption{\genetreeexplanation{estrogen sythesis genes}}
+\caption{\genetreeexplanation{estrogen synthesis genes}}
 \label{fig:estrogen_evolution_tree}
 \end{figure}
 
@@ -2395,9 +2395,11 @@ tree.id <-
 gene.tree.table <- trees[[tree.id]]$table
 gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,
+                 subtree=c("ENSMODG00000005385","ENSLAFG00000027896")
+                 )
 @ 
-\caption{\genetreeexplanation{progesterone sythesis genes}}
+\caption{\genetreeexplanation{progesterone synthesis genes}}
 \label{fig:progesterone_evolution_tree}
 \end{figure}
 
@@ -2454,7 +2456,8 @@ tree.id <-
 gene.tree.table <- trees[[tree.id]]$table
 gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,
+                 subtree=c("ENSG00000113494","ENSMODG00000020376"))
 @ 
 \caption{\genetreeexplanation{prolactin receptor}}
 \label{fig:prolactin_receptor_evolution_tree}

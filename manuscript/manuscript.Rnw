@@ -2753,158 +2753,171 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 \end{figure}
 
 We found evidence of high expression in two novel expansions of genes
-in the elephant genome. One family includes 11 genes that are related
-to the gene PRSS16 gene, a thymus-specific serine protease that may be
-involved regulating the presentation of self-peptides in CD4+
-T-lymphocytes (Fornari et al., 2012). All 11 of these genes are
-expressed in the elephant placenta, three of which have very abundant
-mRNAs (Table 6). It is possible that this elephant-specific gene
-family may be involved in immunity in the elephant placenta and the
-mediation of maternal-fetal immune tolerance; however, future work
-will need to test these hypotheses. Three other genes abundantly
-expressed in the elephant placenta are homologues of SSLP1, a gene
-with predominant expression in the seminal vesicle in mouse (Li et
-al., 2006). Homologues of SSLP1 have been identified as being
-expressed in the placental villi of cow, sheep, and goat. SSLP1 also
-contains an Alu retrotransposon and may be involved in the development
-of villi via cell proliferation (Ushizawa et al., 2009, 2010). We
-verified expression in cow, however its abundant expression was also
-identified in dog. This gene is not found in primates. Expansion of
-these genes in elephants may indicate an elaboration of this system.
+in the \elephant genome. One family includes 11 genes that are related
+to the \textit{PRSS16} gene, a thymus-specific serine protease that
+may be involved regulating the presentation of self-peptides in CD4+
+T-lymphocytes \cite{Fornari.ea2012:TranscriptionprofilingofPrss16}.
+All 11 of these genes are expressed in the elephant placenta, three of
+which have very abundant mRNAs
+(\cref{tab:top50_elephant_placenta,fig:prss16_evolution_tree}). It is
+possible that this elephant-specific gene family may be involved in
+immunity in the elephant placenta and the mediation of maternal-fetal
+immune tolerance; however, future work will need to test these
+hypotheses. Three other genes abundantly expressed in the elephant
+placenta are homologues of \textit{SSLP1}, a gene with predominant
+expression in the seminal vesicle in mouse
+\cite{Li.ea2006:SSLP-1secretedLy-6protein}. Homologues of
+\textit{SSLP1} are also expressed in \cow, \dog, \horse, and \sheep.
+\textit{SSLP1} also contains an Alu retrotransposon and may be
+involved in the development of villi via cell proliferation
+\cite{Ushizawa.ea2009:Characterizationandexpressionanalysis}. This
+gene is not found in primates. Expansion of these genes with high
+expression in \elephant may indicate an elaboration of this system.
 
+\subsection{Annexin Complex}
 
 \subsection{Human Specific Expression Shifts and the Evolution of Preeclampsia}
 
-The human placenta is distinctive from many other primates in that it
+The \human placenta is distinctive from many other primates in that it
 possesses a deeply invasive trophoblast that penetrates the inner
-myometrium of the uterus \cite{Carter.ea2011:Evolutionofinvasiveplacentation}. It is
+myometrium of the uterus
+\cite{Carter.ea2011:Evolutionofinvasiveplacentation}. It is
 hypothesized that this feature is related to the increased demand for
 resources by the developing fetus to feed the expanded size of the
-human brain (Carter and Pijnenborg, 2011; Robillard et al., 2002).
-Humans have the largest brain in terms of relative size and this
-differs markedly from closely related great apes (Boddy et al., 2012).
-Deep penetration of the myometrium occurs in chimpanzees and gorillas,
-but this penetration may be accelerated in humans (Carter and
-Pijnenborg, 2011).
+human brain
+\cite{Carter.ea2011:Evolutionofinvasiveplacentation,Robillard.ea2002:Evolutionaryadaptationstopre-eclampsiaeclampsia}.
+\human have the largest brain in terms of relative size and this
+differs markedly from closely related great apes
+\cite{Boddy.ea2012:Comparativeanalysisofencephalization}. Deep
+penetration of the myometrium occurs in chimpanzees and gorillas, but
+this penetration may be accelerated in humans
+\cite{Carter.ea2011:Evolutionofinvasiveplacentation}.
 
 The near exclusivity of deep trophoblast invasion in humans has also
 led many to speculate on the origin of various disorders, which are
 almost exclusively symptomatic of human pregnancy. For example,
 preeclampsia is a human disease that occurs in 4\% of pregnancies in
-the United States. Preeclampsia can be attributed to the lack of
-adequate invasion of maternal tissue, and is noted by the onset of
-hypertension and proteinuria (citation). Some cases of preeclampsia
-can develop into eclampsia, a more severe condition resulting in
-seizures during pregnancy and death. Lack of invasion in preeclampsia
-may be attributed to the inefficiency of growth regulators as well as
-the inability to sufficiently suppress the maternal immune response.
-Although there are speculative cases of eclampsia in great apes
-(Baird, 1981; Stout and Lemmon, 1969; Thornton and Onwude, 1992), it
-is exceedingly rare in these species \cite{Carter.ea2011:Evolutionofinvasiveplacentation}. It
-is possible that a comparative evolutionary approach to gene
-expression can identify genes that have divergent expression patterns
-from other mammals as well as association with preeclampsia.
+the United States
+\cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current}. Preeclampsia
+can be attributed to the lack of adequate invasion of maternal tissue,
+and is noted by the onset of hypertension and proteinuria
+\cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current}. Some cases of
+preeclampsia can develop into eclampsia, a more severe condition
+resulting in seizures during pregnancy and death. Lack of invasion in
+preeclampsia may be attributed to the inefficiency of growth
+regulators as well as the inability to sufficiently suppress the
+maternal immune response. Although there are speculative cases of
+eclampsia in great apes
+\cite{Baird1981:Eclampsiainlowlandgorilla,Stout.ea1969:Glomerularcapillaryendothelialswelling,Thornton.ea1992:Convulsionsinpregnancyin},
+it is exceedingly rare in these species
+\cite{Carter.ea2011:Evolutionofinvasiveplacentation}. It is possible
+that a comparative evolutionary approach to gene expression can
+identify genes that have divergent expression patterns from other
+mammals as well as association with preeclampsia.
 
 Functional annotation clusters significantly enriched on the human
 lineage (blood vessel development, extracellular matrix, tube
 morphogenesis) seem to suggest involvement in remodeling of tissues
 and increased blood flow, both of which may correlate with the
-invasion of the trophoblast (Table 8; Supplemental Table X). In
+invasion of the trophoblast (\cref{tab:go_terms_all_species}). In
 addition, clusters such as cytokines and defense response
-(Supplemental Table X) also indicate an a significant change in
-expression of the immune response that may be involved in
+(\cref{tab:go_terms_all_species}) also indicate an a significant
+change in expression of the immune response that may be involved in
 immunosupression at the maternal-fetal boundary to further allow
 invasion of fetal tissues.
 
-Many genes that both show expression shifts on the human lineage and
-have very high expression (FPKM>200) are directly related to the
-highly invasive nature of the human placenta. For example, GPC3,
-glypican 3, is an imprinted gene and cell growth regulator, associated
-with Simpson-Golabi-Behmel fetal overgrowth syndrome, and involved in
-intrauterine growth restriction (Monk and Moore, 2004; Pilia et al.,
-1996). GPC3 has the highest expression in humans (Table 2), but is
-also expressed in other mammals to a lesser degree, especially those
-with invasive hemochorial placentas like bonobos (\ac{FPKM}= 199.924),
-spider monkeys (\ac{FPKM}= 96.24), and the mouse (\ac{FPKM}= 80.7545)
-(Supplemental Tables X-XX). ADAM12 increases the availability of
-insulin-like growth factors that lead to the promotion of cell growth
-and placental invasion (Laigaard et al., 2005). (Hou et al., 2009)
-found evidence of adaptive evolution in ADAM12 on the primate lineage,
-and like GPC3 it is expressed in the bonobo (\ac{FPKM}= 46.1553), spider
-monkey (\ac{FPKM}=30.41) and mouse (\ac{FPKM}=2.25391) as well, although to a
-lesser degree (Supplemental Tables X-XX). RHOBTB3 is imprinted and
-associated with trophoblast invasion as well (Bilban et al., 2010;
-Yuen et al., 2011). In addition, one other gene, KISS1, shows
-exceptional abundance in the human placenta (Table 2); however due to
-its absence in elephant Ensmebl gene annotations, it was not part of
-the 1:1 orthologues examined in the comparative study. Here, it is
-only expressed in the term placentas of humans (Table 2) and bonobos
-(\ac{FPKM}=17.6394; Supplemental Table X). KISS1 is thought to be involved
-in the regulation of trophoblast invasion, and shows highest
-expression in the first trimester of pregnancy (Bilban et al., 2004;
-Reynolds et al., 2009).
+% I haven't actually done this analysis, so commented out
 
-In addition, several other genes that show expression shifts on the
-human lineage also have major effects on placental function. Genes
-such as TXK and EBI3 are intimately involved in the immune system in
-the placenta. TXK is involved in natural killer cell differentiation
-(Bezman et al., 2012). EBI3 is implicated in natural killer cell
-function an maternal-fetal immunomodulation in the syncytiotrophoblast
-(Devergne et al., 2001). KYNU and KMO are interacting genes that are
-involved in tryptophan metabolism, which may be involved in
-immunosupression and the prevention of fetal rejection (Takikawa,
-2005). THSD7A is a thrombospondin, which inhibits endothelial cell
-migration and tube morphogenesis (Wang et al., 2010).
-
-Many genes that show evidence of a shift on the human lineage show
-evidence of implication in preeclampsia, including ADAM12 (Gack et
-al., 2005; Laigaard et al., 2005) MAOA (Carrasco et al., 2000;
-Bottalico et al., 2004), BCL2 (Ishihara et al., 2002), GPC3 (Gui et
-al., 2012; Ogawa, 2007), TMEM8A, CLIC3, EBI3, FLT1, BCL6, SYDE1, and
-MAN1C1 (Enquobahrie et al., 2008; Winn et al., 2009; Nishizawa, 2011).
-In addition KISS1 is also involved in preeclampsia as well (Sado et
-al., 2011; Qiao et al, 2012). Due to the association of many genes
-that show human-specific shifts as well as high expression, we
-conclude that preeclampsia is possibly a symptom of recent evolution
-of gene expression on the human lineage. Although many genes such as
-GPC3 and ADAM12 show distinctive relatively high expression in bonobo,
-this expression has intensified on the human lineage. Sequencing of
-more placentas of nonhuman primates, including other individuals of
-the genus Pan will help to further characterize this transition.
+% Many genes that both show expression shifts on the human lineage and
+% have very high expression (FPKM>200) are directly related to the
+% highly invasive nature of the human placenta. For example, GPC3,
+% glypican 3, is an imprinted gene and cell growth regulator, associated
+% with Simpson-Golabi-Behmel fetal overgrowth syndrome, and involved in
+% intrauterine growth restriction (Monk and Moore, 2004; Pilia et al.,
+% 1996). GPC3 has the highest expression in humans (Table 2), but is
+% also expressed in other mammals to a lesser degree, especially those
+% with invasive hemochorial placentas like bonobos (\ac{FPKM}= 199.924),
+% spider monkeys (\ac{FPKM}= 96.24), and the mouse (\ac{FPKM}= 80.7545)
+% (Supplemental Tables X-XX). ADAM12 increases the availability of
+% insulin-like growth factors that lead to the promotion of cell growth
+% and placental invasion (Laigaard et al., 2005). (Hou et al., 2009)
+% found evidence of adaptive evolution in ADAM12 on the primate lineage,
+% and like GPC3 it is expressed in the bonobo (\ac{FPKM}= 46.1553), spider
+% monkey (\ac{FPKM}=30.41) and mouse (\ac{FPKM}=2.25391) as well, although to a
+% lesser degree (Supplemental Tables X-XX). RHOBTB3 is imprinted and
+% associated with trophoblast invasion as well (Bilban et al., 2010;
+% Yuen et al., 2011). In addition, one other gene, KISS1, shows
+% exceptional abundance in the human placenta (Table 2); however due to
+% its absence in elephant Ensmebl gene annotations, it was not part of
+% the 1:1 orthologues examined in the comparative study. Here, it is
+% only expressed in the term placentas of humans (Table 2) and bonobos
+% (\ac{FPKM}=17.6394; Supplemental Table X). KISS1 is thought to be involved
+% in the regulation of trophoblast invasion, and shows highest
+% expression in the first trimester of pregnancy (Bilban et al., 2004;
+% Reynolds et al., 2009).
+% 
+% In addition, several other genes that show expression shifts on the
+% human lineage also have major effects on placental function. Genes
+% such as TXK and EBI3 are intimately involved in the immune system in
+% the placenta. TXK is involved in natural killer cell differentiation
+% (Bezman et al., 2012). EBI3 is implicated in natural killer cell
+% function an maternal-fetal immunomodulation in the syncytiotrophoblast
+% (Devergne et al., 2001). KYNU and KMO are interacting genes that are
+% involved in tryptophan metabolism, which may be involved in
+% immunosupression and the prevention of fetal rejection (Takikawa,
+% 2005). THSD7A is a thrombospondin, which inhibits endothelial cell
+% migration and tube morphogenesis (Wang et al., 2010).
+% 
+% Many genes that show evidence of a shift on the human lineage show
+% evidence of implication in preeclampsia, including ADAM12 (Gack et
+% al., 2005; Laigaard et al., 2005) MAOA (Carrasco et al., 2000;
+% Bottalico et al., 2004), BCL2 (Ishihara et al., 2002), GPC3 (Gui et
+% al., 2012; Ogawa, 2007), TMEM8A, CLIC3, EBI3, FLT1, BCL6, SYDE1, and
+% MAN1C1 (Enquobahrie et al., 2008; Winn et al., 2009; Nishizawa, 2011).
+% In addition KISS1 is also involved in preeclampsia as well (Sado et
+% al., 2011; Qiao et al, 2012). Due to the association of many genes
+% that show human-specific shifts as well as high expression, we
+% conclude that preeclampsia is possibly a symptom of recent evolution
+% of gene expression on the human lineage. Although many genes such as
+% GPC3 and ADAM12 show distinctive relatively high expression in bonobo,
+% this expression has intensified on the human lineage. Sequencing of
+% more placentas of nonhuman primates, including other individuals of
+% the genus Pan will help to further characterize this transition.
 
 \section{Conclusion}
     
-Here we sequenced six placentas spanning the phylogenetic tree of
-mammals. This revealed a dynamic expression pattern of expression of
-lineage-specific expansions of gene families and differential gene
-expression that agreed with the scenario of an “arms race” between
-maternal and fetal tissues that have shaped such disparate gene
-expression profiles. In addition, we highlighted the broad spectrum of
-hormone gene expression in multiple species that suggested that there
-was a lack of conservation in hormone signaling during mammalian
-pregnancy. Major differences between expression in marsupial and
-eutherian mammals at term seemed to be correlated with the differences
-between choriovitelline and chorioamniotic placenta, with the
-marsupial placenta more enriched in genes the contributed to the
-active generation of energy. We also identified that galectin
-expression, especially that of LGALS1, is a common feature of all
-mammalian placentas and was most likely present in the ancestral
-therian. Also, we identified two new expansions of genes that are
-highly expressed in the elephant placenta hat may be involved in
-trophoplast differentiation and immune system function, mirroring
-expansions in other groups such as primates, rodents, and ruminants.
-We also quantified significant lineage-specific shifts in gene
-expression, concentrating on the identification of genes that showed
-gene expression changes on the human lineage. We cautiously propose
-that many of these genes may be related to the invasive nature of the
-trophoblast in humans, although we note that in many of these genes,
-there is in some cases substantial expression in the bonobo as well.
-These genes have the potential to spur further research and may be at
-the root of obstetrical disorders such as preeclampsia. We propose
-that more placentas from diverse lineages, especially those of
-marsupials and primates, to further identify genes and expression
-levels that are specific to marsupials and eutehrians, as well as
-confirm the identity of human-specific expression shifts.
+We sequenced \Sexpr{star.logs[,length(unique(species))]} placentas
+spanning the phylogenetic tree of mammals. This revealed a dynamic
+expression pattern of expression of lineage-specific expansions of
+gene families and differential gene expression that agreed with the
+scenario of an “arms race” between maternal and fetal tissues that
+have shaped such disparate gene expression profiles. In addition, we
+highlighted the broad spectrum of hormone gene expression in multiple
+species that suggested that there is a lack of conservation in hormone
+signaling during mammalian pregnancy. Major differences between
+expression in marsupial and eutherian mammals at term seemed to be
+correlated with the differences between choriovitelline and
+chorioamniotic placenta, with the marsupial placenta more enriched in
+genes the contributed to the active generation of energy. We also
+identified that galectin expression, especially that of
+\textit{LGALS1}, is a common feature of all mammalian placentas and
+was most likely present in the ancestral therian. Also, we identified
+two new expansions of genes that are highly expressed in the \elephant
+placenta hat may be involved in trophoplast differentiation and immune
+system function, mirroring expansions in other groups such as
+primates, rodents, and ruminants. We also quantified significant
+lineage-specific shifts in gene expression, concentrating on the
+identification of genes that showed gene expression changes on the
+human lineage. We cautiously propose that many of these genes may be
+related to the invasive nature of the trophoblast in \human, although
+we note that in many of these genes, there is in some cases
+substantial expression in the \bonobo as well. These genes have the
+potential to spur further research and may be at the root of
+obstetrical disorders such as pre-eclampsia. We propose that more
+placentas from diverse lineages, especially those of marsupials and
+primates, to further identify genes and expression levels that are
+specific to marsupials and eutherians, as well as confirm the identity
+of human-specific expression shifts.
 
  
 \printbibliography

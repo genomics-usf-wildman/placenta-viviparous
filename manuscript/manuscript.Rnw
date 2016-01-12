@@ -374,7 +374,7 @@ preeclampsia.
     \textit{Ateles fusciceps}     & 224 & 1 & \citet{Ernest2003:lifehistorycharacteristicsofplacental}\\
     \textit{Bos taurus}           & 278 & 1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
     \textit{Canis familiaris}     & 61 & 4 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
-    \textit{Dasypus novemcinctus} & 135 & 4 & \DLA{Cite Amazing Armadillo: geography book}\\
+    \textit{Dasypus novemcinctus} & 150 & 4 & \citet{Smith1984:amazingarmadillo} \\
     \textit{Equus caballus}       & 336 & 1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation}\\
     \textit{Loxodonta africana}   & 644 & 1 & \citet{Ernest2003:lifehistorycharacteristicsofplacental}\\
     \textit{Homo sapiens}         & 270 & 1.1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
@@ -1164,22 +1164,26 @@ annotation for each assembled contig. In the term placenta of
 (\cref{tab:top50_spider_monkey_placenta}) include a possible regulator
 of androgen receptor signaling
 \cite{Sampson.ea2012:PAGE4positivityisassociated}, \textit{PAGE4} %
-(\Sexpr{gene.expression("ateles fusciceps","PAGE4")}), %
+(\Sexpr{gene.expression("ateles_fusciceps","PAGE4")}), %
 the pregnancy specific glycoprotein \textit{PSG8}
-(\Sexpr{gene.expression("ateles fusciceps","PSG8")}), %
+(\Sexpr{gene.expression("ateles_fusciceps","PSG8")}), %
 a member of the chorionic somatotropins, \textit{GH1} %
-(\Sexpr{gene.expression("ateles fusciceps","GH1")}), %
+(\Sexpr{gene.expression("ateles_fusciceps","GH1")}), %
 a few HLA genes (\textit{HLA-A}, \textit{HLA-F},
 \cref{tab:top50_spider_monkey_placenta}), and multiple components of
-the annexin complex %
-(\Sexpr{gene.expression("ateles fusciceps","ANXA2",complete=TRUE)}, %
-\Sexpr{gene.expression("ateles fusciceps","S100P",complete=TRUE)}, %
-\Sexpr{gene.expression("ateles fusciceps","S100A11",complete=TRUE)}) %
+the annexin complex
+(\Sexpr{gene.expression("ateles_fusciceps","ANXA2",complete=TRUE)}, %
+\Sexpr{gene.expression("ateles_fusciceps","S100P",complete=TRUE)}, %
+\Sexpr{gene.expression("ateles_fusciceps","S100A11",complete=TRUE)}) %
 which may play a role in angiogenesis, and certainly regulate
 cell-cell interaction in the developing placenta
-\cite{Liu.ea2015:AnnexinA2complexeswith}. All genes with expression
+\cite{Liu.ea2015:AnnexinA2complexeswith}.
+\Sexpr{gene.expression("ateles_fusciceps","AL365202.1",complete=TRUE)}
+is also highly expressed, has no known function, and is duplicated
+multiple times in \textit{Macaca mulatta}. All genes with expression
 greater than 50 \ac{FPKM} are listed in Supplementary
-\cref{tab:all_ateles_fuciceps_placenta}.
+\cref{tab:all_ateles_fusciceps_placenta}.
+
 
 \subsection{Rodentia Placenta Transcriptomes}
 

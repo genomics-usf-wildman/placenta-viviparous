@@ -223,6 +223,11 @@ load("../go_annotation/go_tissue_analysis")
 
 @ 
 
+<<plot.defaults,echo=FALSE,results="hide">>=
+grad.def <- list(low = "white", high = "green", space = "Lab", na.value = "gray50")
+
+@ 
+
 \section{Abstract}
 
 The placenta is arguably the most anatomically variable organ in
@@ -1954,7 +1959,10 @@ print(ggplot(core.placenta.transcriptome.long[!grepl("(min|median|max)_expressio
       + geom_tile(aes(fill=log10(FPKM)))
       + scale_x_discrete(expand=c(0,0))
       + scale_y_discrete(expand=c(0,0))
-      + scale_fill_gradient(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = "grey50",
+      + scale_fill_gradient(low = grad.def[["low"]],
+                            high = grad.def[["high"]],
+                            space = grad.def[["space"]],
+                            na.value = grad.def[["na.value"]],
                             limits=c(0,4),
                             guide=guide_colorbar(title=expression(log[10](FPKM)))
                             )
@@ -2310,7 +2318,7 @@ gene.expression.nozero <- function(genes) {
 
 ### hormone genes
 hormone.genes <- c("CGA","CGB","CGB1","CGB2","CGB5","CGB8","CSH1","CSH2","CSHL1","CYP19A1",
-                   "GH2","GHRH","HSD3B1","NPPB","NPPC","PRL","RLN1")
+                   "GH2","GHRH","HSD3B1","HSD3B2","HSD17B2","HSD17B1","NPPB","NPPC","PRL","RLN1")
 hormone.expression.nozero <-
     gene.expression.nozero(hormone.genes)
 
@@ -2359,7 +2367,10 @@ combined.long$species <-
 common.plot.options <- 
     list(geom_tile(aes(fill = fpkm), colour = "white"),
 ##         scale_fill_gradientn(colours = colorends, values = rescale(gradientends)),
-         scale_fill_gradient(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = "grey50",
+         scale_fill_gradient(low = grad.def[["low"]],
+                             high = grad.def[["high"]],
+                             space = grad.def[["space"]],
+                             na.value = grad.def[["na.value"]],
                              guide=guide_colorbar(title=expression(log[10](FPKM)))),
          scale_x_discrete("", expand = c(0, 0)),
          scale_y_discrete("", expand = c(0, 0)),
@@ -2367,7 +2378,7 @@ common.plot.options <-
          theme(legend.position = "top",
                axis.ticks = element_blank(), 
                axis.text.x = element_text(angle = 300, hjust = 0, vjust=1,face="italic")),
-         facet_wrap(~type,scale="free_y",ncol=1)
+         facet_grid(type~.,scale="free_y",space="free_y")
          )
 print(ggplot(combined.long, aes(y=gene, x=species))
       + common.plot.options

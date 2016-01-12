@@ -2562,22 +2562,31 @@ the beta subunits with which its product dimerizes (\cref{fig:hormone_genes,fig:
 \textit{CGA} is one of several genes noted by
 \citet{Uddin.ea2008:Distinctgenomicsignaturesof} to have undergone
 adaptive evolution of the \human{}-\textit{P. troglodytes} stem lineage.
-including increasing maternal blood flow, widening the pubic bone and
-relaxing uterine musculature in preparation for labor. In both dogs
-and elephants, there is high expression of relaxin in the term
-placenta, with little evidence in other species examined here (Table
-8). Relaxin is known to be produced in the placenta of the pregnant
-dog and is used in the diagnosis of canine pregnancy
-\cite{Steinetz.ea1989:Serumrelaxinandprogesterone,Tsutsui.ea1991:Determinationofsourceof};
-however, the source of relaxin produced by pregnant African elephants
-remains unclear \cite{Meyer.ea2004:Speciesandfetalgender}. The high
-rise in relaxin in elephants has been suggested to be a major signal
-for the initiation of labor
-\cite{Niemuller.ea1998:Plasmaconcentrationsofimmunoreactive} Here we
-show that the placenta of elephants show high expression of relaxin
-and is likely the predominant source of relaxin at term \DLA{(Table 8)}.
 
-Two genes, NPPB and NPPC, code for peptide hormones that are important
+\subsubsection{Relaxin}
+
+Relaxin (\textit{RLN}) is a hormone that has multiple effects during
+pregnancy including increasing maternal blood flow, widening the pubic
+bone and relaxing uterine musculature in preparation for labor. In
+\dog, \elephant, \mouse, \carmeli, and \horse there is high expression
+of relaxin in the term placenta, with little evidence in other species
+examined here (\cref{fig:rln2_evolution_tree}). \textit{RLN} is known
+to be produced in the placenta of the pregnant \dog and is used in the
+diagnosis of canine pregnancy
+\cite{Steinetz.ea1989:Serumrelaxinandprogesterone,Tsutsui.ea1991:Determinationofsourceof},
+the luteal ovary and placenta of \pig
+\cite{Hisaw.ea1948:Relaxininovaryof}, and the placenta of \horse
+\cite{Klonisch.ea1997:Placentallocalizationofrelaxin}. However, the
+source of relaxin produced by pregnant \elephant remains unclear
+\cite{Meyer.ea2004:Speciesandfetalgender}. The high rise in relaxin in
+\elephant has been suggested to be a major signal for the initiation
+of labor \cite{Niemuller.ea1998:Plasmaconcentrationsofimmunoreactive}.
+Here we show that the placenta of elephants show high expression of
+relaxin and is likely a major source of \textit{RLN} at term. In
+contrast to the results of
+\cite{Evans.ea1993:mouserelaxingenenucleotide}, we also see expression
+of \textit{RLN} in the placenta of \mouse and \carmeli.
+
 in the inducement of vasodilation, and may be important in increasing
 maternal blood flow to the fetus (Cameron et al., 1996). There is some
 indication that these proteins are present in the decidua of mice

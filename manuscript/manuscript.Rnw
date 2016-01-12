@@ -2588,16 +2588,49 @@ contrast to the results of
 \cite{Evans.ea1993:mouserelaxingenenucleotide}, we also see expression
 of \textit{RLN} in the placenta of \mouse and \carmeli.
 
-in the inducement of vasodilation, and may be important in increasing
-maternal blood flow to the fetus (Cameron et al., 1996). There is some
-indication that these proteins are present in the decidua of mice
-(Cameron et al., 1996), but we find very little expression in the
-fetal portion of the mouse placenta (Table 8). Here we find high
-expression of at least one of these genes in dog, cow, and elephant.
-The lack of expression in the hemochorial placentas of
-Euarchontoglires may mean that high expression of these genes are
-essential in increasing maternal blood flow in epitheliochorial and
-endotheliochorial placentas
+\subsubsection{\textit{NPPB} and \textit{NPPC}}
+
+\begin{figure}
+<<nppb.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="NPPB" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+@ 
+\caption{\genetreeexplanation{\textit{NPPB}}}
+\label{fig:nppb_evolution_tree}
+\end{figure}
+
+\begin{figure}
+<<nppc.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="NPPC" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+@ 
+\caption{\genetreeexplanation{\textit{NPPC}}}
+\label{fig:nppc_evolution_tree}
+\end{figure}
+
+Two genes, \textit{NPPB} and \textit{NPPC}, code for peptide hormones
+that are important in the inducement of vasodilation, and may be
+important in increasing maternal blood flow to the fetus
+\cite{Cameron.ea1996:sitesofgeneexpression}. There is some indication
+that these proteins are present in the decidua of mice
+\cite{Cameron.ea1996:sitesofgeneexpression}, but we find very little
+expression in the fetal portion of the mouse placenta
+(\cref{fig:hormone_genes,fig:nppc_evolution_tree,fig:nppb_evolution_tree}).
+However, we do find high expression of at least one of these genes in
+\dog, \cow, and \elephant. The lack of expression in the hemochorial
+placentas of Euarchontoglires may mean that high expression of these
+genes are essential in increasing maternal blood flow in
+epitheliochorial and endotheliochorial placentas.
 
 \subsection{The Evolution of Placental Expression of Galectins}
 

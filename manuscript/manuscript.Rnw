@@ -2290,22 +2290,6 @@ in many species. Here we quantified the extreme disparity in genes
 with hormone products or enzymatic products that directly produce
 hormones in multiple mammalian species (\cref{fig:hormone_genes}).
 
-In both ruminants and primates, the placenta is responsible for the
-production of estrogen and progesterone. High relative expression of
-\textit{CYP19A1} (\cref{fig:estrogen_evolution_tree}), the enzyme that
-synthesizes estrogen from androstenedione is seen in \human, \bonobo,
-\cow, and \horse, though not in \sheep, \smonkey. %
-%
-\textit{HSD3B1}, one of two enzymes that synthesizes progesterone from
-pregnalone
-(\cite{Simard.ea2005:Molecularbiologyof3beta-hydroxysteroid},
-\cref{fig:progesterone_evolution_tree}) is also highly expressed in
-\human, \bonobo, \cow, \horse, and \dog, but is not highly expressed
-in \smonkey. The diversity of \textit{CYP19A1} and \textit{HSD3B1}
-expression levels in in primates and ungulates seen here points to the
-need for more complete sampling of placentas at different timepoints
-and in different clades.
-
 \begin{figure}
 <<hormone.genes.plot,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
 
@@ -2392,6 +2376,25 @@ print(ggplot(combined.long, aes(y=gene, x=species))
 \label{fig:hormone_genes}
 \end{figure}
 
+\subsubsection{Estrogen and Progesterone}
+
+In both ruminants and primates, the placenta is responsible for the
+production of estrogen and progesterone. High relative expression of
+\textit{CYP19A1} (\cref{fig:estrogen_evolution_tree}), the enzyme that
+synthesizes estrogen from androstenedione is seen in \human, \bonobo,
+\cow, and \horse, though not in \sheep, \smonkey. %
+%
+\textit{HSD3B1}, one of two enzymes that synthesizes progesterone from
+pregnalone
+(\cite{Simard.ea2005:Molecularbiologyof3beta-hydroxysteroid},
+\cref{fig:progesterone_evolution_tree}) is also highly expressed in
+\human, \bonobo, \cow, \horse, and \dog, but is not highly expressed
+in \smonkey. The diversity of \textit{CYP19A1} and \textit{HSD3B1}
+expression levels in in primates and ungulates seen here points to the
+need for more complete sampling of placentas at different timepoints
+and in different clades.
+
+
 \begin{figure}
 <<estrogen.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
 
@@ -2437,6 +2440,34 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 \end{figure}
 
 
+\subsubsection{Prolactin}
+
+The elephant is strikingly the only mammal analyzed that shows high
+expression of the primarily pituitary hormone prolactin (\textit{PRL}) in the
+placenta. All afrotherians yet analyzed contain only one prolactin
+gene, and prolactin has undergone adaptive evolution on the elephant
+lineage \cite{Wallis2009:ProlactininAfrotheriacharacterization}.
+\citet{Yamamoto.ea2011:PlacentationinAfricanelephant} noted the
+presence of a prolactin in the trophoblast of the elephant placenta
+using immunohistological staining and human derived antibodies. A
+previous analysis of the elephant placenta also detected the
+expression of prolactin
+\cite{Hou.ea2012:Elephanttranscriptomeprovidesinsights}. Here we
+confirm that the sole prolactin in the elephant is not only expressed
+but highly expressed in the placenta, and likely functions both in the
+maintenance of the corpus luteum and as a placental lactogen
+\cite{Yamamoto.ea2011:PlacentationinAfricanelephant}. \textit{PRL} is
+not expressed in the opossum, even though there is evidence that it is
+expressed in the placenta of another marsupial, the tammar wallaby
+\cite{Menzies.ea2011:Placentalexpressionofpituitary}. This suggests
+that placental prolactin expression in marsupials may be as diverse as
+in eutherian mammals. Although, \textit{PRL} is not expressed to any
+great degree in the placenta other mammals, we see very high
+expression of genes which resulted from duplications of \textit{PRL}
+in the \mouse, \galili, \carmeli, and \cow
+(\cref{fig:prolactin_evolution_tree}).
+
+
 \begin{figure}
 <<prolactin.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
 
@@ -2466,60 +2497,7 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 \label{fig:prolactin_receptor_evolution_tree}
 \end{figure}
 
-\begin{figure}
-<<tmsb1.receptor.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="TMSB10" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
-@ 
-\caption{\genetreeexplanation{\textit{TMSB1}}}
-\label{fig:tmsb1_evolution_tree}
-\end{figure}
-
-
-\begin{figure}
-<<sslp1.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_id=="ENSCAFG00000010638" & species=="canis familiaris",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
-@ 
-\caption{\genetreeexplanation{\textit{SSLP1}}}
-\label{fig:sslp1_evolution_tree}
-\end{figure}
-
-
-The elephant is strikingly the only mammal analyzed that shows high
-expression of the primarily pituitary hormone prolactin (PRL) in the
-placenta. All afrotherians yet analyzed contain only one prolactin
-gene, and prolactin has undergone adaptive evolution on the elephant
-lineage \cite{Wallis2009:ProlactininAfrotheriacharacterization}.
-\citet{Yamamoto.ea2011:PlacentationinAfricanelephant} noted the
-presence of a prolactin in the trophoblast of the elephant placenta
-using immunohistological staining and human derived antibodies. A
-previous analysis of the elephant placenta also detected the
-expression of prolactin
-\cite{Hou.ea2012:Elephanttranscriptomeprovidesinsights}. Here we
-confirm that the sole prolactin in the elephant is not only expressed
-but highly expressed in the placenta, and likely functions both in the
-maintenance of the corpus luteum and as a placental lactogen
-\cite{Yamamoto.ea2011:PlacentationinAfricanelephant}. \textit{PRL} is
-not expressed in the opossum, even though there is evidence that it is
-expressed in the placenta of another marsupial, the tammar wallaby
-\cite{Menzies.ea2011:Placentalexpressionofpituitary}. This suggests
-that placental prolactin expression in marsupials may be as diverse as
-in eutherian mammals. Although, \textit{PRL} is not expressed to any
-great degree in the placenta other mammals, we see very high
-expression of genes which resulted from duplications of \textit{PRL}
-in the \mouse, \galili, \carmeli, and \cow
-(\cref{fig:prolactin_evolution_tree}).
+\subsubsection{\ac{GH} family}
 
 The \ac{GH} family has expanded in anthropoid primates, resulting in
 approximately 5 genes in \human (\textit{GH1}, \textit{GH2},
@@ -2732,6 +2710,20 @@ lactation (Sharp et al., 2007), and here in abundance in the opossum
 placenta.
 
 \subsection{Novel Gene Expansions in the Elephant Placenta}
+
+\begin{figure}
+<<sslp1.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_id=="ENSCAFG00000010638" & species=="canis familiaris",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+@ 
+\caption{\genetreeexplanation{\textit{SSLP1}}}
+\label{fig:sslp1_evolution_tree}
+\end{figure}
 
 We found evidence of high expression in two novel expansions of genes
 in the elephant genome. One family includes 11 genes that are related

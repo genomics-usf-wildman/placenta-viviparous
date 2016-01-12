@@ -2658,99 +2658,110 @@ gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
 @ 
-\caption{\genetreeexplanation{galectins}}
+\caption{\genetreeexplanation{\textit{LGALS13}}}
 \label{fig:galectins_lgals13_evolution_tree}
 \end{figure}
-
+%$
 Galectins are recognized as major regulators of pregnancy in both
-fetal and maternal tissues (Than et al., 2012). Indeed, the evolution
-of new lineage-specific galectins has occurred in both primates and
-ruminants, with the genes LGALS13, LGALS14, and LGALS16 recognized as
-being placenta-specific in humans and regulating immune responses by
-inducing apoptosis of maternal T-cells (Than et al., 2009). Indeed,
-LGALS14 has the highest expression of any galectin in the human
-placenta (Table 8), and other primate galectins such as LGALS13 and
-LGALS16 are also expressed in human placenta. However, in the closely
-related bonobo, LGALS14 is not found, and LGALS1 is the most abundant
-galectin. LGALS1 shows generally high expression in all placentas
-analyzed. LGALS1 is also involved in mediating maternal-fetal immune
-tolerance, and is expressed in both maternal and fetal tissue in
-primates (Than et al., 2008). LGALS1 placental expression was thought
-to be confined to eutherian mammals, as there is evidence of adaptive
-evolution at this node, as well as the appearance of estrogen response
-elements in eutherian cis-regulatory regions (Than et al., 2008). It
-was unclear as to whether galectins such as LGALS1 were important in
-the regulation of pregnancy in marsupials, as well as eutherians. Here
-we show substantial expression of galectins in the opossum, especially
-LGALS1 (Table 8). In addition, LGALS2, LGALS3, and LGALS8 are also
+fetal and maternal tissues
+\cite{Than.ea2012:Galectinsguardiansofeutherian}. Indeed, the
+evolution of new lineage-specific galectins has occurred in both
+primates and ruminants, with the genes \textit{LGALS13},
+\textit{LGALS14}, and \textit{LGALS16} recognized as being
+placenta-specific in \human and regulating immune responses by
+inducing apoptosis of maternal T-cells
+\cite{Than.ea2009:primatesubfamilyofgalectins}. Indeed,
+\textit{LGALS14} has the highest expression of any galectin in the
+\human and \smonkey placenta
+(\cref{fig:hormone_genes,fig:galectins_lgals13_evolution_tree}), and
+other primate galectins such as \textit{LGALS13} and \textit{LGALS16}
+are also expressed in \human and \smonkey placenta. However, in the
+closely related \bonobo, \textit{LGALS14} is not found, and
+\textit{LGALS1} is the most abundant galectin. \textit{LGALS1} shows
+generally high expression in all placentas analyzed. \textit{LGALS1}
+is also involved in mediating maternal-fetal immune tolerance, and is
+expressed in both maternal and fetal tissue in primates
+\cite{Than.ea2008:Emergenceofhormonaland}. \textit{LGALS1} placental
+expression was thought to be confined to eutherian mammals, as there
+is evidence of adaptive evolution at this node, as well as the
+appearance of estrogen response elements in eutherian cis-regulatory
+regions \cite{Than.ea2008:Emergenceofhormonaland}. It was unclear as
+to whether galectins such as \textit{LGALS1} were important in the
+regulation of pregnancy in marsupials, as well as eutherians. Here we
+show substantial expression of galectins in the opossum, especially
+\textit{LGALS1} (Table 8). In addition, \textit{LGALS2} is also
 expressed. The presence of galectins at the maternal-fetal interface
-in the opossum implies that it was also present in the ancestral
-placenta of therian mammals. Indeed, adaptive evolution of LGALS1 on
+in \opossum implies that it was also present in the ancestral placenta
+of therian mammals. Indeed, adaptive evolution of \textit{LGALS1} on
 the eutherian stem is likely due to the increased invasive nature of
 eutehrian placentation rather than the origination of maternal-fetal
-tolerance. Although the function of LGALS1 in the marsupial placenta
-needs to be confirmed, it is likely that the mediation of
+tolerance. Although the function of \textit{LGALS1} in the marsupial
+placenta needs to be confirmed, it is likely that the mediation of
 maternal-fetal immune tolerance by galectins is an ancient feature of
 mammalian viviparity.
 
 \subsection{The Opossum Placenta and the Evolution of Viviparity}
 
-The placenta of the opossum Monodelphis domestica is distinctly
-different from that of the term placenta of eutherian mammals in that
-it is derived from both the chorion and yolk sac. Indeed other
-differences between the placentas of marsupials and eutherians include
-lack of invasive extravillous trophoblasts in marsupials, the
-retention of a permeable shell coat for 2/3 of marsupial gestation,
-and the greater degree of imprinting in placenta-expressed genes in
-eutherians (Renfree, 2010; Renfree et al., 2013). In addition, the
-placenta of Monodelphis is also distinct from other marsupials, in
-that it is considered one of the least specialized, and thought be
-closer to the original marsupial condition (Renfree, 2010). In
-Monodelphis, the duration of direct connection between maternal and
-fetal tissues is as short as two days in a gestational period of 13-15
-days. During this period, the placenta is directly engaged in the
-exchange of urea with maternal tissues, owing to the lack of a
-vesicular allantois (Freyer et al., 2007). This differs drastically
+The placenta of \opossum is distinctly different from that of the term
+placenta of eutherian mammals in that it is derived from both the
+chorion and yolk sac. Other differences between the placentas of
+marsupials and eutherians include lack of invasive extravillous
+trophoblasts in marsupials, the retention of a permeable shell coat
+for 2/3 of marsupial gestation, and the greater degree of imprinting
+in placenta-expressed genes in eutherians
+\cite{Renfree2010:ReviewMarsupialsplacentalmammals,Renfree.ea2013:originandevolutionof}.
+In addition, the placenta of \opossum is also distinct from other
+marsupials, in that it is considered one of the least specialized, and
+thought be closer to the original marsupial condition
+\cite{Renfree2010:ReviewMarsupialsplacentalmammals}. In \opossum, the
+duration of direct connection between maternal and fetal tissues is as
+short as two days in a gestational period of 13-15 days
+\cite{Harder.ea1993:Gestationandplacentationin}. During this period,
+the placenta is directly engaged in the exchange of urea with maternal
+tissues, owing to the lack of a vesicular allantois
+\cite{Freyer.ea2007:Placentalfunctionintwo}. This differs drastically
 with the situation in another well-studied marsupial, the tammar
-wallaby (Freyer et al., 2007). Therefore, we must interpret
-differences between the opossum and eutherian placentas with caution,
-as highly expressed genes and functional annotation clusters may
-represent didelphid or Monodelphis specific adaptations.
+wallaby \cite{Freyer.ea2007:Placentalfunctionintwo}. Therefore, we
+must interpret differences between the opossum and eutherian placentas
+with caution, as highly expressed genes and functional annotation
+clusters may represent didelphid or \opossum specific adaptations.
 
-Genes that show a significant shift on the opossum lineage include
-functional annotation clusters that correspond to active generation of
-energy, transport, and lipid breakdown via the peroxisome (Table 10;
-Supplemental Table X). The choriovitelline placenta of both didelphids
-and the tammar wallaby are known to be involved in glycolysis and
-protein synethsis (Freyer et al., 2003). This implies that the
-choriovitelline placenta in marsupials is an active site of metabolism
-and molecular synthesis, as well as the transport of nutrients from
-the maternal tissues. This is a distinct difference that is not seen
-in significant shifts on other lineages, and may be due to the
-formation of the placenta in the opossum from the yolk sac. In
-addition, the urea cycle is a highly enriched functional annotation
-cluster which directly correlates with the high levels of urea in the
-Monodelphis placenta (Freyer et al., 2007). This is potentially a
-Monodelphis-specific characteristic as discussed above.
+% Genes that show a significant shift on the \opossum lineage include
+% functional annotation clusters that correspond to active generation of
+% energy, transport, and lipid breakdown via the peroxisome (Table 10;
+% Supplemental Table X). The choriovitelline placenta of both didelphids
+% and the tammar wallaby are known to be involved in glycolysis and
+% protein synethsis (Freyer et al., 2003). This implies that the
+% choriovitelline placenta in marsupials is an active site of metabolism
+% and molecular synthesis, as well as the transport of nutrients from
+% the maternal tissues. This is a distinct difference that is not seen
+% in significant shifts on other lineages, and may be due to the
+% formation of the placenta in the opossum from the yolk sac. In
+% addition, the urea cycle is a highly enriched functional annotation
+% cluster which directly correlates with the high levels of urea in the
+% Monodelphis placenta (Freyer et al., 2007). This is potentially a
+% Monodelphis-specific characteristic as discussed above.
 
 The opossum placenta shows expression of genes that either do not
 exist in eutherians or are not found in the term eutherian placenta
-(Table X). The existence of embryonic forms of hemoglobin in fetal
-tissues at term, as evidenced by the expression of HBE, HBZ, and HBO
-is a feature of marsupials that is generally due to their very short
-gestation periods. Embryonic hemoglobins in marsupials have a lower
-affinity for oxygen and allow for a lower rate of oxygen uptake from
-maternal tissues (Holland and Gooley, 1997). One novel uncharacterized
-gene that shows high expression (XM\_001364916.1) is not found in
-eutherians; Ensembl gene trees reveal that homologs of this gene exist
-in other amniotes such as birds and turtles, but are not present in
-eutherian mammals. The homolog of this gene in chicken is found to
-expressed in reproductive tract (Froman et al., 2006), but its
-function is unknown. WFDC2 is a member of the whey acidic protein
-(WAP) family and involved in innate immunity. It is expressed in the
-mammary gland of the tammar wallaby during pregnancy and early
-lactation (Sharp et al., 2007), and here in abundance in the opossum
-placenta.
+(\cref{tab:top50_opossum_placenta}). The existence of embryonic forms
+of hemoglobin in fetal tissues at term, as evidenced by the expression
+of \textit{HBE} and \textit{HBZ} is a feature of marsupials that is
+generally due to their very short gestation periods. Embryonic
+hemoglobins in marsupials have a lower affinity for oxygen and allow
+for a lower rate of oxygen uptake from maternal tissues
+\cite{Holland.ea1997:Characterizationofembryonicglobin}. One novel
+uncharacterized gene that shows high expression (LOC10001195) is not
+found in eutherians; Ensembl gene trees reveal that homologs of this
+gene exist in other amniotes such as birds and turtles, but are not
+present in eutherian mammals. The homolog of this gene in chicken is
+found to expressed in reproductive tract
+\cite{Froman.ea2006:expressedsequencetaganalysis}, but its function is
+unknown. \textit{WFDC2} is a member of the whey acidic protein (WAP)
+family and involved in innate immunity. It is expressed in the mammary
+gland of the tammar wallaby during pregnancy and early lactation
+\cite{Sharp.ea2007:Molecularevolutionofmonotreme}, and here in
+relative abundance in the opossum placenta.
 
 \subsection{Novel Gene Expansions in the Elephant Placenta}
 

@@ -1852,14 +1852,14 @@ print(xtable(top.opossum.genes),
       sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
 setkey(top.opossum.genes,"Gene symbol")
 @ 
-\caption{\tableexplanation{\opossum}{tab:all_monodelphis_domestica}}
+\caption{\tableexplanation{\opossum}{tab:all_monodelphis_domestica_placenta}}
 \label{tab:top50_opossum_placenta}
 \end{table}
 
 The top 50 expressed genes as measured by \ac{FPKM} in the term
 placenta of the \opossum are shown in
 \cref{tab:top50_opossum_placenta} with a list of all genes in
-Supplemental \cref{tab:all_monodelphis_domestica}. The gene with the
+Supplemental \cref{tab:all_monodelphis_domestica_placenta}. The gene with the
 second highest expression is superoxide dismutase 3, extracellular
 (\Sexpr{gene.expression("monodelphis_domestica","SOD3",complete=TRUE)}),
 which functions as an antioxidant. The gene with the second highest
@@ -2076,12 +2076,12 @@ transcriptome, including \textit{ANXA2}, \textit{ANXA1},
 \textit{S100A11}, \textit{S100A10}. The modulation of  \DLA{It does more stuff; read
   the huthcinson2011 review and fill this in}
 %
-Another annexin, \textit{ANXA2} 
+% Another annexin, \textit{ANXA2} 
 %
 \textit{TIMP3}, which may be down-regulated in pre-eclampsia
 \cite{Ma.ea2014:Down-regulationofTIMP3leads} (though another study
 \cite{Xiang.ea2013:PromoterhypomethylationofTIMP3} claims
-up-regulation)
+up-regulation) does things
 
 % SPINT2 -- Serine Peptidase inhibitor
 
@@ -2724,7 +2724,7 @@ generally due to their very short gestation periods. Embryonic
 hemoglobins in marsupials have a lower affinity for oxygen and allow
 for a lower rate of oxygen uptake from maternal tissues
 \cite{Holland.ea1997:Characterizationofembryonicglobin}. One novel
-uncharacterized gene that shows high expression (LOC10001195) is not
+uncharacterized gene that shows high expression (\textit{LOC10001195}) is not
 found in eutherians; Ensembl gene trees reveal that homologs of this
 gene exist in other amniotes such as birds and turtles, but are not
 present in eutherian mammals. The homolog of this gene in chicken is

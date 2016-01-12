@@ -229,60 +229,60 @@ load("../go_annotation/go_tissue_analysis")
 
 \section{Transcriptome statistics}
 
-\begin{figure}
-<<transcriptome.mapping.figure,fig.width=8,fig.height=8,echo=FALSE>>=
-star.logs.unmapped <- 
-    star.logs[grepl("%",field) & 
-                  grepl("unmapped",field) & 
-                      !grepl("too many mismatches",field),]
-star.logs.unmapped <- 
-    star.logs.unmapped[,field:=capfirst(gsub("\\% of reads unmapped: ","",field))]
-pushViewport(viewport(layout=grid.layout(ncol=1,nrow=2,heights=c(2,1))))
-print(ggplot(star.logs.unmapped,
-             aes(x=capfirst(species),y=as.numeric(gsub("%","",value))))
-      + geom_boxplot()
-      + facet_grid(field~.,scales="free")
-      + ylab("Percent of Reads")
-      + xlab(NULL)
-      + theme_bw()
-      + theme(legend.position="top",
-              plot.margin=unit(c(0,0,0,1.1),"strwidth",data=list("","","","e8")),
-              axis.title.x=element_blank(),
-              axis.text.x = element_blank()),#element_text(angle = 30, hjust = 1, vjust=1,face="italic")),
-      vp=viewport(layout.pos.col=1,layout.pos.row=1)
-      )
-pushViewport(viewport(layout.pos.col=1,layout.pos.row=1))
-grid.text("A",
-          y=unit(1,"npc")-unit(0.1,"cm"),
-          x=unit(0,"npc")+unit(0.1,"cm"),
-          gp=gpar(fontsize=24),
-          just=c("left","top"))
-popViewport()          
-print(ggplot(star.logs[grepl("input reads$",field),],
-             aes(x=capfirst(species),y=as.numeric(value)))
-      + geom_boxplot()
-      + scale_y_log10()
-      + ylab("Reads")
-      + xlab("Species")
-      + theme_bw()
-      + theme(legend.position="top",
-              plot.margin=unit(c(0,1.6,0,0),"strheight",data=list("","TO","","")),
-              axis.text.x = element_text(angle = 30, hjust = 1, vjust=1,face="italic")),
-      vp=viewport(layout.pos.col=1,layout.pos.row=2))
-pushViewport(viewport(layout.pos.col=1,layout.pos.row=2))
-grid.text("B",
-          y=unit(1,"npc")-unit(0.1,"cm"),
-          x=unit(0,"npc")+unit(0.1,"cm"),
-          gp=gpar(fontsize=24),
-          just=c("left","top"))
-popViewport(2)
-@ 
-\caption{RNAseq read and alignment statistics for all species. A)
-  Boxplot of percentages of unmapped reads in each species; 0\% of
-  reads in all species were unmapped because of mismatches. B) Boxplot
-  of number of RNAseq reads in each species.}
-\label{fig:transcriptome_statistics}
-\end{figure}
+% \begin{figure}
+% <<transcriptome.mapping.figure,fig.width=8,fig.height=8,echo=FALSE>>=
+% star.logs.unmapped <- 
+%     star.logs[grepl("%",field) & 
+%                   grepl("unmapped",field) & 
+%                       !grepl("too many mismatches",field),]
+% star.logs.unmapped <- 
+%     star.logs.unmapped[,field:=capfirst(gsub("\\% of reads unmapped: ","",field))]
+% pushViewport(viewport(layout=grid.layout(ncol=1,nrow=2,heights=c(2,1))))
+% print(ggplot(star.logs.unmapped,
+%              aes(x=capfirst(species),y=as.numeric(gsub("%","",value))))
+%       + geom_boxplot()
+%       + facet_grid(field~.,scales="free")
+%       + ylab("Percent of Reads")
+%       + xlab(NULL)
+%       + theme_bw()
+%       + theme(legend.position="top",
+%               plot.margin=unit(c(0,0,0,1.1),"strwidth",data=list("","","","e8")),
+%               axis.title.x=element_blank(),
+%               axis.text.x = element_blank()),#element_text(angle = 30, hjust = 1, vjust=1,face="italic")),
+%       vp=viewport(layout.pos.col=1,layout.pos.row=1)
+%       )
+% pushViewport(viewport(layout.pos.col=1,layout.pos.row=1))
+% grid.text("A",
+%           y=unit(1,"npc")-unit(0.1,"cm"),
+%           x=unit(0,"npc")+unit(0.1,"cm"),
+%           gp=gpar(fontsize=24),
+%           just=c("left","top"))
+% popViewport()          
+% print(ggplot(star.logs[grepl("input reads$",field),],
+%              aes(x=capfirst(species),y=as.numeric(value)))
+%       + geom_boxplot()
+%       + scale_y_log10()
+%       + ylab("Reads")
+%       + xlab("Species")
+%       + theme_bw()
+%       + theme(legend.position="top",
+%               plot.margin=unit(c(0,1.6,0,0),"strheight",data=list("","TO","","")),
+%               axis.text.x = element_text(angle = 30, hjust = 1, vjust=1,face="italic")),
+%       vp=viewport(layout.pos.col=1,layout.pos.row=2))
+% pushViewport(viewport(layout.pos.col=1,layout.pos.row=2))
+% grid.text("B",
+%           y=unit(1,"npc")-unit(0.1,"cm"),
+%           x=unit(0,"npc")+unit(0.1,"cm"),
+%           gp=gpar(fontsize=24),
+%           just=c("left","top"))
+% popViewport(2)
+% @ 
+% \caption{RNAseq read and alignment statistics for all species. A)
+%   Boxplot of percentages of unmapped reads in each species; 0\% of
+%   reads in all species were unmapped because of mismatches. B) Boxplot
+%   of number of RNAseq reads in each species.}
+% \label{fig:transcriptome_statistics}
+% \end{figure}
 
 \begin{figure}
 <<reads.vs.read.length,fig.width=8,fig.height=8,echo=FALSE>>=

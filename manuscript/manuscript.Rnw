@@ -1214,7 +1214,7 @@ target \textit{in silico} is the orphan G-coupled receptor
 \Sexpr{gene.expression("mus_musculus","Gm27786",complete=TRUE)}, both
 of which are maternally imprinted (the later of which is a homolog of
 human \textit{H19\_2}),
-\Sexpr{gene.expression("mus_musculus","IGF2",complete=TRUE)}, numerous
+\Sexpr{gene.expression("mus_musculus","Igf2",complete=TRUE)}, numerous
 cathepsins and a rodentia specific expansion of prolactin related
 genes. There are also two miRNA which overlap with the of the 7S
 signal recognition particle

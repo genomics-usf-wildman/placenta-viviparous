@@ -2509,11 +2509,14 @@ approximately 5 genes in \human (\textit{GH1}, \textit{GH2},
 \textit{CSH1}, \textit{CSH2}, \textit{CSHL1}) and at least three in
 \bonobo (two \textit{GH2} and \textit{GH1}; owing to the similarity
 between the two \textit{GH1} in \textit{Pan troglodytes} we cannot
-reliably distinguish transcripts between the two). All but
-\textit{GH1} show substantial expression in the \human placenta
-(\cref{fig:csh1_evolution_tree}). There is some evidence that
-increased expression of these genes may be correlated with overall
-birth weight of offspring in \human
+reliably distinguish transcripts between the two). All show
+substantial expression in the \human placenta
+(\cref{fig:csh1_evolution_tree}). The expression of the \ac{GH} family
+in placenta appears to be primate specific, and likely existed at the
+time of the last common ancestor between all extant anthropoids
+\cite{Papper.ea2009:Ancientoriginofplacental}. There is some evidence
+that increased expression of these genes may be correlated with
+overall birth weight of offspring in \human
 \cite{Männik.ea2010:Differentialexpressionprofileof}, and it is
 possible that the extreme expression levels of these genes may be due
 to high birth weight. \human placental \ac{GH} genes are involved in

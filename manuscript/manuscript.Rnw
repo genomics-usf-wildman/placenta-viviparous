@@ -2418,30 +2418,44 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 \subsubsection{Prolactin}
 
 The elephant is strikingly the only mammal analyzed that shows high
-expression of the primarily pituitary hormone prolactin (\textit{PRL}) in the
-placenta. All afrotherians yet analyzed contain only one prolactin
-gene, and prolactin has undergone adaptive evolution on the elephant
-lineage \cite{Wallis2009:ProlactininAfrotheriacharacterization}.
+expression of the primarily pituitary hormone prolactin (\textit{PRL})
+in the placenta, although we see high expression of genes which
+resulted from duplications of \textit{PRL} in the \mouse, \carmeli,
+and \cow (\cref{fig:prolactin_evolution_tree}). All afrotherians yet
+analyzed contain only one prolactin gene, and prolactin has undergone
+adaptive evolution on the \elephant lineage
+\cite{Wallis2009:ProlactininAfrotheriacharacterization}.
 \citet{Yamamoto.ea2011:PlacentationinAfricanelephant} noted the
 presence of a prolactin in the trophoblast of the elephant placenta
 using immunohistological staining and human derived antibodies. A
-previous analysis of the elephant placenta also detected the
-expression of prolactin
-\cite{Hou.ea2012:Elephanttranscriptomeprovidesinsights}. Here we
-confirm that the sole prolactin in the elephant is not only expressed
-but highly expressed in the placenta, and likely functions both in the
-maintenance of the corpus luteum and as a placental lactogen
-\cite{Yamamoto.ea2011:PlacentationinAfricanelephant}. \textit{PRL} is
-not expressed in the opossum, even though there is evidence that it is
-expressed in the placenta of another marsupial, the tammar wallaby
+previous analysis of \elephant placenta also detected the expression
+of prolactin \cite{Hou.ea2012:Elephanttranscriptomeprovidesinsights}.
+Here we confirm that the sole prolactin in \elephant is not only
+expressed but highly expressed in the placenta, and likely functions
+both in the maintenance of the corpus luteum and as a placental
+lactogen \cite{Yamamoto.ea2011:PlacentationinAfricanelephant}.
+\textit{PRL} is not expressed in \opossum, even though there is
+evidence that it is expressed in the placenta of another marsupial,
+\textit{Macropus eugenii} (tammar wallaby)
 \cite{Menzies.ea2011:Placentalexpressionofpituitary}. This suggests
 that placental prolactin expression in marsupials may be as diverse as
-in eutherian mammals. Although, \textit{PRL} is not expressed to any
-great degree in the placenta other mammals, we see very high
-expression of genes which resulted from duplications of \textit{PRL}
-in the \mouse, \galili, \carmeli, and \cow
-(\cref{fig:prolactin_evolution_tree}).
-
+in eutherian mammals. One possible explanation of the diversity of
+expression is the presence of endogenous retroviruses such as MER39 in
+primates, MER77 in rodents, and L1-2\_LA in \elephant
+\cite{Emera.ea2012:Convergentevolutionofendometrial} although this
+does not explain the diversity of expression of different isoforms of
+\textit{PRL} in \mouse or their tissue specificity in primates. An
+alternative, that \textit{HOXA11} expression is responsible for
+\textit{PRL} expression
+\cite{Lynch.ea2008:Adaptivechangesintranscription} seems not to be the
+case in placenta, as the rodent with the highest \textit{HOXA11}
+expression, \galili
+(\Sexpr{gene.expression("nannospalax_galili","Hoxa11",complete=TRUE)})
+is the rodent with the lowest expression of \textit{PRL}
+(\Sexpr{gene.expression("nannospalax_galili","Prl",complete=TRUE)},
+\cref{fig:prolactin_evolution_tree}), and \elephant also does not
+express \textit{HOXA11} highly either
+(\Sexpr{gene.expression("loxodonta_africana","HOXA11",complete=TRUE)}).
 
 \begin{figure}
 <<prolactin.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
@@ -2470,6 +2484,22 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 @ 
 \caption{\genetreeexplanation{prolactin receptor}}
 \label{fig:prolactin_receptor_evolution_tree}
+\end{figure}
+
+\begin{figure}
+<<hoxa11.receptor.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="HOXA11" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,
+                 subtree=c("ENSBTAG00000014738","ENSECAG00000013229")
+                 )
+@ 
+\caption{\genetreeexplanation{\textit{HOXA11}}}
+\label{fig:hoxa11_evolution_tree}
 \end{figure}
 
 \subsubsection{\Ac{GH} family}

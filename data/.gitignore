@@ -13,3 +13,10 @@ gene_trees
 ensembl_orthologs
 homology_table
 hugo_nomenclature
+placenta_core_transcriptome
+placenta_go_results_??
+placenta_lineage_specific
+combined_fpkm_per_sample
+ensembl_orthologs_long
+gene_annotation
+housekeeping_genes_superset

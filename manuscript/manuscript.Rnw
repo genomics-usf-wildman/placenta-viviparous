@@ -249,8 +249,8 @@ marsupials and “placental”) mammals.
 % angiogenesis, tube morphogenesis, cell migration, and regulation of
 % inflammatory response. Three of these genes (KISS1, ADAM12, GPC3)
 % showed exceptionally high expression in humans; these genes are
-% implicated in preeclampsia and may indicate that the risk of
-% preeclampsia recently emerged on the human lineage.
+% implicated in pre-eclampsia and may indicate that the risk of
+% pre-eclampsia recently emerged on the human lineage.
 
 \textbf{Keywords:} mammal, gene expression, evolution, RNA-seq, placenta
 
@@ -270,7 +270,8 @@ trabecular, lamellar, labrynthine)
 mammals differ drastically in the number and size of their offspring,
 as well as the length of gestation, traits often associated with
 specific aspects of placental morphology
-\cite{Capellini.ea2011:Placentationandmaternalinvestment}.
+\cite{Capellini.ea2011:Placentationandmaternalinvestment}
+(\cref{tab:gestational_periods}).
 
 The placenta arose at some point before the origin of therian mammals,
 a group that includes both marsupials and eutherian or “placental”
@@ -297,25 +298,25 @@ characterized in a number of species
 \cite{Mossman.1987:vertebratefetalmembranes}, the diversity of the
 molecular environment is only beginning to be understood from a
 genetic perspective \cite{Carter2012:Evolutionofplacentalfunction}.
-Studies of certain model species (i.e., humans, mice, cattle) have
+Studies of certain model species (i.e., \human, \mouse, \cow) have
 revealed a stunning divergence in the genetics of the placenta,
 especially in later stages of pregnancy
 \cite{Carter2012:Evolutionofplacentalfunction,Hou.ea2012:Elephanttranscriptomeprovidesinsights,Knox.ea2008:Genomicevolutionofplacenta,Su.ea2002:Large-scaleanalysisofhuman}.
 For example, each lineage has evolved expansive placenta-specific gene
 families with expression patterns that can vary in space and time
 \cite{Green.ea2000:Pregnancy-associatedbovineandovine,Simmons.ea2008:Spatialandtemporalexpression}.
-These include independent expansions of the prolactins in mouse and
-cow, pregnancy-specific glycoproteins (PSGs) in humans and mouse,
-pregnancy-associated glycoproteins (PAGs) in cow, and the expansion of
-the growth hormone and chorionic gonadotropin beta genes in hominoid
-primates
+These include independent expansions of the prolactins in \mouse,
+\carmeli, \galili, and \cow, \acp{PSG} in \human and \mouse, \acp{PAG}
+in \cow, genes related to the thymus-specific serine protease
+\textit{PRSS16} in \elephant, and the expansion of the growth hormone
+and chorionic gonadotropin beta genes in hominoid primates
 \cite{Haig2008:Placentalgrowthhormone-relatedproteins,Rawn.ea2008:evolutionregulationandfunction}.
 Expression patterns of specific genes also can vary widely between
 species. For example, the expression of orthologous genes in the
-placenta have been found to vary substantially between humans and mice
-\cite{Su.ea2002:Large-scaleanalysisofhuman}, and the recruitment of
-\textit{SIGLEC6} to placental expression in humans differs from both
-chimpanzees and mice
+placenta have been found to vary substantially between \human and
+\mouse \cite{Su.ea2002:Large-scaleanalysisofhuman}, and the
+recruitment of \textit{SIGLEC6} to placental expression in \human
+differs from both \textit{P. troglodytes} and \mouse
 \cite{Linden.ea2007:Human-specificexpressionofSiglec-6}.
 
 One explanation for the divergent paths of the placental interface is
@@ -326,28 +327,30 @@ nutrients to the fetus without risking the health of the mother, while
 the fetal strategy via paternal genes is to extract as many resources
 from the mother as possible. Therefore, an interplay between these
 extremes can set up an intricate “arms race”, involving the imprinting
-of parental alleles, production of new genes, and enlistment of
+of parental alleles, expansion of gene families, and enlistment of
 existing genes to expression at the maternal-fetal interface
 \cite{Haig1993:Geneticconflictsinhuman}.
 
 One symptom of this maternal-fetal conflict is its potential affect on
-human health
+\human health
 \cite{Hollegaard.ea2013:Parent-offspringconflictandpersistence}. In
-addition to having an invasive hemochorial placenta, humans possess a
+addition to having an invasive hemochorial placenta, \human possess a
 deeply invasive trophoblast layer that can penetrate the myometrium of
 the uterus \cite{Carter.ea2011:Evolutionofinvasiveplacentation}.
 Defects in placental growth are known to be associated with the
-devastating condition of preeclampsia, which can cause hypertension,
+devastating condition of pre-eclampsia, which can cause hypertension,
 proteinuria, and has the potential to lead to death of the mother
 and/or infant \cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current}.
-Although cases have been documented in chimpanzees
+Although cases have been documented in \textit{P. troglodytes}
 \cite{Stout.ea1969:Glomerularcapillaryendothelialswelling}, and
-gorillas \cite{Thornton.ea1992:Convulsionsinpregnancyin}, preeclampsia
-has a far higher incidence in human pregnancies with as much as 4\% of
+\textit{Gorilla gorilla}
+\cite{Thornton.ea1992:Convulsionsinpregnancyin}, pre-eclampsia has a
+far higher incidence in \human pregnancies with as much as 4\% of
 pregnancies being affected in the United States
-\cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current}. Chimpanzees
-and gorillas also have deeply invasive trophoblasts, although the
-progression of invasion in great apes may be slower than humans
+\cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current}. \textit{P.
+  troglodytes} and \textit{G. gorilla} also have deeply invasive
+trophoblasts, although the progression of invasion in great apes may
+be slower than \human
 \cite{Carter.ea2011:Evolutionofinvasiveplacentation}; however,
 large-scale expression studies of great ape placentas have not been
 conducted. The increasing affordability of next-generation sequencing
@@ -357,24 +360,25 @@ the evolution of gene expression
 \cite{Brawand.ea2011:evolutionofgeneexpression}. Here we use RNA-Seq
 technology to sequence and quantify the mRNA environment of mammalian
 placentas at term, including that of the \human, \bonobo (the sister
-species to the chimpanzee), \smonkey, \mouse, \galili, \carmeli, \dog,
-\cow, \elephant, \armadillo, and \opossum, representing marsupials as
-well as three major branches of eutherian mammals (Euarchontoglires,
-Laurasiatheria, Afrotheria). These placentas also represent a wide
-array of placental morphologies as well as traits such as number and
-size of offspring and length of gestation
-\cref{tab:gestational_periods}. We use this data, along with existing
-RNA-Seq data from \mouse \cite{Wang.ea2011:surveyfornovelimprinted},
-\human \cite{Hughes.ea2015:Evaluatingintra-andinter-individual},
-\horse \cite{Coleman.ea2010:Structuralannotationofequine}, \sheep
+species to \textit{P. troglodytes}), \smonkey, \mouse, \galili,
+\carmeli, \dog, \cow, \elephant, \armadillo, and \opossum. These
+species represent three major branches of eutherian mammals
+(Euarchontoglires, Laurasiatheria, Afrotheria) as well as marsupials.
+These placentas also represent a wide array of placental morphologies
+as well as traits such as number and size of offspring and length of
+gestation (\cref{tab:gestational_periods}). We use this data, along with
+existing RNA-Seq data from \mouse
+\cite{Wang.ea2011:surveyfornovelimprinted}, \human
+\cite{Hughes.ea2015:Evaluatingintra-andinter-individual}, \horse
+\cite{Coleman.ea2010:Structuralannotationofequine}, \sheep
 \cite{Archibald.ea2010:sheepgenomereferencesequence}, and \pig
 \cite{Ahanda.ea2012:Predictionofaltered3-} to address the major
 differences between expression in marsupial and eutherian mammals at
 term, identify the evolution of expression in important placental
 genes such as hormones and galectins, identify novel lineage-specific
-expression patterns, and quantify human specific differences in gene
+expression patterns, and quantify \human specific differences in gene
 expression that may be related to obstetrical disorders such as
-preeclampsia.
+pre-eclampsia.
 
 \begin{table}
   \begin{tabular}{c c c p{3in}}
@@ -979,7 +983,7 @@ hormone gene family, \ac{GH2} (\ac{FPKM}=%
 is also expressed to a high degree in the \human placenta
 (\cref{tab:top50_human_placenta}).
 % 
-Eleven pregnancy-specific beta-1-glycoprotein genes are highly-expressed
+Eleven \acp{PSG} are highly-expressed
 (\ac{FPKM}$\ge 100$) in the term placenta of \human, with \textit{PSG1} showing the
 greatest degree of expression %
 (\Sexpr{gene.expression(species.name="homo sapiens",gene="PSG1")}) % 
@@ -2830,15 +2834,15 @@ this penetration may be accelerated in humans
 The near exclusivity of deep trophoblast invasion in humans has also
 led many to speculate on the origin of various disorders, which are
 almost exclusively symptomatic of human pregnancy. For example,
-preeclampsia is a human disease that occurs in 4\% of pregnancies in
+pre-eclampsia is a human disease that occurs in 4\% of pregnancies in
 the United States
 \cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current}. Preeclampsia
 can be attributed to the lack of adequate invasion of maternal tissue,
 and is noted by the onset of hypertension and proteinuria
 \cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current}. Some cases of
-preeclampsia can develop into eclampsia, a more severe condition
+pre-eclampsia can develop into eclampsia, a more severe condition
 resulting in seizures during pregnancy and death. Lack of invasion in
-preeclampsia may be attributed to the inefficiency of growth
+pre-eclampsia may be attributed to the inefficiency of growth
 regulators as well as the inability to sufficiently suppress the
 maternal immune response. Although there are speculative cases of
 eclampsia in great apes
@@ -2847,7 +2851,7 @@ it is exceedingly rare in these species
 \cite{Carter.ea2011:Evolutionofinvasiveplacentation}. It is possible
 that a comparative evolutionary approach to gene expression can
 identify genes that have divergent expression patterns from other
-mammals as well as association with preeclampsia.
+mammals as well as association with pre-eclampsia.
 
 Functional annotation clusters significantly enriched on the human
 lineage (blood vessel development, extracellular matrix, tube
@@ -2903,15 +2907,15 @@ invasion of fetal tissues.
 % migration and tube morphogenesis (Wang et al., 2010).
 % 
 % Many genes that show evidence of a shift on the human lineage show
-% evidence of implication in preeclampsia, including ADAM12 (Gack et
+% evidence of implication in pre-eclampsia, including ADAM12 (Gack et
 % al., 2005; Laigaard et al., 2005) MAOA (Carrasco et al., 2000;
 % Bottalico et al., 2004), BCL2 (Ishihara et al., 2002), GPC3 (Gui et
 % al., 2012; Ogawa, 2007), TMEM8A, CLIC3, EBI3, FLT1, BCL6, SYDE1, and
 % MAN1C1 (Enquobahrie et al., 2008; Winn et al., 2009; Nishizawa, 2011).
-% In addition KISS1 is also involved in preeclampsia as well (Sado et
+% In addition KISS1 is also involved in pre-eclampsia as well (Sado et
 % al., 2011; Qiao et al, 2012). Due to the association of many genes
 % that show human-specific shifts as well as high expression, we
-% conclude that preeclampsia is possibly a symptom of recent evolution
+% conclude that pre-eclampsia is possibly a symptom of recent evolution
 % of gene expression on the human lineage. Although many genes such as
 % GPC3 and ADAM12 show distinctive relatively high expression in bonobo,
 % this expression has intensified on the human lineage. Sequencing of

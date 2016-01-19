@@ -110,5 +110,5 @@ placenta_go_results_bp: go_analysis.R placenta_core_transcriptome
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,2,$^) placenta.transcriptome.list BP $@
 
 
-ortholog_expression_matrix.txt: ortholog_expression_matrix.R combined_fpkm
-	$(R) $(ROPTS) -f $< --args $(wordlist 2,2,$^) $@
+ortholog_expression_matrix.txt: ortholog_expression_matrix.R combined_fpkm housekeeping_genes_superset
+	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@

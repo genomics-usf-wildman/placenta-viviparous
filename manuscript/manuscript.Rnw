@@ -1157,7 +1157,7 @@ a member of the chorionic somatotropins, \textit{GH1} %
 (\Sexpr{gene.expression("ateles_fusciceps","GH1")}), %
 a few HLA genes (\textit{HLA-A}, \textit{HLA-F},
 \cref{tab:top50_spider_monkey_placenta}), and multiple components of
-the annexin complex
+annexin complexes
 (\Sexpr{gene.expression("ateles_fusciceps","ANXA2",complete=TRUE)}, %
 \Sexpr{gene.expression("ateles_fusciceps","S100P",complete=TRUE)}, %
 \Sexpr{gene.expression("ateles_fusciceps","S100A11",complete=TRUE)}) %
@@ -1294,7 +1294,7 @@ The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
 in the term placenta of \galili are shown in
 \cref{tab:top50_n_galili_placenta} with a list of all highly expressed
 genes in Supplemental \cref{tab:all_nannospalax_galili_placenta}.
-Components of the annexin complex are highly expressed
+Components of annexin complexes are highly expressed
 (\Sexpr{gene.expression("nannospalax_galili","S100a6",complete=TRUE)},
 \Sexpr{gene.expression("nannospalax_galili","S100a11",complete=TRUE)},
 \Sexpr{gene.expression("nannospalax_galili","S100a10",complete=TRUE)},
@@ -1461,7 +1461,7 @@ The gene with the highest expression was \textit{TMSB10} %
 (\Sexpr{gene.expression("bos taurus","TMSB10")}), and
 \textit{TMSB4} was also highly expressed %
 (\Sexpr{gene.expression("bos taurus","TMSB4")}). As in
-\dog{}, members of the annexin complex were also highly expressed
+\dog{}, members of annexin complexes were also highly expressed
 (\Sexpr{gene.expression("bos taurus","S100G",complete=TRUE)}, %
 \Sexpr{gene.expression("bos taurus","ANXA2",complete=TRUE)}, %
 \Sexpr{gene.expression("bos taurus","S100A2",complete=TRUE)}, and %
@@ -1573,12 +1573,11 @@ neither of which have an obvious target gene on the basis of
 expressed genes include members of the insulin growth factor family
 (\Sexpr{gene.expression("sus_scrofa","IGF2",complete=TRUE)} and
 \Sexpr{gene.expression("sus_scrofa","IGFBP3",complete=TRUE)}), members
-of the annexin complex
+of annexin complexes
 (\Sexpr{gene.expression("sus_scrofa","S100A1",complete=TRUE)},
 \Sexpr{gene.expression("sus_scrofa","ANXA2",complete=TRUE)},
-\Sexpr{gene.expression("sus_scrofa","S100A12",complete=TRUE)},
-\Sexpr{gene.expression("sus_scrofa","S100A10",complete=TRUE)}, and
-\Sexpr{gene.expression("sus_scrofa","S100A1",complete=TRUE)}), the
+\Sexpr{gene.expression("sus_scrofa","S100A12",complete=TRUE)}, and
+\Sexpr{gene.expression("sus_scrofa","S100A10",complete=TRUE)}), the
 galectin \Sexpr{gene.expression("sus_scrofa","LGALS3",complete=TRUE)}
 and multiple cytoskeleton and extracellular matrix proteins
 (\Sexpr{gene.expression("sus_scrofa","KRT19",complete=TRUE)},
@@ -1620,7 +1619,7 @@ with no known \textit{in silico} targets
 members of the insulin growth factor family
 (\Sexpr{gene.expression("equus_caballus","IGF2",complete=TRUE)} and
 \Sexpr{gene.expression("equus_caballus","IGFBP3",complete=TRUE)}) and
-multiple members of the annexin complex
+multiple members of annexin complexes
 (\Sexpr{gene.expression("equus_caballus","S100A6",complete=TRUE)},
 \Sexpr{gene.expression("equus_caballus","S100A1",complete=TRUE)}, and
 \Sexpr{gene.expression("equus_caballus","ANXA2",complete=TRUE)}),
@@ -1655,7 +1654,7 @@ genes in Supplemental \cref{tab:all_ovis_aries_placenta}. The complete
 list of highly expressed genes includes many snRNAs and rRNAs likely
 due to the RNA extraction and library preparation procedure utilized
 for this sample. Ignoring these, notable highly expressed genes
-include members of the annexin complex
+include members of annexin complexes
 (\Sexpr{gene.expression("ovis_aries","S100G",complete=TRUE)},
 \Sexpr{gene.expression("ovis_aries","ANXA2",complete=TRUE)}),
 hemoglobin subunits
@@ -2089,17 +2088,26 @@ not a human housekeeping gene according to
 which would be included in the core placenta set if the \ac{FPKM}
 cutoff was set differently.
 %
-Multiple components of the annexin complex are included in the core
+Multiple components of annexin complexes are included in the core
 transcriptome, including \textit{ANXA2}, \textit{ANXA1},
-\textit{S100A11}, \textit{S100A10}. The modulation of  \DLA{It does more stuff; read
-  the huthcinson2011 review and fill this in}
-%
-% Another annexin, \textit{ANXA2} 
-%
-\textit{TIMP3}, which may be down-regulated in pre-eclampsia
-\cite{Ma.ea2014:Down-regulationofTIMP3leads} (though another study
-\cite{Xiang.ea2013:PromoterhypomethylationofTIMP3} claims
-up-regulation) does things
+\textit{S100A11}, \textit{S100A10}. ANXA1 is involved in the
+resolution of the inflammation response through inhibition of
+phospholipase A2 activity and signaling through the formyl peptide
+receptor family, and has previously been hypothesized to be important
+for the maintenance of the anti-inflammatory during pregnancy
+\cite{Hutchinson.ea2011:Molecularregulatorsofresolution}. ANXA2 is
+known to interact with S100A10, S100A6, S100A11, and S100A4
+\cite{Liu.ea2015:AnnexinA2complexeswith}, and there is evidence for
+its interaction with S100P as well; it is involved in cell-cell
+interaction as well as vesicle trafficking and von Willibrand Factor
+secretion. The expression regulation of another core gene,
+\textit{TIMP3}, has been implicated in pre-eclampsia
+\cite{Ma.ea2014:Down-regulationofTIMP3leads,Xiang.ea2013:PromoterhypomethylationofTIMP3}.
+\Cref{tab:core_placenta_go_terms} lists the significant enrichment of
+\ac{GO} terms in the core placenta transcriptome; notable terms
+include those involved in cytoskeletal structure, protein transport,
+membrane protein structure, and inflammation resolution.
+
 
 % SPINT2 -- Serine Peptidase inhibitor
 
@@ -2122,13 +2130,9 @@ up-regulation) does things
 
 % F11R -- tight junctions
 
-SERPINH1? with TIMP3 
+% SERPINH1? with TIMP3 
 % http://www.proteinatlas.org/ENSG00000149257-SERPINH1/tissue/placenta
 
-\Cref{tab:core_placenta_go_terms} lists the significant enrichment of
-\ac{GO} terms in the core placenta transcriptome; notable terms
-include those involved in cytoskeletal structure, protein transport,
-and membrane protein structure.
 
 \subsubsection{\ac{GSE} Analyses of Individual Transcriptomes}
 

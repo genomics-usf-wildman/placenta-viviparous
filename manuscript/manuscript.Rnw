@@ -2043,25 +2043,38 @@ print(ggplot(cpt.distribution.shape[`Expression (FPKM)` > 1,],
 \label{fig:core_placenta_transcriptome_shape}
 \end{figure}
 
+\begin{table}
+\footnotesize
 <<go.analysis,warning=FALSE,message=FALSE,echo=FALSE,results="asis">>=
-placenta.go.results <- rbindlist(list(placenta_go_results_mf[classic.fdr < 0.05,],
-                             placenta_go_results_bp[classic.fdr < 0.05,]))
+placenta.go.results <- rbindlist(list(head(n=20,placenta_go_results_mf[classic.fdr < 0.05,]),
+                             head(n=20,placenta_go_results_bp[classic.fdr < 0.05,])))
 placenta.go.results <- placenta.go.results[,Annotated:=NULL]
+setnames(placenta.go.results,"Significant","# Core")
 setnames(placenta.go.results,"classic","p value")
 setnames(placenta.go.results,"classic.fdr","FDR")
 setnames(placenta.go.results,"GO.ID","GO ID")
 setnames(placenta.go.results,"Term","GO Term")
 print(xtable(placenta.go.results,
              digits=2,
-             display=c("d","s","s","d","f","e","e","s"),
-             caption="Top go MF results",
-             label="tab:core_placenta_go_terms"),
+             display=c("d","s","s","d","f","e","e","s")),
       include.rownames=FALSE,
-      floating=TRUE,
       booktabs=TRUE,
-      size="\\tiny"
+      floating=FALSE
       )
 @ 
+\caption{\ac{GO} terms most significantly enriched
+  (\Sexpr{placenta.go.results[,sum(Ontology=="MF")]},
+  \Sexpr{placenta.go.results[,sum(Ontology=="BP")]} BP)
+  in the core placenta transcriptome as compared to all genes
+  with 1:1 human orthologs in all species. “# Core” is the
+  number of genes in the core transcriptome for each \ac{GO} term;
+  “Expected” is the number of genes expected in the core
+  transcriptome for each term; “p-value” are the odds of this
+  occurring by chance calculated by the Fisher exact test for
+  each term; “FDR” is the false discovery rate as estimated by
+  the Benjamini and Hochberg procedure \cite{Benjamini1995:bh_procedure}}
+\label{tab:core_placenta_go_terms}
+\end{table}
 
 The
 \Sexpr{core.placenta.transcriptome.long[,length(unique(human_name))]}
@@ -2111,6 +2124,11 @@ up-regulation) does things
 
 SERPINH1? with TIMP3 
 % http://www.proteinatlas.org/ENSG00000149257-SERPINH1/tissue/placenta
+
+\Cref{tab:core_placenta_go_terms} lists the significant enrichment of
+\ac{GO} terms in the core placenta transcriptome; notable terms
+include those involved in cytoskeletal structure, protein transport,
+and membrane protein structure.
 
 \subsubsection{\ac{GSE} Analyses of Individual Transcriptomes}
 

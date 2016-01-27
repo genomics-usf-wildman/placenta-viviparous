@@ -6,6 +6,11 @@ ROPTS=-q --no-save --no-restore-data
 
 all: manuscript.pdf supplemental_material.pdf
 
+bmcart.cls:
+	wget -O temp.zip "http://media.biomedcentral.com/content/production/bmc_article-tex.zip"
+	unzip -j temp.zip '*/bmcart.cls';
+	rm -f temp.zip
+
 %.pdf: %.svg
 	inkscape -D -A $@ $<
 

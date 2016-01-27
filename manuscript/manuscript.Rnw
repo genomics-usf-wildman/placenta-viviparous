@@ -1,13 +1,15 @@
-\documentclass[english,12pt]{article}
+%\documentclass[english,12pt]{article}
+\documentclass[doublespacing]{bmcart_dla}
 \usepackage{fontspec}
-\setmainfont{FreeSerif}
+\setmainfont{FreeSans}
 \setsansfont{FreeSans}
 \setmonofont{FreeMono}
-\usepackage[letterpaper,left=1in,right=1in,top=1in,bottom=1in,headheight=14pt]{geometry}
+%\usepackage[letterpaper,left=1in,right=1in,top=1in,bottom=1in,headheight=14pt]{geometry}
+\usepackage[letterpaper]{geometry}
 \usepackage{url}
-\usepackage{fancyhdr}
+% \usepackage{fancyhdr}
 \usepackage{graphicx}
-\usepackage[bf]{caption}
+% \usepackage[bf]{caption}
 \usepackage{rotating}
 \usepackage{wrapfig}
 \usepackage{booktabs}
@@ -24,21 +26,21 @@
 \usepackage{longtable}
 \usepackage{pdflscape}
 \usepackage{amsmath}
-\usepackage[backend=biber,natbib=true,hyperref=true,style=reading,autocite=inline]{biblatex}
+\usepackage[backend=biber,natbib=true,hyperref=true,citestyle=numeric-comp,style=nature,autocite=inline]{biblatex}
 \addbibresource{references.bib}
-\usepackage[noblocks,auth-sc]{authblk}
+% \usepackage[noblocks,auth-sc]{authblk}
 \usepackage[hyperfigures,bookmarks,colorlinks,linkcolor=black,urlcolor=black]{hyperref}
 %\usepackage[hyperfigures,bookmarks,colorlinks,citecolor=black,filecolor=black,linkcolor=black,urlcolor=black]{hyperref}
 % Floats at end for journals
 % \usepackage[nolists,figuresfirst,nomarkers,heads,nofighead,notabhead]{endfloat}
-% \AtBeginFigures{\section*{Figure Legends}\renewcommand{\efloatseparator}{\hbox{}}}
-% \AtBeginTables{\section*{Tables}\renewcommand{\efloatseparator}{\mbox{}}}
+% \AtBeginFigures{\newpage \section*{Figure Legends}\renewcommand{\efloatseparator}{\hbox{}}}
+% \AtBeginTables{\newpage \section*{Tables}\renewcommand{\efloatseparator}{\mbox{}}}
 \usepackage[nomargin,inline,draft]{fixme}
 \newcommand{\DLA}[1]{\textcolor{red}{\fxnote{DLA: #1}}}
 \newcommand{\DEW}[1]{\textcolor{purple}{\fxnote{DEW: #1}}}
-\usepackage[x11names,svgnames]{xcolor}
-\usepackage{texshade}
-\usepackage{tikz}
+% \usepackage[x11names,svgnames]{xcolor}
+% \usepackage{texshade}
+% \usepackage{tikz}
 \usepackage{nameref}
 \usepackage{xspace}
 % this package will stretch the font slightly if necessary.
@@ -47,48 +49,48 @@
 \zxrsetup{toltxlabel}
 \zexternaldocument*{supplemental_material}
 \usepackage[capitalize]{cleveref}
-\newenvironment{narrow}[2]{%
-  \begin{list}{}{%
-      \setlength{\topsep}{0pt}%
-      \setlength{\leftmargin}{#1}%
-      \setlength{\rightmargin}{#2}%
-      \setlength{\listparindent}{\parindent}%
-      \setlength{\itemindent}{\parindent}%
-      \setlength{\parsep}{\parskip}}%
-  \item[]}{\end{list}}
-\def\newblock{\hskip}
-\newenvironment{paperquote}{%
-  \begin{quote}%
-     \it
-  }%
-  {\end{quote}}
-\renewcommand{\textfraction}{0.15}
-\renewcommand{\topfraction}{0.85}
-\renewcommand{\bottomfraction}{0.65}
-\renewcommand{\floatpagefraction}{0.60}
+% \newenvironment{narrow}[2]{%
+%   \begin{list}{}{%
+%       \setlength{\topsep}{0pt}%
+%       \setlength{\leftmargin}{#1}%
+%       \setlength{\rightmargin}{#2}%
+%       \setlength{\listparindent}{\parindent}%
+%       \setlength{\itemindent}{\parindent}%
+%       \setlength{\parsep}{\parskip}}%
+%   \item[]}{\end{list}}
+% \def\newblock{\hskip}
+% \newenvironment{paperquote}{%
+%   \begin{quote}%
+%      \it
+%   }%
+%   {\end{quote}}
+% \renewcommand{\textfraction}{0.15}
+% \renewcommand{\topfraction}{0.85}
+% \renewcommand{\bottomfraction}{0.65}
+% \renewcommand{\floatpagefraction}{0.60}
 %\renewcommand{\baselinestretch}{1.8}
-\newenvironment{enumerate*}%
-  {\begin{enumerate}%
-    \setlength{\itemsep}{0pt}%
-    \setlength{\parskip}{0pt}}%
-  {\end{enumerate}}
-\newenvironment{itemize*}%
-  {\begin{itemize}%
-    \setlength{\itemsep}{0pt}%
-    \setlength{\parskip}{0pt}}%
-  {\end{itemize}}
-\setcounter{tocdepth}{3}
-\oddsidemargin 0.0in 
-\textwidth 6in
-\raggedbottom
-\clubpenalty = 10000
-\widowpenalty = 10000
+% \newenvironment{enumerate*}%
+%   {\begin{enumerate}%
+%     \setlength{\itemsep}{0pt}%
+%     \setlength{\parskip}{0pt}}%
+%   {\end{enumerate}}
+% \newenvironment{itemize*}%
+%   {\begin{itemize}%
+%     \setlength{\itemsep}{0pt}%
+%     \setlength{\parskip}{0pt}}%
+%   {\end{itemize}}
+% \setcounter{tocdepth}{3}
+% \oddsidemargin 0.0in 
+% \textwidth 6in
+% \raggedbottom
+% \clubpenalty = 10000
+% \widowpenalty = 10000
 % set a large emergency stretch to avoid issues with overfull boxes
-\setlength{\emergencystretch}{20em}
+% \setlength{\emergencystretch}{20em}
 % make the afill smaller
-\renewcommand\Affilfont{\itshape\small}
+% \renewcommand\Affilfont{\itshape\small}
 \renewcommand\cite[1]{\autocite{#1}}
-\pagestyle{fancy}
+% \pagestyle{fancy}
 
 % species names
 \newcommand{\smonkey}[0]{\textit{A. fusciceps}\xspace}
@@ -128,38 +130,8 @@
 
 
 \begin{document}
-\author[1]{Don Armstrong}
-\author[2]{Michael R. McGowen}
-\author[1]{Amy Weckle}
-\author[3]{Jason Caravas}
-\author[4]{Dalen Agnew}
-\author[5]{Kurt Benirschke}
-\author[6]{Sue Savage-Rumbaugh}
-\author[7,8]{Chong Jai Kim}
-\author[9]{Günter P. Wagner}
-\author[7]{Roberto Romero}
-\author[1,6,10,*]{Derek E. Wildman}
-\title{The evolution of gene expression in the term placenta of viviparous mammals}
-% These are all wrong, but we'll change them later.
-\affil[1]{Institute for Genomic Biology, University of Illinois at Urbana-Champaign, Urbana, IL, USA}
-\affil[2]{School of Biological and Chemical Sciences, Queen Mary, University of London, London, UK}
-\affil[3]{Center for Molecular Medicine and Genetics, Wayne State University School of Medicine, Detroit, MI, USA}
-\affil[4]{Diagnostic Center for Population and Animal Health, College of Veterinary Medicine, Michigan State University, East Lansing, MI, USA}
-\affil[5]{Department of Pathology, University of California San Diego, La Jolla, CA, USA}
-\affil[6]{Great Ape Trust/Bonobo Hope Sanctuary, Des Moines, IA, USA}
-\affil[7]{Perinatology Research Branch, Eunice Kennedy Shriver National Institute of Child Health and Human Development (NICHD), National Institutes of Health (NIH), Detroit, MI, USA}
-\affil[8]{Department of Pathology, Wayne State University School of Medicine, Detroit, MI, USA}
-\affil[9]{Department of Ecology and Evolutionary Biology and Yale Systems Biology Institute, Yale University, New Haven, CT, USA}
-\affil[10]{Department of Molecular and Integrative Physiology, University of Illinois at Urbana-Champaign, Urbana, IL, USA}
-\affil[*]{To whom correspondence should be addressed}
-\date{\today}
+\raggedright
 
-% Acronyms
-\input{acronyms}
-% \twocolumn
-\maketitle
-% \onehalfspacing
-\doublespacing
 
 <<load.libraries,echo=FALSE,results="hide",warning=FALSE,message=FALSE,error=FALSE,cache=FALSE>>=
 opts_chunk$set(dev="cairo_pdf",out.width="\\textwidth",out.height="0.7\\textheight",out.extra="keepaspectratio")
@@ -231,16 +203,62 @@ grad.def <- list(low = "white", high = "green", space = "Lab", na.value = "gray5
 
 @ 
 
-\section{Abstract}
+% Acronyms
+\input{acronyms}
 
-The placenta is arguably the most anatomically variable organ in
-mammals. Understanding gene expression patterns among placentas from
-multiple species can illuminate the molecular basis of placenta
-function as well as potentially enrich our knowledge of the biology of
-obstetrical syndromes. We profiled the term placenta by using Illumina
-RNA-Seq technology to sequence the transcriptomes of
-\Sexpr{star.logs[,length(unique(species))]} species of therian (i.e.
-marsupials and “placental”) mammals. 
+\begin{frontmatter}
+\begin{fmbox}
+\dochead{Research}
+\title{The evolution of gene expression in the term placenta of viviparous mammals}%
+%
+\author[addressref={aff1},email={don@donarmstrong.com}]{\inits{DL}\fnm{Don L} \snm{Armstrong}}
+\author[addressref={aff2}]{\inits{MR}\fnm{Michael R.} \snm{McGowen}}
+\author[addressref={aff1},email={aweckle@illinois.edu}]{\inits{AL} \fnm{Amy} \snm{Weckle}}
+\author[addressref={aff3}]{\inits{J}\fnm{Jason} \snm{Caravas}}
+\author[addressref={aff4}]{\inits{D}\fnm{Dalen} \snm{Agnew}}
+\author[addressref={aff5}]{\inits{K}\fnm{Kurt} \snm{Benirschke}}
+\author[addressref={aff6}]{\inits{S}\fnm{Sue} \snm{Savage-Rumbaugh}}
+\author[addressref={aff7,aff8}]{\inits{CJ}\fnm{Chong J} \snm{Kim}}
+\author[addressref={aff9}]{\inits{GP}\fnm{Günter P.} \snm{Wagner}}
+\author[addressref={aff7}]{\inits{R}\fnm{Roberto} \snm{Romero}}
+\author[addressref={aff1,aff6,aff10},corref={aff1},email={wildmand@illinois.edu}]{\inits{DE}\fnm{Derek E.} \snm{Wildman}}
+% These are all wrong, but we'll change them later.
+\address[id=aff1]{Institute for Genomic Biology, University of Illinois at Urbana-Champaign, Urbana, IL, USA}
+\address[id=aff2]{School of Biological and Chemical Sciences, Queen Mary, University of London, London, UK}
+\address[id=aff3]{Center for Molecular Medicine and Genetics, Wayne State University School of Medicine, Detroit, MI, USA}
+\address[id=aff4]{Diagnostic Center for Population and Animal Health, College of Veterinary Medicine, Michigan State University, East Lansing, MI, USA}
+\address[id=aff5]{Department of Pathology, University of California San Diego, La Jolla, CA, USA}
+\address[id=aff6]{Great Ape Trust/Bonobo Hope Sanctuary, Des Moines, IA, USA}
+\address[id=aff7]{Perinatology Research Branch, Eunice Kennedy Shriver National Institute of Child Health and Human Development (NICHD), National Institutes of Health (NIH), Detroit, MI, USA}
+\address[id=aff8]{Department of Pathology, Wayne State University School of Medicine, Detroit, MI, USA}
+\address[id=aff9]{Department of Ecology and Evolutionary Biology and Yale Systems Biology Institute, Yale University, New Haven, CT, USA}
+\address[id=aff10]{Department of Molecular and Integrative Physiology, University of Illinois at Urbana-Champaign, Urbana, IL, USA}
+%\address[id=affcor]{Derek Wildman <wildmand@illinois.edu>}
+
+\begin{artnotes}
+\end{artnotes}
+
+\end{fmbox}
+% \twocolumn
+
+\begin{abstractbox}
+\begin{abstract}
+% \section{Abstract}
+  \parttitle{Background} The placenta is arguably the most
+  anatomically variable organ in mammals. Understanding gene
+  expression patterns among placentas from multiple species can
+  illuminate the molecular basis of placenta function as well as
+  potentially enrich our knowledge of the biology of obstetrical
+  syndromes.
+
+  \parttitle{Results} We profiled the term placenta by using Illumina
+  RNA-Seq technology to sequence the transcriptomes of
+  \Sexpr{star.logs[,length(unique(species))]} species of therian (i.e.
+  marsupials and “placental”) mammals.
+
+
+  \parttitle{Conclusions}
+
 
 % We identified significant shifts in gene expression along specific
 % evolutionary lineages using a model of character evolution. Genes that
@@ -254,7 +272,11 @@ marsupials and “placental”) mammals.
 
 \textbf{Keywords:} mammal, gene expression, evolution, RNA-seq, placenta
 
-\section{Introduction}
+\end{abstract}
+\end{abstractbox}
+\end{frontmatter}
+
+\section{Background}
 
 The main role of the placenta in viviparous mammals is the transfer of
 nutrients, oxygen, and waste between mother and offspring. Although
@@ -381,7 +403,7 @@ expression that may be related to obstetrical disorders such as
 pre-eclampsia.
 
 \begin{table}
-  \begin{tabular}{c c c p{3in}}
+  \begin{tabular}{c c c c}
     \toprule
     Species                       & Gestation (days) & Litter Size  & Source \\
     \midrule
@@ -409,11 +431,11 @@ pre-eclampsia.
 
 \subsection{Collection of Placental Tissue and RNA Extraction}
 
-Fetal tissue was collected from the placenta of six mammalian species
-(\human [human], \bonobo [bonobo], \dog [domestic dog], \cow [domestic
-cow], \elephant [African savanna elephant], \opossum [gray
-short-tailed opossum], \gallili [blind mole rat from Upper Galilee],
-\carmelli [blind mole rat from northern Israel]). Information on
+Fetal tissue was collected from the placenta of eight mammalian
+species (\human [human], \bonobo [bonobo], \dog [domestic dog], \cow
+[domestic cow], \elephant [African savanna elephant], \opossum [gray
+short-tailed opossum], \galili [blind mole rat from Upper Galilee],
+\carmeli [blind mole rat from northern Israel]). Information on
 specimen ID, place and time of collection, and collector is shown for
 each sample in \DLA{Supplemental Table 1}. In the case of \bonobo,
 \cow, and \elephant, the placenta was collected at term upon expulsion
@@ -535,7 +557,7 @@ highly-expressed transcripts in each transcriptome, we performed
 functional annotation cluster analyses per transcriptome using topGO
 \cite{topGO:2.20.0}. Gene Ontology clusters were considered
 significantly enriched if the \ac{FDR} as estimated by the Benjamini
-and Hochberg procedure\cite{Benjamini1995:bh_procedure} on from the
+and Hochberg procedure \cite{Benjamini1995:bh_procedure} on from the
 $p$ values obtained from the Fisher Exact Test were less than or equal
 to 0.05. Enrichment tests were considered with two gene lists per
 transcriptome: annotated genes with expression levels of the top
@@ -551,10 +573,11 @@ using the 1:1 \human ortholog obtained
 
 All 1:1 orthologues present among \opossum, \textit{Pan troglodytes},
 \cow, \dog, \elephant, \mouse, and \human were determined using
-Ensembl v.80 gene trees via
-Biomart\cite{Kasprzyk2011:BioMartdrivingparadigmchange} using the
-biomaRt R package \DLA{Cite the biomaRt package}. A total of
-\Sexpr{combined.fpkm[species!="homo sapiens" & mean_fpkm >=
+Ensembl v.80 gene trees via Biomart
+\cite{Kasprzyk2011:BioMartdrivingparadigmchange} using the biomaRt R
+package
+\cite{Durinck.ea2009:Mappingidentifiersforintegration,Durinck.ea2005:BioMartandBioconductorpowerful}.
+A total of \Sexpr{combined.fpkm[species!="homo sapiens" & mean_fpkm >=
   1,length(unique(human_name))]} 1:1 orthologous genes were expressed
 in at least one species. Of these, \Sexpr{combined.fpkm[species!="homo
   sapiens" & mean_fpkm >= 10,length(unique(human_name))]} 1:1
@@ -747,8 +770,7 @@ of reads mapping to the
 respective reference genome (\cref{tab:ref_genome_aligned_species}).
 The top 50 expressed genes in each genome analyzed are shown in
 \cref{tab:top50_human_placenta,tab:top50_bonobo_placenta,tab:top50_spider_monkey_placenta,tab:top50_dog_placenta,tab:top50_cow_placenta,tab:top50_elephant_placenta,tab:top50_opossum_placenta,tab:top50_mouse_placenta,tab:top50_n_galili_placenta,tab:top50_s_carmeli_placenta,tab:top50_pig_placenta,tab:top50_horse_placenta,tab:top50_sheep_placenta}
-and all genes in Supplemental
-\cref{tab:all_ateles_fusciceps_placenta,tab:all_homo_sapiens_placenta,tab:all_pan_paniscus_placenta,tab:all_mus_musculus_placenta,tab:all_nannospalax_galili_placenta,tab:all_spalax_carmeli_placenta,tab:all_bos_taurus_placenta,tab:all_ovis_aries_placenta,tab:all_sus_scrofa_placenta,tab:all_equus_caballus_placenta,tab:all_canis_familiaris_placenta,tab:all_loxodonta_africana_placenta,tab:all_dasypus_novemcinctus_placenta,tab:all_monodelphis_domestica_placenta}.
+and all genes in Supplemental \cref{tab:all_ateles_fusciceps_placenta,tab:all_homo_sapiens_placenta,tab:all_pan_paniscus_placenta,tab:all_mus_musculus_placenta,tab:all_nannospalax_galili_placenta,tab:all_spalax_carmeli_placenta,tab:all_bos_taurus_placenta,tab:all_ovis_aries_placenta,tab:all_sus_scrofa_placenta,tab:all_equus_caballus_placenta,tab:all_canis_familiaris_placenta,tab:all_loxodonta_africana_placenta,tab:all_dasypus_novemcinctus_placenta,tab:all_monodelphis_domestica_placenta}.
 
 % The percentage of bases that mapped to Ensembl annotated mRNA ranged
 % from ~35\% in elephant to ~85\% in human, with percentages of bases
@@ -890,7 +912,7 @@ placenta.lineage.specific.table <- function(analysis,output=TRUE) {
 \subsection{Primate Placenta Transcriptomes}
 
 \begin{table}
-  \tiny
+  \footnotesize
 <<primate.lineage.specific,echo=FALSE,results="asis">>=
 pri.all.lin.spec <- placenta.lineage.specific.table("pri.all")
 setkey(pri.all.lin.spec,"Human Symbol")
@@ -941,7 +963,7 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 \label{sec:human_placenta}
 
 \begin{table}
-  \tiny
+  \footnotesize
 <<top.50.human.expressed.genes,echo=FALSE,results="asis">>=
 top.human.genes <- top.genes.table(species.name="homo sapiens")
 print(xtable(top.human.genes),
@@ -1050,7 +1072,7 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 \subsubsection{\bonobo Placenta Transcriptome}
 
 \begin{table}
-  \tiny
+  \footnotesize
 <<top.50.bonobo.expressed.genes,echo=FALSE,results="asis">>=
 top.bonobo.genes <- top.genes.table(species.name="pan paniscus")
 print(xtable(top.bonobo.genes),
@@ -1122,7 +1144,7 @@ gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,min.fpkm=1)
 @ 
-\caption{\genetreexplanation{\textit{SERPINE2}}}
+\caption{\genetreeexplanation{\textit{SERPINE2}}}
 \label{fig:serpine_evolution_tree}
 \end{figure}
 
@@ -1130,7 +1152,7 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 \subsubsection{\smonkey Transcriptome}
 
 \begin{table}
-  \tiny
+  \footnotesize
 <<top.50.spider.monkey.expressed.genes,echo=FALSE,results="asis">>=
 top.spider.monkey.genes <- top.genes.table(species.name="ateles fusciceps")
 print(xtable(top.spider.monkey.genes),
@@ -1388,7 +1410,7 @@ Laurasiatherians and Euasiatherians
 \subsubsection{\dog Placenta Transcriptome}
 
 \begin{table}
-  \tiny
+  \footnotesize
 <<top.50.dog.expressed.genes,echo=FALSE,results="asis">>=
 top.dog.genes <- top.genes.table(species.name="canis familiaris")
 print(xtable(top.dog.genes),
@@ -1441,7 +1463,7 @@ and expression of \textit{HSD3B7} is also low
 \subsubsection{\cow Placenta Transcriptome}
 
 \begin{table}
-  \tiny
+  \footnotesize
 <<top.50.cow.expressed.genes,echo=FALSE,results="asis">>=
 top.cow.genes <- top.genes.table(species.name="bos taurus")
 print(xtable(top.cow.genes),
@@ -1847,7 +1869,7 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 \subsubsection{\opossum Placenta Transcriptome}
 
 \begin{table}
-  \tiny
+  \footnotesize
 <<top.50.opossum.expressed.genes,echo=FALSE,results="asis">>=
 top.opossum.genes <- top.genes.table(species.name="monodelphis domestica")
 print(xtable(top.opossum.genes),
@@ -2065,7 +2087,7 @@ print(xtable(placenta.go.results,
   (\Sexpr{placenta.go.results[,sum(Ontology=="MF")]},
   \Sexpr{placenta.go.results[,sum(Ontology=="BP")]} BP)
   in the core placenta transcriptome as compared to all genes
-  with 1:1 human orthologs in all species. “# Core” is the
+  with 1:1 human orthologs in all species. “\# Core” is the
   number of genes in the core transcriptome for each \ac{GO} term;
   “Expected” is the number of genes expected in the core
   transcriptome for each term; “p-value” are the odds of this
@@ -2979,7 +3001,23 @@ primates, to further identify genes and expression levels that are
 specific to marsupials and eutherians, as well as confirm the identity
 of human-specific expression shifts.
 
- 
+
+\begin{backmatter}
+\section*{Competing interests}
+  The authors declare that they have no competing interests.
+
+\section*{Author's contributions}
+Don Armstrong analyzed all of the data and wrote the paper. 
+
+Michael McGowan wrote the paper and performed initial analyses.
+
+\section*{Acknowledgements}
+  Text for this section \ldots
+
+\printaddresses
+
+\end{backmatter}
+
 \printbibliography
 
 

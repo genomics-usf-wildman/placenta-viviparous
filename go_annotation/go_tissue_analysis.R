@@ -33,8 +33,8 @@ do.go.analysis <- function(species.name,go.ontology,top.100=TRUE,exclude.houseke
         analysis.type <- paste0("Top 100",analysis.type)
         gene.list <- all.genes[,factor(as.integer(rank <=100))]
     } else {
-        analysis.type <- paste0("Top 5%",analysis.type)
-        gene.list <- all.genes[,factor(as.integer(rank <= (sum(mean_fpkm>0)*0.05)))]
+        analysis.type <- paste0("Top 1%",analysis.type)
+        gene.list <- all.genes[,factor(as.integer(rank <= (sum(mean_fpkm>1)*0.01)))]
     }
     names(gene.list) <- all.genes[,egid]
     

@@ -848,6 +848,7 @@ top.genes.table <- function(species.name,n=50) {
     if (species.name=="homo sapiens" || species.name=="ateles fusciceps") {
         temp[,`Human Symbol`:=NULL]
     }
+    temp[,`FPKM`:=round(`FPKM`)]
     return(temp)
 }
 gene.expression <- function(species.name,gene,complete=FALSE,units=TRUE) {

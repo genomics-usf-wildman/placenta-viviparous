@@ -1197,8 +1197,9 @@ very highly expressed in \mouse in, with %
 \Sexpr{combined.fpkm[species=="mus musculus" &
   grepl("Prl(\\d.\\d)?",gene_short_name), sum(mean_fpkm >= 1)]}
 prolactin related genes having $\mathrm{FPKM} \ge 1$
-(\cref{fig:prolactin_evolution_tree}). The cathespins have also
-expanded in rodents, with six showing high expression
+(\cref{fig:prolactin_evolution_tree}, Supplemental
+\cref{fig:prolactin_receptor_evolution_tree}). The cathespins have
+also expanded in rodents, with six showing high expression
 (\Sexpr{gene.expression("mus_musculus","Ctsj",complete=TRUE)},
 \Sexpr{gene.expression("mus_musculus","Cts6",complete=TRUE)},
 \Sexpr{gene.expression("mus_musculus","Ctsr",complete=TRUE)},
@@ -2281,7 +2282,8 @@ is the rodent with the lowest expression of \textit{PRL}
 (\Sexpr{gene.expression("nannospalax_galili","Prl",complete=TRUE)},
 \cref{fig:prolactin_evolution_tree}), and \elephant also does not
 express \textit{HOXA11} highly either
-(\Sexpr{gene.expression("loxodonta_africana","HOXA11",complete=TRUE)}).
+(\Sexpr{gene.expression("loxodonta_africana","HOXA11",complete=TRUE)},
+Supplemental \cref{fig:hoxa11_evolution_tree}).
 
 \begin{figure}
 <<prolactin.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
@@ -2295,37 +2297,6 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 @ 
 \caption{\genetreeexplanation{prolactin}}
 \label{fig:prolactin_evolution_tree}
-\end{figure}
-
-\begin{figure}
-<<prolactin.receptor.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="PRLR" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,
-                 subtree=c("ENSG00000113494","ENSMODG00000020376"))
-@ 
-\caption{\genetreeexplanation{prolactin receptor}}
-\label{fig:prolactin_receptor_evolution_tree}
-\end{figure}
-
-\begin{figure}
-<<hoxa11.receptor.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="HOXA11" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,
-                 subtree=c("ENSBTAG00000014738","ENSECAG00000013229")
-                 )
-@ 
-\caption{\genetreeexplanation{\textit{HOXA11}}}
-\label{fig:hoxa11_evolution_tree}
 \end{figure}
 
 \subsubsection{\Ac{GH} family}

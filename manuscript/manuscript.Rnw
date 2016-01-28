@@ -958,7 +958,7 @@ gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,min.fpkm=5)
 @ 
-\caption{\genetreeexplanation{follistatin-like 1 \textit{FSTLl1}}}
+\caption{\genetreeexplanation{follistatin-like 1 \textit{FSTL1}}}
 \label{fig:fstl1_evolution_tree}
 \end{figure}
 
@@ -969,12 +969,7 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 \begin{table}
   \footnotesize
 <<top.50.human.expressed.genes,echo=FALSE,results="asis">>=
-top.human.genes <- top.genes.table(species.name="homo sapiens")
-print(xtable(top.human.genes),
-      booktabs=TRUE,
-      floating=FALSE,
-      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
-setkey(top.human.genes,"Gene symbol")
+output.top.genes.table(top.genes.table(species.name="homo sapiens"))
 @ 
 \caption{The top 50 genes by \ac{FPKM} in \human which are not
   annotated as Mt\_rRNA, Mt\_tRNA, rRNA or a housekeeping gene. Gene
@@ -1079,10 +1074,7 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
   \footnotesize
 <<top.50.bonobo.expressed.genes,echo=FALSE,results="asis">>=
 top.bonobo.genes <- top.genes.table(species.name="pan paniscus")
-print(xtable(top.bonobo.genes),
-      booktabs=TRUE,
-      floating=FALSE,
-      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
+output.top.genes.table(top.bonobo.genes)
 setkey(top.bonobo.genes,"Gene symbol")
 @ 
 \caption{\tableexplanation{\bonobo}{tab:all_pan_paniscus_placenta}}
@@ -1159,10 +1151,7 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
   \footnotesize
 <<top.50.spider.monkey.expressed.genes,echo=FALSE,results="asis">>=
 top.spider.monkey.genes <- top.genes.table(species.name="ateles fusciceps")
-print(xtable(top.spider.monkey.genes),
-      booktabs=TRUE,
-      floating=FALSE,
-      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
+output.top.genes.table(top.spider.monkey.genes)
 setkey(top.spider.monkey.genes,"Gene symbol")
 @ 
 \caption{\tableexplanation{\smonkey}{tab:all_ateles_fusciceps_placenta}}
@@ -1200,7 +1189,7 @@ greater than 50 \ac{FPKM} are listed in Supplementary
 \subsection{Rodentia Placenta Transcriptomes}
 
 \begin{table}
-  \tiny
+  \footnotesize
 <<rodentia.lineage.specific,echo=FALSE,results="asis">>=
 rod.all.lin.spec <- placenta.lineage.specific.table("rod.all")
 setkey(rod.all.lin.spec,"Human Symbol")
@@ -1218,14 +1207,9 @@ species (\cref{tab:rodentia_lineage_specific}).
 \subsubsection{\mouse Placenta Transcriptome}
 
 \begin{table}[h]
-  \tiny
+  \footnotesize
 <<top.50.mouse.expressed.genes,echo=FALSE,results="asis">>=
-top.mouse.genes <- top.genes.table(species.name="mus musculus")
-print(xtable(top.mouse.genes),
-      booktabs=TRUE,
-      floating=FALSE,
-      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
-setkey(top.mouse.genes,"Gene symbol")
+output.top.genes.table(top.genes.table(species.name="mus musculus"))
 @ 
 \caption{\tableexplanation{\mouse}{tab:all_mus_musculus_placenta}}
 \label{tab:top50_mouse_placenta}
@@ -1296,21 +1280,16 @@ gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(gene.tree,gene.tree.table,gene.tree.expression,min.fpkm=1,
                  subtree=c("ENSMODG00000002844","ENSMUSG00000055679"))
 @ 
-\caption{Expression of cathespins related to \textit{CTSL} with $\mathrm{FPKM} \ge 1$}
+\caption{\genetreeexplanation{cathespins related to \textit{CTSL}}}
 \label{fig:cathespin_evolution_tree}
 \end{figure}
 
 \subsubsection{\galili Placenta Transcriptome}
 
 \begin{table}[h]
-  \tiny
+  \footnotesize
 <<top.50.n.galili.expressed.genes,echo=FALSE,results="asis">>=
-top.galili.genes <- top.genes.table(species.name="nannospalax galili")
-print(xtable(top.galili.genes),
-      booktabs=TRUE,
-      floating=FALSE,
-      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
-setkey(top.galili.genes,"Gene symbol")
+output.top.genes.table(top.genes.table(species.name="nannospalax galili"))
 @ 
 \caption{\tableexplanation{\galili}{tab:all_nannospalax_galili_placenta}}
 \label{tab:top50_n_galili_placenta}
@@ -1343,14 +1322,9 @@ transmembrane protein of currently unknown function,
 \subsubsection{\carmeli Placenta Transcriptome}
 
 \begin{table}[h]
-  \tiny
+  \footnotesize
 <<top.50.s.carmeli.expressed.genes,echo=FALSE,results="asis">>=
-top.carmeli.genes <- top.genes.table(species.name="spalax carmeli")
-print(xtable(top.carmeli.genes),
-      booktabs=TRUE,
-      floating=FALSE,
-      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
-setkey(top.carmeli.genes,"Gene symbol")
+output.top.genes.table(top.genes.table(species.name="spalax carmeli"))
 @ 
 \caption{\tableexplanation{\carmeli}{tab:all_spalax_carmeli_placenta}}
 \label{tab:top50_s_carmeli_placenta}
@@ -1416,12 +1390,7 @@ Laurasiatherians and Euasiatherians
 \begin{table}
   \footnotesize
 <<top.50.dog.expressed.genes,echo=FALSE,results="asis">>=
-top.dog.genes <- top.genes.table(species.name="canis familiaris")
-print(xtable(top.dog.genes),
-      booktabs=TRUE,
-      floating=FALSE,
-      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
-setkey(top.dog.genes,"Gene symbol")
+output.top.genes.table(top.genes.table(species.name="canis familiaris"))
 @ 
 \caption{\tableexplanation{\dog}{tab:all_canis_familiaris_placenta}}
 \label{tab:top50_dog_placenta}
@@ -1469,12 +1438,7 @@ and expression of \textit{HSD3B7} is also low
 \begin{table}
   \footnotesize
 <<top.50.cow.expressed.genes,echo=FALSE,results="asis">>=
-top.cow.genes <- top.genes.table(species.name="bos taurus")
-print(xtable(top.cow.genes),
-      booktabs=TRUE,
-      floating=FALSE,
-      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
-setkey(top.cow.genes,"Gene symbol")
+output.top.genes.table(top.genes.table(species.name="bos taurus"))
 @ 
 \caption{\tableexplanation{\cow}{tab:all_bos_taurus_placenta}}
 \label{tab:top50_cow_placenta}
@@ -1566,14 +1530,9 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
 \subsubsection{\pig Placenta Transcriptome}
 
 \begin{table}[h]
-  \tiny
+  \footnotesize
 <<top.50.pig.expressed.genes,echo=FALSE,results="asis">>=
-top.pig.genes <- top.genes.table(species.name="sus scrofa")
-print(xtable(top.pig.genes),
-      booktabs=TRUE,
-      floating=FALSE,
-      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
-setkey(top.pig.genes,"Gene symbol")
+output.top.genes.table(top.genes.table(species.name="sus scrofa"))
 @ 
 \caption{\tableexplanation{\pig}{tab:all_sus_scrofa_placenta}}
 \label{tab:top50_pig_placenta}
@@ -1616,7 +1575,7 @@ and multiple cytoskeleton and extracellular matrix proteins
 \subsubsection{\horse Placenta Transcriptome}
 
 \begin{table}[h]
-  \tiny
+  \footnotesize
 <<top.50.horse.expressed.genes,echo=FALSE,results="asis">>=
 top.horse.genes <- top.genes.table(species.name="equus caballus")
 print(xtable(top.horse.genes),
@@ -1654,7 +1613,7 @@ similar to the pattern of expression seen in \pig and \dog.
 \subsubsection{\sheep Placenta Transcriptome}
 
 \begin{table}[h]
-  \tiny
+  \footnotesize
 <<top.50.sheep.expressed.genes,echo=FALSE,results="asis">>=
 top.sheep.genes <- top.genes.table(species.name="ovis aries",n=200)
 top.sheep.genes <-
@@ -1663,11 +1622,7 @@ top.sheep.genes <-
                     !grepl("\\((7SK|.+_([SM]RP|nuc)|SNOR[AD]\\d+|U\\d+|HIST.*)\\)",
                            `Human Symbol`)
                    ,][1:50,]
-print(xtable(top.sheep.genes),
-      booktabs=TRUE,
-      floating=FALSE,
-      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
-setkey(top.sheep.genes,"Gene symbol")
+output.top.genes.table(top.sheep.genes)
 @ 
 \caption{\tableexplanation{\sheep}{tab:all_ovis_aries_placenta}}
 \label{tab:top50_sheep_placenta}
@@ -1699,14 +1654,9 @@ play a role in cellular migration
 \subsubsection{\elephant Placenta Transcriptome}
 
 \begin{table}
-\tiny
+\footnotesize
 <<top.50.elephant.expressed.genes,echo=FALSE,results="asis">>=
-top.elephant.genes <- top.genes.table(species.name="loxodonta africana")
-print(xtable(top.elephant.genes),
-      booktabs=TRUE,
-      floating=FALSE,
-      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
-setkey(top.elephant.genes,"Gene symbol")
+output.top.genes.table(top.genes.table(species.name="loxodonta africana"))
 @ 
 \caption{\tableexplanation{\elephant}{tab:top50_elephant_placenta}}
 \label{tab:top50_elephant_placenta}
@@ -1802,14 +1752,9 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 \subsubsection{\armadillo Placenta Transcriptome}
 
 \begin{table}
-\tiny
+\footnotesize
 <<top.50.armadillo.expressed.genes,echo=FALSE,results="asis">>=
-top.armadillo.genes <- top.genes.table(species.name="dasypus novemcinctus")
-print(xtable(top.armadillo.genes),
-      booktabs=TRUE,
-      floating=FALSE,
-      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
-setkey(top.armadillo.genes,"Gene symbol")
+output.top.genes.table(top.genes.table(species.name="dasypus novemcinctus"))
 @ 
 \caption{\tableexplanation{\armadillo}{tab:all_dasypus_novemcinctus_placenta}}
 \label{tab:top50_armadillo_placenta}

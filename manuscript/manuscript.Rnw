@@ -541,7 +541,7 @@ $p$ values obtained from the Fisher Exact Test were less than or equal
 to 0.05. Enrichment tests were considered with two gene lists per
 transcriptome: annotated genes with expression levels of the top
 5\% of the frequency distribution of \ac{FPKM} (Supplemental
-\cref{tab:go_terms_enriched_top_five_dasypus_novemcinctus,tab:go_terms_enriched_top_five_equus_caballus,tab:go_terms_enriched_top_five_homo_sapiens,tab:go_terms_enriched_top_five_loxodonta_africana,tab:go_terms_enriched_top_five_monodelphis_domestica,tab:go_terms_enriched_top_five_mus_musculus,tab:go_terms_enriched_top_five_ovis_aries,tab:go_terms_enriched_top_five_pan_paniscus,tab:go_terms_enriched_top_five_sus_scrofa,tab:go_terms_enriched_top_five_ateles_fusciceps,tab:go_terms_enriched_top_five_nannospalax_galili,tab:go_terms_enriched_top_five_spalax_carmeli,tab:go_terms_enriched_top_five_bos_taurus,tab:go_terms_enriched_top_five_canis_familiaris});
+\cref{tab:go_terms_enriched_top_one_dasypus_novemcinctus,tab:go_terms_enriched_top_one_equus_caballus,tab:go_terms_enriched_top_one_homo_sapiens,tab:go_terms_enriched_top_one_loxodonta_africana,tab:go_terms_enriched_top_one_monodelphis_domestica,tab:go_terms_enriched_top_one_mus_musculus,tab:go_terms_enriched_top_one_ovis_aries,tab:go_terms_enriched_top_one_pan_paniscus,tab:go_terms_enriched_top_one_sus_scrofa,tab:go_terms_enriched_top_one_ateles_fusciceps,tab:go_terms_enriched_top_one_nannospalax_galili,tab:go_terms_enriched_top_one_spalax_carmeli,tab:go_terms_enriched_top_one_bos_taurus,tab:go_terms_enriched_top_one_canis_familiaris});
 the top 100 genes with the highest \ac{FPKM} (Supplemental
 \cref{tab:go_terms_enriched_dasypus_novemcinctus,tab:go_terms_enriched_equus_caballus,tab:go_terms_enriched_homo_sapiens,tab:go_terms_enriched_loxodonta_africana,tab:go_terms_enriched_monodelphis_domestica,tab:go_terms_enriched_mus_musculus,tab:go_terms_enriched_ovis_aries,tab:go_terms_enriched_pan_paniscus,tab:go_terms_enriched_sus_scrofa,tab:go_terms_enriched_ateles_fusciceps,tab:go_terms_enriched_nannospalax_galili,tab:go_terms_enriched_spalax_carmeli,tab:go_terms_enriched_bos_taurus,tab:go_terms_enriched_canis_familiaris}).
 Due to the paucity of annotated gene ontology terms for some species,
@@ -1657,21 +1657,6 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 \label{fig:prss16_evolution_tree}
 \end{figure}
 
-\begin{figure}
-<<rln2.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="RLN2" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
-@ 
-\caption{\genetreeexplanation{\textit{RLN2}}}
-\label{fig:rln2_evolution_tree}
-\end{figure}
-
-
 \subsubsection{\armadillo Placenta Transcriptome}
 
 \begin{table}
@@ -1702,7 +1687,7 @@ hemoglobin subunit beta,
 an un-annotated gene with high similarity to \human and \cow
 \textit{OVOS2}
 \Sexpr{gene.expression("dasypus_novemcinctus","ENSDNOG00000033320",complete=TRUE)}
-(\cref{fig:ovos2_evolution_tree}), the growth factors
+(Supplemental \cref{fig:ovos2_evolution_tree}), the growth factors
 \Sexpr{gene.expression("dasypus_novemcinctus","IGF2",complete=TRUE)}
 and
 \Sexpr{gene.expression("dasypus_novemcinctus","IGFBP4",complete=TRUE)},
@@ -1720,20 +1705,6 @@ complex are also highly expressed, including
 (\textit{ANXA2}).
 
 
-\begin{figure}
-<<ovos2.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
-
-tree.id <-
-    genes.to.tree["ENSDNOG00000033320",tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,
-                 subtree=c("ENSDNOG00000033320","ENSMODG00000017988"))
-@ 
-\caption{\genetreeexplanation{\cow \textit{OVOS2}}}
-\label{fig:ovos2_evolution_tree}
-\end{figure}
 
 
 \subsection{Metatherians}
@@ -1743,12 +1714,7 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 \begin{table}
   \footnotesize
 <<top.50.opossum.expressed.genes,echo=FALSE,results="asis">>=
-top.opossum.genes <- top.genes.table(species.name="monodelphis domestica")
-print(xtable(top.opossum.genes),
-      booktabs=TRUE,
-      floating=FALSE,
-      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
-setkey(top.opossum.genes,"Gene symbol")
+output.top.genes.table(top.genes.table(species.name="monodelphis domestica"))
 @ 
 \caption{\tableexplanation{\opossum}{tab:all_monodelphis_domestica_placenta}}
 \label{tab:top50_opossum_placenta}
@@ -1939,9 +1905,9 @@ membrane protein structure, and inflammation resolution.
 
 In order to identify major functional categories of genes expressed in
 the individual transcriptomes, we examined \ac{GSE} in 1:1 human
-orthologs which had \ac{FPKM} values in the top 5\% of expressed genes
+orthologs which had \ac{FPKM} values in the top 1\% of expressed genes
 (Supplemental %
-\cref{tab:go_terms_enriched_top_five_dasypus_novemcinctus,tab:go_terms_enriched_top_five_equus_caballus,tab:go_terms_enriched_top_five_homo_sapiens,tab:go_terms_enriched_top_five_loxodonta_africana,tab:go_terms_enriched_top_five_monodelphis_domestica,tab:go_terms_enriched_top_five_mus_musculus,tab:go_terms_enriched_top_five_ovis_aries,tab:go_terms_enriched_top_five_pan_paniscus,tab:go_terms_enriched_top_five_sus_scrofa,tab:go_terms_enriched_top_five_ateles_fusciceps,tab:go_terms_enriched_top_five_nannospalax_galili,tab:go_terms_enriched_top_five_spalax_carmeli,tab:go_terms_enriched_top_five_bos_taurus,tab:go_terms_enriched_top_five_canis_familiaris}) using topGO \cite{topGO:2.20.0}. %
+\cref{tab:go_terms_enriched_top_one_dasypus_novemcinctus,tab:go_terms_enriched_top_one_equus_caballus,tab:go_terms_enriched_top_one_homo_sapiens,tab:go_terms_enriched_top_one_loxodonta_africana,tab:go_terms_enriched_top_one_monodelphis_domestica,tab:go_terms_enriched_top_one_mus_musculus,tab:go_terms_enriched_top_one_ovis_aries,tab:go_terms_enriched_top_one_pan_paniscus,tab:go_terms_enriched_top_one_sus_scrofa,tab:go_terms_enriched_top_one_ateles_fusciceps,tab:go_terms_enriched_top_one_nannospalax_galili,tab:go_terms_enriched_top_one_spalax_carmeli,tab:go_terms_enriched_top_one_bos_taurus,tab:go_terms_enriched_top_one_canis_familiaris}) using topGO \cite{topGO:2.20.0}. %
 %
 Significant enrichment in genes ($\mathrm{FDR}\le0.05$) in the top 5\%
 of \ac{FPKM} values in at least 12 of the
@@ -2375,7 +2341,7 @@ pregnancy including increasing maternal blood flow, widening the pubic
 bone and relaxing uterine musculature in preparation for labor. In
 \dog, \elephant, \mouse, \carmeli, and \horse there is high expression
 of relaxin in the term placenta, with little evidence in other species
-examined here (\cref{fig:rln2_evolution_tree}). \textit{RLN} is known
+examined here (Supplemental \cref{fig:rln2_evolution_tree}). \textit{RLN} is known
 to be produced in the placenta of the pregnant \dog and is used in the
 diagnosis of canine pregnancy
 \cite{Steinetz.ea1989:Serumrelaxinandprogesterone,Tsutsui.ea1991:Determinationofsourceof},
@@ -2394,34 +2360,6 @@ of \textit{RLN} in the placenta of \mouse and \carmeli.
 
 \subsubsection{\textit{NPPB} and \textit{NPPC}}
 
-\begin{figure}
-<<nppb.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="NPPB" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
-@ 
-\caption{\genetreeexplanation{\textit{NPPB}}}
-\label{fig:nppb_evolution_tree}
-\end{figure}
-
-\begin{figure}
-<<nppc.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="NPPC" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
-@ 
-\caption{\genetreeexplanation{\textit{NPPC}}}
-\label{fig:nppc_evolution_tree}
-\end{figure}
-
 Two genes, \textit{NPPB} and \textit{NPPC}, code for peptide hormones
 that are important in the inducement of vasodilation, and may be
 important in increasing maternal blood flow to the fetus
@@ -2429,7 +2367,7 @@ important in increasing maternal blood flow to the fetus
 that these proteins are present in the decidua of mice
 \cite{Cameron.ea1996:sitesofgeneexpression}, but we find very little
 expression in the fetal portion of the mouse placenta
-(\cref{fig:hormone_genes,fig:nppc_evolution_tree,fig:nppb_evolution_tree}).
+(Supplemental \cref{fig:hormone_genes,fig:nppc_evolution_tree,fig:nppb_evolution_tree}).
 However, we do find high expression of at least one of these genes in
 \dog, \cow, and \elephant. The lack of expression in the hemochorial
 placentas of Euarchontoglires may mean that high expression of these
@@ -2438,34 +2376,6 @@ epitheliochorial and endotheliochorial placentas.
 
 \subsection{The Evolution of Placental Expression of Galectins}
 
-\begin{figure}
-<<galectins.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="LGALS1" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
-@ 
-\caption{Expression of galectins}
-\label{fig:galectins_evolution_tree}
-\end{figure}
-
-\begin{figure}
-<<lgals13.galectins.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="LGALS13" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
-@ 
-\caption{\genetreeexplanation{\textit{LGALS13}}}
-\label{fig:galectins_lgals13_evolution_tree}
-\end{figure}
-%$
 Galectins are recognized as major regulators of pregnancy in both
 fetal and maternal tissues
 \cite{Than.ea2012:Galectinsguardiansofeutherian}. Indeed, the
@@ -2474,17 +2384,18 @@ primates and ruminants, with the genes \textit{LGALS13},
 \textit{LGALS14}, and \textit{LGALS16} recognized as being
 placenta-specific in \human and regulating immune responses by
 inducing apoptosis of maternal T-cells
-\cite{Than.ea2009:primatesubfamilyofgalectins}. Indeed,
-\textit{LGALS14} has the highest expression of any galectin in the
-\human and \smonkey placenta
-(\cref{fig:hormone_genes,fig:galectins_lgals13_evolution_tree}), and
-other primate galectins such as \textit{LGALS13} and \textit{LGALS16}
-are also expressed in \human and \smonkey placenta. However, in the
-closely related \bonobo, \textit{LGALS14} is not found, and
-\textit{LGALS1} is the most abundant galectin. \textit{LGALS1} shows
-generally high expression in all placentas analyzed. \textit{LGALS1}
-is also involved in mediating maternal-fetal immune tolerance, and is
-expressed in both maternal and fetal tissue in primates
+\cite{Than.ea2009:primatesubfamilyofgalectins} (Supplemental
+\cref{fig:galectins_lgals13_evolution_tree}). Indeed, \textit{LGALS14}
+has the highest expression of any galectin in the \human and \smonkey
+placenta (\cref{fig:hormone_genes}, Supplemental
+\cref{fig:galectins_lgals13_evolution_tree}), and other primate
+galectins such as \textit{LGALS13} and \textit{LGALS16} are also
+expressed in \human and \smonkey placenta. However, in the closely
+related \bonobo, \textit{LGALS14} is not found, and \textit{LGALS1} is
+the most abundant galectin. \textit{LGALS1} shows generally high
+expression in all placentas analyzed. \textit{LGALS1} is also involved
+in mediating maternal-fetal immune tolerance, and is expressed in both
+maternal and fetal tissue in primates
 \cite{Than.ea2008:Emergenceofhormonaland}. \textit{LGALS1} placental
 expression was thought to be confined to eutherian mammals, as there
 is evidence of adaptive evolution at this node, as well as the
@@ -2493,16 +2404,16 @@ regions \cite{Than.ea2008:Emergenceofhormonaland}. It was unclear as
 to whether galectins such as \textit{LGALS1} were important in the
 regulation of pregnancy in marsupials, as well as eutherians. Here we
 show substantial expression of galectins in the opossum, especially
-\textit{LGALS1} (Table 8). In addition, \textit{LGALS2} is also
-expressed. The presence of galectins at the maternal-fetal interface
-in \opossum implies that it was also present in the ancestral placenta
-of therian mammals. Indeed, adaptive evolution of \textit{LGALS1} on
-the eutherian stem is likely due to the increased invasive nature of
-eutehrian placentation rather than the origination of maternal-fetal
-tolerance. Although the function of \textit{LGALS1} in the marsupial
-placenta needs to be confirmed, it is likely that the mediation of
-maternal-fetal immune tolerance by galectins is an ancient feature of
-mammalian viviparity.
+\textit{LGALS1} (Supplemental \cref{fig:galectins_evolution_tree}). In
+addition, \textit{LGALS2} is also expressed. The presence of galectins
+at the maternal-fetal interface in \opossum implies that it was also
+present in the ancestral placenta of therian mammals. Indeed, adaptive
+evolution of \textit{LGALS1} on the eutherian stem is likely due to
+the increased invasive nature of eutehrian placentation rather than
+the origination of maternal-fetal tolerance. Although the function of
+\textit{LGALS1} in the marsupial placenta needs to be confirmed, it is
+likely that the mediation of maternal-fetal immune tolerance by
+galectins is an ancient feature of mammalian viviparity.
 
 \subsection{The Opossum Placenta and the Evolution of Viviparity}
 

@@ -143,7 +143,7 @@ opts_chunk$set(cache=TRUE, autodep=TRUE)
 options(device = function(file, width = 8, height = 7, ...) {
   cairo_pdf(tempfile(), width = width, height = height, ...)
 })
-options(scipen = -1, digits = 2)
+options(scipen = -2, digits = 0)
 library("data.table")
 library("ggplot2")
 library("reshape2")
@@ -473,7 +473,7 @@ sequencing was performed by the Applied Genomics Technology Center
 total RNA and the standard Illumina protocol. Paired-end sequencing
 was performed using the Illumina Genome Analyzer II with an insert
 size of 230 base pairs (bp). Read lengths for species are shown in
-\cref{tab:ref_genome_aligned_species}.
+Supplemental \cref{tab:ref_genome_aligned_species}.
 
 \subsubsection{Additional Sequences}
 
@@ -489,16 +489,17 @@ placenta in \mouse \cite{Wang.ea2011:surveyfornovelimprinted}, \human
 
 The quality of reads was evaluated using FASTQC v0.11.2
 (\url{http://www.bioinformatics.babraham.ac.uk/projects/fastqc/}).
-Transcriptomes without a suitable reference genome (Reference of ---
-in \cref{tab:ref_genome_aligned_species}) were assembled into a
-reference using Trinity v2014-07-17
-\cite{Haas.ea2013:Denovotranscriptsequence} and annotated using
-Diamond \cite{Buchfink.ea2015:Fastandsensitiveprotein} against either
-the \human or \mouse transcriptome
-(\cref{tab:ref_genome_aligned_species}).
+Transcriptomes without a suitable reference genome (\smonkey, \galili,
+\carmeli; italic reference in Supplemental
+\cref{tab:ref_genome_aligned_species}) were assembled 
+using Trinity v2014-07-17 \cite{Haas.ea2013:Denovotranscriptsequence}
+and annotated using Diamond
+\cite{Buchfink.ea2015:Fastandsensitiveprotein} against either the
+\human or \mouse transcriptome
+(Supplemental \cref{tab:ref_genome_aligned_species}).
 % 
-All transcriptomes were then aligned to the appropriate reference
-genome using STAR v2.4.2a
+All transcriptomes were then aligned to the appropriate reference (or
+assembled) genome using STAR v2.4.2a
 \cite{Dobin.ea2013:STARultrafastuniversalRNA-seq} and expression
 values in \ac{FPKM}
 \cite{Trapnell.ea2010:Transcriptassemblyandquantification} were
@@ -510,32 +511,6 @@ a reference for \bonobo. The separation between the two
 recognized Pan species is generally perceived to be $\approx 1$ Mya
 \cite{Prüfer.ea2012:bonobogenomecomparedwith}.
 
-
-
-\begin{table}
-  \begin{tabular}{c c c c}
-    \toprule
-    Species                       & Common Name        & Reference & Read Length \\
-    \midrule
-    \textit{Ateles fusciceps}     & Spider monkey      & \textit{Homo sapiens} & 100 \\
-    \textit{Bos taurus}           & Cow                & UMD3.1     & 75 \\
-    \textit{Canis familiaris}     & Dog                & CanFam3.1  & 150 \\
-    \textit{Dasypus novemcinctus} & 9-Banded Armadillo & DASNOV3    & 100 \\
-    \textit{Equus caballus}       & Horse              & EquCab2    & 100 \\ 
-    \textit{Loxodonta africana}   & Elephant           & loxAfr3    & 75 \\
-    \textit{Homo sapiens}         & Human              & GRCh38     & 75, 150 \\
-    \textit{Monodelphis domestica} & Opossum           & BROAD05    & 75 \\
-    \textit{Mus musculus}         & Mouse              & GRCm38     & 35,44,150 \\
-    \textit{Nannospalax galili}   & Blind mole rat     & \textit{Mus musculus} & 100 \\
-    \textit{Ovis aries}           & Sheep              & Oar\_v3.1   & 151 \\
-    \textit{Pan paniscus}         & Bonobo             & CHIMP2.1.4 & 150 \\
-    \textit{Spalax carmeli}       & Blind mole rat     & \textit{Mus musculus} & 100 \\
-    \textit{Sus scrofa}           & Duroc (pig)        & Sscrofa10.2 & 51 \\
-    \bottomrule
-  \end{tabular}
-  \caption{Reference genomes for aligned species}
-  \label{tab:ref_genome_aligned_species}
-\end{table}
 
 \begin{figure}
 <<species.tree,fig.width=8,fig.height=6,echo=FALSE>>=
@@ -670,62 +645,7 @@ sequences used are deposited in SRA, and can be obtained using
 
 \subsection{Transcriptome Statistics}
 
-\begin{figure}
-<<transcriptome.mapping.figure,fig.width=8,fig.height=8,echo=FALSE>>=
-star.logs.unmapped <- 
-    star.logs[grepl("%",field) & 
-                  grepl("unmapped",field) & 
-                      !grepl("too many mismatches",field),]
-star.logs.unmapped <- 
-    star.logs.unmapped[,field:=capfirst(gsub("\\% of reads unmapped: ","",field))]
-pushViewport(viewport(layout=grid.layout(ncol=1,nrow=2,heights=c(2,1))))
-print(ggplot(star.logs.unmapped,
-             aes(x=capfirst(species),y=as.numeric(gsub("%","",value))))
-      + geom_boxplot()
-      + facet_grid(field~.,scales="free")
-      + ylab("Percent of Reads")
-      + xlab(NULL)
-      + theme_bw()
-      + theme(legend.position="top",
-              plot.margin=unit(c(0,0,0,1.1),"strwidth",data=list("","","","e8")),
-              axis.title.x=element_blank(),
-              axis.text.x = element_blank()),#element_text(angle = 30, hjust = 1, vjust=1,face="italic")),
-      vp=viewport(layout.pos.col=1,layout.pos.row=1)
-      )
-pushViewport(viewport(layout.pos.col=1,layout.pos.row=1))
-grid.text("A",
-          y=unit(1,"npc")-unit(0.1,"cm"),
-          x=unit(0,"npc")+unit(0.1,"cm"),
-          gp=gpar(fontsize=24),
-          just=c("left","top"))
-popViewport()          
-print(ggplot(star.logs[grepl("input reads$",field),],
-             aes(x=capfirst(species),y=as.numeric(value)))
-      + geom_boxplot()
-      + scale_y_log10()
-      + ylab("Reads")
-      + xlab("Species")
-      + theme_bw()
-      + theme(legend.position="top",
-              plot.margin=unit(c(0,1.6,0,0),"strheight",data=list("","TO","","")),
-              axis.text.x = element_text(angle = 30, hjust = 1, vjust=1,face="italic")),
-      vp=viewport(layout.pos.col=1,layout.pos.row=2))
-pushViewport(viewport(layout.pos.col=1,layout.pos.row=2))
-grid.text("B",
-          y=unit(1,"npc")-unit(0.1,"cm"),
-          x=unit(0,"npc")+unit(0.1,"cm"),
-          gp=gpar(fontsize=24),
-          just=c("left","top"))
-popViewport(2)
-@ 
-\caption{RNAseq read and alignment statistics for all species. A)
-  Boxplot of percentages of unmapped reads in each species; 0\% of
-  reads in all species were unmapped because of mismatches. B) Boxplot
-  of number of RNAseq reads in each species.}
-\label{fig:transcriptome_statistics}
-\end{figure}
-
-\Cref{fig:transcriptome_statistics} shows the RNAseq read and
+Supplemental \cref{fig:transcriptome_statistics} shows the RNAseq read and
 alignment statistics for all species. For transcriptomes sequenced
 with 75 bp %
 %
@@ -1379,35 +1299,13 @@ expansion seen in \mouse.
 
 \subsection{Laurasiatheria}
 
-\begin{table}
-  \tiny
-<<lau.lineage.specific,echo=FALSE,results="asis">>=
-lau.all.lin.spec <- placenta.lineage.specific.table("lau.all")
-setkey(lau.all.lin.spec,"Human Symbol")
-@ 
-\caption{Genes whose expression changed in the Laurasiatheria
-  superorder as compared to all other analyzed species.}
-\label{tab:laurasiatheria_lineage_specific}
-\end{table}
-
-\begin{table}
-  \tiny
-<<eua.lau.lineage.specific,echo=FALSE,results="asis">>=
-eua.lau.lin.spec <- placenta.lineage.specific.table("eua.lau")
-setkey(eua.lau.lin.spec,"Human Symbol")
-@ 
-\caption{Genes whose expression changed between the
-  Euasiatherian and Laurasiatherian superorder.}
-\label{tab:laurasiatheria_eurasiatherian_lineage_specific}
-\end{table}
-
 We examined the expression of five Laurasiatherians: \cow, \sheep,
 \pig, \horse, and \dog. We were unable to detect any significant
 differences after correcting for multiple testing between
 Laurasiatherians and all other analyzed species
-(\cref{tab:laurasiatheria_lineage_specific}) or between
+(Supplemental \cref{tab:laurasiatheria_lineage_specific}) or between
 Laurasiatherians and Euasiatherians
-(\cref{tab:laurasiatheria_eurasiatherian_lineage_specific}).
+(Supplemental \cref{tab:laurasiatheria_eurasiatherian_lineage_specific}).
 
 \subsubsection{\dog Placenta Transcriptome}
 
@@ -1879,8 +1777,9 @@ In addition, there is high expression of the gene hemoglobin, omega
 % this is LOC_1000016060 which I figured out by tblastn'ing AAK11486.1
 % against Monodelphis domestica
 a hemoglobin found only in marsupials and monotremes
-\cite{Opazo.ea2008:Genomicevidenceforindependent}. The hemoglobin gene
-\textit{HBA} is also expressed in the placenta
+\cite{Opazo.ea2008:Genomicevidenceforindependent} (Supplemental
+\cref{fig:hbe1_evolution_tree}). The hemoglobin gene \textit{HBA} is
+also expressed in the placenta
 (\Sexpr{gene.expression("monodelphis_domestica","ENSMODG00000016633",complete=TRUE)}).
 Two cystatin genes
 (\Sexpr{gene.expression("monodelphis_domestica","ENSMODG00000018295",complete=TRUE)}
@@ -1893,9 +1792,9 @@ gene
 cystatins \cite{Turk.ea2001:Lysosomalcysteineproteasesfacts}. The
 uncharacterized gene \textit{LOC10001195}
 (\Sexpr{gene.expression("monodelphis_domestica","ENSMODG00000006547",complete=TRUE)})
-also shows high expression in the opossum placenta. The gene \textit{WFDC2}, a
-member of the whey acidic protein (WAP) family is also expressed to a
-high degree in the opossum placenta
+also shows high expression in the opossum placenta. The gene
+\textit{WFDC2}, a member of the whey acidic protein (WAP) family is
+also expressed to a high degree in the opossum placenta
 (\Sexpr{gene.expression("monodelphis_domestica","WFDC2",complete=TRUE)}).
 Other genes with high expression include members of the annexin
 complex
@@ -1907,21 +1806,6 @@ and
 \Sexpr{gene.expression("monodelphis_domestica","ENSMODG00000005385",complete=TRUE)},
 respectively).
 
-
-
-\begin{figure}
-<<hbe1.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="HBE1" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
-@ 
-\caption{Expression of \textit{HBE1} and related genes}
-\label{fig:hbe1_evolution_tree}
-\end{figure}
 
 
 \subsection{Core Placenta Transcriptome}
@@ -1958,85 +1842,6 @@ print(ggplot(core.placenta.transcriptome.long[!grepl("(min|median|max)_expressio
 \label{fig:core_placenta_transcriptome}
 \end{figure}
 
-
-\begin{figure}
-<<core.placenta.transcriptome.distribution,fig.width=8,fig.height=8,out.height="0.8\\textheight",echo=FALSE,message=FALSE>>=
-calculate.distribution.shape <- 
-    function(min.vector) {
-        min.vector <- sort(min.vector,decreasing=TRUE)
-        temp <- data.table(FPKM=min.vector,num_genes=1:length(min.vector))
-        temp <- temp[order(-num_genes)][!duplicated(FPKM)]
-        return(temp)
-    }
-
-cptg.nh <- core.placenta.transcriptome.genes.shape[!(human_name %in% housekeeping.genes.superset[,gene_short_name])]
-
-cpt.distribution.shape <- 
-    lapply(c("min_expression",
-             "second_min_expression",
-             "third_min_expression",
-             "fourth_min_expression",
-             "fifth_min_expression"),
-           function(x){
-               calculate.distribution.shape(cptg.nh[,x,with=FALSE][[1]])[,`Lowest Expression`:=x]
-           })
-cpt.distribution.shape <- 
-    rbindlist(cpt.distribution.shape)
-
-cpt.distribution.shape <- 
-    cpt.distribution.shape[,`Lowest Expression`:=
-                               gsub("^min_expression$","First",
-                                    `Lowest Expression`)]
-cpt.distribution.shape <- 
-    cpt.distribution.shape[,`Lowest Expression`:=
-                               factor(gsub("^(.)(.+)_min_expression$","\\U\\1\\L\\2",
-                                           `Lowest Expression`,perl=TRUE),
-                                      levels=c("First","Second","Third","Fourth","Fifth"))
-                           ]
-setnames(cpt.distribution.shape,
-         "FPKM",
-         "Expression (FPKM)")
-         
-
-print(ggplot(cpt.distribution.shape[`Expression (FPKM)` > 1,],
-             aes(x=`Expression (FPKM)`,color=`Lowest Expression`,y=num_genes))
-      + geom_line(lwd=1)
-      + xlab(expression(FPKM))
-      + ylab("Genes with N-th Lowest Expression")
-      + scale_y_log10()
-      + scale_x_log10()
-      + geom_vline(xintercept=10)
-      + geom_segment(mapping=aes(y=V1,
-                         yend=V1,
-                         xend=10,
-                         x=100,
-                         color=`Lowest Expression`),
-                     data=cpt.distribution.shape[`Expression (FPKM)` > 10,
-                                              max(num_genes),`Lowest Expression`],
-                     arrow=arrow(length=unit(0.5,"cm"))
-                   )
-      + geom_text(mapping=aes(x=100,
-                      y=V1,
-                      label=paste0(V1," genes"),override=TRUE),
-                  data=cpt.distribution.shape[`Expression (FPKM)` > 10,
-                      max(num_genes),`Lowest Expression`],
-                  show_guide=FALSE,
-                  hjust=0
-                  )
-      + guides(color=guide_legend(title="Lowest\nExpression"))
-      )
-@ 
-\caption{Distribution shape of placenta core genes. The vertical axis shows
-  the number of orthologous gene sets included in the core placenta
-  transcriptome if the least expression cutoff (or second-least, etc.)
-  was set to the horizontal axis. For example, if the cutoff is set to 10
-  (vertical black line), 37 genes would be included if the FPKM of all
-  species must be at least 10, 134 genes would be included if all but
-  one species must have FPKM of at least 10. 655 genes would be
-  included if all but five species must have FPKM of at least 10.}
-\label{fig:core_placenta_transcriptome_shape}
-\end{figure}
-
 \begin{table}
 \footnotesize
 <<go.analysis,warning=FALSE,message=FALSE,echo=FALSE,results="asis">>=
@@ -2057,7 +1862,7 @@ print(xtable(placenta.go.results,
       )
 @ 
 \caption{\ac{GO} terms most significantly enriched
-  (\Sexpr{placenta.go.results[,sum(Ontology=="MF")]},
+  (\Sexpr{placenta.go.results[,sum(Ontology=="MF")]} MF,
   \Sexpr{placenta.go.results[,sum(Ontology=="BP")]} BP)
   in the core placenta transcriptome as compared to all genes
   with 1:1 human orthologs in all species. “\# Core” is the
@@ -2066,7 +1871,7 @@ print(xtable(placenta.go.results,
   transcriptome for each term; “p-value” are the odds of this
   occurring by chance calculated by the Fisher exact test for
   each term; “FDR” is the false discovery rate as estimated by
-  the Benjamini and Hochberg procedure \cite{Benjamini1995:bh_procedure}}
+  the Benjamini and Hochberg procedure \cite{Benjamini1995:bh_procedure}.}
 \label{tab:core_placenta_go_terms}
 \end{table}
 
@@ -2079,7 +1884,7 @@ the placenta transcriptome if a 1:1 ortholog of that gene was
 expressed with $\mathrm{FPKM} \ge 10$ in all species studied and was
 not a human housekeeping gene according to
 \citet{Eisenberg.ea2013:Humanhousekeepinggenesrevisited}.
-\Cref{fig:core_placenta_transcriptome_shape} shows the number of genes
+Supplemental \cref{fig:core_placenta_transcriptome_shape} shows the number of genes
 which would be included in the core placenta set if the \ac{FPKM}
 cutoff was set differently.
 %
@@ -2185,7 +1990,7 @@ go.analysis.wide <-
                      value.var="FDR"))
 go.analysis.wide <- 
     go.analysis.wide[,`n(FDR ≤ 0.05)`:=apply(go.analysis.wide[,-(1:4),with=FALSE],1,
-                                         function(x){sum(x <= 0.05)})]
+                                         function(x){sum(as.numeric(as.character(x)) <= 0.05)})]
 go.analysis.wide <- 
     go.analysis.wide[,`max(FDR ≤ 0.05)`:=apply(go.analysis.wide[,-(1:4),with=FALSE],1,
                                            function(x){if (!any(is.finite(x) & x<=0.05)) {
@@ -2195,7 +2000,7 @@ go.analysis.wide <-
                                                        }})]
 go.analysis.wide.table <- 
     go.analysis.wide[!is.na(`n(FDR ≤ 0.05)`) & `n(FDR ≤ 0.05)` >= 12 &
-                         grepl("Top 5% No Housekeeping",type),
+                         grepl("Top 1% No Housekeeping",type),
                      list(GO.ID,Term,Ontology,`n(FDR ≤ 0.05)`,`max(FDR ≤ 0.05)`)]
 go.analysis.wide.table <- 
     go.analysis.wide.table[order(Ontology,-`n(FDR ≤ 0.05)`,`max(FDR ≤ 0.05)`)]
@@ -2213,7 +2018,7 @@ print(xtable(go.analysis.wide.table,
 
 @ 
 \caption{GO terms with significant enrichment ($\mathrm{FDR}\le0.05$)
-  in 12 or more of the species analyzed from genes in the top 5\% of
+  in 12 or more of the species analyzed from genes in the top 1\% of
   expression. $n(\mathrm{FDR}\le0.05)$ is the number of species with
   significant enrichment ($\mathrm{FDR}\le 0.05$) in the GO term
   listed. $max(\mathrm{FDR}\le0.05)$ is the maximum FDR value in all

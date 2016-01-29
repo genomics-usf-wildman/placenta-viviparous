@@ -827,12 +827,12 @@ print(xtable(placenta.go.results,
       floating=FALSE
       )
 @ 
-\caption{\ac{GO} terms most significantly enriched
+\caption{GO terms most significantly enriched
   (\Sexpr{placenta.go.results[,sum(Ontology=="MF")]} MF,
   \Sexpr{placenta.go.results[,sum(Ontology=="BP")]} BP)
   in the core placenta transcriptome as compared to all genes
   with 1:1 human orthologs in all species. “\# Core” is the
-  number of genes in the core transcriptome for each \ac{GO} term;
+  number of genes in the core transcriptome for each GO term;
   “Expected” is the number of genes expected in the core
   transcriptome for each term; “p-value” are the odds of this
   occurring by chance calculated by the Fisher exact test for

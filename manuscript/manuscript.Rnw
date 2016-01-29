@@ -36,9 +36,10 @@
 \usepackage[hyperfigures,bookmarks,colorlinks,linkcolor=black,urlcolor=black]{hyperref}
 %\usepackage[hyperfigures,bookmarks,colorlinks,citecolor=black,filecolor=black,linkcolor=black,urlcolor=black]{hyperref}
 % Floats at end for journals
-% \usepackage[nolists,figuresfirst,nomarkers,heads,nofighead,notabhead]{endfloat}
-% \AtBeginFigures{\newpage \section*{Figure Legends}\renewcommand{\efloatseparator}{\hbox{}}}
-% \AtBeginTables{\newpage \section*{Tables}\renewcommand{\efloatseparator}{\mbox{}}}
+\usepackage[nolists,figuresfirst,nomarkers,heads]{endfloat}
+\renewcommand{\efloatseparator}{\mbox{}}
+%\AtBeginFigures{\newpage \renewcommand{\efloatseparator}{\mbox{}}\section*{Figure Legends}}
+%\AtBeginTables{\newpage \section*{Tables}\renewcommand{\efloatseparator}{\mbox{}}}
 \usepackage[nomargin,inline,draft]{fixme}
 \newcommand{\DLA}[1]{\textcolor{red}{\fxnote{DLA: #1}}}
 \newcommand{\DEW}[1]{\textcolor{purple}{\fxnote{DEW: #1}}}

@@ -128,7 +128,7 @@
   expression of genes related to #1. The gene tree was obtained from
   Ensembl~\cite{Cunningham.ea2015:Ensembl2015} and genes from species
   not included in this study or having expression by \ac{FPKM} less
-  than 1 were excluded from the plotted tree. Heatmap cells in grey
+  than 1 were excluded from the plotted tree. Heatmap cells in white
   are from species where there was no expression of the relevant
   transcript (or a species where that transcript does not apply).}
 
@@ -204,7 +204,7 @@ load("../go_annotation/go_tissue_analysis")
 @ 
 
 <<plot.defaults,echo=FALSE,results="hide">>=
-grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = "gray50")
+grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = NA)
 
 @ 
 
@@ -440,7 +440,7 @@ species (\human [human], \bonobo [bonobo], \dog [domestic dog], \cow
 short-tailed opossum], \galili [blind mole rat from Upper Galilee],
 \carmeli [blind mole rat from northern Israel]). Information on
 specimen ID, place and time of collection, and collector is shown for
-each sample in \DLA{Supplemental Table 1}. In the case of \bonobo,
+each sample in Supplemental \cref{tab:srr_numbers}. In the case of \bonobo,
 \cow, and \elephant, the placenta was collected at term upon expulsion
 from the mother following delivery. Placental tissue from \human was
 collected upon delivery via a caesarian section. Near-term placental
@@ -462,7 +462,7 @@ from the sample. Total RNA was then evaluated on a Nanodrop 1000
 isolation. RNA quality was assessed using A260/A280 and A260/A230
 absorbance values.
 
-\DLA{Add details for new sequences and fix numbers}
+% \DLA{Add details for new sequences and fix numbers}
 
 \subsection{Sequencing}
 
@@ -1120,7 +1120,7 @@ lower levels than \human as well (\cref{tab:top50_human_placenta}).
 Two Ensembl-annotated beta subunits of the chorionic gonadotropin
 genes are expressed in \bonobo, one related to \textit{CGB} and
 another related to \textit{CGB7}; both are not highly expressed
-(\cref{fig:cgb_evolution_tree}). Among the other top 50 expressed
+(\cref{fig:cga_cgb_evolution_tree}). Among the other top 50 expressed
 genes, there is high expression of keratins (e.g., \textit{KRT19},
 \textit{KRT18}), heat-shock proteins (e.g., \textit{HSP90B1},
 \textit{HSPA1A}), serpins (\textit{SERPINE1}, \textit{SERPINE2},
@@ -1234,7 +1234,7 @@ also expanded in rodents, with six showing high expression
 \Sexpr{gene.expression("mus_musculus","Ctsq",complete=TRUE)},
 \Sexpr{gene.expression("mus_musculus","Cts3",complete=TRUE)}, and
 \Sexpr{gene.expression("mus_musculus","Ctsm",complete=TRUE)},
-\cref{tab:top50_mouse_placenta,fig:cathespin_evolution_tree}).
+\cref{tab:top50_mouse_placenta,fig:pag2_prss16_ctsl_psg_evolution_tree}).
 Finally, \textit{Peg10}, an imprinted gene required for proper
 formation of the placenta in mice is also highly expressed
 (\Sexpr{gene.expression("mus_musculus","Peg10")}), as previously
@@ -1493,12 +1493,7 @@ and multiple cytoskeleton and extracellular matrix proteins
 \begin{table}[h]
   \footnotesize
 <<top.50.horse.expressed.genes,echo=FALSE,results="asis">>=
-top.horse.genes <- top.genes.table(species.name="equus caballus")
-print(xtable(top.horse.genes),
-      booktabs=TRUE,
-      floating=FALSE,
-      sanitize.text.function=genes.table.sanitize,include.rownames=FALSE)
-setkey(top.horse.genes,"Gene symbol")
+output.top.genes.table(top.genes.table(species.name="equus caballus"))
 @ 
 \caption{\tableexplanation{\horse}{tab:all_equus_caballus_placenta}}
 \label{tab:top50_horse_placenta}
@@ -1594,20 +1589,22 @@ were also also was highly expressed. The miRNA mir-675
 which is imbedded in the first exon of the maternally imprinted long
 non-coding RNA gene \textit{H19}
 \cite{Keniry.ea2012:H19lincRNAisdevelopmental}, a gene which is
-currently un-annotated in \elephant{}. \DLA{Probably consider fixing
-  the unannotation of H19; it seems pretty obvious to me, though it
-  would require fixing the GTF file for elephant with the right
-  \href{http://useast.ensembl.org/Loxodonta_africana/Transcript/Summary?db=core;pt=GENSCAN00000034833;r=scaffold_145:855987-899506}{genscan
-    prediction} for this region} Five uncharacterized genes are
-expressed to a high degree in the \elephant placenta
-(\cref{tab:top50_elephant_placenta}), three of which
+currently un-annotated in \elephant{}. %
+% \DLA{Probably consider fixing the unannotation of H19; it seems pretty
+%   obvious to me, though it would require fixing the GTF file for
+%   elephant with the right
+%   \href{http://useast.ensembl.org/Loxodonta_africana/Transcript/Summary?db=core;pt=GENSCAN00000034833;r=scaffold_145:855987-899506}{genscan
+%     prediction} for this region} %
+Five uncharacterized genes are expressed to a high degree in the
+\elephant placenta (\cref{tab:top50_elephant_placenta}), three of
+which
 (\Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000028493",complete=TRUE)},
 \Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000032011",complete=TRUE)},
 \Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000031933",complete=TRUE)})
 are members of an \elephant{}-specific expansion of 11 genes closely
 related to the thymus-specific serine protease gene \textit{PRSS16}
-\cref{fig:pag2_prss16_ctsl_psg_evolution_tree}~C The other 8 \textit{PRSS16}-like
-genes are also expressed to a lesser degree
+\cref{fig:pag2_prss16_ctsl_psg_evolution_tree}~C The other 8
+\textit{PRSS16}-like genes are also expressed to a lesser degree
 (\Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000026505",complete=TRUE)}).
 Two other novel genes with high expression are related to the gene
 \textit{SSLP1}
@@ -1756,7 +1753,6 @@ respectively).
 
 \subsection{Core Placenta Transcriptome}
 
-
 \begin{figure}
 <<core.placenta.transcriptome,fig.width=8,fig.height=12,out.height="0.8\\textheight",echo=FALSE>>=
 print(ggplot(core.placenta.transcriptome.long[!grepl("(min|median|max)_expression",Species),],
@@ -1788,38 +1784,6 @@ print(ggplot(core.placenta.transcriptome.long[!grepl("(min|median|max)_expressio
 \label{fig:core_placenta_transcriptome}
 \end{figure}
 
-\begin{table}
-\footnotesize
-<<go.analysis,warning=FALSE,message=FALSE,echo=FALSE,results="asis">>=
-placenta.go.results <- rbindlist(list(head(n=20,placenta_go_results_mf[classic.fdr < 0.05,]),
-                             head(n=20,placenta_go_results_bp[classic.fdr < 0.05,])))
-placenta.go.results <- placenta.go.results[,Annotated:=NULL]
-setnames(placenta.go.results,"Significant","# Core")
-setnames(placenta.go.results,"classic","p value")
-setnames(placenta.go.results,"classic.fdr","FDR")
-setnames(placenta.go.results,"GO.ID","GO ID")
-setnames(placenta.go.results,"Term","GO Term")
-print(xtable(placenta.go.results,
-             digits=2,
-             display=c("d","s","s","d","f","e","e","s")),
-      include.rownames=FALSE,
-      booktabs=TRUE,
-      floating=FALSE
-      )
-@ 
-\caption{\ac{GO} terms most significantly enriched
-  (\Sexpr{placenta.go.results[,sum(Ontology=="MF")]} MF,
-  \Sexpr{placenta.go.results[,sum(Ontology=="BP")]} BP)
-  in the core placenta transcriptome as compared to all genes
-  with 1:1 human orthologs in all species. “\# Core” is the
-  number of genes in the core transcriptome for each \ac{GO} term;
-  “Expected” is the number of genes expected in the core
-  transcriptome for each term; “p-value” are the odds of this
-  occurring by chance calculated by the Fisher exact test for
-  each term; “FDR” is the false discovery rate as estimated by
-  the Benjamini and Hochberg procedure \cite{Benjamini1995:bh_procedure}.}
-\label{tab:core_placenta_go_terms}
-\end{table}
 
 The
 \Sexpr{core.placenta.transcriptome.long[,length(unique(human_name))]}
@@ -1849,7 +1813,7 @@ interaction as well as vesicle trafficking and von Willibrand Factor
 secretion. The expression regulation of another core gene,
 \textit{TIMP3}, has been implicated in pre-eclampsia
 \cite{Ma.ea2014:Down-regulationofTIMP3leads,Xiang.ea2013:PromoterhypomethylationofTIMP3}.
-\Cref{tab:core_placenta_go_terms} lists the significant enrichment of
+Supplemental \cref{tab:core_placenta_go_terms} lists the significant enrichment of
 \ac{GO} terms in the core placenta transcriptome; notable terms
 include those involved in cytoskeletal structure, protein transport,
 membrane protein structure, and inflammation resolution.
@@ -1888,13 +1852,13 @@ orthologs which had \ac{FPKM} values in the top 1\% of expressed genes
 (Supplemental %
 \cref{tab:go_terms_enriched_top_one_dasypus_novemcinctus,tab:go_terms_enriched_top_one_equus_caballus,tab:go_terms_enriched_top_one_homo_sapiens,tab:go_terms_enriched_top_one_loxodonta_africana,tab:go_terms_enriched_top_one_monodelphis_domestica,tab:go_terms_enriched_top_one_mus_musculus,tab:go_terms_enriched_top_one_ovis_aries,tab:go_terms_enriched_top_one_pan_paniscus,tab:go_terms_enriched_top_one_sus_scrofa,tab:go_terms_enriched_top_one_ateles_fusciceps,tab:go_terms_enriched_top_one_nannospalax_galili,tab:go_terms_enriched_top_one_spalax_carmeli,tab:go_terms_enriched_top_one_bos_taurus,tab:go_terms_enriched_top_one_canis_familiaris}) using topGO \cite{topGO:2.20.0}. %
 %
-Significant enrichment in genes ($\mathrm{FDR}\le0.05$) in the top 5\%
+Significant enrichment in genes ($\mathrm{FDR}\le0.05$) in the top 1\%
 of \ac{FPKM} values in at least 12 of the
 \Sexpr{length(species.names)} species included clusters such as
 membrane organization , locomotion, tissue development, extracellular
 matrix organization, regulation of peptidase activity, and various
 cell death related pathways among others
-(\cref{tab:go_terms_all_species}). If we instead examine the top 100
+(Supplemental \cref{tab:go_terms_all_species}). If we instead examine the top 100
 genes by \ac{FPKM} in each of the \Sexpr{length(species.names)}
 species (Supplemental %
 \cref{tab:go_terms_enriched_dasypus_novemcinctus,tab:go_terms_enriched_equus_caballus,tab:go_terms_enriched_homo_sapiens,tab:go_terms_enriched_loxodonta_africana,tab:go_terms_enriched_monodelphis_domestica,tab:go_terms_enriched_mus_musculus,tab:go_terms_enriched_ovis_aries,tab:go_terms_enriched_pan_paniscus,tab:go_terms_enriched_sus_scrofa,tab:go_terms_enriched_ateles_fusciceps,tab:go_terms_enriched_nannospalax_galili,tab:go_terms_enriched_spalax_carmeli,tab:go_terms_enriched_bos_taurus,tab:go_terms_enriched_canis_familiaris})
@@ -1925,52 +1889,6 @@ related processes.
 % with RNA, coagulation and calcium binding. Opossum shows enrichment in
 % genes involved in apoptosis, oxidative stress, mitochondrion, hormone
 % metabolism, and lipids.
-
-
-\begin{table}
-  \footnotesize
-<<go.analysis.all.tissue,echo=FALSE,results="asis">>=
-go.analysis.wide <- 
-    data.table(dcast(data=go.results,
-                     formula=GO.ID+type+Term+Ontology~species,
-                     value.var="FDR"))
-go.analysis.wide <- 
-    go.analysis.wide[,`n(FDR ≤ 0.05)`:=apply(go.analysis.wide[,-(1:4),with=FALSE],1,
-                                         function(x){sum(as.numeric(as.character(x)) <= 0.05)})]
-go.analysis.wide <- 
-    go.analysis.wide[,`max(FDR ≤ 0.05)`:=apply(go.analysis.wide[,-(1:4),with=FALSE],1,
-                                           function(x){if (!any(is.finite(x) & x<=0.05)) {
-                                                           return(NA)
-                                                       } else {
-                                                           max(x[is.finite(x) & x<=0.05],na.rm=TRUE)
-                                                       }})]
-go.analysis.wide.table <- 
-    go.analysis.wide[!is.na(`n(FDR ≤ 0.05)`) & `n(FDR ≤ 0.05)` >= 12 &
-                         grepl("Top 1% No Housekeeping",type),
-                     list(GO.ID,Term,Ontology,`n(FDR ≤ 0.05)`,`max(FDR ≤ 0.05)`)]
-go.analysis.wide.table <- 
-    go.analysis.wide.table[order(Ontology,-`n(FDR ≤ 0.05)`,`max(FDR ≤ 0.05)`)]
-setnames(go.analysis.wide.table,"GO.ID","GO ID")
-
-print(xtable(go.analysis.wide.table,
-             display=c("d","s","s","s","d","e"),
-             align=  c("c","c","c","c","c","c")
-             ),
-      math.style.exponents=TRUE,
-      include.rownames=FALSE,
-      booktabs=TRUE,
-      floating=FALSE
-      )
-
-@ 
-\caption{GO terms with significant enrichment ($\mathrm{FDR}\le0.05$)
-  in 12 or more of the species analyzed from genes in the top 1\% of
-  expression. $n(\mathrm{FDR}\le0.05)$ is the number of species with
-  significant enrichment ($\mathrm{FDR}\le 0.05$) in the GO term
-  listed. $max(\mathrm{FDR}\le0.05)$ is the maximum FDR value in all
-  species with an FDR of less than $0.05$.}
-\label{tab:go_terms_all_species}
-\end{table}
 
 
 % Not sure if this is actually worthwhile; I've mentioned some of this
@@ -2111,7 +2029,8 @@ common.plot.options <-
          scale_y_discrete("", expand = c(0, 0)),
          theme_grey(base_size = 9),
          theme(legend.position = "top",
-               axis.ticks = element_blank(), 
+               axis.ticks = element_blank(),
+               panel.background = element_blank(),
                axis.text.x = element_text(angle = 300, hjust = 0, vjust=1,face="italic")),
          facet_grid(type~.,scale="free_y",space="free_y")
          )
@@ -2185,7 +2104,7 @@ express \textit{HOXA11} highly either
 (\Sexpr{gene.expression("loxodonta_africana","HOXA11",complete=TRUE)},
 Supplemental \cref{fig:hoxa11_evolution_tree}).
 
-\subsubsection{\Ac{GH} family}
+\subsubsection{\ac{GH} family}
 
 The \ac{GH} family has expanded in anthropoid primates, resulting in
 approximately 5 genes in \human (\textit{GH1}, \textit{GH2},
@@ -2211,29 +2130,39 @@ and it is likely that they have the same function in \bonobo.
 \begin{figure}
 <<chorionic.somatomammotropin.alpha.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
 
+plot.label.size <- 4
+pushViewport(viewport(layout=grid.layout(nrow=1,ncol=2,widths=c(2,3))))
+
 tree.id <-
     genes.to.tree[combined.fpkm[gene_short_name=="CGA" & species=="homo sapiens",gene_id],tree]
 gene.tree.table <- trees[[tree.id]]$table
 gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
-@ 
-\caption{\genetreeexplanation{chorionic gonadotropin, alpha subunit}}
-\label{fig:cga_evolution_tree}
-\end{figure}
-
-\begin{figure}
-<<chorionic.gonadotropin.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,
+                 vp=viewport(layout.pos.col=1,layout.pos.row=1),
+                 offset.ratio=0.8,
+                 fontsize=plot.label.size
+                 )
 
 tree.id <-
     genes.to.tree[combined.fpkm[gene_short_name=="CGB1" & species=="homo sapiens",gene_id],tree]
 gene.tree.table <- trees[[tree.id]]$table
 gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,
+                 vp=viewport(layout.pos.col=2,layout.pos.row=1),
+                 subtree=c("ENSMODG00000013768","ENSG00000104818"),
+                 offset.ratio=0.6,
+                 fontsize=plot.label.size)
+popViewport(1)
+grid.text(c("A","B"),
+          x=unit(c(0,1/3),"npc"),y=unit(c(1,1),"npc"),
+          just=c("left","top"),
+          gp=gpar(fontsize="48")
+          )
 @ 
-\caption{\genetreeexplanation{chorionic gonadotropin, beta subunit}}
-\label{fig:cgb_evolution_tree}
+\caption{\genetreeexplanation{(A) \textit{CGA} (B) \textit{CGB}}}
+\label{fig:cga_cgb_evolution_tree}
 \end{figure}
 
 The human gene \textit{CGA} codes for the alpha subunit of multiple
@@ -2244,12 +2173,12 @@ numerous chorionic gonadotropins with variable beta subunits
 the chorionic gonadotropins is to prevent the regression of the corpus
 luteum \cite{Hanson.ea1971:EffectsofHCGand}. Among the six placentas
 we analyzed here, \textit{CGA} is only expressed in the placentas of
-\human and \bonobo (\cref{fig:hormone_genes,fig:cga_evolution_tree}),
+\human and \bonobo (\cref{fig:hormone_genes,fig:cga_cgb_evolution_tree}),
 which corresponds with the emergence of the chorionic gonadotropins in
 anthropoid primates
 \cite{Maston.ea2002:Chorionicgonadotropinhasrecent}. However, oddly,
 \textit{CGA} is expressed at much higher levels in both species than
-the beta subunits with which its product dimerizes (\cref{fig:hormone_genes,fig:cga_evolution_tree,fig:cgb_evolution_tree}).
+the beta subunits with which its product dimerizes (\cref{fig:hormone_genes,fig:cga_cgb_evolution_tree}).
 \textit{CGA} is one of several genes noted by
 \citet{Uddin.ea2008:Distinctgenomicsignaturesof} to have undergone
 adaptive evolution of the \human{}-\textit{P. troglodytes} stem lineage.
@@ -2287,7 +2216,7 @@ important in increasing maternal blood flow to the fetus
 that these proteins are present in the decidua of mice
 \cite{Cameron.ea1996:sitesofgeneexpression}, but we find very little
 expression in the fetal portion of the mouse placenta
-(Supplemental \cref{fig:hormone_genes,fig:nppc_evolution_tree,fig:nppb_evolution_tree}).
+(\cref{fig:hormone_genes}, Supplemental \cref{fig:nppc_evolution_tree,fig:nppb_evolution_tree}).
 However, we do find high expression of at least one of these genes in
 \dog, \cow, and \elephant. The lack of expression in the hemochorial
 placentas of Euarchontoglires may mean that high expression of these
@@ -2400,20 +2329,6 @@ relative abundance in \opossum placenta.
 
 \subsection{Novel Gene Expansions in the Elephant Placenta}
 
-\begin{figure}
-<<sslp1.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_id=="ENSCAFG00000010638" & species=="canis familiaris",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
-@ 
-\caption{\genetreeexplanation{\textit{SSLP1}}}
-\label{fig:sslp1_evolution_tree}
-\end{figure}
-
 We found evidence of high expression in two novel expansions of genes
 in the \elephant genome. One family includes 11 genes that are related
 to the \textit{PRSS16} gene, a thymus-specific serine protease that
@@ -2421,7 +2336,7 @@ may be involved regulating the presentation of self-peptides in CD4+
 T-lymphocytes \cite{Fornari.ea2012:TranscriptionprofilingofPrss16}.
 All 11 of these genes are expressed in the elephant placenta, three of
 which have very abundant mRNAs
-(\cref{tab:top50_elephant_placenta,fig:prss16_evolution_tree}). It is
+(\cref{tab:top50_elephant_placenta} and \cref{fig:pag2_prss16_ctsl_psg_evolution_tree}C). It is
 possible that this elephant-specific gene family may be involved in
 immunity in the elephant placenta and the mediation of maternal-fetal
 immune tolerance; however, future work will need to test these
@@ -2599,7 +2514,5 @@ Michael McGowan wrote the paper and performed initial analyses.
 \end{backmatter}
 
 \printbibliography
-
-
 
 \end{document}

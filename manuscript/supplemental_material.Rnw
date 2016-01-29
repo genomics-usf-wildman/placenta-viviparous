@@ -97,7 +97,7 @@
 \newcommand{\genetreeexplanation}[1]{Gene tree and heatmap of
   expression of genes related to #1. The gene tree was obtained from
   Ensembl~\cite{Cunningham.ea2015:Ensembl2015} and genes from species
-  not included in this study or having expression by \ac{FPKM} less
+  not included in this study or having expression by FPKM less
   than 1 were excluded from the plotted tree. Heatmap cells in grey
   are from species where there was no expression of the relevant
   transcript (or a species where that transcript does not apply).}

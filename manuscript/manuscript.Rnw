@@ -522,29 +522,29 @@ print(pp %>%
       ## monodelphis
       phylopic("91324e57-b3f1-42e0-abe3-43e5bc8aa4c6", color="#86B875",alpha=0.5,node=1,width=0.2)
       ## Armadillo
-      %>% phylopic("5d59b5ce-c1dd-40f6-b295-8d2629b9775e", color="#44EEBB",alpha=0.5,node=2,width=0.18)
+      %>% phylopic("5d59b5ce-c1dd-40f6-b295-8d2629b9775e", color="#44EEBB",alpha=0.5,node=2,width=0.15)
       ## elephant
-      %>% phylopic("80db1004-bc9f-4318-84e7-cdd9639a1f3e",color="#BB1111",alpha=0.5,node=3,width=0.18)
+      %>% phylopic("80db1004-bc9f-4318-84e7-cdd9639a1f3e",color="#BB1111",alpha=0.5,node=3,width=0.15)
       ## dog
-      %>% phylopic("4d83a0cd-cf06-4a32-9a5a-0a6b644158c1",color="#FFAACC",alpha=0.5,node=4,width=0.19)
+      %>% phylopic("4d83a0cd-cf06-4a32-9a5a-0a6b644158c1",color="#FFAACC",alpha=0.5,node=4,width=0.15)
       ## horse
-      %>% phylopic("071ee517-a0f1-4d19-aa29-812b9f86cb53",color="#22BBBB",alpha=0.5,node=5,width=0.18)
+      %>% phylopic("071ee517-a0f1-4d19-aa29-812b9f86cb53",color="#22BBBB",alpha=0.5,node=5,width=0.15)
       ## pig
-      %>% phylopic("008d6d88-d1be-470a-8c70-73625c3fb4fb",color="#33AA11",alpha=0.5,node=6,width=0.15)
+      %>% phylopic("008d6d88-d1be-470a-8c70-73625c3fb4fb",color="#33AA11",alpha=0.5,node=6,width=0.12)
       ## sheep
-      %>% phylopic("cbea1964-89bf-4ce1-99b0-58fe0f9170b3",color="#004411",alpha=0.5,node=7,width=0.2)
+      %>% phylopic("cbea1964-89bf-4ce1-99b0-58fe0f9170b3",color="#004411",alpha=0.5,node=7,width=0.18)
       ## cow
-      %>% phylopic("415714b4-859c-4d1c-9ce0-9e1081613df7",color="#881111",alpha=0.5,node=8,width=0.15)
+      %>% phylopic("415714b4-859c-4d1c-9ce0-9e1081613df7",color="#881111",alpha=0.5,node=8,width=0.12)
       ## s carmeli
-      %>% phylopic("287c58ad-009b-4878-9a9e-59fd7e0fe66f",color="#881188",alpha=0.5,node=9,width=0.15)
+      %>% phylopic("287c58ad-009b-4878-9a9e-59fd7e0fe66f",color="#881188",alpha=0.5,node=9,width=0.1)
       ## n galili
-      %>% phylopic("287c58ad-009b-4878-9a9e-59fd7e0fe66f",color="#888888",alpha=0.5,node=10,width=0.15)
+      %>% phylopic("287c58ad-009b-4878-9a9e-59fd7e0fe66f",color="#888888",alpha=0.5,node=10,width=0.1)
       ## mouse
-      %>% phylopic("6b2b98f6-f879-445f-9ac2-2c2563157025",color="#BB11CC",alpha=0.5,node=11,width=0.2)
+      %>% phylopic("6b2b98f6-f879-445f-9ac2-2c2563157025",color="#BB11CC",alpha=0.5,node=11,width=0.18)
       ## bonobo
-      %>% phylopic("f06b4dd0-094e-4f37-9105-25fdb4eb1b02",color="#1111FF",alpha=0.5,node=14,width=0.18)
+      %>% phylopic("f06b4dd0-094e-4f37-9105-25fdb4eb1b02",color="#1111FF",alpha=0.5,node=12,width=0.18)
       ## spider monkey
-      %>% phylopic("aceb287d-84cf-46f1-868c-4797c4ac54a8",color="#FF11FF",alpha=0.5,node=12,width=0.25)
+      %>% phylopic("aceb287d-84cf-46f1-868c-4797c4ac54a8",color="#FF11FF",alpha=0.5,node=14,width=0.25)
       ## human
       %>% phylopic("a9f4ebd5-53d7-4de9-9e66-85ff6c2d513e",color="#CCCC44",alpha=0.5,node=13,width=0.18)
       )

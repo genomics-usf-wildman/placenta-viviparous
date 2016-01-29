@@ -468,6 +468,92 @@ genes.expression.table <- function(species.name,min.fpkm=50) {
 \subsection{Gene Evolution Trees}
 
 \begin{figure}
+<<fstl1.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="FSTL1" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,min.fpkm=5)
+@ 
+\caption{\genetreeexplanation{follistatin-like 1 \textit{FSTL1}}}
+\label{fig:fstl1_evolution_tree}
+\end{figure}
+
+\begin{figure}
+<<serpine.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="SERPINE2" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,min.fpkm=1)
+@ 
+\caption{\genetreeexplanation{\textit{SERPINE2}}}
+\label{fig:serpine_evolution_tree}
+\end{figure}
+
+\begin{figure}
+<<estrogen.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="CYP19A1" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+@ 
+\caption{\genetreeexplanation{estrogen synthesis genes}}
+\label{fig:estrogen_evolution_tree}
+\end{figure}
+
+\begin{figure}
+<<progesterone.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="HSD3B1" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,
+                 subtree=c("ENSMODG00000005385","ENSLAFG00000027896")
+                 )
+@ 
+\caption{\genetreeexplanation{progesterone synthesis genes}}
+\label{fig:progesterone_evolution_tree}
+\end{figure}
+
+\begin{figure}
+<<chorionic.somatomammotropin.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="CSH1" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+@ 
+\caption{\genetreeexplanation{chorionic somatomammotropin}}
+\label{fig:csh1_evolution_tree}
+\end{figure}
+
+\begin{figure}
+<<prolactin.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="PRL" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+@ 
+\caption{\genetreeexplanation{prolactin}}
+\label{fig:prolactin_evolution_tree}
+\end{figure}
+
+\begin{figure}
 <<rln2.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
 
 tree.id <-
@@ -544,6 +630,17 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 \end{figure}
 
 \subsection{Clade specific Expression}
+
+\begin{table}
+  \footnotesize
+<<rodentia.lineage.specific,echo=FALSE,results="asis">>=
+rod.all.lin.spec <- placenta.lineage.specific.table("rod.all")
+setkey(rod.all.lin.spec,"Human Symbol")
+@ 
+\caption{Genes whose expression changed significantly in the Rodentia
+  order as compared to all other analyzed species.}
+\label{tab:rodentia_lineage_specific}
+\end{table}
 
 \begin{table}
   \footnotesize

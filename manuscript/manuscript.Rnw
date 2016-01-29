@@ -217,17 +217,16 @@ grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = "g
 \title{The evolution of gene expression in the term placenta of viviparous mammals}%
 %
 \author[addressref={aff1},email={don@donarmstrong.com}]{\inits{DL}\fnm{Don L} \snm{Armstrong}}
-\author[addressref={aff2}]{\inits{MR}\fnm{Michael R.} \snm{McGowen}}
+\author[addressref={aff2},email={1mmcgowen1@gmail.com}]{\inits{MR}\fnm{Michael R.} \snm{McGowen}}
 \author[addressref={aff1},email={aweckle@illinois.edu}]{\inits{AL} \fnm{Amy} \snm{Weckle}}
-\author[addressref={aff3}]{\inits{J}\fnm{Jason} \snm{Caravas}}
-\author[addressref={aff4}]{\inits{D}\fnm{Dalen} \snm{Agnew}}
-\author[addressref={aff5}]{\inits{K}\fnm{Kurt} \snm{Benirschke}}
-\author[addressref={aff6}]{\inits{S}\fnm{Sue} \snm{Savage-Rumbaugh}}
-\author[addressref={aff7,aff8}]{\inits{CJ}\fnm{Chong J} \snm{Kim}}
-\author[addressref={aff9}]{\inits{GP}\fnm{Günter P.} \snm{Wagner}}
-\author[addressref={aff7}]{\inits{R}\fnm{Roberto} \snm{Romero}}
+\author[addressref={aff3},email={jacaravas@gmail.com}]{\inits{J}\fnm{Jason} \snm{Caravas}}
+\author[addressref={aff4},email={agnewd@dcpah.msu.edu}]{\inits{D}\fnm{Dalen} \snm{Agnew}}
+\author[addressref={aff5},email={kbenirschke@ucsd.edu}]{\inits{K}\fnm{Kurt} \snm{Benirschke}}
+\author[addressref={aff6},email={suerumbaugh@gmail.com}]{\inits{S}\fnm{Sue} \snm{Savage-Rumbaugh}}
+\author[addressref={aff7,aff8},email={cjkim@med.wayne.edu}]{\inits{CJ}\fnm{Chong J} \snm{Kim}}
+\author[addressref={aff9},email={gunter.wagner@yale.edu}]{\inits{GP}\fnm{Günter P.} \snm{Wagner}}
+\author[addressref={aff7},email={prbchiefstaff@med.wayne.edu}]{\inits{R}\fnm{Roberto} \snm{Romero}}
 \author[addressref={aff1,aff6,aff10},corref={aff1},email={wildmand@illinois.edu}]{\inits{DE}\fnm{Derek E.} \snm{Wildman}}
-% These are all wrong, but we'll change them later.
 \address[id=aff1]{Institute for Genomic Biology, University of Illinois at Urbana-Champaign, Urbana, IL, USA}
 \address[id=aff2]{School of Biological and Chemical Sciences, Queen Mary, University of London, London, UK}
 \address[id=aff3]{Center for Molecular Medicine and Genetics, Wayne State University School of Medicine, Detroit, MI, USA}
@@ -238,7 +237,6 @@ grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = "g
 \address[id=aff8]{Department of Pathology, Wayne State University School of Medicine, Detroit, MI, USA}
 \address[id=aff9]{Department of Ecology and Evolutionary Biology and Yale Systems Biology Institute, Yale University, New Haven, CT, USA}
 \address[id=aff10]{Department of Molecular and Integrative Physiology, University of Illinois at Urbana-Champaign, Urbana, IL, USA}
-%\address[id=affcor]{Derek Wildman <wildmand@illinois.edu>}
 
 \begin{artnotes}
 \end{artnotes}

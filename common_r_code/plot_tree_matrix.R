@@ -1,7 +1,79 @@
 library("magrittr")
 library("tidyr")
 library("geiger")
-plot.tree.matrix <- function(gene.tree,gene.tree.table,gene.tree.expression,offset.ratio=0.5,min.fpkm=NA,subtree=NULL) {
+
+
+don.gheatmap <- function(p, data, offset=0, width=1, low="green", high="red",
+                     color="white", colnames=TRUE, colnames_position="bottom", font.size=4) {
+
+    colnames_position %<>% match.arg(c("bottom", "top"))
+    variable <- value <- lab <- y <- NULL
+    
+    ## if (is.null(width)) {
+    ##     width <- (p$data$x %>% range %>% diff)/30
+    ## }
+
+    ## convert width to width of each cell
+    width <- width * (p$data$x %>% range %>% diff) / ncol(data)
+    
+    isTip <- x <- y <- variable <- value <- from <- to <- NULL
+ 
+    df=p$data
+    df=df[df$isTip,]
+    start <- max(df$x) + offset
+
+    dd <- data[df$label[order(df$y)],]
+    dd$y <- sort(df$y)
+
+    dd$lab <- rownames(dd)
+    ## dd <- melt(dd, id=c("lab", "y"))
+    dd <- gather(dd, variable, value, -c(lab, y))
+    
+    dd$value[is.na(dd$value) | dd$value == ""] <- NA
+
+    V2 <- start + as.numeric(dd$variable) * width
+    mapping <- data.frame(from=dd$variable, to=V2)
+    mapping <- unique(mapping)
+
+    dd$x <- V2
+
+    #if (is.null(color)) {
+        p2 <- p + geom_raster(data=dd, aes(x, y, fill=value), inherit.aes=FALSE)
+##    } else {
+##        p2 <- p + geom_raster(data=dd, aes(x, y, fill=value), color=color, inherit.aes=FALSE)
+##    }
+    if (is(dd$value,"numeric")) {
+        p2 <- p2 + scale_fill_gradient(low=low, high=high, na.value="white")
+    } else {
+        p2 <- p2 + scale_fill_discrete(na.value="white")
+    }
+    
+    if (colnames) {
+        if (colnames_position == "bottom") {
+            y <- min(p$data$y)-0.6
+        } else {
+            y <- max(p$data$y) + 1
+        }
+        p2 <- p2 + geom_text(data=mapping,
+                             aes(x=to, label=from),
+                             angle=90,
+                             hjust=1,
+                             vjust=0.5,
+                             y=y, size=font.size, inherit.aes = FALSE)
+    }
+
+    p2 <- p2 + theme(legend.position="top",
+                     legend.title=element_blank(),
+                     legend.margin=unit(0,"mm"),
+                     plot.margin=unit(c(0,0,0,0),"mm")
+                     )
+    # p2 <- p2 + guides(fill = guide_legend(override.aes = list(color = NULL)))
+    
+    attr(p2, "mapping") <- mapping
+    return(p2)
+}
+
+plot.tree.matrix <- function(gene.tree,gene.tree.table,gene.tree.expression,offset.ratio=0.5,min.fpkm=NA,subtree=NULL,vp=NULL,fontsize=3) {
     gene.tree$tip.label <- gsub("^(ENS.+)\\1$","\\1",gene.tree$tip.label)
     gene.tree.table[,species:=capfirst(gsub("_"," ",species))]
     gene.tree.table[,short.species:=gsub("^(.)[^ ]* +([^ ]*)","\\1. \\2",species)]
@@ -56,86 +128,29 @@ plot.tree.matrix <- function(gene.tree,gene.tree.table,gene.tree.expression,offs
     gene.tree.subset$tip.label <-
         gene.tree.table[gene.tree.subset$tip.label,symbol_or_id]
     p <- ggtree(gene.tree.subset)# %>% add_legend(x=2008, y=5)
-    p <- p + geom_tiplab(aes(label=""),align=TRUE,size=3)
+#    p <- p; + geom_tiplab(aes(label=""),align=TRUE,size=10)
     
 
     text.labels <- p$data[!is.na(p$data$label),]
-    text.labels$xpos <- max(p$data$x)+max(p$data$x)*offset.ratio/2
-    print(don.gheatmap(p,data=gene.tree.expression.matrix,offset=max(p$data$x)*offset.ratio,colnames=TRUE)
+    text.labels$xpos <- max(p$data$x)+max(p$data$x)*offset.ratio
+    print(don.gheatmap(p,data=gene.tree.expression.matrix,
+                       width=1.5,
+                       offset=max(p$data$x)*offset.ratio,colnames=TRUE)
           + geom_text(aes(x=xpos,
                           y=y,label=label,
-                          hjust=0.5),
+                          hjust=1),
+                      size=fontsize,
                       data=text.labels
                       )
-          + theme(legend.title=element_text())
-          + scale_fill_gradient(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = "grey50",
-                                name=expression(log[10](FPKM)))
+          + theme(legend.title=element_text(),legend.position="top",
+                  legend.margin=unit(0,"mm"),
+                  plot.margin=unit(c(0,0,0,0),"mm"),
+                  panel.grid=element_line(size=0.5,color="gray50")
+                  )
+          + scale_fill_gradient(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = NA,
+                                name=expression(log[10](FPKM))),
+          vp=vp
           )
 
 }
 
-don.gheatmap <- function(p, data, offset=0, width=1, low="green", high="red",
-                     color="white", colnames=TRUE, colnames_position="bottom", font.size=4) {
-
-    colnames_position %<>% match.arg(c("bottom", "top"))
-    variable <- value <- lab <- y <- NULL
-    
-    ## if (is.null(width)) {
-    ##     width <- (p$data$x %>% range %>% diff)/30
-    ## }
-
-    ## convert width to width of each cell
-    width <- width * (p$data$x %>% range %>% diff) / ncol(data)
-    
-    isTip <- x <- y <- variable <- value <- from <- to <- NULL
- 
-    df=p$data
-    df=df[df$isTip,]
-    start <- max(df$x) + offset
-
-    dd <- data[df$label[order(df$y)],]
-    dd$y <- sort(df$y)
-
-    dd$lab <- rownames(dd)
-    ## dd <- melt(dd, id=c("lab", "y"))
-    dd <- gather(dd, variable, value, -c(lab, y))
-    
-    dd$value[is.na(dd$value) | dd$value == ""] <- NA
-
-    V2 <- start + as.numeric(dd$variable) * width
-    mapping <- data.frame(from=dd$variable, to=V2)
-    mapping <- unique(mapping)
-
-    dd$x <- V2
-
-    if (is.null(color)) {
-        p2 <- p + geom_tile(data=dd, aes(x, y, fill=value), inherit.aes=FALSE)
-    } else {
-        p2 <- p + geom_tile(data=dd, aes(x, y, fill=value), color=color, inherit.aes=FALSE)
-    }
-    if (is(dd$value,"numeric")) {
-        p2 <- p2 + scale_fill_gradient(low=low, high=high, na.value="white")
-    } else {
-        p2 <- p2 + scale_fill_discrete(na.value="white")
-    }
-    
-    if (colnames) {
-        if (colnames_position == "bottom") {
-            y <- min(p$data$y)-0.6
-        } else {
-            y <- max(p$data$y) + 1
-        }
-        p2 <- p2 + geom_text(data=mapping,
-                             aes(x=to, label=from),
-                             angle=90,
-                             hjust=1,
-                             vjust=0.5,
-                             y=y, size=font.size, inherit.aes = FALSE)
-    }
-
-    p2 <- p2 + theme(legend.position="right", legend.title=element_blank())
-    p2 <- p2 + guides(fill = guide_legend(override.aes = list(colour = NULL)))
-    
-    attr(p2, "mapping") <- mapping
-    return(p2)
-}

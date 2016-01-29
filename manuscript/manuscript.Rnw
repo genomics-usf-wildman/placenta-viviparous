@@ -203,7 +203,7 @@ load("../go_annotation/go_tissue_analysis")
 @ 
 
 <<plot.defaults,echo=FALSE,results="hide">>=
-grad.def <- list(low = "white", high = "green", space = "Lab", na.value = "gray50")
+grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = "gray50")
 
 @ 
 
@@ -998,17 +998,63 @@ glucose transport (\textit{SLC2A1}) among others
 
 
 \begin{figure}
-<<psg.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+<<psg.ctsl.evolution.tree,echo=FALSE,fig.width=16,fig.height=16,warning=FALSE,message=FALSE>>=
+plot.label.size <- 3
 
+pushViewport(viewport(layout=grid.layout(nrow=2,ncol=2)))
 tree.id <-
     genes.to.tree[combined.fpkm[gene_short_name=="PSG1" & species=="homo sapiens",gene_id],tree]
 gene.tree.table <- trees[[tree.id]]$table
 gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,min.fpkm=1)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,min.fpkm=1,
+                 vp=viewport(layout.pos.col=1,layout.pos.row=1),
+                 fontsize=plot.label.size
+                 )
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="CTSL" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(gene.tree,gene.tree.table,gene.tree.expression,min.fpkm=1,
+                 subtree=c("ENSMODG00000002844","ENSMUSG00000055679"),
+                 vp=viewport(layout.pos.col=2,layout.pos.row=1),
+                 fontsize=plot.label.size
+                 )
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="PRSS16" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,
+                 vp=viewport(layout.pos.col=1,layout.pos.row=2),
+                 fontsize=plot.label.size
+                 )
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="PAG2" & species=="bos taurus",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
+                 gene.tree.table,gene.tree.expression,min.fpkm=1,
+                 subtree=c("ENSSSCG00000006792",
+                           "ENSBTAG00000046085"),
+                 vp=viewport(layout.pos.col=2,layout.pos.row=2),
+                 fontsize=plot.label.size
+                 )
+
+popViewport(1)
+grid.text(c("A","B","C","D"),
+          x=unit(c(0,0.5,0,0.5),"npc"),y=unit(c(1,1,0.5,0.5),"npc"),
+          just=c("left","top"),
+          gp=gpar(fontsize="48")
+          )
 @ 
-\caption{\genetreeexplanation{pregnancy-specific glycoproteins}}
-\label{fig:psg_evolution_tree}
+\caption{\genetreeexplanation{(A) \textit{PSG1}, (B) \textit{CTSL}, (C) \textit{PRSS16}, and (D) \textit{PAG2}}}
+\label{fig:pag2_prss16_ctsl_psg_evolution_tree}
 \end{figure}
 
 
@@ -1069,25 +1115,10 @@ another related to \textit{CGB7}; both are not highly expressed
 (\cref{fig:cgb_evolution_tree}). Among the other top 50 expressed
 genes, there is high expression of keratins (e.g., \textit{KRT19},
 \textit{KRT18}), heat-shock proteins (e.g., \textit{HSP90B1},
-\textit{HSPA1A}), serpins (\textit{SERPINE1}, \textit{SERPINE2}),
-insulin growth factor 2 (\textit{IGF2}) and one of its binding
-proteins \textit{IGFBP3}, and the hormone adrenomedullin
-(\textit{ADM}).
-
-\begin{figure}
-<<serpine.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="SERPINE2" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,min.fpkm=1)
-@ 
-\caption{\genetreeexplanation{\textit{SERPINE2}}}
-\label{fig:serpine_evolution_tree}
-\end{figure}
-
+\textit{HSPA1A}), serpins (\textit{SERPINE1}, \textit{SERPINE2},
+Supplemental \cref{fig:serpine_evolution_tree}), insulin growth factor
+2 (\textit{IGF2}) and one of its binding proteins \textit{IGFBP3}, and
+the hormone adrenomedullin (\textit{ADM}).
 
 \subsubsection{\smonkey Transcriptome}
 
@@ -1212,23 +1243,6 @@ formation of the placenta in mice is also highly expressed
 (\Sexpr{gene.expression("mus_musculus","Peg10")}), as previously
 reported \cite{Ono.ea2006:DeletionofPeg10imprinted}.
 
-
-
-\begin{figure}
-<<cathespin.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="CTSL" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(gene.tree,gene.tree.table,gene.tree.expression,min.fpkm=1,
-                 subtree=c("ENSMODG00000002844","ENSMUSG00000055679"))
-@ 
-\caption{\genetreeexplanation{cathespins related to \textit{CTSL}}}
-\label{fig:cathespin_evolution_tree}
-\end{figure}
-
 \subsubsection{\galili Placenta Transcriptome}
 
 \begin{table}[h]
@@ -1290,7 +1304,7 @@ multiple cathespins
 (\Sexpr{gene.expression("spalax_carmeli","Ctsm",complete=TRUE)},
 \Sexpr{gene.expression("spalax_carmeli","BC051665",complete=TRUE)},
 and \Sexpr{gene.expression("spalax_carmeli","Ctsl",complete=TRUE)},
-\cref{fig:cathespin_evolution_tree}), and many prolactin-related genes
+\cref{fig:pag2_prss16_ctsl_psg_evolution_tree}~B), and many prolactin-related genes
 (\Sexpr{gene.expression("spalax_carmeli","Prl4a1",complete=TRUE)},
 \Sexpr{gene.expression("spalax_carmeli","Prl6a1",complete=TRUE)},
 \Sexpr{gene.expression("spalax_carmeli","Prl3b1",complete=TRUE)}, and
@@ -1391,7 +1405,7 @@ the \cow genome.
 % 
 Several members of the ruminant-specific pregnancy-associated
 glycoprotein family show especially high expression in \cow placenta
-(\cref{tab:top50_cow_placenta}, \cref{fig:pag2_evolution_tree}, and
+(\cref{tab:top50_cow_placenta}, \cref{fig:pag2_prss16_ctsl_psg_evolution_tree}~D, and
 Supplemental \cref{tab:all_bos_taurus_placenta}) including
 %
 \Sexpr{gene.expression("bos taurus","PAG2",complete=TRUE)}, %
@@ -1405,7 +1419,7 @@ Supplemental \cref{tab:all_bos_taurus_placenta}) including
 28 members of this family have $FPKM \ge 1$, and this family of
 genes has greatly expanded in ruminants (\cow and \sheep{}) although
 the expression levels of this family are higher in \cow than in \sheep
-\cref{fig:pag2_evolution_tree}. Other genes with high expression
+\cref{fig:pag2_prss16_ctsl_psg_evolution_tree}~D. Other genes with high expression
 include genes involved with regulation of growth (\textit{IGF2},
 \textit{PHLDA2}), imprinted genes (\textit{DLK1}, \textit{PHLDA2}),
 and \textit{CSH1}, a gene that is a member of a ruminant specific
@@ -1431,24 +1445,6 @@ There is some placental expression of the estrogen synthase gene
 (\Sexpr{gene.expression("bos taurus","CYP19A1")}), and
 comparatively greater expression of \textit{HSD3B} %
 (\Sexpr{gene.expression("bos taurus","HSD3B")}).
-
-\begin{figure}
-<<pag2.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="PAG2" & species=="bos taurus",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
-                 gene.tree.table,gene.tree.expression,min.fpkm=1,
-                 subtree=c("ENSSSCG00000006792",
-                           "ENSBTAG00000046085")
-                 )
-@ 
-\caption{\genetreeexplanation{\cow \textit{PAG2}}}
-\label{fig:pag2_evolution_tree}
-\end{figure}
 
 \subsubsection{\pig Placenta Transcriptome}
 
@@ -1613,7 +1609,7 @@ expressed to a high degree in the \elephant placenta
 \Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000031933",complete=TRUE)})
 are members of an \elephant{}-specific expansion of 11 genes closely
 related to the thymus-specific serine protease gene \textit{PRSS16}
-\cref{fig:prss16_evolution_tree} The other 8 \textit{PRSS16}-like
+\cref{fig:pag2_prss16_ctsl_psg_evolution_tree}~C The other 8 \textit{PRSS16}-like
 genes are also expressed to a lesser degree
 (\Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000026505",complete=TRUE)}).
 Two other novel genes with high expression are related to the gene
@@ -1643,20 +1639,6 @@ and
 gene usually expressed in the endometrium of the uterus in humans
 \cite{Rutanen.ea1987:Progesterone-associatedproteinsPP12and}.
 
-\begin{figure}
-<<prss16.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="PRSS16" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
-@ 
-\caption{\genetreeexplanation{\textit{PRSS16}}}
-\label{fig:prss16_evolution_tree}
-\end{figure}
-
 \subsubsection{\armadillo Placenta Transcriptome}
 
 \begin{table}
@@ -1681,7 +1663,7 @@ two being
 and
 \Sexpr{gene.expression("dasypus_novemcinctus","ENSDNOG00000040431",complete=TRUE)}),
 though the expansion is less than that seen \cow and \sheep
-(\cref{fig:pag2_evolution_tree}). There is also high expression of
+(\cref{fig:pag2_prss16_ctsl_psg_evolution_tree}~D). There is also high expression of
 hemoglobin subunit beta,
 \Sexpr{gene.expression("dasypus_novemcinctus","HBB",complete=TRUE)},
 an un-annotated gene with high similarity to \human and \cow
@@ -1755,13 +1737,13 @@ and
 are expressed to a high degree, along with one \textit{CTSL} related
 gene
 (\Sexpr{gene.expression("monodelphis_domestica","ENSMODG00000002844",complete=TRUE)},
-\cref{fig:cathespin_evolution_tree}), which are known to interact with
+\cref{fig:pag2_prss16_ctsl_psg_evolution_tree}~B), which are known to interact with
 cystatins \cite{Turk.ea2001:Lysosomalcysteineproteasesfacts}. The
 uncharacterized gene \textit{LOC10001195}
 (\Sexpr{gene.expression("monodelphis_domestica","ENSMODG00000006547",complete=TRUE)})
-also shows high expression in the opossum placenta. The gene
+also shows high expression in \opossum placenta. The gene
 \textit{WFDC2}, a member of the whey acidic protein (WAP) family is
-also expressed to a high degree in the opossum placenta
+also expressed to a high degree in \opossum placenta
 (\Sexpr{gene.expression("monodelphis_domestica","WFDC2",complete=TRUE)}).
 Other genes with high expression include members of the annexin
 complex

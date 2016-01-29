@@ -190,15 +190,16 @@ load("../go_annotation/go_tissue_analysis")
 \begin{table}
   \begin{tabular}{c c p{3in}}
     \toprule
-    Species                       & Experiment Number & Sample Number(s) \\
+    Species                       & Collector & Experiment Number & Sample Number(s) \\
     \midrule
-    \textit{Ateles fusciceps}     &  & \\
-    \textit{Bos taurus}           &  & \\
-    \textit{Canis familiaris}     &  & \\
-    \textit{Dasypus novemcinctus} &  & \\
-    \textit{Equus caballus}       &  & SRR850299,  SRR850300 \\
-    \textit{Loxodonta africana}   &  & \\
-    \textit{Homo sapiens}         & GSE66622 & SRR1850945,
+    \textit{Ateles fusciceps}     &  & & \\
+    \textit{Bos taurus}           & Bob Kreft & & \\
+    \textit{Canis familiaris}     &  & & \\
+    \textit{Dasypus novemcinctus} &  & & \\
+    \textit{Equus caballus}       & \citet{Coleman.ea2010:Structuralannotationofequine} & SRR850299,  SRR850300 \\
+    \textit{Loxodonta africana}   & Kurt Benirschke & & \\
+    \textit{Homo sapiens}         & Karina Richani, \citet{Hughes.ea2015:Evaluatingintra-andinter-individual} & GSE66622 
+                                             & SRR1850945,
                                                SRR1850946, 
                                                SRR1850951, 
                                                SRR1850952, 
@@ -224,8 +225,9 @@ load("../go_annotation/go_tissue_analysis")
                                                SRR1851004, 
                                                SRR1851011, 
                                                SRR1851012 \\
-    \textit{Monodelphis domestica} & & \\
-    \textit{Mus musculus}         &  & SRR243594,
+    \textit{Monodelphis domestica} & K. Smith & & \\
+    \textit{Mus musculus}         & J. Gonzalez, \cite{Wang.ea2011:surveyfornovelimprinted} & GSE29690 
+                                     & SRR243594,
                                        SRR243595,
                                        SRR243596,
                                        SRR243597,
@@ -242,11 +244,11 @@ load("../go_annotation/go_tissue_analysis")
                                        SRR243591,
                                        SRR243592,
                                        SRR243593\\
-    \textit{Nannospalax galili}   &  & \\
-    \textit{Ovis aries}           &  & ERR489144, ERR489145\\
+    \textit{Nannospalax galili}   &  & GSE68763 & SRR2016467 \\
+    \textit{Ovis aries}           & \cite{Archibald.ea2010:sheepgenomereferencesequence} & ERR489144, ERR489145\\
     \textit{Pan paniscus}         &  & \\
-    \textit{Spalax carmeli}       &  & \\
-    \textit{Sus scrofa}           &           & SRR543893 \\
+    \textit{Spalax carmeli}       &  & GSE68763 & SRR2016467 \\
+    \textit{Sus scrofa}           & \cite{Ahanda.ea2012:Predictionofaltered3-} &  SRP014902 & SRR543893 \\
     \bottomrule
   \end{tabular}
   \caption{Species, experiment and species numbers used in the analyses presented in this paper}
@@ -367,6 +369,52 @@ print(ggplot(star.logs.wide,
 
 
 \section{Gene Ontology Analyses}
+
+\begin{table}
+  \footnotesize
+<<go.analysis.all.tissue,echo=FALSE,results="asis">>=
+go.analysis.wide <- 
+    data.table(dcast(data=go.results,
+                     formula=GO.ID+type+Term+Ontology~species,
+                     value.var="FDR"))
+go.analysis.wide <- 
+    go.analysis.wide[,`n(FDR ≤ 0.05)`:=apply(go.analysis.wide[,-(1:4),with=FALSE],1,
+                                         function(x){sum(as.numeric(as.character(x)) <= 0.05)})]
+go.analysis.wide <- 
+    go.analysis.wide[,`max(FDR ≤ 0.05)`:=apply(go.analysis.wide[,-(1:4),with=FALSE],1,
+                                           function(x){if (!any(is.finite(x) & x<=0.05)) {
+                                                           return(NA)
+                                                       } else {
+                                                           max(x[is.finite(x) & x<=0.05],na.rm=TRUE)
+                                                       }})]
+go.analysis.wide.table <- 
+    go.analysis.wide[!is.na(`n(FDR ≤ 0.05)`) & `n(FDR ≤ 0.05)` >= 12 &
+                         grepl("Top 1% No Housekeeping",type),
+                     list(GO.ID,Term,Ontology,`n(FDR ≤ 0.05)`,`max(FDR ≤ 0.05)`)]
+go.analysis.wide.table <- 
+    go.analysis.wide.table[order(Ontology,-`n(FDR ≤ 0.05)`,`max(FDR ≤ 0.05)`)]
+setnames(go.analysis.wide.table,"GO.ID","GO ID")
+
+print(xtable(go.analysis.wide.table,
+             display=c("d","s","s","s","d","e"),
+             align=  c("c","c","c","c","c","c")
+             ),
+      math.style.exponents=TRUE,
+      include.rownames=FALSE,
+      booktabs=TRUE,
+      floating=FALSE
+      )
+
+@ 
+\caption{GO terms with significant enrichment ($\mathrm{FDR}\le0.05$)
+  in 12 or more of the species analyzed from genes in the top 1\% of
+  expression. $n(\mathrm{FDR}\le0.05)$ is the number of species with
+  significant enrichment ($\mathrm{FDR}\le 0.05$) in the GO term
+  listed. $max(\mathrm{FDR}\le0.05)$ is the maximum FDR value in all
+  species with an FDR of less than $0.05$.}
+\label{tab:go_terms_all_species}
+\end{table}
+
 
 \subsection{Top 100 Transcripts Enrichment}
 
@@ -493,6 +541,20 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 @ 
 \caption{\genetreeexplanation{\textit{SERPINE2}}}
 \label{fig:serpine_evolution_tree}
+\end{figure}
+
+\begin{figure}
+<<sslp1.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_id=="ENSCAFG00000010638" & species=="canis familiaris",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+@ 
+\caption{\genetreeexplanation{\textit{SSLP1}}}
+\label{fig:sslp1_evolution_tree}
 \end{figure}
 
 \begin{figure}
@@ -745,6 +807,39 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 \end{figure}
 
 \section{Core Placenta Transcriptome}
+
+\begin{table}
+\footnotesize
+<<go.analysis,warning=FALSE,message=FALSE,echo=FALSE,results="asis">>=
+placenta.go.results <- rbindlist(list(head(n=20,placenta_go_results_mf[classic.fdr < 0.05,]),
+                             head(n=20,placenta_go_results_bp[classic.fdr < 0.05,])))
+placenta.go.results <- placenta.go.results[,Annotated:=NULL]
+setnames(placenta.go.results,"Significant","# Core")
+setnames(placenta.go.results,"classic","p value")
+setnames(placenta.go.results,"classic.fdr","FDR")
+setnames(placenta.go.results,"GO.ID","GO ID")
+setnames(placenta.go.results,"Term","GO Term")
+print(xtable(placenta.go.results,
+             digits=2,
+             display=c("d","s","s","d","f","e","e","s")),
+      include.rownames=FALSE,
+      booktabs=TRUE,
+      floating=FALSE
+      )
+@ 
+\caption{\ac{GO} terms most significantly enriched
+  (\Sexpr{placenta.go.results[,sum(Ontology=="MF")]} MF,
+  \Sexpr{placenta.go.results[,sum(Ontology=="BP")]} BP)
+  in the core placenta transcriptome as compared to all genes
+  with 1:1 human orthologs in all species. “\# Core” is the
+  number of genes in the core transcriptome for each \ac{GO} term;
+  “Expected” is the number of genes expected in the core
+  transcriptome for each term; “p-value” are the odds of this
+  occurring by chance calculated by the Fisher exact test for
+  each term; “FDR” is the false discovery rate as estimated by
+  the Benjamini and Hochberg procedure \cite{Benjamini1995:bh_procedure}.}
+\label{tab:core_placenta_go_terms}
+\end{table}
 
 \begin{figure}
 <<core.placenta.transcriptome.distribution,fig.width=8,fig.height=8,out.height="0.8\\textheight",echo=FALSE,message=FALSE>>=

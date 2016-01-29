@@ -76,7 +76,7 @@ don.gheatmap <- function(p, data, offset=0, width=1, low="green", high="red",
 plot.tree.matrix <- function(gene.tree,gene.tree.table,gene.tree.expression,offset.ratio=0.5,min.fpkm=NA,subtree=NULL,vp=NULL,fontsize=3) {
     gene.tree$tip.label <- gsub("^(ENS.+)\\1$","\\1",gene.tree$tip.label)
     gene.tree.table[,species:=capfirst(gsub("_"," ",species))]
-    gene.tree.table[,short.species:=gsub("^(.)[^ ]* +([^ ]*)","\\1. \\2",species)]
+    gene.tree.table[,short.species:=gsub("^(.)[^ ]* +([^ ]{2})[^ ]*","\\1.\\2.",species)]
     gene.tree.table[,symbol_or_id:=ifelse(symbol=="NULL",gene_id,paste0(symbol," ",short.species))]
     ## use symbol gene_id for duplicates
     gene.tree.table[duplicated(symbol_or_id)|duplicated(symbol_or_id,fromLast=TRUE),
@@ -133,12 +133,17 @@ plot.tree.matrix <- function(gene.tree,gene.tree.table,gene.tree.expression,offs
 
     text.labels <- p$data[!is.na(p$data$label),]
     text.labels$xpos <- max(p$data$x)+max(p$data$x)*offset.ratio
+    text.labels$face <- "italic"
+    text.labels$face[grepl("^ENS",text.labels$label)] <- "plain"
     print(don.gheatmap(p,data=gene.tree.expression.matrix,
                        width=1.5,
                        offset=max(p$data$x)*offset.ratio,colnames=TRUE)
           + geom_text(aes(x=xpos,
-                          y=y,label=label,
-                          hjust=1),
+                          y=y,
+                          label=label,
+                          hjust=1,
+                          fontface=face
+                          ),
                       size=fontsize,
                       data=text.labels
                       )

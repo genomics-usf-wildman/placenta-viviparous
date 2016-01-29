@@ -900,7 +900,7 @@ We examined the expression of three primates, \human, \bonobo, and
 lineage in comparison to all other analyzed species are listed in
 \cref{tab:primate_lineage_specific}. \textit{FSTL1} has significantly
 higher expression in the primate lineage
-(\cref{fig:fstl1_evolution_tree},
+(Supplemental \cref{fig:fstl1_evolution_tree},
 $\mathrm{FDR}=\Sexpr{pri.all.lin.spec["FSTL1",`FDR`]}$), is implicated
 in BMP signaling, and has previously been implicated in inflammation
 and invasiveness
@@ -915,22 +915,6 @@ which is still lower than the lowest primate, \smonkey
 %
 No other genes were significantly differentially expressed on this
 lineage by t-test.
-
-
-\begin{figure}
-<<fstl1.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="FSTL1" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,min.fpkm=5)
-@ 
-\caption{\genetreeexplanation{follistatin-like 1 \textit{FSTL1}}}
-\label{fig:fstl1_evolution_tree}
-\end{figure}
-
 
 \subsubsection{\human Placenta Transcriptome}
 \label{sec:human_placenta}
@@ -978,7 +962,7 @@ Eleven \acp{PSG} are highly-expressed
 greatest degree of expression %
 (\Sexpr{gene.expression(species.name="homo sapiens",gene="PSG1")}) % 
 and the pseudogene \textit{PSG10P} showing the least %
-(\Sexpr{gene.expression(species.name="homo sapiens",gene="PSG10P")}, \cref{fig:psg_evolution_tree}) . %
+(\Sexpr{gene.expression(species.name="homo sapiens",gene="PSG10P")}, \cref{fig:pag2_prss16_ctsl_psg_evolution_tree}~A) . %
 These
 genes are members of a hominoid-specific expansion of the \ac{CEA} family
 and known to be expressed by the syncytiotrophoblast
@@ -1188,21 +1172,10 @@ greater than 50 \ac{FPKM} are listed in Supplementary
 
 \subsection{Rodentia Placenta Transcriptomes}
 
-\begin{table}
-  \footnotesize
-<<rodentia.lineage.specific,echo=FALSE,results="asis">>=
-rod.all.lin.spec <- placenta.lineage.specific.table("rod.all")
-setkey(rod.all.lin.spec,"Human Symbol")
-@ 
-\caption{Genes whose expression changed significantly in the Rodentia
-  order as compared to all other analyzed species.}
-\label{tab:rodentia_lineage_specific}
-\end{table}
-
 We examined the expression of three rodentia, \mouse, \carmeli, and
 \galili{}. We lacked sufficient power to detect any significant
 changes on the Rodentia lineage in comparison to all other analyzed
-species (\cref{tab:rodentia_lineage_specific}).
+species (Supplemental \cref{tab:rodentia_lineage_specific}).
 
 \subsubsection{\mouse Placenta Transcriptome}
 
@@ -1789,7 +1762,7 @@ respectively).
 <<core.placenta.transcriptome,fig.width=8,fig.height=12,out.height="0.8\\textheight",echo=FALSE>>=
 print(ggplot(core.placenta.transcriptome.long[!grepl("(min|median|max)_expression",Species),],
              aes(y=human_name,x=capfirst(Species)))
-      + geom_tile(aes(fill=log10(FPKM)))
+      + geom_raster(aes(fill=log10(FPKM)))
       + scale_x_discrete(expand=c(0,0))
       + scale_y_discrete(expand=c(0,0))
       + scale_fill_gradient(low = grad.def[["low"]],
@@ -2155,64 +2128,19 @@ print(ggplot(combined.long, aes(y=gene, x=species))
 
 In both ruminants and primates, the placenta is responsible for the
 production of estrogen and progesterone. High relative expression of
-\textit{CYP19A1} (\cref{fig:estrogen_evolution_tree}), the enzyme that
-synthesizes estrogen from androstenedione is seen in \human, \bonobo,
-\cow, and \horse, though not in \sheep, \smonkey. %
+\textit{CYP19A1} (Supplemental \cref{fig:estrogen_evolution_tree}),
+the enzyme that synthesizes estrogen from androstenedione is seen in
+\human, \bonobo, \cow, and \horse, though not in \sheep, \smonkey. %
 %
 \textit{HSD3B1}, one of two enzymes that synthesizes progesterone from
 pregnalone
 (\cite{Simard.ea2005:Molecularbiologyof3beta-hydroxysteroid},
-\cref{fig:progesterone_evolution_tree}) is also highly expressed in
-\human, \bonobo, \cow, \horse, and \dog, but is not highly expressed
-in \smonkey. The diversity of \textit{CYP19A1} and \textit{HSD3B1}
-expression levels in in primates and ungulates seen here points to the
-need for more complete sampling of placentas at different timepoints
-and in different clades.
-
-
-\begin{figure}
-<<estrogen.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="CYP19A1" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
-@ 
-\caption{\genetreeexplanation{estrogen synthesis genes}}
-\label{fig:estrogen_evolution_tree}
-\end{figure}
-
-\begin{figure}
-<<progesterone.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="HSD3B1" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,
-                 subtree=c("ENSMODG00000005385","ENSLAFG00000027896")
-                 )
-@ 
-\caption{\genetreeexplanation{progesterone synthesis genes}}
-\label{fig:progesterone_evolution_tree}
-\end{figure}
-
-\begin{figure}
-<<chorionic.somatomammotropin.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="CSH1" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
-@ 
-\caption{\genetreeexplanation{chorionic somatomammotropin}}
-\label{fig:csh1_evolution_tree}
-\end{figure}
+Supplemental \cref{fig:progesterone_evolution_tree}) is also highly
+expressed in \human, \bonobo, \cow, \horse, and \dog, but is not
+highly expressed in \smonkey. The diversity of \textit{CYP19A1} and
+\textit{HSD3B1} expression levels in in primates and ungulates seen
+here points to the need for more complete sampling of placentas at
+different timepoints and in different clades.
 
 
 \subsubsection{Prolactin}
@@ -2221,7 +2149,7 @@ The elephant is strikingly the only mammal analyzed that shows high
 expression of the primarily pituitary hormone prolactin (\textit{PRL})
 in the placenta, although we see high expression of genes which
 resulted from duplications of \textit{PRL} in the \mouse, \carmeli,
-and \cow (\cref{fig:prolactin_evolution_tree}). All afrotherians yet
+and \cow (Supplemental \cref{fig:prolactin_evolution_tree}). All afrotherians yet
 analyzed contain only one prolactin gene, and prolactin has undergone
 adaptive evolution on the \elephant lineage
 \cite{Wallis2009:ProlactininAfrotheriacharacterization}.
@@ -2257,20 +2185,6 @@ is the rodent with the lowest expression of \textit{PRL}
 express \textit{HOXA11} highly either
 (\Sexpr{gene.expression("loxodonta_africana","HOXA11",complete=TRUE)},
 Supplemental \cref{fig:hoxa11_evolution_tree}).
-
-\begin{figure}
-<<prolactin.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="PRL" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
-@ 
-\caption{\genetreeexplanation{prolactin}}
-\label{fig:prolactin_evolution_tree}
-\end{figure}
 
 \subsubsection{\Ac{GH} family}
 
@@ -2464,7 +2378,7 @@ clusters may represent didelphid or \opossum specific adaptations.
 % Monodelphis placenta (Freyer et al., 2007). This is potentially a
 % Monodelphis-specific characteristic as discussed above.
 
-The opossum placenta shows expression of genes that either do not
+The \opossum placenta shows expression of genes that either do not
 exist in eutherians or are not found in the term eutherian placenta
 (\cref{tab:top50_opossum_placenta}). The existence of embryonic forms
 of hemoglobin in fetal tissues at term, as evidenced by the expression
@@ -2482,8 +2396,8 @@ found to expressed in reproductive tract
 unknown. \textit{WFDC2} is a member of the whey acidic protein (WAP)
 family and involved in innate immunity. It is expressed in the mammary
 gland of the tammar wallaby during pregnancy and early lactation
-\cite{Sharp.ea2007:Molecularevolutionofmonotreme}, and here in
-relative abundance in the opossum placenta.
+\cite{Sharp.ea2007:Molecularevolutionofmonotreme}, and present in
+relative abundance in \opossum placenta.
 
 \subsection{Novel Gene Expansions in the Elephant Placenta}
 

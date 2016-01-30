@@ -22,7 +22,7 @@
 \usepackage{adjustbox}
 \usepackage{longtable}
 \usepackage{pdflscape}
-\usepackage[backend=biber,natbib=true,hyperref=true,style=reading,autocite=inline]{biblatex}
+\usepackage[backend=biber,natbib=true,hyperref=true,style=nature,citestyle=numeric-comp,autocite=inline]{biblatex}
 \addbibresource{references.bib}
 \usepackage[noblocks,auth-sc]{authblk}
 \usepackage[hyperfigures,bookmarks,colorlinks,linkcolor=black,urlcolor=black]{hyperref}
@@ -188,7 +188,7 @@ load("../go_annotation/go_tissue_analysis")
 \DLA{Add in SRR and GSE numbers for everything here once I have them.}
 
 \begin{table}
-  \begin{tabular}{c c p{3in}}
+  \begin{tabular}{c p{1.5in} c p{2in}}
     \toprule
     Species                       & Collector & Experiment Number & Sample Number(s) \\
     \midrule
@@ -196,7 +196,7 @@ load("../go_annotation/go_tissue_analysis")
     \textit{Bos taurus}           & Bob Kreft & & \\
     \textit{Canis familiaris}     &  & & \\
     \textit{Dasypus novemcinctus} &  & & \\
-    \textit{Equus caballus}       & \citet{Coleman.ea2010:Structuralannotationofequine} & SRR850299,  SRR850300 \\
+    \textit{Equus caballus}       & \citet{Coleman.ea2010:Structuralannotationofequine} & GSM1139275 & SRR850299,  SRR850300 \\
     \textit{Loxodonta africana}   & Kurt Benirschke & & \\
     \textit{Homo sapiens}         & Karina Richani, \citet{Hughes.ea2015:Evaluatingintra-andinter-individual} & GSE66622 
                                              & SRR1850945,
@@ -226,7 +226,7 @@ load("../go_annotation/go_tissue_analysis")
                                                SRR1851011, 
                                                SRR1851012 \\
     \textit{Monodelphis domestica} & K. Smith & & \\
-    \textit{Mus musculus}         & J. Gonzalez, \cite{Wang.ea2011:surveyfornovelimprinted} & GSE29690 
+    \textit{Mus musculus}         & J. Gonzalez, \citet{Wang.ea2011:surveyfornovelimprinted} & GSE29690 
                                      & SRR243594,
                                        SRR243595,
                                        SRR243596,
@@ -245,10 +245,10 @@ load("../go_annotation/go_tissue_analysis")
                                        SRR243592,
                                        SRR243593\\
     \textit{Nannospalax galili}   &  & GSE68763 & SRR2016467 \\
-    \textit{Ovis aries}           & \cite{Archibald.ea2010:sheepgenomereferencesequence} & ERR489144, ERR489145\\
+    \textit{Ovis aries}           & \citet{Archibald.ea2010:sheepgenomereferencesequence} & ERP005642 & ERR489144, ERR489145\\
     \textit{Pan paniscus}         &  & \\
     \textit{Spalax carmeli}       &  & GSE68763 & SRR2016467 \\
-    \textit{Sus scrofa}           & \cite{Ahanda.ea2012:Predictionofaltered3-} &  SRP014902 & SRR543893 \\
+    \textit{Sus scrofa}           & \citet{Ahanda.ea2012:Predictionofaltered3-} &  SRP014902 & SRR543893 \\
     \bottomrule
   \end{tabular}
   \caption{Species, experiment and species numbers used in the analyses presented in this paper}

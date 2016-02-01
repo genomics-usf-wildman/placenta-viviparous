@@ -2498,18 +2498,40 @@ of human-specific expression shifts.
 
 
 \begin{backmatter}
-\section*{Competing interests}
+  \section*{Competing interests}
   The authors declare that they have no competing interests.
+  
+  \section*{Author's contributions}
+  Don Armstrong analyzed all of the data and wrote the paper. 
 
-\section*{Author's contributions}
-Don Armstrong analyzed all of the data and wrote the paper. 
+  Michael McGowan wrote the paper and performed initial analyses.
 
-Michael McGowan wrote the paper and performed initial analyses.
+  Amy Weckle performed all of the RNA extractions and managed the
+  samples.
 
-\section*{Acknowledgements}
-  Text for this section \ldots
+  Jason Caravas provided samples.
+  
+  Dalen Agnew provided samples.
+  
+  Kurt Benirschke provided samples.
+  
+  Sue Savage-Rumbaugh provided samples.
 
-\printaddresses
+  Chong J. Kim provided samples.
+
+  Günter P. Wagner provided samples.
+
+  Roberto Romero provided samples.
+
+  Derek E. Wildman conceived the study, wrote the paper, and performed
+  analyses.
+
+  \section*{Acknowledgements}
+  The authors would like to specially acknowledge those groups whose
+  publicly available data contributed to the completeness of this
+  work.
+
+  \printaddresses
 
 \end{backmatter}
 

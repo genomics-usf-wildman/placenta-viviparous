@@ -254,13 +254,24 @@ grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = NA
   potentially enrich our knowledge of the biology of obstetrical
   syndromes.
 
-  \parttitle{Results} We profiled the term placenta by using Illumina
-  RNA-Seq technology to sequence the transcriptomes of
-  \Sexpr{star.logs[,length(unique(species))]} species of therian (i.e.
-  marsupials and “placental”) mammals.
+  \parttitle{Results} We measured the expression profiles of the term
+  placenta of \Sexpr{star.logs[,length(unique(species))]} species of
+  therian (i.e. marsupials and “placental”) mammals using RNA-Seq. We
+  identified multiple genes and transcripts which are differentially
+  expressed across lineages including prolactin, relaxin, and
+  galectins, as well as identifying the non-housekeeping genes which
+  are core to placenta function (such as components of annexin
+  complexes) in all \Sexpr{star.logs[,length(unique(species))]}
+  species studied.
 
-
-  \parttitle{Conclusions}
+  \parttitle{Conclusions} While there are multiple non-housekeeping
+  genes which are highly expressed in all placentas examined and are
+  likely to be involved in the basic functions of the mammalian
+  placenta, we see incredible lineage-specific diversity in the
+  expression and expansion of many genes. These lineage-specific genes
+  are likely to play a role in the anatomical variability of the
+  placenta and may also be implicated in important \human placental
+  disorders such as pre-eclampsia.
 
 
 % We identified significant shifts in gene expression along specific

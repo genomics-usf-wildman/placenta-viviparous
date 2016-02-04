@@ -26,3 +26,11 @@ bmcart.cls:
 manuscript.tex: manuscript.Rnw ../data/combined_fpkm ../data/placenta_core_transcriptome ../data/placenta_go_results_mf ../data/placenta_go_results_bp
 
 supplemental_material.tex: supplemental_material.Rnw ../data/combined_fpkm ../data/placenta_core_transcriptome ../data/placenta_go_results_mf ../data/placenta_go_results_bp
+
+version_it: manuscript.pdf supplemental_material.pdf
+	for a in $^; do \
+		cp $$a placenta_viviparous_$${a%%.pdf}_$$(date +%Y%m%d)_$$(git rev-parse --short HEAD).pdf; \
+	done;
+
+
+.PHONY:

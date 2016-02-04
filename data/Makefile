@@ -112,3 +112,9 @@ placenta_go_results_bp: go_analysis.R placenta_core_transcriptome
 
 ortholog_expression_matrix.txt: ortholog_expression_matrix.R combined_fpkm housekeeping_genes_superset
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
+
+ortholog_expression_nexus.nex: ortholog_expression_nexus.R combined_fpkm housekeeping_genes_superset
+	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
+
+ortholog_expression_nexus_continuous.nex: ortholog_expression_nexus_continuous.R combined_fpkm housekeeping_genes_superset
+	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@

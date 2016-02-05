@@ -192,13 +192,13 @@ load("../go_annotation/go_tissue_analysis")
     \toprule
     Species                       & Collector & Experiment Number & Sample Number(s) \\
     \midrule
-    \textit{Ateles fusciceps}     &  & & \\
+    \textit{Ateles fusciceps}     & Kurt Benirschke & & \\
     \textit{Bos taurus}           & Bob Kreft & & \\
-    \textit{Canis familiaris}     &  & & \\
-    \textit{Dasypus novemcinctus} &  & & \\
+    \textit{Canis familiaris}     & Dalen Agnew & & (Bounty Hubler) \\
+    \textit{Dasypus novemcinctus} & Richard Truman & & \\
     \textit{Equus caballus}       & \citet{Coleman.ea2010:Structuralannotationofequine} & GSM1139275 & SRR850299,  SRR850300 \\
     \textit{Loxodonta africana}   & Kurt Benirschke & & \\
-    \textit{Homo sapiens}         & Karina Richani, \citet{Hughes.ea2015:Evaluatingintra-andinter-individual} & GSE66622 
+    \textit{Homo sapiens}         & Nandor Gabor, \citet{Hughes.ea2015:Evaluatingintra-andinter-individual} & GSE66622 
                                              & SRR1850945,
                                                SRR1850946, 
                                                SRR1850951, 
@@ -244,10 +244,10 @@ load("../go_annotation/go_tissue_analysis")
                                        SRR243591,
                                        SRR243592,
                                        SRR243593\\
-    \textit{Nannospalax galili}   &  & GSE68763 & SRR2016467 \\
+    \textit{Nannospalax galili}   & Eviator Nevo & GSE68763 & SRR2016467 \\
     \textit{Ovis aries}           & \citet{Archibald.ea2010:sheepgenomereferencesequence} & ERP005642 & ERR489144, ERR489145\\
-    \textit{Pan paniscus}         &  & \\
-    \textit{Spalax carmeli}       &  & GSE68763 & SRR2016467 \\
+    \textit{Pan paniscus}         &  William Mintz Fields & & (Teco)\\
+    \textit{Spalax carmeli}       & Eviator Nevo & GSE68763 & SRR2016467 \\
     \textit{Sus scrofa}           & \citet{Ahanda.ea2012:Predictionofaltered3-} &  SRP014902 & SRR543893 \\
     \bottomrule
   \end{tabular}

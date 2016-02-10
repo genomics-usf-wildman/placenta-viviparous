@@ -195,7 +195,7 @@ load("../go_annotation/go_tissue_analysis")
     \textit{Ateles fusciceps}     & Kurt Benirschke & & \\
     \textit{Bos taurus}           & Bob Kreft & & \\
     \textit{Canis familiaris}     & Dalen Agnew & & (Bounty Hubler) \\
-    \textit{Dasypus novemcinctus} & Richard Truman & & \\
+    \textit{Dasypus novemcinctus} & Richard Truman, Vincent J. Lynch& & \\
     \textit{Equus caballus}       & \citet{Coleman.ea2010:Structuralannotationofequine} & GSM1139275 & SRR850299,  SRR850300 \\
     \textit{Loxodonta africana}   & Kurt Benirschke & & \\
     \textit{Homo sapiens}         & Nandor Gabor, \citet{Hughes.ea2015:Evaluatingintra-andinter-individual} & GSE66622 
@@ -225,8 +225,8 @@ load("../go_annotation/go_tissue_analysis")
                                                SRR1851004, 
                                                SRR1851011, 
                                                SRR1851012 \\
-    \textit{Monodelphis domestica} & K. Smith & & \\
-    \textit{Mus musculus}         & J. Gonzalez, \citet{Wang.ea2011:surveyfornovelimprinted} & GSE29690 
+    \textit{Monodelphis domestica} & Karen Smith, Gunter Wagner & & \\
+    \textit{Mus musculus}         & Juan Gonzalez, \citet{Wang.ea2011:surveyfornovelimprinted} & GSE29690 
                                      & SRR243594,
                                        SRR243595,
                                        SRR243596,
@@ -246,8 +246,8 @@ load("../go_annotation/go_tissue_analysis")
                                        SRR243593\\
     \textit{Nannospalax galili}   & Eviator Nevo & GSE68763 & SRR2016467 \\
     \textit{Ovis aries}           & \citet{Archibald.ea2010:sheepgenomereferencesequence} & ERP005642 & ERR489144, ERR489145\\
-    \textit{Pan paniscus}         &  William Mintz Fields & & (Teco)\\
-    \textit{Spalax carmeli}       & Eviator Nevo & GSE68763 & SRR2016467 \\
+    \textit{Pan paniscus}         & William Mintz Fields & & (Teco)\\
+    \textit{Spalax carmeli}       & Anne Dupressoir, Eviator Nevo & GSE68763 & SRR2016467 \\
     \textit{Sus scrofa}           & \citet{Ahanda.ea2012:Predictionofaltered3-} &  SRP014902 & SRR543893 \\
     \bottomrule
   \end{tabular}

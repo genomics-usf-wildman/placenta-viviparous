@@ -223,6 +223,7 @@ grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = NA
 \author[addressref={aff4},email={agnewd@dcpah.msu.edu}]{\inits{D}\fnm{Dalen} \snm{Agnew}}
 \author[addressref={aff5},email={kbenirschke@ucsd.edu}]{\inits{K}\fnm{Kurt} \snm{Benirschke}}
 \author[addressref={aff6},email={suerumbaugh@gmail.com}]{\inits{S}\fnm{Sue} \snm{Savage-Rumbaugh}}
+\author[addressref={aff11},email={nevo@research.haifa.ac.il}]{\inits{E}\fnm{Eviatar} \snm{Nevo}}
 \author[addressref={aff7,aff8},email={cjkim@med.wayne.edu}]{\inits{CJ}\fnm{Chong J} \snm{Kim}}
 \author[addressref={aff9},email={gunter.wagner@yale.edu}]{\inits{GP}\fnm{Günter P.} \snm{Wagner}}
 \author[addressref={aff7},email={prbchiefstaff@med.wayne.edu}]{\inits{R}\fnm{Roberto} \snm{Romero}}
@@ -237,6 +238,7 @@ grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = NA
 \address[id=aff8]{Department of Pathology, Wayne State University School of Medicine, Detroit, MI, USA}
 \address[id=aff9]{Department of Ecology and Evolutionary Biology and Yale Systems Biology Institute, Yale University, New Haven, CT, USA}
 \address[id=aff10]{Department of Molecular and Integrative Physiology, University of Illinois at Urbana-Champaign, Urbana, IL, USA}
+\address[id=aff11]{The Institute of Evolution, University of Haifa, Haifa, Israel}
 
 \begin{artnotes}
 \end{artnotes}

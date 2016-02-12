@@ -272,7 +272,7 @@ grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = NA
   placenta, we see incredible lineage-specific diversity in the
   expression and expansion of many genes. These lineage-specific genes
   are likely to play a role in the anatomical variability of the
-  placenta and may also be implicated in important \human placental
+  placenta and may also be implicated in important human placental
   disorders such as pre-eclampsia.
 
 
@@ -312,41 +312,47 @@ specific aspects of placental morphology
 (\cref{tab:gestational_periods}).
 
 The placenta arose at some point before the origin of therian mammals,
-a group that includes both marsupials and eutherian or “placental”
-mammals. The term “placental mammals” is misleading, as marsupials
-also possess a placenta, although its direct apposition to maternal
-tissues lasts for a proportionally shorter time during gestation
-\cite{Renfree2010:ReviewMarsupialsplacentalmammals}. Marsupials also
-differ from eutherian mammals in that most possess only a
-choriovitelline placenta, produced from the fusion of the chorion and
-yolk sac, during most of gestation. Although some eutherian mammals
-may possess a choriovitelline placenta at some point in development,
-the major site of nutrient exchange in placentals occurs via the
-chorioallantoic placenta, produced from the fusion of the chorion and
-allantois \cite{Mossman.1987:vertebratefetalmembranes}. It is unclear
-whether the first placenta was more like that of marsupials or
-eutherians; however, using phylogenetic methods, the ancestral
-eutherian was reconstructed as possessing a relatively invasive
-hemochorial placenta, in which the maternal and fetal blood supply is
-separated by one tissue layer, as in humans and mouse
+a group that includes both marsupials and eutherian or “placental
+mammals”. The term “placental mammals” is misleading, as extant
+yinothereians (such as \textit{Ornithorhynchus anatinus}, the
+platypus) possess a rudimentary placenta, as do marsupials, although
+the direct apposition to maternal tissues lasts for a proportionally
+shorter time during gestation
+\cite{Selwood.ea2006:Trophoblastandhypoblastin,Renfree2010:ReviewMarsupialsplacentalmammals}.
+Marsupials also differ from eutherian mammals in that most possess
+only a choriovitelline placenta, produced from the fusion of the
+chorion and yolk sac, during most of gestation. Although some
+eutherian mammals may possess a choriovitelline placenta at some point
+in development, the major site of nutrient exchange in placentals
+occurs via the chorioallantoic placenta, produced from the fusion of
+the chorion and allantois
+\cite{Mossman.1987:vertebratefetalmembranes}. It is unclear whether
+the first placenta was more like that of marsupials or eutherians;
+however, using phylogenetic methods, the ancestral eutherian was
+reconstructed as possessing a relatively invasive hemochorial
+placenta, in which the maternal and fetal blood supply is separated by
+one tissue layer, as in humans and mouse
 \cite{Elliot.ea2009:Phylogeneticevidenceforearly,Wildman.ea2006:Evolutionofmammalianplacenta}.
+\DLA{To discuss with derek}
+
 
 Although the morphology of the mammalian placenta has been well
 characterized in a number of species
 \cite{Mossman.1987:vertebratefetalmembranes}, the diversity of the
 molecular environment is only beginning to be understood from a
 genetic perspective \cite{Carter2012:Evolutionofplacentalfunction}.
-Studies of certain model species (i.e., \human, \mouse, \cow) have
-revealed a stunning divergence in the genetics of the placenta,
-especially in later stages of pregnancy
+Studies of certain model species (i.e., \textit{Homo sapiens},
+\textit{Mus musculus}, \textit{Bos taurus}) have revealed a stunning
+divergence in the genetics of the placenta, especially in later stages
+of pregnancy
 \cite{Carter2012:Evolutionofplacentalfunction,Hou.ea2012:Elephanttranscriptomeprovidesinsights,Knox.ea2008:Genomicevolutionofplacenta,Su.ea2002:Large-scaleanalysisofhuman}.
 For example, each lineage has evolved expansive placenta-specific gene
 families with expression patterns that can vary in space and time
 \cite{Green.ea2000:Pregnancy-associatedbovineandovine,Simmons.ea2008:Spatialandtemporalexpression}.
 These include independent expansions of the prolactins in \mouse,
-\carmeli, \galili, and \cow, \acp{PSG} in \human and \mouse, \acp{PAG}
+\textit{Spalax carmeli}, \textit{Nanospalax galili}, and \cow, \acp{PSG} in \human and \mouse, \acp{PAG}
 in \cow, genes related to the thymus-specific serine protease
-\textit{PRSS16} in \elephant, and the expansion of the growth hormone
+\textit{PRSS16} in \textit{Loxodona africana}, and the expansion of the growth hormone
 and chorionic gonadotropin beta genes in hominoid primates
 \cite{Haig2008:Placentalgrowthhormone-relatedproteins,Rawn.ea2008:evolutionregulationandfunction}.
 Expression patterns of specific genes also can vary widely between
@@ -354,7 +360,7 @@ species. For example, the expression of orthologous genes in the
 placenta have been found to vary substantially between \human and
 \mouse \cite{Su.ea2002:Large-scaleanalysisofhuman}, and the
 recruitment of \textit{SIGLEC6} to placental expression in \human
-differs from both \textit{P. troglodytes} and \mouse
+differs from both \textit{Pan troglodytes} and \mouse
 \cite{Linden.ea2007:Human-specificexpressionofSiglec-6}.
 
 One explanation for the divergent paths of the placental interface is
@@ -370,7 +376,7 @@ existing genes to expression at the maternal-fetal interface
 \cite{Haig1993:Geneticconflictsinhuman}.
 
 One symptom of this maternal-fetal conflict is its potential affect on
-\human health
+health
 \cite{Hollegaard.ea2013:Parent-offspringconflictandpersistence}. In
 addition to having an invasive hemochorial placenta, \human possess a
 deeply invasive trophoblast layer that can penetrate the myometrium of
@@ -397,19 +403,21 @@ a wide array of species to address broader phylogenetic questions in
 the evolution of gene expression
 \cite{Brawand.ea2011:evolutionofgeneexpression}. Here we use RNA-Seq
 technology to sequence and quantify the mRNA environment of mammalian
-placentas at term, including that of the \human, \bonobo (the sister
-species to \textit{P. troglodytes}), \smonkey, \mouse, \galili,
-\carmeli, \dog, \cow, \elephant, \armadillo, and \opossum. These
-species represent three major branches of eutherian mammals
-(Euarchontoglires, Laurasiatheria, Afrotheria) as well as marsupials.
-These placentas also represent a wide array of placental morphologies
-as well as traits such as number and size of offspring and length of
-gestation (\cref{tab:gestational_periods}). We use this data, along with
+placentas at term, including that of the \human, \textit{Pan paniscus}
+(the sister species to \textit{P. troglodytes}), \textit{Ateles
+  fusciceps}, \mouse, \galili, \carmeli, \textit{Canis familiaris},
+\cow, \elephant, \textit{Dasypus novemcinctus}, and
+\textit{Monodelphis domesticus}. These species represent four major
+branches of eutherian mammals (Euarchontoglires, Laurasiatheria,
+Afrotheria, and Xenartha) as well as marsupials. These placentas also represent a
+wide array of placental morphologies as well as traits such as number
+and size of offspring and length of gestation
+(\cref{tab:gestational_periods}). We use this data, along with
 existing RNA-Seq data from \mouse
 \cite{Wang.ea2011:surveyfornovelimprinted}, \human
-\cite{Hughes.ea2015:Evaluatingintra-andinter-individual}, \horse
-\cite{Coleman.ea2010:Structuralannotationofequine}, \sheep
-\cite{Archibald.ea2010:sheepgenomereferencesequence}, and \pig
+\cite{Hughes.ea2015:Evaluatingintra-andinter-individual}, \textit{Equus caballus}
+\cite{Coleman.ea2010:Structuralannotationofequine}, \textit{Ovis aries}
+\cite{Archibald.ea2010:sheepgenomereferencesequence}, and \textit{Sus scrofa}
 \cite{Ahanda.ea2012:Predictionofaltered3-} to address the major
 differences between expression in marsupial and eutherian mammals at
 term, identify the evolution of expression in important placental
@@ -487,6 +495,8 @@ was performed using the Illumina Genome Analyzer II with an insert
 size of 230 base pairs (bp). Read lengths for species are shown in
 Supplemental \cref{tab:ref_genome_aligned_species}.
 
+\DLA{Add QC information}
+
 \subsubsection{Additional Sequences}
 
 For more complete evolutionary comparisons additional sequences of
@@ -518,9 +528,9 @@ values in \ac{FPKM}
 quantified using Cufflinks v2.2.1
 \cite{Trapnell.ea2009:TopHatdiscoveringsplicejunctions}.
 %
-The genome of the closely-related \textit{Pan troglodytes} was used as
-a reference for \bonobo. The separation between the two
-recognized Pan species is generally perceived to be $\approx 1$ Mya
+The genome of the closely-related \textit{P. troglodytes} was used as
+a reference for \bonobo. The separation between the two recognized Pan
+species is generally perceived to be $\approx 1$ million years
 \cite{Prüfer.ea2012:bonobogenomecomparedwith}.
 
 
@@ -587,7 +597,7 @@ using the 1:1 \human ortholog obtained
 
 \subsection{Comparative Analysis of Gene Expression}
 
-All 1:1 orthologues present among \opossum, \textit{Pan troglodytes},
+All 1:1 orthologs present among \opossum, \textit{Pan troglodytes},
 \cow, \dog, \elephant, \mouse, and \human were determined using
 Ensembl v.80 gene trees via Biomart
 \cite{Kasprzyk2011:BioMartdrivingparadigmchange} using the biomaRt R

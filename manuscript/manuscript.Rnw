@@ -130,7 +130,12 @@
   not included in this study or having expression by \ac{FPKM} less
   than 1 were excluded from the plotted tree. Heatmap cells in white
   are from species where there was no expression of the relevant
-  transcript (or a species where that transcript does not apply).}
+  transcript (or a species where that transcript does not apply). The
+  species names are abbreviated with the first letter of the genus and
+  first two letters of the species (for example, \textit{Homo sapiens}
+  is \textit{H.sa.}). Genes with duplicate gene names in the same
+  species (or no gene named defined) are listed by the Ensemble gene
+  ID.}
 
 
 

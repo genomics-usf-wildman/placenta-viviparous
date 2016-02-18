@@ -338,7 +338,7 @@ reconstructed as possessing a relatively invasive hemochorial
 placenta, in which the maternal and fetal blood supply is separated by
 one tissue layer, as in humans and mouse
 \cite{Elliot.ea2009:Phylogeneticevidenceforearly,Wildman.ea2006:Evolutionofmammalianplacenta}.
-\DLA{To discuss with derek}
+\DLA{To discuss maternal/fetal split with derek}
 
 
 Although the morphology of the mammalian placenta has been well
@@ -355,7 +355,7 @@ For example, each lineage has evolved expansive placenta-specific gene
 families with expression patterns that can vary in space and time
 \cite{Green.ea2000:Pregnancy-associatedbovineandovine,Simmons.ea2008:Spatialandtemporalexpression}.
 These include independent expansions of the prolactins in \mouse,
-\textit{Spalax carmeli}, \textit{Nanospalax galili}, and \cow, \acp{PSG} in \human and \mouse, \acp{PAG}
+\textit{Spalax carmeli}, \textit{Nannospalax galili}, and \cow, \acp{PSG} in \human and \mouse, \acp{PAG}
 in \cow, genes related to the thymus-specific serine protease
 \textit{PRSS16} in \textit{Loxodona africana}, and the expansion of the growth hormone
 and chorionic gonadotropin beta genes in hominoid primates
@@ -801,21 +801,21 @@ top.genes.table <- function(species.name,n=50) {
     temp[!is.na(name_or_id),
          name_or_id:=paste0("\\href{http://www.ensembl.org/",
                              capfirst(gsub(" ","_",alignment.species)),
-                             "/Gene/Summary?g=",name_or_id,"}{",
-                             xtable.sanitize.text(name_or_id),"}")]
+                             "/Gene/Summary?g=",name_or_id,"}{\\textit{",
+                             xtable.sanitize.text(name_or_id),"}}")]
     temp[!is.na(`Approved Name`),
          `Approved Name`:=paste0("\\href{http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=",`Approved Symbol`,"}{",xtable.sanitize.text(`Approved Name`),"}")]
     temp[!is.na(`Approved Symbol`),
-         `Approved Symbol`:=paste0("\\href{http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=",`Approved Symbol`,"}{",xtable.sanitize.text(`Approved Symbol`),"}")]
+         `Approved Symbol`:=paste0("\\href{http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=",`Approved Symbol`,"}{\\textit{",xtable.sanitize.text(`Approved Symbol`),"}}")]
     temp[used_alignment==TRUE,`Approved Symbol`:=paste0("(",`Approved Symbol`,")")]
     temp[,used_alignment:=NULL]
     temp[,sem_fpkm:=as.numeric(NA)]
     temp[n_fpkm>1,sem_fpkm:=sd_fpkm/sqrt(n_fpkm)]
     temp[,sd_fpkm:=NULL]
     temp[,n_fpkm:=NULL]
-    setnames(temp,c("Gene symbol","Human Symbol","Human Name","FPKM","FPKM SEM"))
-    if (temp[,all(is.na(`FPKM SEM`))]) {
-        temp[,`FPKM SEM`:=NULL]
+    setnames(temp,c("Gene symbol","Human Symbol","Human Name","FPKM","SEM"))
+    if (temp[,all(is.na(`SEM`))]) {
+        temp[,`SEM`:=NULL]
     }
     if (species.name=="homo sapiens" || species.name=="ateles fusciceps") {
         temp[,`Human Symbol`:=NULL]
@@ -872,7 +872,11 @@ placenta.lineage.specific.table <- function(analysis,output=TRUE) {
               )
     setkey(temp.table,"Human Symbol")
     if (output) {
-        print(xtable(temp.table[order(`p (t-test)`),],
+        display.table <- temp.table[order(`p (t-test)`),]
+        display.table <-
+            display.table[,`Human Symbol`:=paste0("\\textit{",xtable.sanitize.text(`Human Symbol`),
+                                                  "}")]
+        print(xtable(display.table,
                      display=c("s","s","s","e","g","f"),
                      ),
               booktabs=TRUE,
@@ -888,7 +892,7 @@ output.top.genes.table <- function(data,output=TRUE) {
     if (output) {
         table.display <- c("s","s","s","d")
         table.align <- c("c","c","p{3in}","r")
-        if (any(colnames(data) %in% "FPKM SEM"))  {
+        if (any(colnames(data) %in% "SEM"))  {
             table.display <- c(table.display,"d")
             table.align <- c(table.align,"r")
         }
@@ -1036,16 +1040,18 @@ glucose transport (\textit{SLC2A1}) among others
 \begin{figure}
 <<psg.ctsl.evolution.tree,echo=FALSE,fig.width=16,fig.height=16,warning=FALSE,message=FALSE>>=
 plot.label.size <- 3
+axis.text.size <- 3.5
 
-pushViewport(viewport(layout=grid.layout(nrow=2,ncol=2)))
+pushViewport(viewport(layout=grid.layout(nrow=2,ncol=2),clip="off"))
 tree.id <-
     genes.to.tree[combined.fpkm[gene_short_name=="PSG1" & species=="homo sapiens",gene_id],tree]
 gene.tree.table <- trees[[tree.id]]$table
 gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,min.fpkm=1,
-                 vp=viewport(layout.pos.col=1,layout.pos.row=1),
-                 fontsize=plot.label.size
+                 vp=viewport(layout.pos.col=1,layout.pos.row=1,clip="off"),
+                 axis.text.size=axis.text.size,
+                 fontsize=plot.label.size,
                  )
 
 tree.id <-
@@ -1055,8 +1061,11 @@ gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(gene.tree,gene.tree.table,gene.tree.expression,min.fpkm=1,
                  subtree=c("ENSMODG00000002844","ENSMUSG00000055679"),
-                 vp=viewport(layout.pos.col=2,layout.pos.row=1),
-                 fontsize=plot.label.size
+                 vp=viewport(layout.pos.col=2,layout.pos.row=1,clip="off"),
+                 fontsize=4,
+                 width=3,
+                 axis.text.size=axis.text.size,
+                 offset.ratio=1
                  )
 
 tree.id <-
@@ -1065,8 +1074,11 @@ gene.tree.table <- trees[[tree.id]]$table
 gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,
-                 vp=viewport(layout.pos.col=1,layout.pos.row=2),
-                 fontsize=plot.label.size
+                 vp=viewport(layout.pos.col=1,layout.pos.row=2,clip="off"),
+                 fontsize=4,
+                 width=3,
+                 axis.text.size=axis.text.size,
+                 offset.ratio=1.2
                  )
 
 tree.id <-
@@ -1078,8 +1090,10 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
                  gene.tree.table,gene.tree.expression,min.fpkm=1,
                  subtree=c("ENSSSCG00000006792",
                            "ENSBTAG00000046085"),
-                 vp=viewport(layout.pos.col=2,layout.pos.row=2),
-                 fontsize=plot.label.size
+                 vp=viewport(layout.pos.col=2,layout.pos.row=2,clip="off"),
+                 axis.text.size=axis.text.size,
+                 fontsize=plot.label.size,
+                 offset.ratio=0.6
                  )
 
 popViewport(1)
@@ -1123,11 +1137,13 @@ comparatively much lower) in the human placenta
 (\Sexpr{gene.expression("homo sapiens","PRG2")};
 Supplemental \cref{tab:all_homo_sapiens_placenta}). Four \bonobo genes
 related to the chorionic somatomammotropins
-are also expressed at relatively high levels (GH1 
+are also expressed at relatively high levels (\textit{GH1} 
 \Sexpr{gene.expression("pan paniscus","ENSPTRG00000034560",complete=TRUE)}, 
+\textit{GH1} 
 \Sexpr{gene.expression("pan paniscus","ENSPTRG00000034212",complete=TRUE)}, 
-GH2
+\textit{GH2}
 \Sexpr{gene.expression("pan paniscus","ENSPTRG00000030805",complete=TRUE)}, 
+and \textit{GH2}
 \Sexpr{gene.expression("pan paniscus","ENSPTRG00000034209",complete=TRUE)}, 
 %
 \cref{tab:all_pan_paniscus_placenta}, \cref{fig:csh1_evolution_tree}).
@@ -1179,7 +1195,7 @@ of androgen receptor signaling
 (\Sexpr{gene.expression("ateles_fusciceps","PAGE4")}), %
 the pregnancy specific glycoprotein \textit{PSG8}
 (\Sexpr{gene.expression("ateles_fusciceps","PSG8")}), %
-a member of the chorionic somatotropins, \textit{GH1} %
+only one member of the chorionic somatotropins, \textit{GH1} %
 (\Sexpr{gene.expression("ateles_fusciceps","GH1")}), %
 a few HLA genes (\textit{HLA-A}, \textit{HLA-F},
 \cref{tab:top50_spider_monkey_placenta}), and multiple components of
@@ -1192,9 +1208,10 @@ cell-cell interaction in the developing placenta
 \cite{Liu.ea2015:AnnexinA2complexeswith}.
 \Sexpr{gene.expression("ateles_fusciceps","AL365202.1",complete=TRUE)}
 is also highly expressed, has no known function, and is duplicated
-multiple times in \textit{Macaca mulatta}. All genes with expression
-greater than 50 \ac{FPKM} are listed in Supplementary
-\cref{tab:all_ateles_fusciceps_placenta}.
+multiple times in \textit{Macaca mulatta} (Ensembl gene tree
+\href{http://useast.ensembl.org/Multi/GeneTree/Image?gt=ENSGT00580000081348}{ENSGT00580000081348}).
+All genes with expression greater than 50 \ac{FPKM} are listed in
+Supplementary \cref{tab:all_ateles_fusciceps_placenta}.
 
 
 \subsection{Rodentia Placenta Transcriptomes}
@@ -1321,7 +1338,7 @@ expressed genes in Supplemental
 \cref{tab:all_spalax_carmeli_placenta}. Numerous hemoglobin subunits
 ware highly expressed
 (\Sexpr{gene.expression("spalax_carmeli","Hbb-bh1",complete=TRUE)},
-\Sexpr{gene.expression("spalax_carmeli","Hbb-a1",complete=TRUE)}, and
+\Sexpr{gene.expression("spalax_carmeli","Hba-a1",complete=TRUE)}, and
 \Sexpr{gene.expression("spalax_carmeli","Hbb-bs",complete=TRUE)}), as
 well as the relaxin
 \Sexpr{gene.expression("spalax_carmeli","Rln1",complete=TRUE)},
@@ -1344,8 +1361,8 @@ We examined the expression of five Laurasiatherians: \cow, \sheep,
 differences after correcting for multiple testing between
 Laurasiatherians and all other analyzed species
 (Supplemental \cref{tab:laurasiatheria_lineage_specific}) or between
-Laurasiatherians and Euasiatherians
-(Supplemental \cref{tab:laurasiatheria_eurasiatherian_lineage_specific}).
+Laurasiatherians and Euarchontoglires
+(Supplemental \cref{tab:laurasiatheria_euarchontoglires_lineage_specific}).
 
 \subsubsection{\dog Placenta Transcriptome}
 
@@ -1589,7 +1606,7 @@ play a role in cellular migration
 \cite{Raymond.ea2010:Expressionoforphanprotein}.
 
 
-\subsection{Atlantogenata}
+\subsection{Atlantogenata (Afrotheria + Xenartha)}
 \subsubsection{\elephant Placenta Transcriptome}
 
 \begin{table}
@@ -1658,7 +1675,7 @@ growth
 (\Sexpr{gene.expression("loxodonta_africana","IGF2",complete=TRUE)})
 and
 \Sexpr{gene.expression("loxodonta_africana","PAEP",complete=TRUE)}, a
-gene usually expressed in the endometrium of the uterus in humans
+gene predominantly expressed in the endometrium of the uterus in humans
 \cite{Rutanen.ea1987:Progesterone-associatedproteinsPP12and}.
 
 \subsubsection{\armadillo Placenta Transcriptome}
@@ -1731,7 +1748,7 @@ Supplemental \cref{tab:all_monodelphis_domestica_placenta}. The gene with the
 second highest expression is superoxide dismutase 3, extracellular
 (\Sexpr{gene.expression("monodelphis_domestica","SOD3",complete=TRUE)}),
 which functions as an antioxidant. The gene with the second highest
-expression is the hemoglobin subunit epsilon
+expression is the beta hemoglobin subunit epsilon
 (\Sexpr{gene.expression("monodelphis_domestica","ENSMODG00000011325",complete=TRUE)}),
 which is expressed at the embryonic stage of development in
 marsupials, as in other mammals
@@ -1784,7 +1801,7 @@ respectively).
 \begin{figure}
 <<core.placenta.transcriptome,fig.width=8,fig.height=12,out.height="0.8\\textheight",echo=FALSE>>=
 print(ggplot(core.placenta.transcriptome.long[!grepl("(min|median|max)_expression",Species),],
-             aes(y=human_name,x=capfirst(Species)))
+             aes(y=human_name,x=gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",capfirst(Species))))
       + geom_raster(aes(fill=log10(FPKM)))
       + scale_x_discrete(expand=c(0,0))
       + scale_y_discrete(expand=c(0,0))
@@ -1799,7 +1816,8 @@ print(ggplot(core.placenta.transcriptome.long[!grepl("(min|median|max)_expressio
       + xlab("Species")
       + theme_grey()
       + theme(legend.position="top",
-              axis.ticks = element_blank(), 
+              axis.ticks = element_blank(),
+              axis.text.y = element_text(face="italic"),
               axis.text.x = element_text(angle = 340, hjust = 0.1, vjust=1,face="italic"))
       )
 @ 
@@ -2059,6 +2077,7 @@ common.plot.options <-
          theme(legend.position = "top",
                axis.ticks = element_blank(),
                panel.background = element_blank(),
+               axis.text.y = element_text(face="italic"),
                axis.text.x = element_text(angle = 300, hjust = 0, vjust=1,face="italic")),
          facet_grid(type~.,scale="free_y",space="free_y")
          )
@@ -2072,11 +2091,13 @@ print(ggplot(combined.long, aes(y=gene, x=species))
 
 \subsubsection{Estrogen and Progesterone}
 
-In both ruminants and primates, the placenta is responsible for the
-production of estrogen and progesterone. High relative expression of
-\textit{CYP19A1} (Supplemental \cref{fig:estrogen_evolution_tree}),
-the enzyme that synthesizes estrogen from androstenedione is seen in
-\human, \bonobo, \cow, and \horse, though not in \sheep, \smonkey. %
+In both ruminants and primates, the placenta is capable of producing
+estrogen and progesterone
+\cite{Strauss.ea1996:Placentalsteroidhormonesynthesis}. High relative
+expression of \textit{CYP19A1} (Supplemental
+\cref{fig:estrogen_evolution_tree}), the enzyme that synthesizes
+estrogen from androstenedione is seen in \human, \bonobo, \cow, and
+\horse, though not in \sheep, \smonkey. %
 %
 \textit{HSD3B1}, one of two enzymes that synthesizes progesterone from
 pregnalone
@@ -2126,8 +2147,7 @@ case in placenta, as the rodent with the highest \textit{HOXA11}
 expression, \galili
 (\Sexpr{gene.expression("nannospalax_galili","Hoxa11",complete=TRUE)})
 is the rodent with the lowest expression of \textit{PRL}
-(\Sexpr{gene.expression("nannospalax_galili","Prl",complete=TRUE)},
-\cref{fig:prolactin_evolution_tree}), and \elephant also does not
+(\cref{fig:prolactin_evolution_tree}), and \elephant also does not
 express \textit{HOXA11} highly either
 (\Sexpr{gene.expression("loxodonta_africana","HOXA11",complete=TRUE)},
 Supplemental \cref{fig:hoxa11_evolution_tree}).
@@ -2158,7 +2178,7 @@ and it is likely that they have the same function in \bonobo.
 \begin{figure}
 <<chorionic.somatomammotropin.alpha.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
 
-plot.label.size <- 4
+plot.label.size <- 4.5
 pushViewport(viewport(layout=grid.layout(nrow=1,ncol=2,widths=c(2,3))))
 
 tree.id <-
@@ -2168,8 +2188,9 @@ gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,
                  vp=viewport(layout.pos.col=1,layout.pos.row=1),
-                 offset.ratio=0.8,
-                 fontsize=plot.label.size
+                 offset.ratio=0.7,
+                 fontsize=plot.label.size,
+                 axis.text.size=3.5
                  )
 
 tree.id <-
@@ -2180,11 +2201,13 @@ gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,
                  vp=viewport(layout.pos.col=2,layout.pos.row=1),
                  subtree=c("ENSMODG00000013768","ENSG00000104818"),
-                 offset.ratio=0.6,
-                 fontsize=plot.label.size)
+                 offset.ratio=1,
+                 fontsize=plot.label.size,
+                 axis.text.size=3.5
+                 )
 popViewport(1)
 grid.text(c("A","B"),
-          x=unit(c(0,1/3),"npc"),y=unit(c(1,1),"npc"),
+          x=unit(c(0,2/5),"npc"),y=unit(c(1,1),"npc"),
           just=c("left","top"),
           gp=gpar(fontsize="48")
           )
@@ -2244,12 +2267,14 @@ important in increasing maternal blood flow to the fetus
 that these proteins are present in the decidua of mice
 \cite{Cameron.ea1996:sitesofgeneexpression}, but we find very little
 expression in the fetal portion of the mouse placenta
-(\cref{fig:hormone_genes}, Supplemental \cref{fig:nppc_evolution_tree,fig:nppb_evolution_tree}).
-However, we do find high expression of at least one of these genes in
-\dog, \cow, and \elephant. The lack of expression in the hemochorial
-placentas of Euarchontoglires may mean that high expression of these
-genes are essential in increasing maternal blood flow in
-epitheliochorial and endotheliochorial placentas.
+(\cref{fig:hormone_genes}, Supplemental
+\cref{fig:nppc_evolution_tree,fig:nppb_evolution_tree}). While we do
+find high expression of at least one of these genes in \dog, \cow, and
+\elephant, the expression pattern does not follow the placental
+organization (endotheliochorial for \dog and \elphant,
+synepitheliochorial for \cow and \sheep), so it is unlikely that
+expression of these genes are essential for specific placental
+organizations.
 
 \subsection{The Evolution of Placental Expression of Galectins}
 
@@ -2381,7 +2406,7 @@ expression in \elephant may indicate an elaboration of this system.
 
 \subsection{Annexin Complex}
 
-\subsection{Human Specific Expression Shifts and the Evolution of Preeclampsia}
+\subsection{Human Specific Expression Shifts and the Evolution of Pre-eclampsia}
 
 The \human placenta is distinctive from many other primates in that it
 possesses a deeply invasive trophoblast that penetrates the inner
@@ -2403,7 +2428,7 @@ led many to speculate on the origin of various disorders, which are
 almost exclusively symptomatic of human pregnancy. For example,
 pre-eclampsia is a human disease that occurs in 4\% of pregnancies in
 the United States
-\cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current}. Preeclampsia
+\cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current}. Pre-eclampsia
 can be attributed to the lack of adequate invasion of maternal tissue,
 and is noted by the onset of hypertension and proteinuria
 \cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current}. Some cases of
@@ -2545,11 +2570,13 @@ of human-specific expression shifts.
   
   Sue Savage-Rumbaugh provided samples.
 
+  Eviatar Nevo provided samples.
+
   Chong J. Kim provided samples.
 
-  Günter P. Wagner provided samples.
+  Günter P. Wagner provided samples and wrote the paper.
 
-  Roberto Romero provided samples.
+  Roberto Romero provided samples and conceived the study.
 
   Derek E. Wildman conceived the study, wrote the paper, and performed
   analyses.

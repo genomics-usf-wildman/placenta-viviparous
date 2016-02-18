@@ -31,6 +31,9 @@
 % \usepackage[nolists,figuresfirst,nomarkers,heads,nofighead,notabhead]{endfloat}
 % \AtBeginFigures{\section*{Figure Legends}\renewcommand{\efloatseparator}{\hbox{}}}
 % \AtBeginTables{\section*{Tables}\renewcommand{\efloatseparator}{\mbox{}}}
+\usepackage{float}
+\floatstyle{plaintop}
+\restylefloat{table}
 \usepackage[nomargin,inline,draft]{fixme}
 \newcommand{\DLA}[1]{\textcolor{red}{\fxnote{DLA: #1}}}
 \usepackage[x11names,svgnames]{xcolor}
@@ -124,7 +127,7 @@
 
 <<load.libraries,echo=FALSE,results="hide",warning=FALSE,message=FALSE,error=FALSE,cache=FALSE>>=
 opts_chunk$set(dev="cairo_pdf",out.width="\\textwidth",out.height="0.7\\textheight",out.extra="keepaspectratio")
-opts_chunk$set(cache=TRUE, autodep=TRUE)
+opts_chunk$set(cache=TRUE, autodep=TRUE,cache.path="supplemental_cache/")
 options(device = function(file, width = 8, height = 7, ...) {
   cairo_pdf(tempfile(), width = width, height = height, ...)
 })
@@ -139,7 +142,6 @@ library("ape")
 library("ggtree")
 library("topGO")
 library("org.Hs.eg.db")
-
 
 @ 
 
@@ -278,7 +280,10 @@ load("../go_annotation/go_tissue_analysis")
     \textit{Sus scrofa}           & Duroc (pig)        & Sscrofa10.2 & 51 \\
     \bottomrule
   \end{tabular}
-  \caption{Reference genomes for aligned species}
+  \caption{Species names, common names, reference genomes and read 
+    lengths for aligned species. An italic species as a reference 
+    indicates that assembled reads were annotated using the corresponding
+    reference genome as explained in the text.}
   \label{tab:ref_genome_aligned_species}
 \end{table}
 
@@ -415,6 +420,7 @@ print(xtable(go.analysis.wide.table,
 \label{tab:go_terms_all_species}
 \end{table}
 
+\clearpage
 
 \subsection{Top 100 Transcripts Enrichment}
 
@@ -441,6 +447,8 @@ for (this.species in names(species.names)) {
 }
 @ 
 
+\clearpage
+
 \subsection{Top 1\% Transcripts Enrichment}
 
 <<go.analysis.top.5p.all.species,echo=FALSE,results="asis">>=
@@ -465,6 +473,8 @@ for (this.species in names(species.names)) {
           floating=FALSE)
 }
 @ 
+
+\clearpage
 
 <<genes.expression,echo=FALSE,results="hide">>=
 genes.expression.table <- function(species.name,min.fpkm=50) {
@@ -523,7 +533,11 @@ tree.id <-
 gene.tree.table <- trees[[tree.id]]$table
 gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,min.fpkm=5)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
+                 gene.tree.table,gene.tree.expression,min.fpkm=5,
+                 axis.text.size=5,
+                 fontsize=8
+                 )
 @ 
 \caption{\genetreeexplanation{follistatin-like 1 \textit{FSTL1}}}
 \label{fig:fstl1_evolution_tree}
@@ -537,7 +551,10 @@ tree.id <-
 gene.tree.table <- trees[[tree.id]]$table
 gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,min.fpkm=1)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
+                 gene.tree.table,gene.tree.expression,min.fpkm=1,
+                 axis.text.size=5,
+                 fontsize=4)
 @ 
 \caption{\genetreeexplanation{\textit{SERPINE2}}}
 \label{fig:serpine_evolution_tree}
@@ -551,7 +568,10 @@ tree.id <-
 gene.tree.table <- trees[[tree.id]]$table
 gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
+                 gene.tree.table,gene.tree.expression,
+                 axis.text.size=5,
+                 fontsize=6)
 @ 
 \caption{\genetreeexplanation{\textit{SSLP1}}}
 \label{fig:sslp1_evolution_tree}
@@ -565,7 +585,10 @@ tree.id <-
 gene.tree.table <- trees[[tree.id]]$table
 gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
+                 gene.tree.table,gene.tree.expression,
+                 axis.text.size=5,
+                 fontsize=7)
 @ 
 \caption{\genetreeexplanation{estrogen synthesis genes}}
 \label{fig:estrogen_evolution_tree}
@@ -579,8 +602,11 @@ tree.id <-
 gene.tree.table <- trees[[tree.id]]$table
 gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,
-                 subtree=c("ENSMODG00000005385","ENSLAFG00000027896")
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
+                 gene.tree.table,gene.tree.expression,
+                 subtree=c("ENSMODG00000005385","ENSLAFG00000027896"),
+                 axis.text.size=5,
+                 fontsize=6
                  )
 @ 
 \caption{\genetreeexplanation{progesterone synthesis genes}}
@@ -595,7 +621,10 @@ tree.id <-
 gene.tree.table <- trees[[tree.id]]$table
 gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
+                 gene.tree.table,gene.tree.expression,
+                 axis.text.size=5,
+                 fontsize=4)
 @ 
 \caption{\genetreeexplanation{chorionic somatomammotropin}}
 \label{fig:csh1_evolution_tree}
@@ -609,7 +638,10 @@ tree.id <-
 gene.tree.table <- trees[[tree.id]]$table
 gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
+                 gene.tree.table,gene.tree.expression,
+                 axis.text.size=5,
+                 fontsize=5)
 @ 
 \caption{\genetreeexplanation{prolactin}}
 \label{fig:prolactin_evolution_tree}
@@ -623,7 +655,10 @@ tree.id <-
 gene.tree.table <- trees[[tree.id]]$table
 gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
+                 gene.tree.table,gene.tree.expression,
+                 axis.text.size=5,
+                 fontsize=5)
 @ 
 \caption{\genetreeexplanation{\textit{RLN2}}}
 \label{fig:rln2_evolution_tree}
@@ -637,8 +672,11 @@ tree.id <-
 gene.tree.table <- trees[[tree.id]]$table
 gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,
-                 subtree=c("ENSDNOG00000033320","ENSMODG00000017988"))
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
+                 gene.tree.table,gene.tree.expression,
+                 subtree=c("ENSDNOG00000033320","ENSMODG00000017988"),
+                 axis.text.size=5,
+                 fontsize=5)
 @ 
 \caption{\genetreeexplanation{\cow \textit{OVOS2}}}
 \label{fig:ovos2_evolution_tree}
@@ -652,8 +690,11 @@ tree.id <-
 gene.tree.table <- trees[[tree.id]]$table
 gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,
-                 subtree=c("ENSG00000113494","ENSMODG00000020376"))
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
+                 gene.tree.table,gene.tree.expression,
+                 subtree=c("ENSG00000113494","ENSMODG00000020376"),
+                 axis.text.size=5,
+                 fontsize=7)
 @ 
 \caption{\genetreeexplanation{prolactin receptor, \textit{PRLR}}}
 \label{fig:prolactin_receptor_evolution_tree}
@@ -668,8 +709,11 @@ tree.id <-
 gene.tree.table <- trees[[tree.id]]$table
 gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,
-                 subtree=c("ENSBTAG00000014738","ENSECAG00000013229")
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
+                 gene.tree.table,gene.tree.expression,
+                 subtree=c("ENSBTAG00000014738","ENSECAG00000013229"),
+                 axis.text.size=5,
+                 fontsize=5
                  )
 @ 
 \caption{\genetreeexplanation{\textit{HOXA11}}}
@@ -685,13 +729,78 @@ tree.id <-
 gene.tree.table <- trees[[tree.id]]$table
 gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
+                 gene.tree.table,gene.tree.expression,
+                 axis.text.size=5,
+                 fontsize=5)
 @ 
-\caption{Expression of \textit{HBE1} and related genes}
+\caption{\genetreeexplanation{\textit{HBE1}}}
 \label{fig:hbe1_evolution_tree}
 \end{figure}
 
 \subsection{Clade specific Expression}
+
+<<load.placenta.lineage.specific,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../data/",c("placenta_lineage_specific")))>>=
+load("../data/placenta_lineage_specific")
+source("/home/don/projects/xtable/pkg/R/print.xtable.R")
+
+placenta.lineage.specific.table <- function(analysis,output=TRUE) {
+    temp.table <- 
+        head(placenta.lineage.specific.analysis[analysis.name==analysis &
+                                                p.value <= 0.05][order(p.value),
+                                                                 list(human_name,p.value,fdr,fc),],
+             n=5)
+    temp.table <- data.table(temp.table)
+    setkey(temp.table,"human_name")
+    temp.table <- 
+        hugo.nomenclature[temp.table][,list(`Approved Symbol`,
+                                            `Approved Name`,p.value,fdr,fc)]
+    setnames(temp.table,
+              c("Human Symbol","Human Name","p (t-test)","FDR","Fold Change")
+              )
+    setkey(temp.table,"Human Symbol")
+    if (output) {
+        display.table <- temp.table[order(`p (t-test)`),]
+        display.table <-
+            display.table[,`Human Symbol`:=paste0("\\textit{",xtable.sanitize.text(`Human Symbol`),
+                                                  "}")]
+        print(xtable(display.table,
+                     display=c("s","s","s","e","g","f"),
+                     ),
+              booktabs=TRUE,
+              floating=FALSE,
+              math.style.exponents=TRUE,
+              sanitize.text.function=genes.table.sanitize,
+              include.rownames=FALSE)
+        
+    }
+    return(invisible(temp.table[order(`p (t-test)`),]))
+}
+output.top.genes.table <- function(data,output=TRUE) {
+    if (output) {
+        table.display <- c("s","s","s","d")
+        table.align <- c("c","c","p{3in}","r")
+        if (any(colnames(data) %in% "SEM"))  {
+            table.display <- c(table.display,"d")
+            table.align <- c(table.align,"r")
+        }
+        if (any(colnames(data) %in% "Human Symbol"))  {
+            table.align <- c("c",table.align)
+            table.display <- c("s",table.display)
+        }
+        print(xtable(data,
+                     display=table.display,
+                     align=table.align
+                     ),
+              booktabs=TRUE,
+              floating=FALSE,
+              sanitize.text.function=genes.table.sanitize,
+              include.rownames=FALSE)
+    }
+}
+
+@ 
+
 
 \begin{table}
   \footnotesize
@@ -699,7 +808,7 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 rod.all.lin.spec <- placenta.lineage.specific.table("rod.all")
 setkey(rod.all.lin.spec,"Human Symbol")
 @ 
-\caption{Genes whose expression changed significantly in the Rodentia
+\caption{Genes whose expression changed in the Rodentia
   order as compared to all other analyzed species.}
 \label{tab:rodentia_lineage_specific}
 \end{table}
@@ -722,8 +831,8 @@ eua.lau.lin.spec <- placenta.lineage.specific.table("eua.lau")
 setkey(eua.lau.lin.spec,"Human Symbol")
 @ 
 \caption{Genes whose expression changed between the
-  Euasiatherian and Laurasiatherian superorder.}
-\label{tab:laurasiatheria_eurasiatherian_lineage_specific}
+  Euarchontoglires and Laurasiatherian superorder.}
+\label{tab:laurasiatheria_euarchontoglires_lineage_specific}
 \end{table}
 
 

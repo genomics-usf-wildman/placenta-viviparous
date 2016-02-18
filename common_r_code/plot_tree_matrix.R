@@ -59,7 +59,7 @@ don.gheatmap <- function(p, data, offset=0, width=1, low="green", high="red",
                              angle=90,
                              hjust=1,
                              vjust=0.5,
-                             y=y, size=font.size, inherit.aes = FALSE)
+                             y=y, size=font.size, fontface="italic",inherit.aes = FALSE)
     }
 
     p2 <- p2 + theme(legend.position="top",
@@ -73,7 +73,7 @@ don.gheatmap <- function(p, data, offset=0, width=1, low="green", high="red",
     return(p2)
 }
 
-plot.tree.matrix <- function(gene.tree,gene.tree.table,gene.tree.expression,offset.ratio=0.5,min.fpkm=NA,subtree=NULL,vp=NULL,fontsize=3) {
+plot.tree.matrix <- function(gene.tree,gene.tree.table,gene.tree.expression,offset.ratio=0.5,min.fpkm=NA,subtree=NULL,vp=NULL,fontsize=3,width=1.5,axis.text.size=5) {
     gene.tree$tip.label <- gsub("^(ENS.+)\\1$","\\1",gene.tree$tip.label)
     gene.tree.table[,species:=capfirst(gsub("_"," ",species))]
     gene.tree.table[,short.species:=gsub("^(.)[^ ]* +([^ ]{2})[^ ]*","\\1.\\2.",species)]
@@ -135,27 +135,32 @@ plot.tree.matrix <- function(gene.tree,gene.tree.table,gene.tree.expression,offs
     text.labels$xpos <- max(p$data$x)+max(p$data$x)*offset.ratio
     text.labels$face <- "italic"
     text.labels$face[grepl("^ENS",text.labels$label)] <- "plain"
-    print(don.gheatmap(p,data=gene.tree.expression.matrix,
-                       width=1.5,
-                       offset=max(p$data$x)*offset.ratio,colnames=TRUE)
-          + geom_text(aes(x=xpos,
-                          y=y,
-                          label=label,
-                          hjust=1,
-                          fontface=face
-                          ),
-                      size=fontsize,
-                      data=text.labels
-                      )
-          + theme(legend.title=element_text(),legend.position="top",
-                  legend.margin=unit(0,"mm"),
-                  plot.margin=unit(c(0,0,0,0),"mm"),
-                  panel.grid=element_line(size=0.5,color="gray50")
-                  )
-          + scale_fill_gradient(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = NA,
-                                name=expression(log[10](FPKM))),
-          vp=vp
-          )
-
+    g1 <-
+        (don.gheatmap(p,data=gene.tree.expression.matrix,
+                      width=width,
+                      offset=max(p$data$x)*offset.ratio,font.size=axis.text.size,colnames=TRUE)
+            + geom_text(aes(x=xpos,
+                            y=y,
+                            label=label,
+                            hjust=1,
+                            fontface=face
+                            ),
+                        size=fontsize,
+                        data=text.labels
+                        )
+            + theme(legend.title=element_text(),legend.position="top",
+                    legend.margin=unit(0,"mm"),
+                    plot.margin=unit(c(2,0,0,0),"mm"),
+                    panel.grid=element_line(size=0.5,color="gray50"),
+                    axis.text=element_text(size=axis.text.size,face="italic")
+                    )
+            + scale_fill_gradient(low = "#132B43", high = "#56B1F7",
+                                  space = "Lab", na.value = NA,
+                                  name=expression(log[10](FPKM)))
+        )
+    g1 <- ggplot_gtable(ggplot_build(g1))
+    g1$layout$clip[g1$layout$name=="panel"] <- "off"
+    g1$vp=vp
+    grid.draw(g1)
 }
 

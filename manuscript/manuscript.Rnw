@@ -161,10 +161,12 @@ library("ggtree")
 library("topGO")
 library("org.Hs.eg.db")
 library("scales")
+library("magrittr")
+library("tidyr")
 
 @ 
 
-<<source.to.latex,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../common_r_code/",c("to_latex.R","plot_tree_matrix.R","utility_functions.R")))>>=
+<<source.to.latex,echo=FALSE,message=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../common_r_code/",c("to_latex.R","plot_tree_matrix.R","utility_functions.R")))>>=
 for (a in paste0("../common_r_code/",c("to_latex.R","plot_tree_matrix.R","utility_functions.R"))) {
     source(a)
 }
@@ -218,12 +220,12 @@ grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = NA
 
 \begin{frontmatter}
 \begin{fmbox}
-\dochead{Research}
+\dochead{Research}%
 \title{The evolution of gene expression in the term placenta of viviparous mammals}%
 %
 \author[addressref={aff1},email={don@donarmstrong.com}]{\inits{DL}\fnm{Don L} \snm{Armstrong}}
 \author[addressref={aff2},email={1mmcgowen1@gmail.com}]{\inits{MR}\fnm{Michael R.} \snm{McGowen}}
-\author[addressref={aff1},email={aweckle@illinois.edu}]{\inits{AL} \fnm{Amy} \snm{Weckle}}
+\author[addressref={aff1},email={aweckle@illinois.edu}]{\inits{AL}\fnm{Amy} \snm{Weckle}}
 \author[addressref={aff3},email={jacaravas@gmail.com}]{\inits{J}\fnm{Jason} \snm{Caravas}}
 \author[addressref={aff4},email={agnewd@dcpah.msu.edu}]{\inits{D}\fnm{Dalen} \snm{Agnew}}
 \author[addressref={aff5},email={kbenirschke@ucsd.edu}]{\inits{K}\fnm{Kurt} \snm{Benirschke}}

@@ -42,6 +42,7 @@
 \usepackage{nameref}
 \usepackage{zref-xr,zref-user}
 \usepackage{cleveref}
+\usepackage{xspace}
 \newenvironment{narrow}[2]{%
   \begin{list}{}{%
       \setlength{\topsep}{0pt}%
@@ -142,10 +143,12 @@ library("ape")
 library("ggtree")
 library("topGO")
 library("org.Hs.eg.db")
+library("magrittr")
+library("tidyr")
 
 @ 
 
-<<source.to.latex,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../common_r_code/",c("to_latex.R","plot_tree_matrix.R","utility_functions.R")))>>=
+<<source.to.latex,echo=FALSE,message=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../common_r_code/",c("to_latex.R","plot_tree_matrix.R","utility_functions.R")))>>=
 for (a in paste0("../common_r_code/",c("to_latex.R","plot_tree_matrix.R","utility_functions.R"))) {
     source(a)
 }
@@ -287,6 +290,8 @@ load("../go_annotation/go_tissue_analysis")
   \label{tab:ref_genome_aligned_species}
 \end{table}
 
+\clearpage
+
 \section{Transcriptome statistics}
 
 
@@ -373,10 +378,10 @@ print(ggplot(star.logs.wide,
 \end{figure}
 
 
+\clearpage
+
 \section{Gene Ontology Analyses}
 
-\begin{table}
-  \footnotesize
 <<go.analysis.all.tissue,echo=FALSE,results="asis">>=
 go.analysis.wide <- 
     data.table(dcast(data=go.results,
@@ -402,23 +407,25 @@ setnames(go.analysis.wide.table,"GO.ID","GO ID")
 
 print(xtable(go.analysis.wide.table,
              display=c("d","s","s","s","d","e"),
-             align=  c("c","c","c","c","c","c")
-             ),
-      math.style.exponents=TRUE,
-      include.rownames=FALSE,
-      booktabs=TRUE,
-      floating=FALSE
-      )
+             align=  c("c","c","c","c","c","c"),
+             caption="GO terms with significant enrichment ($\\mathrm{FDR}\\le0.05$)
+  in 12 or more of the species analyzed from genes in the top 1\\% of
+  expression. $n(\\mathrm{FDR}\\le0.05)$ is the number of species with
+  significant enrichment ($\\mathrm{FDR}\\le 0.05$) in the GO term
+  listed. $max(\\mathrm{FDR}\\le0.05)$ is the maximum FDR value in all
+  species with an FDR of less than $0.05$.",
+  label="tab:go_terms_all_species"
+  ),
+  math.style.exponents=TRUE,
+  include.rownames=FALSE,
+  booktabs=TRUE,
+  floating=FALSE,
+  tabular.environment="longtable",
+  caption.placement="top",
+  size="\\footnotesize"
+  )
 
 @ 
-\caption{GO terms with significant enrichment ($\mathrm{FDR}\le0.05$)
-  in 12 or more of the species analyzed from genes in the top 1\% of
-  expression. $n(\mathrm{FDR}\le0.05)$ is the number of species with
-  significant enrichment ($\mathrm{FDR}\le 0.05$) in the GO term
-  listed. $max(\mathrm{FDR}\le0.05)$ is the maximum FDR value in all
-  species with an FDR of less than $0.05$.}
-\label{tab:go_terms_all_species}
-\end{table}
 
 \clearpage
 
@@ -738,6 +745,66 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
 \label{fig:hbe1_evolution_tree}
 \end{figure}
 
+\begin{figure}
+<<nppb.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="NPPB" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+@ 
+\caption{\genetreeexplanation{\textit{NPPB}}}
+\label{fig:nppb_evolution_tree}
+\end{figure}
+
+\begin{figure}
+<<nppc.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="NPPC" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+@ 
+\caption{\genetreeexplanation{\textit{NPPC}}}
+\label{fig:nppc_evolution_tree}
+\end{figure}
+
+
+\begin{figure}
+<<galectins.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="LGALS1" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+@ 
+\caption{\genetreeexplanation{galectins}}
+\label{fig:galectins_evolution_tree}
+\end{figure}
+
+
+\begin{figure}
+<<lgals13.galectins.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="LGALS13" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
+@ 
+\caption{\genetreeexplanation{\textit{LGALS13}}}
+\label{fig:galectins_lgals13_evolution_tree}
+\end{figure}
+
+\clearpage
+
 \subsection{Clade specific Expression}
 
 <<load.placenta.lineage.specific,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../data/",c("placenta_lineage_specific")))>>=
@@ -802,7 +869,7 @@ output.top.genes.table <- function(data,output=TRUE) {
 @ 
 
 
-\begin{table}
+\begin{table}[hb]
   \footnotesize
 <<rodentia.lineage.specific,echo=FALSE,results="asis">>=
 rod.all.lin.spec <- placenta.lineage.specific.table("rod.all")
@@ -813,7 +880,7 @@ setkey(rod.all.lin.spec,"Human Symbol")
 \label{tab:rodentia_lineage_specific}
 \end{table}
 
-\begin{table}
+\begin{table}[hb]
   \footnotesize
 <<lau.lineage.specific,echo=FALSE,results="asis">>=
 lau.all.lin.spec <- placenta.lineage.specific.table("lau.all")
@@ -824,7 +891,7 @@ setkey(lau.all.lin.spec,"Human Symbol")
 \label{tab:laurasiatheria_lineage_specific}
 \end{table}
 
-\begin{table}
+\begin{table}[hb]
   \footnotesize
 <<eua.lau.lineage.specific,echo=FALSE,results="asis">>=
 eua.lau.lin.spec <- placenta.lineage.specific.table("eua.lau")
@@ -835,6 +902,7 @@ setkey(eua.lau.lin.spec,"Human Symbol")
 \label{tab:laurasiatheria_euarchontoglires_lineage_specific}
 \end{table}
 
+\clearpage
 
 \subsection{Species Expression}
 
@@ -842,7 +910,7 @@ setkey(eua.lau.lin.spec,"Human Symbol")
 for (this.species in names(species.names)) {
     this.caption <- paste0("\\textit{",
                            capfirst(this.species),"} Placental Gene Expression of all genes with FPKM $\\ge 50$")
-    cat(paste0("\\subsection{",this.caption,"}\n\n"))
+    cat(paste0("\\subsection{\\textit{",capfirst(this.species),"} Placental Gene Expression}\n\n"))
     print(xtable(genes.expression.table(species.name=this.species),
                  caption=this.caption,
                  label=paste0("tab:all_",gsub(" ","_",this.species),"_placenta")
@@ -857,63 +925,7 @@ for (this.species in names(species.names)) {
 }
 @ 
 
-\begin{figure}
-<<nppb.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="NPPB" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
-@ 
-\caption{\genetreeexplanation{\textit{NPPB}}}
-\label{fig:nppb_evolution_tree}
-\end{figure}
-
-\begin{figure}
-<<nppc.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="NPPC" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
-@ 
-\caption{\genetreeexplanation{\textit{NPPC}}}
-\label{fig:nppc_evolution_tree}
-\end{figure}
-
-
-\begin{figure}
-<<galectins.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="LGALS1" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
-@ 
-\caption{\genetreeexplanation{galectins}}
-\label{fig:galectins_evolution_tree}
-\end{figure}
-
-
-\begin{figure}
-<<lgals13.galectins.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="LGALS13" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression)
-@ 
-\caption{\genetreeexplanation{\textit{LGALS13}}}
-\label{fig:galectins_lgals13_evolution_tree}
-\end{figure}
+\clearpage
 
 \section{Core Placenta Transcriptome}
 

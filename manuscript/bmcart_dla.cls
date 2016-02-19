@@ -940,7 +940,7 @@
   \hy@endfrontmatter
 %
   \immediate\write\@mainaux{\string\global\string\@namedef{num@address}{\the\c@address}}%
-  \immediate\write\@mainaux{\string\global\string\@namedef{num@author}{\the\c@bmcauthor}}%  
+  \immediate\write\@mainaux{\string\global\string\@namedef{num@bmcauthor}{\the\c@bmcauthor}}%  
   \set@authorcorref@notset%
 %
   \global\mathsurround\sv@mathsurround
@@ -1074,7 +1074,7 @@
       \global\let\printaddresses\relax
    \fi%
    \@tempcnta=0\relax%
-   \@ifundefined{num@author}{}{\@tempcnta=\num@author\relax}%
+   \@ifundefined{num@bmcauthor}{}{\@tempcnta=\num@bmcauthor\relax}%
    \ifnum\@tempcnta=1\relax%
       \global\@namedef{num@address}{1}
 %      \define@key{author}{addressref}{}%
@@ -1199,10 +1199,10 @@
   \author@correffalse%
   \xdef\author@id{au\the\c@bmcauthor}%
   \setkeys{author}{#1}%
-     \@ifundefined{num@author}{\@tempcnta=10\relax}{\@tempcnta=\num@author\relax}%
+     \@ifundefined{num@bmcauthor}{\@tempcnta=10\relax}{\@tempcnta=\num@bmcauthor\relax}%
      \def\a@sep{, }%
      \ifnum\@tempcnta>1\relax%
-       \ifnum\c@author=\@tempcnta% 
+       \ifnum\c@bmcauthor=\@tempcnta% 
           \let\a@sep\authorand@sep%
         \else% 
           \let\a@sep\author@sep%
@@ -1222,7 +1222,7 @@
        {}%
   \fi%
 %
-  \ifnum\c@author=1 \author@fmt@init \let\a@sep\relax \xdef\first@author@id{\author@id}\fi%
+  \ifnum\c@bmcauthor=1 \author@fmt@init \let\a@sep\relax \xdef\first@author@id{\author@id}\fi%
   \bgroup% F. Author
     \def\inits##1{##1}\def\fnm##1{}\def\snm##1{##1}\def\particle##1{##1}\def\suffix##1{##1}%
     \no@harm%
@@ -1233,7 +1233,7 @@
     \def\inits##1{}\def\fnm##1{##1}\def\particle##1{##1}\def\snm##1{##1}\def\suffix##1{##1}%
     \no@harm%
     \xdef\author@arg{#2}%
-    \ifnum\c@author=1\addto@authors@list{#2}\xdef\first@author@id{\author@id}\else\addto@authors@list{, #2}\fi%
+    \ifnum\c@bmcauthor=1\addto@authors@list{#2}\xdef\first@author@id{\author@id}\else\addto@authors@list{, #2}\fi%
   \egroup%
   \expandafter\protected@xdef\csname author@\author@id\endcsname{\author@arg}%
   \bgroup% Author
@@ -1257,10 +1257,10 @@
 \def\authorname@fmt#1{#1}
 
 \def\set@runauthor{%
-  \ifnum\c@author=1\relax
+  \ifnum\c@bmcauthor=1\relax
      \gdef\@runauthor{\@nameuse{runauthor@1@snm}}%
   \else
-    \ifnum\c@author=2\relax
+    \ifnum\c@bmcauthor=2\relax
        \gdef\@runauthor{\@nameuse{runauthor@1@snm} and \@nameuse{runauthor@2@snm}}%
     \else
        \@ifundefined{runauthor@1@snm}{}{\gdef\@runauthor{\@nameuse{runauthor@1@snm} \etal}}%
@@ -1447,7 +1447,7 @@
 % \printcorremail{<thanksref>}{<email-ref>}
 
 \def\printcorremail#1#2{%
-  \@ifundefined{num@author}{\@tempcnta=0}{\@tempcnta=\num@author}
+  \@ifundefined{num@bmcauthor}{\@tempcnta=0}{\@tempcnta=\num@bmcauthor}
   \ifnum\@tempcnta=1\relax\else\thanksmark{#1}\fi%
   \corref@text\printead*{#2}\par
 }

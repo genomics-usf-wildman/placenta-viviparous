@@ -20,7 +20,7 @@ bmcart.cls:
 %.tex: %.Rnw
 	$(R) --encoding=utf-8 -e "library('knitr'); knit('$<')"
 
-%.pdf: %.tex $(wildcard *.bib) $(wildcard *.tex)
+%.pdf: %.tex $(wildcard *.bib) $(wildcard *.tex) $(wildcard *.cls)
 	latexmk -f -pdf -pdflatex='xelatex -interaction=nonstopmode %O %S' -bibtex -use-make $<
 
 manuscript.tex: manuscript.Rnw ../data/combined_fpkm ../data/placenta_core_transcriptome ../data/placenta_go_results_mf ../data/placenta_go_results_bp

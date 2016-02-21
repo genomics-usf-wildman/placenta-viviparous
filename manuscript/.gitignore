@@ -15,6 +15,7 @@ figure
 manuscript.tex
 supplemental_material.tex
 cache
+supplemental_cache
 *.lof
 *.lot
 *.toc

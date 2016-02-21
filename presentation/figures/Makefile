@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 
-all: uofi_mark.pdf igb_wordmark.pdf
+all: uofi_mark.pdf igb_wordmark.pdf relevant_xkcd.png
 
 igb_wordmarks.zip:
 	wget -O $@ "http://www.igb.illinois.edu/sites/default/files/upload/Wordmarks-Eps.zip"
@@ -19,4 +19,4 @@ uofi_mark.pdf: uofi_mark.zip
 	rm -rf uclogo_1867_horz_bold
 
 relevant_xkcd.png:
-	wget -O $@ "http://imgs.xkcd.com/comics/cells.png"
+	wget -O $@ "http://imgs.xkcd.com/comics/dna.png"

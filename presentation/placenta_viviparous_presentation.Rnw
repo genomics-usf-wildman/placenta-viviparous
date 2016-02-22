@@ -573,120 +573,6 @@ transcriptome, including \textit{ANXA2}, \textit{ANXA1},
 
 \end{frame}
 
-\subsection{Primate Placenta Transcriptomes}
-
-\begin{frame}{Primate Placenta Transcriptome}
-\begin{table}
-  \footnotesize
-<<primate.lineage.specific,echo=FALSE,results="asis">>=
-pri.all.lin.spec <- placenta.lineage.specific.table("pri.all")
-setkey(pri.all.lin.spec,"Human Symbol")
-@ 
-\end{table}
-\end{frame}
-
-
-
-\begin{frame}{Pregnancy-Specific Glycoprotein Expansion}
-\begin{columns}
-\column{0.4\textwidth}
-\begin{itemize}
-\item 11 highly expressed \textit{PSG} genes in \human and some
-  expression in \smonkey and \bonobo
-\item \mouse specific expansion and high expression of \textit{PSG} as
-  well
-\item No other species have high expression of \textit{PSG} or
-  \textit{CEACAM}
-\end{itemize}
-\column{0.6\textwidth}
-\begin{figure}
-<<psg.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
-plot.label.size <- 3
-axis.text.size <- 3.5
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="PSG1" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,min.fpkm=1,
-                 vp=viewport(layout.pos.col=1,layout.pos.row=1,clip="off"),
-                 axis.text.size=axis.text.size,
-                 fontsize=plot.label.size,
-                 )
-@ 
-\end{figure}
-\end{columns}
-\end{frame}
-
-\begin{frame}{Cathepsin-L expansion}
-\begin{columns}
-\column{0.4\textwidth}
-\begin{itemize}
-\item Cathepsins are highly expressed in many placentas
-\item Expanded in \mouse and \galili and possibly also \carmeli to a
-  lesser degree
-\item Intracellular protease which degrades collagen, elastin, and in
-  IGF1R
-\end{itemize}
-\column{0.6\textwidth}
-\begin{figure}
-<<ctsl.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
-plot.label.size <- 3
-axis.text.size <- 3.5
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="CTSL" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(gene.tree,gene.tree.table,gene.tree.expression,min.fpkm=1,
-                 subtree=c("ENSMODG00000002844","ENSMUSG00000055679"),
-                 vp=viewport(layout.pos.col=2,layout.pos.row=1,clip="off"),
-                 fontsize=4,
-                 width=3,
-                 axis.text.size=axis.text.size,
-                 offset.ratio=1
-                 )
-
-@ 
-\end{figure}
-\end{columns}
-\end{frame}
-
-
-\begin{frame}{Pregnancy associated glycoprotein}
-\begin{columns}
-\column{0.4\textwidth}
-\begin{itemize}
-\item Massive expansion in ruminants (\cow and \sheep)
-\item 28 members of this family have $\mathrm{FPKM} \ge 1$ in \cow
-\item \Sexpr{gene.expression("bos taurus","PAG2",complete=TRUE)}
-\item \Sexpr{gene.expression("bos taurus","PAG10",complete=TRUE)}
-\end{itemize}
-\column{0.6\textwidth}
-\begin{figure}
-<<pag2.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="PAG2" & species=="bos taurus",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
-                 gene.tree.table,gene.tree.expression,min.fpkm=1,
-                 subtree=c("ENSSSCG00000006792",
-                           "ENSBTAG00000046085"),
-                 vp=viewport(layout.pos.col=2,layout.pos.row=2,clip="off"),
-                 axis.text.size=axis.text.size,
-                 fontsize=plot.label.size,
-                 offset.ratio=0.6
-                 )
-
-@ 
-\end{figure}
-\end{columns}
-\end{frame}
-
-
 \subsection{Evolution of Placental Hormones}
 
 Reproductive hormones are central to the regulation of pregnancy and
@@ -840,6 +726,121 @@ print(ggplot(combined.long[combined.long$type=="IGF Related",], aes(y=gene, x=sp
 \end{figure}
 \end{columns}
 \end{frame}
+
+\subsection{Primate Placenta Transcriptomes}
+
+\begin{frame}{Primate Placenta Transcriptome}
+\begin{table}
+  \footnotesize
+<<primate.lineage.specific,echo=FALSE,results="asis">>=
+pri.all.lin.spec <- placenta.lineage.specific.table("pri.all")
+setkey(pri.all.lin.spec,"Human Symbol")
+@ 
+\end{table}
+\end{frame}
+
+
+
+\begin{frame}{Pregnancy-Specific Glycoprotein Expansion}
+\begin{columns}
+\column{0.4\textwidth}
+\begin{itemize}
+\item 11 highly expressed \textit{PSG} genes in \human and some
+  expression in \smonkey and \bonobo
+\item \mouse specific expansion and high expression of \textit{PSG} as
+  well
+\item No other species have high expression of \textit{PSG} or
+  \textit{CEACAM}
+\end{itemize}
+\column{0.6\textwidth}
+\begin{figure}
+<<psg.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
+plot.label.size <- 3
+axis.text.size <- 3.5
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="PSG1" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,min.fpkm=1,
+                 vp=viewport(layout.pos.col=1,layout.pos.row=1,clip="off"),
+                 axis.text.size=axis.text.size,
+                 fontsize=plot.label.size,
+                 )
+@ 
+\end{figure}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Cathepsin-L expansion}
+\begin{columns}
+\column{0.4\textwidth}
+\begin{itemize}
+\item Cathepsins are highly expressed in many placentas
+\item Expanded in \mouse and \galili and possibly also \carmeli to a
+  lesser degree
+\item Intracellular protease which degrades collagen, elastin, and in
+  IGF1R
+\end{itemize}
+\column{0.6\textwidth}
+\begin{figure}
+<<ctsl.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
+plot.label.size <- 3
+axis.text.size <- 3.5
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="CTSL" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(gene.tree,gene.tree.table,gene.tree.expression,min.fpkm=1,
+                 subtree=c("ENSMODG00000002844","ENSMUSG00000055679"),
+                 vp=viewport(layout.pos.col=2,layout.pos.row=1,clip="off"),
+                 fontsize=4,
+                 width=3,
+                 axis.text.size=axis.text.size,
+                 offset.ratio=1
+                 )
+
+@ 
+\end{figure}
+\end{columns}
+\end{frame}
+
+
+\begin{frame}{Pregnancy associated glycoprotein}
+\begin{columns}
+\column{0.4\textwidth}
+\begin{itemize}
+\item Massive expansion in ruminants (\cow and \sheep)
+\item 28 members of this family have $\mathrm{FPKM} \ge 1$ in \cow
+\item \Sexpr{gene.expression("bos taurus","PAG2",complete=TRUE)}
+\item \Sexpr{gene.expression("bos taurus","PAG10",complete=TRUE)}
+\end{itemize}
+\column{0.6\textwidth}
+\begin{figure}
+<<pag2.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="PAG2" & species=="bos taurus",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
+                 gene.tree.table,gene.tree.expression,min.fpkm=1,
+                 subtree=c("ENSSSCG00000006792",
+                           "ENSBTAG00000046085"),
+                 vp=viewport(layout.pos.col=2,layout.pos.row=2,clip="off"),
+                 axis.text.size=axis.text.size,
+                 fontsize=plot.label.size,
+                 offset.ratio=0.6
+                 )
+
+@ 
+\end{figure}
+\end{columns}
+\end{frame}
+
+
 
 \begin{frame}{Prolactin}
 \begin{columns}

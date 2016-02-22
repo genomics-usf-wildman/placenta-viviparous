@@ -11,6 +11,7 @@
 \usepackage{wrapfig}
 \usepackage{fancybox}
 \usepackage{booktabs}
+\usepackage{pdfpcnotes}
 % \usepackage{multirow}
 \usepackage{acronym}
 \usepackage{qrcode}
@@ -71,7 +72,7 @@
 %   \setbeamercolor*{fine separation line}{}
 %   \setbeamercovered{transparent}  
   \logo{\begin{tikzpicture}% Pale figure
-      {\node[opacity=0.734]{\IfFileExists{figures/igb_wordmark.pdf}{\includegraphics[width=2cm,height=1cm,keepaspectratio]{figures/igb_wordmark}}{}%
+      {\node[opacity=0.5]{\IfFileExists{figures/igb_wordmark.pdf}{\includegraphics[width=2cm,height=1cm,keepaspectratio]{figures/igb_wordmark}}{}%
         };}%
     \end{tikzpicture}}
 }
@@ -300,8 +301,8 @@ print(pp %>%
 \end{frame}
 
 \begin{frame}{Variation in Gestational Periods and Litter Size}
-\tiny
-\begin{table}
+\footnotesize
+%\begin{table}
   \begin{tabular}{c c c c}
     \toprule
     Species                       & Gestation (days) & Litter Size  & Source \\
@@ -324,11 +325,12 @@ print(pp %>%
   \end{tabular}
 %  \caption{Gestational periods in days and average liter sizes for studied species.}
 %  \label{tab:gestational_periods}
-\end{table}
+%\end{table}
 \end{frame}
 
 \begin{frame}{Variations in Placenta Morphology}
-\begin{table}
+%\begin{table}
+\footnotesize
 \begin{tabular}{c c c}
   \toprule
   Species & Interhemal Membrane & Pattern \\
@@ -351,7 +353,7 @@ print(pp %>%
   \pig & epitheliochorial & diffuse \\
   \bottomrule
 \end{tabular}
-\end{table}
+%\end{table}
 \end{frame}
 
 \section{Methods}
@@ -497,7 +499,7 @@ placenta.lineage.specific.table <- function(analysis,output=TRUE) {
                                                   "}")]
         print(xtable(display.table,
                      display=c("s","s","s","e","g","f"),
-                     columns=c("c","c","p{1.5in}","c","c","c")
+                     align=c("c","c","p{1.5in}","c","c","c")
                      ),
               booktabs=TRUE,
               floating=FALSE,
@@ -543,32 +545,29 @@ print(ggplot(core.placenta.transcriptome.long[!grepl("(min|median|max)_expressio
 \begin{frame}{Core placenta transcriptome}
 \begin{itemize}
 
-\item We considered a gene to be core to the placenta transcriptome if
-  a 1:1 ortholog of that gene was expressed with
-  $\mathrm{FPKM} \ge 10$ in all species studied and was not a human
-  housekeeping gene according to
+\item Gene is core to the placenta transcriptome if a 1:1 ortholog is
+  expressed with $\mathrm{FPKM} \ge 10$ in all species studied and was
+  not a human housekeeping gene according to
   \citet{Eisenberg.ea2013:Humanhousekeepinggenesrevisited}.
 
 \item Multiple components of annexin complexes are included in the core
 transcriptome, including \textit{ANXA2}, \textit{ANXA1},
 \textit{S100A11}, \textit{S100A10}. 
 
-\item ANXA1 is involved in the resolution of the inflammation response
-  through inhibition of phospholipase A2 activity and signaling
-  through the formyl peptide receptor family, and has previously been
-  hypothesized to be important for the maintenance of the
+\item ANXA1 is involved in resolution of inflammation by inhibiting
+  phospholipase A2 activity and signaling via formyl peptide receptor
+  family
+\item hypothesized to be important for the maintenance of the
   anti-inflammatory during pregnancy
   \cite{Hutchinson.ea2011:Molecularregulatorsofresolution}.
 
-\item ANXA2 is known to interact with S100A10, S100A6, S100A11, and
+\item ANXA2 interacts with S100A10, S100A6, S100A11, and
   S100A4 \cite{Liu.ea2015:AnnexinA2complexeswith}, and there is
-  evidence for its interaction with S100P as well; it is involved in
-  cell-cell interaction as well as vesicle trafficking and von
-  Willibrand Factor secretion.
+  evidence for its interaction with S100P as well
+\item ANXA2 involved in cell-cell interaction as well as vesicle
+  trafficking and von Willibrand Factor secretion.
 
-
-\item The expression regulation of another core gene, \textit{TIMP3},
-  has been implicated in pre-eclampsia
+\item \textit{TIMP3} has been implicated in pre-eclampsia
   \cite{Ma.ea2014:Down-regulationofTIMP3leads,Xiang.ea2013:PromoterhypomethylationofTIMP3}.
 \end{itemize}
 
@@ -591,7 +590,18 @@ setkey(pri.all.lin.spec,"Human Symbol")
 
 
 
-\begin{frame}{PSG1}
+\begin{frame}{Pregnancy-Specific Glycoprotein Expansion}
+\begin{columns}
+\column{0.4\textwidth}
+\begin{itemize}
+\item 11 highly expressed \textit{PSG} genes in \human and some
+  expression in \smonkey and \bonobo
+\item \mouse specific expansion and high expression of \textit{PSG} as
+  well
+\item No other species have high expression of \textit{PSG} or
+  \textit{CEACAM}
+\end{itemize}
+\column{0.6\textwidth}
 \begin{figure}
 <<psg.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
 plot.label.size <- 3
@@ -609,9 +619,20 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
                  )
 @ 
 \end{figure}
+\end{columns}
 \end{frame}
 
-\begin{frame}{CTSL}
+\begin{frame}{Cathepsin-L expansion}
+\begin{columns}
+\column{0.4\textwidth}
+\begin{itemize}
+\item Cathepsins are highly expressed in many placentas
+\item Expanded in \mouse and \galili and possibly also \carmeli to a
+  lesser degree
+\item Intracellular protease which degrades collagen, elastin, and in
+  IGF1R
+\end{itemize}
+\column{0.6\textwidth}
 \begin{figure}
 <<ctsl.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
 plot.label.size <- 3
@@ -632,10 +653,20 @@ plot.tree.matrix(gene.tree,gene.tree.table,gene.tree.expression,min.fpkm=1,
 
 @ 
 \end{figure}
+\end{columns}
 \end{frame}
 
 
-\begin{frame}{PAG2}
+\begin{frame}{Pregnancy associated glycoprotein}
+\begin{columns}
+\column{0.4\textwidth}
+\begin{itemize}
+\item Massive expansion in ruminants (\cow and \sheep)
+\item 28 members of this family have $\mathrm{FPKM} \ge 1$ in \cow
+\item \Sexpr{gene.expression("bos taurus","PAG2",complete=TRUE)}
+\item \Sexpr{gene.expression("bos taurus","PAG10",complete=TRUE)}
+\end{itemize}
+\column{0.6\textwidth}
 \begin{figure}
 <<pag2.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
 tree.id <-
@@ -655,6 +686,7 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
 
 @ 
 \end{figure}
+\end{columns}
 \end{frame}
 
 
@@ -669,6 +701,17 @@ with hormone products or enzymatic products that directly produce
 hormones in multiple mammalian species (\cref{fig:hormone_genes}).
 
 \begin{frame}{Galectin Expression}
+\begin{columns}
+\column{0.4\textwidth}
+\begin{itemize}
+\item Galectins are major regulators of pregnancy in fetal and
+  maternal tissues \cite{Than.ea2012:Galectinsguardiansofeutherian}
+\item \textit{LGALS1} expressed everywhere
+\item Primate expansion of \textit{LGALS13} and \textit{LGALS14}
+\item Likely present in ancestral placenta of therian mammals as it is
+  expressed even in \opossum
+\end{itemize}
+\column{0.6\textwidth}
 \begin{figure}
 <<hormone.genes.plot,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
 
@@ -704,7 +747,7 @@ colnames(gal.exp.long)[1:3] <- c("gene","species","fpkm")
 
 ### IGF related genes
 
-igfrelated.genes <- unique(grep("^IGF",combined.fpkm[,human_name],value=TRUE))
+igfrelated.genes <- unique(c(grep("^IGF",combined.fpkm[,human_name],value=TRUE),"H19"))
 
 igfrelated.expression.nozero <-
     gene.expression.nozero(igfrelated.genes)
@@ -742,23 +785,35 @@ common.plot.options <-
          scale_x_discrete("", expand = c(0, 0)),
          scale_y_discrete("", expand = c(0, 0)),
          theme_grey(base_size = 9),
-         theme(legend.position = "top",
+         theme(legend.position = "right",
                axis.ticks = element_blank(),
                panel.background = element_blank(),
-               axis.text.y = element_text(face="italic"),
-               axis.text.x = element_text(angle = 300, hjust = 0, vjust=1,face="italic")),
+               axis.text.y = element_text(size=15,face="italic"),
+               axis.text.x = element_text(size=16,angle = 300, hjust = 0, vjust=1,face="italic")),
          facet_grid(type~.,scale="free_y",space="free_y")
          )
 print(ggplot(combined.long[combined.long$type=="Galectin",], aes(y=gene, x=species))
       + common.plot.options
       )
 @ 
-\caption{Expression of Hormone Genes, Galectins, and IGF related genes}
-\label{fig:hormone_genes}
 \end{figure}
+\end{columns}
 \end{frame}
 
 \begin{frame}{Hormone Expression}
+\begin{columns}
+\column{0.4\textwidth}
+\begin{itemize}
+\item \human specific high expression of \textit{CGA}
+\item \human expansion of \textit{CGB}
+\item Vasodilation-involved proteins (\textit{NPPB} \& \textit{NPPC})
+  highly-expressed in \elephant and \dog, but not expressed elsewhere
+  \pnote{NPPB and NPPC have been seen in decidua of mouse
+    \cite{Cameron.ea1996:sitesofgeneexpression}.}
+\item \textit{PRL} highly expressed in \elephant
+\pnote{more about PRL later}
+\end{itemize}
+\column{0.6\textwidth}
 \begin{figure}
 <<hormone.expression.plot,echo=FALSE>>=
 print(ggplot(combined.long[combined.long$type=="Hormone",], aes(y=gene, x=species))
@@ -766,9 +821,19 @@ print(ggplot(combined.long[combined.long$type=="Hormone",], aes(y=gene, x=specie
       )
 @ 
 \end{figure}
+\end{columns}
 \end{frame}
 
 \begin{frame}{IGF Related}
+\begin{columns}
+\column{0.4\textwidth}
+\begin{itemize}
+\item \textit{IGF2} is highly expressed in most clades
+\item \textit{IGF2} promotes the growth and division of cells; highly active during fetal development
+\item \textit{IGF2} binding partners are also highly expressed
+  (\textit{IGFBP3}, \textit{IGFBP5})
+\end{itemize}
+\column{0.6\textwidth}
 \begin{figure}
 <<igfrelated.expression.plot,echo=FALSE>>=
 print(ggplot(combined.long[combined.long$type=="IGF Related",], aes(y=gene, x=species))
@@ -776,6 +841,7 @@ print(ggplot(combined.long[combined.long$type=="IGF Related",], aes(y=gene, x=sp
       )
 @ 
 \end{figure}
+\end{columns}
 \end{frame}
 
 % \begin{frame}{Prolactin}
@@ -805,11 +871,11 @@ print(ggplot(combined.long[combined.long$type=="IGF Related",], aes(y=gene, x=sp
 
 \subsubsection{GH family}
 
-\begin{frame}{Growth Hormone family}
+\begin{frame}{Growth Hormone (GH) family}
 
 \begin{columns}
 \column{0.4\textwidth}
-The \ac{GH} family has expanded in anthropoid primates, resulting in
+The GH family has expanded in anthropoid primates, resulting in
 approximately 5 genes in \human (\textit{GH1}, \textit{GH2},
 \textit{CSH1}, \textit{CSH2}, \textit{CSHL1}) and at least three in
 \bonobo (two \textit{GH2} and \textit{GH1}; owing to the similarity
@@ -826,8 +892,9 @@ gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
                  gene.tree.table,gene.tree.expression,
+                 offset=2,
                  axis.text.size=5,
-                 fontsize=4)
+                 fontsize=10)
 @ 
 \end{columns}
 
@@ -835,26 +902,25 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
 
 \begin{frame}{CGA}
 
-  The human gene \textit{CGA} codes for the alpha subunit of multiple
-  hormones including pituitary hormones (luteinizing hormone,
-  follicle-stimulating hormone, thyroid-stimulating hormone), as well
-  as numerous chorionic gonadotropins with variable beta subunits
-  \cite{Maston.ea2002:Chorionicgonadotropinhasrecent}. The function of
-  the chorionic gonadotropins is to prevent the regression of the
-  corpus luteum \cite{Hanson.ea1971:EffectsofHCGand}. Among the six
-  placentas we analyzed here, \textit{CGA} is only expressed in the
-  placentas of \human and \bonobo
-  (\cref{fig:hormone_genes,fig:cga_cgb_evolution_tree}), which
-  corresponds with the emergence of the chorionic gonadotropins in
-  anthropoid primates
-  \cite{Maston.ea2002:Chorionicgonadotropinhasrecent}. However, oddly,
-  \textit{CGA} is expressed at much higher levels in both species than
-  the beta subunits with which its product dimerizes \textit{CGA} is
-  one of several genes noted by
-  \citet{Uddin.ea2008:Distinctgenomicsignaturesof} to have undergone
-  adaptive evolution of the \human{}-\textit{P. troglodytes} stem
-  lineage.
+  \begin{columns}
+\column{0.4\textwidth}
+\begin{itemize}
+\item \textit{CGA} codes for the alpha subunit of multiple hormones as
+  well as numerous chorionic gonadotropins with variable beta subunits
+  \cite{Maston.ea2002:Chorionicgonadotropinhasrecent}.
 
+\item Chorionic gonadotropins prevent the regression of the corpus
+  luteum \cite{Hanson.ea1971:EffectsofHCGand}. 
+
+\item \textit{CGA} only expressed in the placentas of \human and
+  \bonobo
+
+  \pnote{Expression corresponds with emergence of the chorionic gonadotropins in
+    anthropoid primates
+    \cite{Maston.ea2002:Chorionicgonadotropinhasrecent}.}
+
+\end{itemize}
+\column{0.6\textwidth}
 \begin{figure}
 <<chorionic.somatomammotropin.alpha.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
 
@@ -865,13 +931,13 @@ gene.tree.table <- trees[[tree.id]]$table
 gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,
-                 offset.ratio=0.7,
-                 fontsize=plot.label.size,
-                 axis.text.size=3.5
+                 offset.ratio=1,
+                 fontsize=8,
+                 axis.text.size=5
                  )
 @ 
 \end{figure}
-
+\end{columns}
 \end{frame}
 
 \begin{frame}{CGB}

@@ -15,10 +15,13 @@ all: placenta_viviparous_presentation.pdf
 %.tex: %.Rnw
 	$(R) --encoding=utf-8 -e "library('knitr'); knit('$<')"
 
-%.pdf: %.tex $(wildcard *.bib) $(wildcard *.tex)
+%.pdf: %.tex $(wildcard *.bib) $(wildcard *.tex) pdfpcnotes.sty
 	latexmk -f -pdf -pdflatex='xelatex -interaction=nonstopmode %O %S' -bibtex -use-make $<
 
-placenta_viviparous_presentation.tex: placenta_viviparous_presentation.Rnw ../data/combined_fpkm ../data/placenta_core_transcriptome ../data/placenta_go_results_mf ../data/placenta_go_results_bp
+pdfpcnotes.sty:
+	wget -O "$@" https://raw.github.com/cebe/pdfpc-latex-notes/master/pdfpcnotes.sty
+
+placenta_viviparous_presentation.tex: placenta_viviparous_presentation.Rnw ../data/combined_fpkm ../data/placenta_core_transcriptome ../data/placenta_go_results_mf ../data/placenta_go_results_bp 
 
 version_it: placenta_viviparous_presentation.pdf
 	for a in $^; do \

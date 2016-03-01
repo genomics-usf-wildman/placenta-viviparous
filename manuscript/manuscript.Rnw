@@ -471,7 +471,7 @@ specimen ID, place and time of collection, and collector is shown for
 each sample in Supplemental \cref{tab:srr_numbers}. In the case of \bonobo,
 \cow, and \elephant, the placenta was collected at term upon expulsion
 from the mother following delivery. Placental tissue from \human was
-collected upon delivery via a caesarian section. Near-term placental
+collected upon delivery via a cesarean section. Near-term placental
 tissue from \dog was collected upon the death of the mother from a car
 accident. Placental tissue from \opossum was sampled at fetal stage
 32, roughly one day prior to birth. Only the fetal portion of the
@@ -2518,6 +2518,8 @@ invasion of fetal tissues.
 
 \section{Conclusion}
     
+\DLA{Totally rewrite the conclusion; it's terrible}
+
 We sequenced \Sexpr{star.logs[,length(unique(species))]} placentas
 spanning the phylogenetic tree of mammals. This revealed a dynamic
 expression pattern of expression of lineage-specific expansions of
@@ -2530,12 +2532,12 @@ signaling during mammalian pregnancy. Major differences between
 expression in marsupial and eutherian mammals at term seemed to be
 correlated with the differences between choriovitelline and
 chorioamniotic placenta, with the marsupial placenta more enriched in
-genes the contributed to the active generation of energy. We also
+genes which contribute to the active generation of energy. We also
 identified that galectin expression, especially that of
 \textit{LGALS1}, is a common feature of all mammalian placentas and
 was most likely present in the ancestral therian. Also, we identified
 two new expansions of genes that are highly expressed in the \elephant
-placenta hat may be involved in trophoplast differentiation and immune
+placenta that may be involved in trophoplast differentiation and immune
 system function, mirroring expansions in other groups such as
 primates, rodents, and ruminants. We also quantified significant
 lineage-specific shifts in gene expression, concentrating on the
@@ -2564,7 +2566,7 @@ of human-specific expression shifts.
   Amy Weckle performed all of the RNA extractions and managed the
   samples.
 
-  Jason Caravas provided samples.
+  Jason Caravas performed initial analyses.
   
   Dalen Agnew provided samples.
   

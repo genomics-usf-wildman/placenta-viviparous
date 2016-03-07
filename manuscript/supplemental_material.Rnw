@@ -433,10 +433,10 @@ print(xtable(go.analysis.wide.table,
 
 <<go.analysis.all.species,echo=FALSE,results="asis">>=
 for (this.species in names(species.names)) {
-    cat(paste0("\\subsubsection{Signficantly enriched ($\\mathrm{FDR}\\le0.05$) GO terms in ",
+    cat(paste0("\\subsubsection{Significantly enriched ($\\mathrm{FDR}\\le0.05$) GO terms in ",
                            " the top 100 \\textit{",
                            capfirst(this.species),"} expressed transcripts}\n\n"))
-    this.caption <- paste0("Signficantly enriched ($\\mathrm{FDR}\\le0.05$) GO terms in ",
+    this.caption <- paste0("Significantly enriched ($\\mathrm{FDR}\\le0.05$) GO terms in ",
                            " the top 100 \\textit{",capfirst(this.species),"} expressed transcripts")
     this.label <- paste0("tab:go_terms_enriched_",gsub(" ","_",this.species))
     print(xtable(go.results[grepl("100 No Housekeeping",type) & FDR <= 0.05 & species == this.species,
@@ -460,10 +460,10 @@ for (this.species in names(species.names)) {
 
 <<go.analysis.top.5p.all.species,echo=FALSE,results="asis">>=
 for (this.species in names(species.names)) {
-    cat(paste0("\\subsubsection{Signficantly enriched ($\\mathrm{FDR}\\le0.05$) GO terms in ",
+    cat(paste0("\\subsubsection{Significantly enriched ($\\mathrm{FDR}\\le0.05$) GO terms in ",
                            " the top 1\\% of \\textit{",
                            capfirst(this.species),"} expressed transcripts}\n\n"))
-    this.caption <- paste0("Signficantly enriched ($\\mathrm{FDR}\\le0.05$) GO terms in ",
+    this.caption <- paste0("Significantly enriched ($\\mathrm{FDR}\\le0.05$) GO terms in ",
                            " the top 1\\% of \\textit{",
                            capfirst(this.species),"} expressed transcripts.")
     print(xtable(go.results[grepl("Top 1% No Housekeeping",type) & FDR <= 0.05 & species == this.species,

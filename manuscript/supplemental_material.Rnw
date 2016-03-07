@@ -92,7 +92,7 @@
 \newcommand{\human}[0]{\textit{H. sapiens}\xspace}
 \newcommand{\opossum}[0]{\textit{M. domestica}\xspace}
 \newcommand{\mouse}[0]{\textit{M. musculus}\xspace}
-\newcommand{\galili}[0]{\textit{N. galili}\xspace}
+\newcommand{\galili}[0]{\textit{S. galili}\xspace}
 \newcommand{\sheep}[0]{\textit{O. aries}\xspace}
 \newcommand{\bonobo}[0]{\textit{P. paniscus}\xspace}
 \newcommand{\carmeli}[0]{\textit{S. carmeli}\xspace}
@@ -249,10 +249,10 @@ load("../go_annotation/go_tissue_analysis")
                                        SRR243591,
                                        SRR243592,
                                        SRR243593\\
-    \textit{Nannospalax galili}   & Eviator Nevo & GSE68763 & SRR2016467 \\
     \textit{Ovis aries}           & \citet{Archibald.ea2010:sheepgenomereferencesequence} & ERP005642 & ERR489144, ERR489145\\
     \textit{Pan paniscus}         & William Mintz Fields & & (Teco)\\
     \textit{Spalax carmeli}       & Anne Dupressoir, Eviator Nevo & GSE68763 & SRR2016467 \\
+    \textit{Spalax galili}        & Eviator Nevo                  & GSE68763 & SRR2016467 \\
     \textit{Sus scrofa}           & \citet{Ahanda.ea2012:Predictionofaltered3-} &  SRP014902 & SRR543893 \\
     \bottomrule
   \end{tabular}
@@ -276,10 +276,10 @@ load("../go_annotation/go_tissue_analysis")
     \textit{Homo sapiens}         & Human              & GRCh38     & 75, 150 \\
     \textit{Monodelphis domestica} & Opossum           & BROAD05    & 75 \\
     \textit{Mus musculus}         & Mouse              & GRCm38     & 35,44,150 \\
-    \textit{Nannospalax galili}   & Blind mole rat     & \textit{Mus musculus} & 100 \\
     \textit{Ovis aries}           & Sheep              & Oar\_v3.1   & 151 \\
     \textit{Pan paniscus}         & Bonobo             & CHIMP2.1.4 & 150 \\
     \textit{Spalax carmeli}       & Blind mole rat     & \textit{Mus musculus} & 100 \\
+    \textit{Spalax galili}   & Blind mole rat     & \textit{Mus musculus} & 100 \\
     \textit{Sus scrofa}           & Duroc (pig)        & Sscrofa10.2 & 51 \\
     \bottomrule
   \end{tabular}

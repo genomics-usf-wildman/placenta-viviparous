@@ -107,7 +107,7 @@
 \newcommand{\human}[0]{\textit{H. sapiens}\xspace}
 \newcommand{\opossum}[0]{\textit{M. domestica}\xspace}
 \newcommand{\mouse}[0]{\textit{M. musculus}\xspace}
-\newcommand{\galili}[0]{\textit{N. galili}\xspace}
+\newcommand{\galili}[0]{\textit{S. galili}\xspace}
 \newcommand{\sheep}[0]{\textit{O. aries}\xspace}
 \newcommand{\bonobo}[0]{\textit{P. paniscus}\xspace}
 \newcommand{\carmeli}[0]{\textit{S. carmeli}\xspace}
@@ -357,7 +357,7 @@ For example, each lineage has evolved expansive placenta-specific gene
 families with expression patterns that can vary in space and time
 \cite{Green.ea2000:Pregnancy-associatedbovineandovine,Simmons.ea2008:Spatialandtemporalexpression}.
 These include independent expansions of the prolactins in \mouse,
-\textit{Spalax carmeli}, \textit{Nannospalax galili}, and \cow, \acp{PSG} in \human and \mouse, \acp{PAG}
+\textit{Spalax carmeli}, \textit{Spalax galili}, and \cow, \acp{PSG} in \human and \mouse, \acp{PAG}
 in \cow, genes related to the thymus-specific serine protease
 \textit{PRSS16} in \textit{Loxodona africana}, and the expansion of the growth hormone
 and chorionic gonadotropin beta genes in hominoid primates
@@ -447,7 +447,7 @@ pre-eclampsia.
     \textit{Homo sapiens}         & 270 & 1.1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
     \textit{Monodelphis domestica}& 15 & 7.1 & \citet{Harder.ea1993:Gestationandplacentationin} \\
     \textit{Mus musculus}         & 20 & 6.1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
-    \textit{Nannospalax galili}   & 28-42 & 4 & \citet{Nevo1997:mosiacevolutionofsubterranianmammals} \\
+    \textit{Spalax galili}   & 28-42 & 4 & \citet{Nevo1997:mosiacevolutionofsubterranianmammals} \\
     \textit{Ovis aries}           & 151 & 1.35 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
     \textit{Pan paniscus}         & 223 & 1 & \citet{Ernest2003:lifehistorycharacteristicsofplacental} \\
     \textit{Spalax carmeli}       & 28-42 & 4 & \citet{Nevo1997:mosiacevolutionofsubterranianmammals}\\
@@ -544,7 +544,7 @@ species is generally perceived to be $\approx 1$ million years
 \begin{figure}
 <<species.tree,fig.width=8,fig.height=6,echo=FALSE>>=
 species.tree <- 
-    read.tree(text="(Monodelphis_domestica,((Dasypus_novemcinctus,Loxodonta_africana)Atlantogenata,((Canis_familiaris,(Equus_caballus,(Sus_scrofa,(Ovis_aries,Bos_taurus))))Laurasiatheria,(((Spalax_carmeli,Nannospalax_galili),Mus_Musculus)Rodentia,((Pan_paniscus,Homo_sapiens),Ateles_fuciceps)Primates)Euarchontoglires)Boreoeutheria)Eutheria);")
+    read.tree(text="(Monodelphis_domestica,((Dasypus_novemcinctus,Loxodonta_africana)Atlantogenata,((Canis_familiaris,(Equus_caballus,(Sus_scrofa,(Ovis_aries,Bos_taurus))))Laurasiatheria,(((Spalax_carmeli,Spalax_galili),Mus_Musculus)Rodentia,((Pan_paniscus,Homo_sapiens),Ateles_fuciceps)Primates)Euarchontoglires)Boreoeutheria)Eutheria);")
 pp <- ggtree(species.tree)+
     geom_text(aes(label=label),hjust=0,size=5,fontface="italic")+
     scale_x_continuous(limits=c(0,10))
@@ -595,9 +595,9 @@ $p$ values obtained from the Fisher Exact Test were less than or equal
 to 0.05. Enrichment tests were considered with two gene lists per
 transcriptome: annotated genes with expression levels of the top
 5\% of the frequency distribution of \ac{FPKM} (Supplemental
-\cref{tab:go_terms_enriched_top_one_dasypus_novemcinctus,tab:go_terms_enriched_top_one_equus_caballus,tab:go_terms_enriched_top_one_homo_sapiens,tab:go_terms_enriched_top_one_loxodonta_africana,tab:go_terms_enriched_top_one_monodelphis_domestica,tab:go_terms_enriched_top_one_mus_musculus,tab:go_terms_enriched_top_one_ovis_aries,tab:go_terms_enriched_top_one_pan_paniscus,tab:go_terms_enriched_top_one_sus_scrofa,tab:go_terms_enriched_top_one_ateles_fusciceps,tab:go_terms_enriched_top_one_nannospalax_galili,tab:go_terms_enriched_top_one_spalax_carmeli,tab:go_terms_enriched_top_one_bos_taurus,tab:go_terms_enriched_top_one_canis_familiaris});
+\cref{tab:go_terms_enriched_top_one_dasypus_novemcinctus,tab:go_terms_enriched_top_one_equus_caballus,tab:go_terms_enriched_top_one_homo_sapiens,tab:go_terms_enriched_top_one_loxodonta_africana,tab:go_terms_enriched_top_one_monodelphis_domestica,tab:go_terms_enriched_top_one_mus_musculus,tab:go_terms_enriched_top_one_ovis_aries,tab:go_terms_enriched_top_one_pan_paniscus,tab:go_terms_enriched_top_one_sus_scrofa,tab:go_terms_enriched_top_one_ateles_fusciceps,tab:go_terms_enriched_top_one_spalax_galili,tab:go_terms_enriched_top_one_spalax_carmeli,tab:go_terms_enriched_top_one_bos_taurus,tab:go_terms_enriched_top_one_canis_familiaris});
 the top 100 genes with the highest \ac{FPKM} (Supplemental
-\cref{tab:go_terms_enriched_dasypus_novemcinctus,tab:go_terms_enriched_equus_caballus,tab:go_terms_enriched_homo_sapiens,tab:go_terms_enriched_loxodonta_africana,tab:go_terms_enriched_monodelphis_domestica,tab:go_terms_enriched_mus_musculus,tab:go_terms_enriched_ovis_aries,tab:go_terms_enriched_pan_paniscus,tab:go_terms_enriched_sus_scrofa,tab:go_terms_enriched_ateles_fusciceps,tab:go_terms_enriched_nannospalax_galili,tab:go_terms_enriched_spalax_carmeli,tab:go_terms_enriched_bos_taurus,tab:go_terms_enriched_canis_familiaris}).
+\cref{tab:go_terms_enriched_dasypus_novemcinctus,tab:go_terms_enriched_equus_caballus,tab:go_terms_enriched_homo_sapiens,tab:go_terms_enriched_loxodonta_africana,tab:go_terms_enriched_monodelphis_domestica,tab:go_terms_enriched_mus_musculus,tab:go_terms_enriched_ovis_aries,tab:go_terms_enriched_pan_paniscus,tab:go_terms_enriched_sus_scrofa,tab:go_terms_enriched_ateles_fusciceps,tab:go_terms_enriched_spalax_galili,tab:go_terms_enriched_spalax_carmeli,tab:go_terms_enriched_bos_taurus,tab:go_terms_enriched_canis_familiaris}).
 Due to the paucity of annotated gene ontology terms for some species,
 gene lists were compared using the \human Gene Ontology
 using the 1:1 \human ortholog obtained
@@ -748,7 +748,7 @@ of reads mapping to the
 respective reference genome (\cref{tab:ref_genome_aligned_species}).
 The top 50 expressed genes in each genome analyzed are shown in
 \cref{tab:top50_human_placenta,tab:top50_bonobo_placenta,tab:top50_spider_monkey_placenta,tab:top50_dog_placenta,tab:top50_cow_placenta,tab:top50_elephant_placenta,tab:top50_opossum_placenta,tab:top50_mouse_placenta,tab:top50_n_galili_placenta,tab:top50_s_carmeli_placenta,tab:top50_pig_placenta,tab:top50_horse_placenta,tab:top50_sheep_placenta}
-and all genes in Supplemental \cref{tab:all_ateles_fusciceps_placenta,tab:all_homo_sapiens_placenta,tab:all_pan_paniscus_placenta,tab:all_mus_musculus_placenta,tab:all_nannospalax_galili_placenta,tab:all_spalax_carmeli_placenta,tab:all_bos_taurus_placenta,tab:all_ovis_aries_placenta,tab:all_sus_scrofa_placenta,tab:all_equus_caballus_placenta,tab:all_canis_familiaris_placenta,tab:all_loxodonta_africana_placenta,tab:all_dasypus_novemcinctus_placenta,tab:all_monodelphis_domestica_placenta}.
+and all genes in Supplemental \cref{tab:all_ateles_fusciceps_placenta,tab:all_homo_sapiens_placenta,tab:all_pan_paniscus_placenta,tab:all_mus_musculus_placenta,tab:all_spalax_galili_placenta,tab:all_spalax_carmeli_placenta,tab:all_bos_taurus_placenta,tab:all_ovis_aries_placenta,tab:all_sus_scrofa_placenta,tab:all_equus_caballus_placenta,tab:all_canis_familiaris_placenta,tab:all_loxodonta_africana_placenta,tab:all_dasypus_novemcinctus_placenta,tab:all_monodelphis_domestica_placenta}.
 
 % The percentage of bases that mapped to Ensembl annotated mRNA ranged
 % from ~35\% in elephant to ~85\% in human, with percentages of bases
@@ -1292,34 +1292,34 @@ reported \cite{Ono.ea2006:DeletionofPeg10imprinted}.
 \begin{table}[h]
   \footnotesize
 <<top.50.n.galili.expressed.genes,echo=FALSE,results="asis">>=
-output.top.genes.table(top.genes.table(species.name="nannospalax galili"))
+output.top.genes.table(top.genes.table(species.name="spalax galili"))
 @ 
-\caption{\tableexplanation{\galili}{tab:all_nannospalax_galili_placenta}}
+\caption{\tableexplanation{\galili}{tab:all_spalax_galili_placenta}}
 \label{tab:top50_n_galili_placenta}
 \end{table}
 
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
 in the term placenta of \galili are shown in
 \cref{tab:top50_n_galili_placenta} with a list of all highly expressed
-genes in Supplemental \cref{tab:all_nannospalax_galili_placenta}.
+genes in Supplemental \cref{tab:all_spalax_galili_placenta}.
 Components of annexin complexes are highly expressed
-(\Sexpr{gene.expression("nannospalax_galili","S100a6",complete=TRUE)},
-\Sexpr{gene.expression("nannospalax_galili","S100a11",complete=TRUE)},
-\Sexpr{gene.expression("nannospalax_galili","S100a10",complete=TRUE)},
+(\Sexpr{gene.expression("spalax_galili","S100a6",complete=TRUE)},
+\Sexpr{gene.expression("spalax_galili","S100a11",complete=TRUE)},
+\Sexpr{gene.expression("spalax_galili","S100a10",complete=TRUE)},
 and
-\Sexpr{gene.expression("nannospalax_galili","Anxa2",complete=TRUE)}),
+\Sexpr{gene.expression("spalax_galili","Anxa2",complete=TRUE)}),
 as are members of the thymosin family
-(\Sexpr{gene.expression("nannospalax_galili","Tmsb4x",complete=TRUE)}
+(\Sexpr{gene.expression("spalax_galili","Tmsb4x",complete=TRUE)}
 and
-\Sexpr{gene.expression("nannospalax_galili","Tmsb10",complete=TRUE)}),
+\Sexpr{gene.expression("spalax_galili","Tmsb10",complete=TRUE)}),
 various cytoskeleton related proteins
-(\Sexpr{gene.expression("nannospalax_galili","Actc1",complete=TRUE)},
-\Sexpr{gene.expression("nannospalax_galili","Actg2",complete=TRUE)},
-\Sexpr{gene.expression("nannospalax_galili","Acta2",complete=TRUE)},
-\Sexpr{gene.expression("nannospalax_galili","Myl9",complete=TRUE)},
-\Sexpr{gene.expression("nannospalax_galili","Vim",complete=TRUE)}), and
+(\Sexpr{gene.expression("spalax_galili","Actc1",complete=TRUE)},
+\Sexpr{gene.expression("spalax_galili","Actg2",complete=TRUE)},
+\Sexpr{gene.expression("spalax_galili","Acta2",complete=TRUE)},
+\Sexpr{gene.expression("spalax_galili","Myl9",complete=TRUE)},
+\Sexpr{gene.expression("spalax_galili","Vim",complete=TRUE)}), and
 transmembrane protein of currently unknown function, 
-\Sexpr{gene.expression("nannospalax_galili","Gm10134",complete=TRUE)}.
+\Sexpr{gene.expression("spalax_galili","Gm10134",complete=TRUE)}.
 
 
 \subsubsection{\carmeli Placenta Transcriptome}
@@ -1898,7 +1898,7 @@ In order to identify major functional categories of genes expressed in
 the individual transcriptomes, we examined \ac{GSE} in 1:1 human
 orthologs which had \ac{FPKM} values in the top 1\% of expressed genes
 (Supplemental %
-\cref{tab:go_terms_enriched_top_one_dasypus_novemcinctus,tab:go_terms_enriched_top_one_equus_caballus,tab:go_terms_enriched_top_one_homo_sapiens,tab:go_terms_enriched_top_one_loxodonta_africana,tab:go_terms_enriched_top_one_monodelphis_domestica,tab:go_terms_enriched_top_one_mus_musculus,tab:go_terms_enriched_top_one_ovis_aries,tab:go_terms_enriched_top_one_pan_paniscus,tab:go_terms_enriched_top_one_sus_scrofa,tab:go_terms_enriched_top_one_ateles_fusciceps,tab:go_terms_enriched_top_one_nannospalax_galili,tab:go_terms_enriched_top_one_spalax_carmeli,tab:go_terms_enriched_top_one_bos_taurus,tab:go_terms_enriched_top_one_canis_familiaris}) using topGO \cite{topGO:2.20.0}. %
+\cref{tab:go_terms_enriched_top_one_dasypus_novemcinctus,tab:go_terms_enriched_top_one_equus_caballus,tab:go_terms_enriched_top_one_homo_sapiens,tab:go_terms_enriched_top_one_loxodonta_africana,tab:go_terms_enriched_top_one_monodelphis_domestica,tab:go_terms_enriched_top_one_mus_musculus,tab:go_terms_enriched_top_one_ovis_aries,tab:go_terms_enriched_top_one_pan_paniscus,tab:go_terms_enriched_top_one_sus_scrofa,tab:go_terms_enriched_top_one_ateles_fusciceps,tab:go_terms_enriched_top_one_spalax_galili,tab:go_terms_enriched_top_one_spalax_carmeli,tab:go_terms_enriched_top_one_bos_taurus,tab:go_terms_enriched_top_one_canis_familiaris}) using topGO \cite{topGO:2.20.0}. %
 %
 Significant enrichment in genes ($\mathrm{FDR}\le0.05$) in the top 1\%
 of \ac{FPKM} values in at least 12 of the
@@ -1909,7 +1909,7 @@ cell death related pathways among others
 (Supplemental \cref{tab:go_terms_all_species}). If we instead examine the top 100
 genes by \ac{FPKM} in each of the \Sexpr{length(species.names)}
 species (Supplemental %
-\cref{tab:go_terms_enriched_dasypus_novemcinctus,tab:go_terms_enriched_equus_caballus,tab:go_terms_enriched_homo_sapiens,tab:go_terms_enriched_loxodonta_africana,tab:go_terms_enriched_monodelphis_domestica,tab:go_terms_enriched_mus_musculus,tab:go_terms_enriched_ovis_aries,tab:go_terms_enriched_pan_paniscus,tab:go_terms_enriched_sus_scrofa,tab:go_terms_enriched_ateles_fusciceps,tab:go_terms_enriched_nannospalax_galili,tab:go_terms_enriched_spalax_carmeli,tab:go_terms_enriched_bos_taurus,tab:go_terms_enriched_canis_familiaris})
+\cref{tab:go_terms_enriched_dasypus_novemcinctus,tab:go_terms_enriched_equus_caballus,tab:go_terms_enriched_homo_sapiens,tab:go_terms_enriched_loxodonta_africana,tab:go_terms_enriched_monodelphis_domestica,tab:go_terms_enriched_mus_musculus,tab:go_terms_enriched_ovis_aries,tab:go_terms_enriched_pan_paniscus,tab:go_terms_enriched_sus_scrofa,tab:go_terms_enriched_ateles_fusciceps,tab:go_terms_enriched_spalax_galili,tab:go_terms_enriched_spalax_carmeli,tab:go_terms_enriched_bos_taurus,tab:go_terms_enriched_canis_familiaris})
 notable enrichments include extracellular matrix, female pregnancy,
 integrin and collagen-related processes, and various cell death
 related processes.
@@ -1924,7 +1924,7 @@ related processes.
 % placentas are enriched in clusters related to stress, apoptosis, and
 % response to abiotic stimuli. \textit{Mus musculus} placentas are
 % enriched in cell junction, vesicle transport, in utero embryonic
-% development, and many cytoskeletal processes. \textit{Nannospalax
+% development, and many cytoskeletal processes. \textit{Spalax
 %   galili} placentas are enriched in extracellular matrix organization,
 % integrin binding, and cell death.
 % 
@@ -2147,7 +2147,7 @@ alternative, that \textit{HOXA11} expression is responsible for
 \cite{Lynch.ea2008:Adaptivechangesintranscription} seems not to be the
 case in placenta, as the rodent with the highest \textit{HOXA11}
 expression, \galili
-(\Sexpr{gene.expression("nannospalax_galili","Hoxa11",complete=TRUE)})
+(\Sexpr{gene.expression("spalax_galili","Hoxa11",complete=TRUE)})
 is the rodent with the lowest expression of \textit{PRL}
 (\cref{fig:prolactin_evolution_tree}), and \elephant also does not
 express \textit{HOXA11} highly either

@@ -33,6 +33,9 @@ trinity.diamond.species <- NULL
 trinity.diamond <- list()
 for (file in trinity.diamond.files) {
     species.name <- gsub("_"," ",gsub("_trinity_diamond.txt","",file))
+    if (species.name=="nannospalax galili") {
+        species.name <- "spalax galili"
+    }
     trinity.diamond.species <-
         c(trinity.diamond.species,
           species.name)
@@ -68,11 +71,15 @@ for (file in gene.files) {
         gsub("_"," ",
              gsub("_genes.fpkm_tracking","",
                   gsub("SRR\\d+_","",file)))
+    orig.species.name <- species.name
+    if (species.name=="nannospalax galili") {
+        species.name <- "spalax galili"
+    }
     if (any(species.name %in% trinity.diamond.species)) {
         ## need to merge in the gene names here and then merge down
         ## the calls on the genes to only a single gene
         diamond.file <-
-            paste0(gsub(" ","_",species.name),"_trinity_diamond.txt")
+            paste0(gsub(" ","_",orig.species.name),"_trinity_diamond.txt")
         gene.fpkms[[file]][,tracking_id:=paste0(gsub(" +","_",species.name),
                                 "_",gsub(":.+","",locus))]
         setkey(gene.fpkms[[file]],"tracking_id")
@@ -110,9 +117,14 @@ gene.fpkms[,n_fpkm := length(FPKM),tracking_id]
 isoform.fpkms <- list();
 for (file in isoform.files) {
     isoform.fpkms[[file]] <- fread(file)
-    isoform.fpkms[[file]][,species := gsub("_"," ",
-                                       gsub("_isoforms.fpkm_tracking","",
-                                            gsub("SRR\\d+_","",file)))]
+    species.name <-
+        gsub("_"," ",
+             gsub("_isoforms.fpkm_tracking","",
+                  gsub("SRR\\d+_","",file)))
+    if (species.name=="nannospalax galili") {
+        species.name <- "spalax galili"
+    }
+    isoform.fpkms[[file]][,species := species.name]
     isoform.fpkms[[file]][,file:=file]
     i <- i+1
     setTxtProgressBar(pb,i)
@@ -133,9 +145,14 @@ for (file in star.log.files) {
     star.log$value <- gsub("\\t","",star.log$value)
     star.log$field <- gsub("(^\\s+|\\s+$)","",star.log$field)
     star.logs[[file]] <- data.table(star.log)[!grepl(":$",field),]
-    star.logs[[file]][,species := gsub("_"," ",
-                                   gsub("_log_star.txt","",
-                                        gsub("SRR\\d+_","",file)))]
+    species.name <-
+        gsub("_"," ",
+             gsub("_log_star.txt","",
+                  gsub("SRR\\d+_","",file)))
+    if (species.name=="nannospalax galili") {
+        species.name <- "spalax galili"
+    }
+    star.logs[[file]][,species := species.name]
     star.logs[[file]][,file:=file]
 
     i <- i+1

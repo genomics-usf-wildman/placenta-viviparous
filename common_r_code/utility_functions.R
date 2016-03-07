@@ -35,10 +35,10 @@ species.names <-
             list(sort.order=4,
                  common.name="mouse",
                  scientific.name="Mus musculus"),
-        "nannospalax galili"=
+        "spalax galili"=
             list(sort.order=5,
-                 name="nannospalax galili",
-                 scientific.name="Nannospalax galili"),
+                 name="spalax galili",
+                 scientific.name="Spalax galili"),
         "spalax carmeli"=
             list(sort.order=6,
                  name="spalax carmeli",

@@ -503,17 +503,19 @@ was performed using the Illumina Genome Analyzer II with an insert
 size of 230 base pairs (bp). Read lengths for species are shown in
 Supplemental \cref{tab:ref_genome_aligned_species}.
 
-\DLA{Add QC information}
-
 \subsubsection{Additional Sequences}
 
 For more complete evolutionary comparisons additional sequences of
-placenta in \mouse \cite{Wang.ea2011:surveyfornovelimprinted}, \human
+placenta in \mouse
+(n=\Sexpr{star.logs[grepl("musculus",species),length(unique(file))]})
+\cite{Wang.ea2011:surveyfornovelimprinted}, \human
+(n=\Sexpr{star.logs[grepl("sapiens",species),length(unique(file))]})
 \cite{Hughes.ea2015:Evaluatingintra-andinter-individual} \horse
 \cite{Coleman.ea2010:Structuralannotationofequine}, \sheep
 \cite{Archibald.ea2010:sheepgenomereferencesequence}, and \pig
 \cite{Ahanda.ea2012:Predictionofaltered3-} were obtained from the
-\ac{SRA} (Supplemental \cref{tab:srr_numbers}).
+\ac{SRA} (Supplemental \cref{tab:srr_numbers}) and analyzed using the
+same methodology as mRNAs sequenced specifically for this study.
 
 \subsection{Transcriptome Assembly, Alignment, and Quantification}
 
@@ -594,14 +596,15 @@ significantly enriched if the \ac{FDR} as estimated by the Benjamini
 and Hochberg procedure \cite{Benjamini1995:bh_procedure} on from the
 $p$ values obtained from the Fisher Exact Test were less than or equal
 to 0.05. Enrichment tests were considered with two gene lists per
-transcriptome: annotated genes with expression levels of the top
-5\% of the frequency distribution of \ac{FPKM} (Supplemental
+transcriptome: annotated genes with expression levels of the top 5\%
+of the frequency distribution of \ac{FPKM} (Supplemental
 \cref{tab:go_terms_enriched_top_one_dasypus_novemcinctus,tab:go_terms_enriched_top_one_equus_caballus,tab:go_terms_enriched_top_one_homo_sapiens,tab:go_terms_enriched_top_one_loxodonta_africana,tab:go_terms_enriched_top_one_monodelphis_domestica,tab:go_terms_enriched_top_one_mus_musculus,tab:go_terms_enriched_top_one_ovis_aries,tab:go_terms_enriched_top_one_pan_paniscus,tab:go_terms_enriched_top_one_sus_scrofa,tab:go_terms_enriched_top_one_ateles_fusciceps,tab:go_terms_enriched_top_one_spalax_galili,tab:go_terms_enriched_top_one_spalax_carmeli,tab:go_terms_enriched_top_one_bos_taurus,tab:go_terms_enriched_top_one_canis_familiaris});
 the top 100 genes with the highest \ac{FPKM} (Supplemental
 \cref{tab:go_terms_enriched_dasypus_novemcinctus,tab:go_terms_enriched_equus_caballus,tab:go_terms_enriched_homo_sapiens,tab:go_terms_enriched_loxodonta_africana,tab:go_terms_enriched_monodelphis_domestica,tab:go_terms_enriched_mus_musculus,tab:go_terms_enriched_ovis_aries,tab:go_terms_enriched_pan_paniscus,tab:go_terms_enriched_sus_scrofa,tab:go_terms_enriched_ateles_fusciceps,tab:go_terms_enriched_spalax_galili,tab:go_terms_enriched_spalax_carmeli,tab:go_terms_enriched_bos_taurus,tab:go_terms_enriched_canis_familiaris}).
 Due to the paucity of annotated gene ontology terms for some species,
-gene lists were compared using the \human Gene Ontology
-using the 1:1 \human ortholog obtained
+gene lists were compared using the \human Gene Ontology using the 1:1
+\human ortholog. Enrichment was considered out of the set of all 1:1
+orthologs present in each species.
 
 \subsection{Comparative Analysis of Gene Expression}
 
@@ -617,6 +620,13 @@ in at least one species. Of these, \Sexpr{combined.fpkm[species!="homo
   sapiens" & mean_fpkm >= 10,length(unique(human_name))]} 1:1
 orthologous genes with \ac{FPKM} $\ge 10$ were retained for future
 analyses of gene expression evolution described below.
+
+Significant shifts in expression levels between groups of species were
+calculated using Student's t test on 1:1 orthologs using the mean of
+each species to avoid large biases towards samples with $n \gg 1$ and
+considered significant if the \ac{FDR} as estimated by the Benjamini
+and Hochberg procedure \cite{Benjamini1995:bh_procedure} was
+$\le 0.05$.
 
 % We used the software \ac{OUCH} in the R statistical environment to
 % investigate significant shifts in gene expression levels over

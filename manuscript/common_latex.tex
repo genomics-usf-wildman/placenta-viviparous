@@ -1,0 +1,45 @@
+% species names
+\newcommand{\smonkey}[0]{\textit{A. fusciceps}\xspace}
+\newcommand{\cow}[0]{\textit{B. taurus}\xspace}
+\newcommand{\dog}[0]{\textit{C. familiaris}\xspace}
+\newcommand{\armadillo}[0]{\textit{D. novemcinctus}\xspace}
+\newcommand{\horse}[0]{\textit{E. caballus}\xspace}
+\newcommand{\elephant}[0]{\textit{L. africana}\xspace}
+\newcommand{\human}[0]{\textit{H. sapiens}\xspace}
+\newcommand{\opossum}[0]{\textit{M. domestica}\xspace}
+\newcommand{\mouse}[0]{\textit{M. musculus}\xspace}
+\newcommand{\galili}[0]{\textit{S. galili}\xspace}
+\newcommand{\sheep}[0]{\textit{O. aries}\xspace}
+\newcommand{\bonobo}[0]{\textit{P. paniscus}\xspace}
+\newcommand{\carmeli}[0]{\textit{S. carmeli}\xspace}
+\newcommand{\pig}[0]{\textit{S. scrofa}\xspace}
+
+% top 50 gene table explanation. Note that if you modify this, you
+% should probably also modify the human table explanation, which is
+% slightly different.
+\newcommand{\tableexplanation}[2]{The top 50 genes by FPKM in #1 which
+  are not annotated as Mt\_rRNA, Mt\_tRNA, rRNA or whose \human
+  ortholog is a housekeeping gene. Gene symbol is the gene symbol or
+  Ensembl gene id. Human Symbol is the 1:1 human ortholog or the best
+  human alignment when enclosed in parenthesis. Human Name is the HUGO
+  name corresponding to the human symbol. A complete list of all genes
+  is in \cref{#2}.}
+
+\newcommand{\genetreeexplanation}[1]{Gene tree and heatmap of
+  expression of genes related to #1. The gene tree was obtained from
+  Ensembl~\cite{Cunningham.ea2015:Ensembl2015} and genes from species
+  not included in this study or having expression by FPKM less than 1
+  were excluded from the plotted tree. Heatmap cells in white are from
+  species where there was no expression of the relevant transcript (or
+  a species where that transcript does not apply). The species names
+  are abbreviated with the first letter of the genus and first two
+  letters of the species (for example, \textit{Homo sapiens} is
+  \textit{H.sa.}). Genes with duplicate gene names in the same species
+  (or no gene named defined) are listed by the Ensemble gene ID.}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "manuscript.Rnw"
+%%% End:

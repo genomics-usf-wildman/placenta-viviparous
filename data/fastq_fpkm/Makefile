@@ -9,8 +9,9 @@ ISOFORM_FPKM_FILES=$(wildcard *_isoforms.fpkm_tracking)
 STAR_LOG_FILES=$(wildcard *_log_star.txt)
 
 ## this mouse sample has nearly zero alignable reads and is terrible;
-## do not use it at all
-BAD_SAMPLES=mus_musculus
+## do not use it at all; the homo_sapiens sample we are not uploading
+## to SRA, so delete it
+BAD_SAMPLES=mus_musculus homo_sapiens
 
 BAD_ISOFORMS=$(patsubst %,%_isoforms.fpkm_tracking,$(BAD_SAMPLES))
 BAD_GENES=$(patsubst %,%_genes.fpkm_tracking,$(BAD_SAMPLES))

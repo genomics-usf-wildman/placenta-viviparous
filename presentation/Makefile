@@ -16,7 +16,7 @@ all: placenta_viviparous_presentation.pdf
 	$(R) --encoding=utf-8 -e "library('knitr'); knit('$<')"
 
 %.pdf: %.tex $(wildcard *.bib) $(wildcard *.tex) pdfpcnotes.sty
-	latexmk -f -pdf -pdflatex='xelatex -interaction=nonstopmode %O %S' -bibtex -use-make $<
+	latexmk -f -pdf -pdflatex='xelatex -shell-escape -interaction=nonstopmode %O %S' -bibtex -use-make $<
 
 pdfpcnotes.sty:
 	wget -O "$@" https://raw.github.com/cebe/pdfpc-latex-notes/master/pdfpcnotes.sty

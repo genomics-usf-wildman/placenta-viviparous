@@ -1,4 +1,5 @@
 \documentclass[ignorenonframetext]{beamer}
+\usepackage{morewrites}
 \usepackage{fontspec}
 \setmainfont{FreeSerif}
 \setsansfont{FreeSans}
@@ -29,6 +30,11 @@
 \usepackage{zref-xr,zref-user}
 \renewcommand*{\bibfont}{\tiny}
 \usepackage{mathtools,cancel}
+\usepackage{minted}
+\usepackage{tcolorbox}
+\usepackage{etoolbox}
+\BeforeBeginEnvironment{minted}{\begin{tcolorbox}}%
+\AfterEndEnvironment{minted}{\end{tcolorbox}}%
 
 \renewcommand{\CancelColor}{\color{red}} %change cancel color to red
 
@@ -259,7 +265,7 @@ grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = NA
 \end{frame}
 
 \begin{frame}{Species Studied}
-\begin{figure}
+% \begin{figure}
 <<species.tree,fig.width=8,fig.height=6,echo=FALSE>>=
 species.tree <- 
     read.tree(text="(Monodelphis_domestica,((Dasypus_novemcinctus,Loxodonta_africana)Atlantogenata,((Canis_familiaris,(Equus_caballus,(Sus_scrofa,(Ovis_aries,Bos_taurus))))Laurasiatheria,(((Spalax_carmeli,Nannospalax_galili),Mus_Musculus)Rodentia,((Pan_paniscus,Homo_sapiens),Ateles_fuciceps)Primates)Euarchontoglires)Boreoeutheria)Eutheria);")

@@ -393,6 +393,49 @@ print(pp %>%
   \end{itemize}
 \end{frame}
 
+\subsection{Using Make}
+
+\begin{frame}{Makefile rules}
+\centering
+\includegraphics[keepaspectratio,height=0.8\textheight]{figures/default}
+\end{frame}
+
+\begin{frame}[fragile]{Common Options}
+\tiny
+\inputminted[firstline=8, lastline=36]{make}{../fastq/common_makefile}
+\end{frame}
+
+\begin{frame}[fragile]{FASTQC}
+\inputminted[firstline=78, lastline=83]{make}{../fastq/common_makefile}
+\end{frame}
+
+\begin{frame}[fragile]{Trinity}
+\tiny
+\inputminted[firstline=211, lastline=222]{make}{../fastq/common_makefile}
+\end{frame}
+
+\begin{frame}[fragile]{Diamond}
+\tiny
+\inputminted[firstline=249, lastline=268]{make}{../fastq/common_makefile}
+\end{frame}
+
+
+\begin{frame}[fragile]{STAR Indexes}
+\tiny
+\inputminted[firstline=86, lastline=105]{make}{../fastq/common_makefile}
+\end{frame}
+
+\begin{frame}[fragile]{STAR}
+\tiny
+\inputminted[firstline=106, lastline=118]{make}{../fastq/common_makefile}
+\end{frame}
+
+\begin{frame}[fragile]{Cufflinks}
+\tiny
+\inputminted[firstline=43, lastline=60]{make}{../fastq/common_makefile}
+\end{frame}
+
+
 \subsection{Additional Methods}
 \begin{frame}{Additional Methods}
   All of the code used to produce every analysis presented in this

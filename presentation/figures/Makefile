@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 
-all: uofi_mark.pdf igb_wordmark.pdf relevant_xkcd.png
+all: uofi_mark.pdf igb_wordmark.pdf relevant_xkcd.png default.png
 
 igb_wordmarks.zip:
 	wget -O $@ "http://www.igb.illinois.edu/sites/default/files/upload/Wordmarks-Eps.zip"
@@ -20,3 +20,6 @@ uofi_mark.pdf: uofi_mark.zip
 
 relevant_xkcd.png:
 	wget -O $@ "http://imgs.xkcd.com/comics/dna.png"
+
+default.png:
+	dotify_makefile ../../fastq/common_makefile

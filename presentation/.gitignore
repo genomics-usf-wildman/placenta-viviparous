@@ -19,3 +19,7 @@ cache
 *.nav
 *.snm
 *.vrb
+*.mw
+*.pdfpc
+pdfpcnotes.sty
+_minted-*

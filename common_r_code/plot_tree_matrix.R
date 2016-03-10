@@ -4,7 +4,7 @@ library("geiger")
 
 
 don.gheatmap <- function(p, data, offset=0, width=1, low="green", high="red",
-                     color="white", colnames=TRUE, colnames_position="bottom", font.size=4) {
+                     color="white", colnames=TRUE, colnames_position="bottom", font.size=4,font.angle=90) {
 
     colnames_position %<>% match.arg(c("bottom", "top"))
     variable <- value <- lab <- y <- NULL
@@ -56,8 +56,8 @@ don.gheatmap <- function(p, data, offset=0, width=1, low="green", high="red",
         }
         p2 <- p2 + geom_text(data=mapping,
                              aes(x=to, label=from),
-                             angle=90,
-                             hjust=1,
+                             angle=font.angle,
+                             hjust=ifelse(font.angle==0,0.5,1),
                              vjust=0.5,
                              y=y, size=font.size, fontface="italic",inherit.aes = FALSE)
     }
@@ -73,7 +73,7 @@ don.gheatmap <- function(p, data, offset=0, width=1, low="green", high="red",
     return(p2)
 }
 
-plot.tree.matrix <- function(gene.tree,gene.tree.table,gene.tree.expression,offset.ratio=0.5,min.fpkm=NA,subtree=NULL,vp=NULL,fontsize=3,width=1.5,axis.text.size=5) {
+plot.tree.matrix <- function(gene.tree,gene.tree.table,gene.tree.expression,offset.ratio=0.5,min.fpkm=NA,subtree=NULL,vp=NULL,fontsize=3,width=1.5,axis.text.size=5,axis.text.angle=90) {
     gene.tree$tip.label <- gsub("^(ENS.+)\\1$","\\1",gene.tree$tip.label)
     gene.tree.table[,species:=capfirst(gsub("_"," ",species))]
     gene.tree.table[,short.species:=gsub("^(.)[^ ]* +([^ ]{2})[^ ]*","\\1.\\2.",species)]
@@ -138,7 +138,10 @@ plot.tree.matrix <- function(gene.tree,gene.tree.table,gene.tree.expression,offs
     g1 <-
         (don.gheatmap(p,data=gene.tree.expression.matrix,
                       width=width,
-                      offset=max(p$data$x)*offset.ratio,font.size=axis.text.size,colnames=TRUE)
+                      offset=max(p$data$x)*offset.ratio,
+                      font.size=axis.text.size,
+                      font.angle=axis.text.angle,
+                      colnames=TRUE)
             + geom_text(aes(x=xpos,
                             y=y,
                             label=label,

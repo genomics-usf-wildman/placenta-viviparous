@@ -25,7 +25,7 @@ placenta.lineage.specific <-
     placenta.lineage.specific[!(human_name %in% housekeeping.genes.superset[,gene_short_name]),]
 
 species <- c("ateles fusciceps", "homo sapiens", "pan paniscus", "mus musculus", 
-             "nannospalax galili", "spalax carmeli", "bos taurus", "ovis aries", 
+             "spalax galili", "spalax carmeli", "bos taurus", "ovis aries",
              "sus scrofa", "equus caballus", "canis familiaris", "loxodonta africana", 
              "dasypus novemcinctus", "monodelphis domestica")
 

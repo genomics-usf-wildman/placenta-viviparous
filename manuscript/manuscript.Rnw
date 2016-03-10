@@ -242,6 +242,8 @@ grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = NA
   placenta and may also be implicated in important human placental
   disorders such as pre-eclampsia.
 
+  \DLA{Complete rewrite abstract to make the points that we have found
+    stronger and less weak.}
 
 % We identified significant shifts in gene expression along specific
 % evolutionary lineages using a model of character evolution. Genes that
@@ -297,11 +299,8 @@ the chorion and allantois
 the first placenta was more like that of marsupials or eutherians;
 however, using phylogenetic methods, the ancestral eutherian was
 reconstructed as possessing a relatively invasive hemochorial
-placenta, in which the maternal and fetal blood supply is separated by
-one tissue layer, as in humans and mouse
+placenta, as in humans and mouse
 \cite{Elliot.ea2009:Phylogeneticevidenceforearly,Wildman.ea2006:Evolutionofmammalianplacenta}.
-\DLA{To discuss maternal/fetal split with derek}
-
 
 Although the morphology of the mammalian placenta has been well
 characterized in a number of species
@@ -319,7 +318,8 @@ families with expression patterns that can vary in space and time
 These include independent expansions of the prolactins in \mouse,
 \textit{Spalax carmeli}, \textit{Spalax galili}, and \cow, \acp{PSG} in \human and \mouse, \acp{PAG}
 in \cow, genes related to the thymus-specific serine protease
-\textit{PRSS16} in \textit{Loxodona africana}, and the expansion of the growth hormone
+\textit{PRSS16} in \textit{Loxodona africana} (in this work),
+ and the expansion of the growth hormone
 and chorionic gonadotropin beta genes in hominoid primates
 \cite{Haig2008:Placentalgrowthhormone-relatedproteins,Rawn.ea2008:evolutionregulationandfunction}.
 Expression patterns of specific genes also can vary widely between
@@ -362,13 +362,15 @@ pregnancies being affected in the United States
   troglodytes} and \textit{G. gorilla} also have deeply invasive
 trophoblasts, although the progression of invasion in great apes may
 be slower than \human
-\cite{Carter.ea2011:Evolutionofinvasiveplacentation}; however,
+\cite{Carter.ea2011:Evolutionofinvasiveplacentation}. However,
 large-scale expression studies of great ape placentas have not been
 conducted. The increasing affordability of next-generation sequencing
 technology has enabled the large-scale study of specific tissues from
 a wide array of species to address broader phylogenetic questions in
 the evolution of gene expression
-\cite{Brawand.ea2011:evolutionofgeneexpression}. Here we use RNA-Seq
+\cite{Brawand.ea2011:evolutionofgeneexpression}.
+
+Here we use RNA-Seq
 technology to sequence and quantify the mRNA environment of mammalian
 placentas at term, including that of the \human, \textit{Pan paniscus}
 (the sister species to \textit{P. troglodytes}), \textit{Ateles
@@ -627,21 +629,21 @@ $\le 0.05$.
 % each branch using the same methodology as in the per-species gene
 % lists \DLA{reference the tables once this analysis is complete}.
 
-\subsection{Correlation of Tissue Specific Index with Lineage Specific Genes}
-
-To evaluate the extent of tissue specificity of each gene, we
-calculated the \ac{TSI} based on human RNASeq data in 3267 samples in
-126 tissues the Roadmap Epigenomics
-\cite{Bernstein.ea2010:NIHRoadmapEpigenomicsMapping} and GTEx projects
-\cite{Gtexconsortium.2015:Thegenotypetissueexpression} as well
-additional placenta
-\cite{Hughes.ea2015:Evaluatingintra-andinter-individual} and uterus
-\cite{Chan.ea2014:Assessmentofmyometrialtranscriptome} samples from
-SRA. The \ac{TSI} measures the extent to which a specific gene has
-predominant expression in only one tissue
-\cite{Yanai.ea2005:Genome-widemidrangetranscriptionprofiles}. A gene
-expressed in only one tissue would have a \ac{TSI} of 1, whereas a
-gene expressed in all tissues would have a \ac{TSI} of 0.
+% \subsection{Correlation of Tissue Specific Index with Lineage Specific Genes}
+% 
+% To evaluate the extent of tissue specificity of each gene, we
+% calculated the \ac{TSI} based on human RNASeq data in 3267 samples in
+% 126 tissues the Roadmap Epigenomics
+% \cite{Bernstein.ea2010:NIHRoadmapEpigenomicsMapping} and GTEx projects
+% \cite{Gtexconsortium.2015:Thegenotypetissueexpression} as well
+% additional placenta
+% \cite{Hughes.ea2015:Evaluatingintra-andinter-individual} and uterus
+% \cite{Chan.ea2014:Assessmentofmyometrialtranscriptome} samples from
+% SRA. The \ac{TSI} measures the extent to which a specific gene has
+% predominant expression in only one tissue
+% \cite{Yanai.ea2005:Genome-widemidrangetranscriptionprofiles}. A gene
+% expressed in only one tissue would have a \ac{TSI} of 1, whereas a
+% gene expressed in all tissues would have a \ac{TSI} of 0.
 
 % \subsection{Validation of Primate Expression using Spider Monkey Placenta Transcriptome}
 % 
@@ -825,16 +827,17 @@ gene.expression <- function(species.name,gene,complete=FALSE,units=TRUE) {
     
 @ 
 
-<<load.placenta.lineage.specific,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../data/",c("placenta_lineage_specific")))>>=
+<<load.placenta.lineage.specific,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../data/",c("placenta_lineage_specific","human_mouse_lineage_specific")))>>=
 load("../data/placenta_lineage_specific")
+load("../data/human_mouse_lineage_specific")
 source("/home/don/projects/xtable/pkg/R/print.xtable.R")
 
-placenta.lineage.specific.table <- function(analysis,output=TRUE) {
+placenta.lineage.specific.table <- function(analysis,output=TRUE,lineage.table=placenta.lineage.specific.analysis,members=5) {
     temp.table <- 
-        head(placenta.lineage.specific.analysis[analysis.name==analysis &
-                                                p.value <= 0.05][order(p.value),
-                                                                 list(human_name,p.value,fdr,fc),],
-             n=5)
+        head(lineage.table[analysis.name==analysis &
+                           p.value <= 0.05][order(p.value),
+                                            list(human_name,p.value,fdr,fc),],
+             n=members)
     temp.table <- data.table(temp.table)
     setkey(temp.table,"human_name")
     temp.table <- 
@@ -851,6 +854,7 @@ placenta.lineage.specific.table <- function(analysis,output=TRUE) {
                                                   "}")]
         print(xtable(display.table,
                      display=c("s","s","s","e","g","f"),
+                     align=c("c","c","p{2in}","r","r","r")
                      ),
               booktabs=TRUE,
               floating=FALSE,
@@ -925,6 +929,20 @@ lineage by t-test.
 
 \begin{table}
   \footnotesize
+<<human.lineage.specific,echo=FALSE,results="asis">>=
+hum.all.lin.spec <-
+    placenta.lineage.specific.table("hum.all",
+                                    lineage.table=human.mouse.linage.specific.analysis,
+                                    members=40)
+setkey(hum.all.lin.spec,"Human Symbol")
+@ 
+\caption{Genes whose expression changed significantly in \human
+  as compared to all other analyzed species.}
+\label{tab:human_lineage_specific}
+\end{table}
+
+\begin{table}
+  \footnotesize
 <<top.50.human.expressed.genes,echo=FALSE,results="asis">>=
 output.top.genes.table(top.genes.table(species.name="homo sapiens"))
 @ 
@@ -994,7 +1012,7 @@ producing the beta subunits of the chorionic gonadotropins
 (\textit{CGB}, \textit{CGB1}, \textit{CGB2}, \textit{CGB5},
 \textit{CGB7}, \textit{CGB8}) have reasonable expression
 ($\mathrm{FPKM} \ge \Sexpr{cgb.min.expression}$), and the sum of their
-expression is on the order of the expression of expression of
+expression is on the order of the expression of
 \textit{CGA} ($\sum \mathit{CGBs}=\Sexpr{cgb.sum.expression}$ FPKM) .
 %
 %
@@ -1008,7 +1026,7 @@ glucose transport (\textit{SLC2A1}) among others
 (\cref{tab:top50_human_placenta}, Supplemental
 \cref{tab:all_homo_sapiens_placenta}).
 
-
+\DLA{Discuss pre-eclampsia specific genes here to make this point stronger}
 
 \begin{figure}
 <<psg.ctsl.evolution.tree,echo=FALSE,fig.width=16,fig.height=16,warning=FALSE,message=FALSE>>=
@@ -1189,12 +1207,25 @@ Supplementary \cref{tab:all_ateles_fusciceps_placenta}.
 
 \subsection{Rodentia Placenta Transcriptomes}
 
-We examined the expression of three rodentia, \mouse, \carmeli, and
-\galili{}. We lacked sufficient power to detect any significant
-changes on the Rodentia lineage in comparison to all other analyzed
-species (Supplemental \cref{tab:rodentia_lineage_specific}).
+We examined the expression of three rodents, \mouse, \carmeli, and
+\galili{}. We did not detect any significant changes on the Rodentia
+lineage in comparison to all other analyzed species (Supplemental
+\cref{tab:rodentia_lineage_specific}), likely because of a lack power
+to overcome multiple testing.
 
 \subsubsection{\mouse Placenta Transcriptome}
+
+\begin{table}
+<<mouse.lineage.specific,echo=FALSE,results="asis">>=
+mou.all.lin.spec <-
+    placenta.lineage.specific.table("mou.all",
+                                    lineage.table=human.mouse.linage.specific.analysis)
+setkey(mou.all.lin.spec,"Human Symbol")
+@ 
+\caption{Genes whose expression changed significantly in \mouse
+  as compared to all other analyzed species.}
+\label{tab:mouse_lineage_specific}
+\end{table}
 
 \begin{table}[h]
   \footnotesize
@@ -2428,6 +2459,10 @@ addition, clusters such as cytokines and defense response
 change in expression of the immune response that may be involved in
 immunosupression at the maternal-fetal boundary to further allow
 invasion of fetal tissues.
+
+\DLA{Make the discussion of pre-eclampsia clearer and more defined;
+  possibly include some of the discuss below. Also, this is not
+  necessarily a shift on the human line.}
 
 % I haven't actually done this analysis, so commented out
 

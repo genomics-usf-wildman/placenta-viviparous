@@ -12,7 +12,8 @@ FPKM_FILES=Supplemental_Table_2_Homo_NEW_UPDATED.txt $(patsubst %.xlsx,%.txt,$(f
 
 all: combined_fpkm gene_trees housekeeping_genes_superset placenta_core_transcriptome \
 	placenta_go_results_bp placenta_go_results_mf hugo_nomenclature gene_annotation \
-	mammal_lifehistories.txt
+	mammal_lifehistories.txt placenta_lineage_specific combined_fpkm_per_sample \
+	homology_table
 
 mammal_lifehistories.txt:
 	wget -O $@ "http://www.esapubs.org/archive/ecol/E084/093/Mammal_lifehistories_v2.txt"
@@ -94,6 +95,13 @@ placenta_lineage_specific: placenta_lineage_specific.R combined_fpkm housekeepin
 
 placenta_lineage_specific.txt: ../common_r_code/array_to_text.R placenta_lineage_specific
 	$(R) $(ROPTS) -f $< --args placenta_lineage_specific placenta.lineage.specific.analysis $@
+
+### placenta lineage specific
+human_mouse_lineage_specific: human_mouse_lineage_specific.R combined_fpkm_per_sample housekeeping_genes_superset
+	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
+
+human_mouse_lineage_specific.txt: ../common_r_code/array_to_text.R human_mouse_lineage_specific
+	$(R) $(ROPTS) -f $< --args human_mouse_lineage_specific human.mouse.lineage.specific.analysis $@
 
 
 ### placenta specific transcripts and go analysis of them

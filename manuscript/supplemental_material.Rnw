@@ -105,7 +105,7 @@
 
 
 <<load.libraries,echo=FALSE,results="hide",warning=FALSE,message=FALSE,error=FALSE,cache=FALSE>>=
-opts_chunk$set(dev="cairo_pdf",out.width="\\textwidth",out.height="0.7\\textheight",out.extra="keepaspectratio")
+opts_chunk$set(dev="cairo_pdf",out.width="\\textwidth",out.height="0.65\\textheight",out.extra="keepaspectratio")
 opts_chunk$set(cache=TRUE, autodep=TRUE,cache.path="supplemental_cache/")
 options(device = function(file, width = 8, height = 7, ...) {
   cairo_pdf(tempfile(), width = width, height = height, ...)
@@ -171,9 +171,10 @@ load("../go_annotation/go_tissue_analysis")
 \DLA{Add in SRR and GSE numbers for everything here once I have them.}
 
 \begin{table}
-  \begin{tabular}{c p{1.5in} c p{2in}}
+  \raggedright
+  \begin{tabular}{c >{\raggedright}p{1.5in} c >{\raggedright\arraybackslash}p{2in}}
     \toprule
-    Species                       & Collector & Experiment Number & Sample Number(s) \\
+    Species                       & Collector & Experiment & Sample(s) \\
     \midrule
     \textit{Ateles fusciceps}     & Kurt Benirschke & & \\
     \textit{Bos taurus}           & Bob Kreft & & \\
@@ -181,7 +182,7 @@ load("../go_annotation/go_tissue_analysis")
     \textit{Dasypus novemcinctus} & Richard Truman, Vincent J. Lynch& & \\
     \textit{Equus caballus}       & \citet{Coleman.ea2010:Structuralannotationofequine} & GSM1139275 & SRR850299,  SRR850300 \\
     \textit{Loxodonta africana}   & Kurt Benirschke & & \\
-    \textit{Homo sapiens}         & Nandor Gabor, \citet{Hughes.ea2015:Evaluatingintra-andinter-individual} & GSE66622 
+    \textit{Homo sapiens}         & \citet{Hughes.ea2015:Evaluatingintra-andinter-individual} & GSE66622 
                                              & SRR1850945,
                                                SRR1850946, 
                                                SRR1850951, 
@@ -209,34 +210,36 @@ load("../go_annotation/go_tissue_analysis")
                                                SRR1851011, 
                                                SRR1851012 \\
     \textit{Monodelphis domestica} & Karen Smith, Gunter Wagner & & \\
-    \textit{Mus musculus}         & Juan Gonzalez, \citet{Wang.ea2011:surveyfornovelimprinted} & GSE29690 
-                                     & SRR243594,
-                                       SRR243595,
-                                       SRR243596,
-                                       SRR243597,
-                                       SRR243598,
-                                       SRR243599,
-                                       SRR243600,
-                                       SRR243601,
-                                       SRR243602,
-                                       SRR243586,
-                                       SRR243587,
-                                       SRR243588,
-                                       SRR243589,
-                                       SRR243590,
-                                       SRR243591,
-                                       SRR243592,
+    \textit{Mus musculus}         & \citet{Wang.ea2011:surveyfornovelimprinted} & GSE29690 
+                                     & SRR243594, 
+                                       SRR243595, 
+                                       SRR243596, 
+                                       SRR243597, 
+                                       SRR243598, 
+                                       SRR243599, 
+                                       SRR243600, 
+                                       SRR243601, 
+                                       SRR243602, 
+                                       SRR243586, 
+                                       SRR243587, 
+                                       SRR243588, 
+                                       SRR243589, 
+                                       SRR243590, 
+                                       SRR243591, 
+                                       SRR243592, 
                                        SRR243593\\
     \textit{Ovis aries}           & \citet{Archibald.ea2010:sheepgenomereferencesequence} & ERP005642 & ERR489144, ERR489145\\
     \textit{Pan paniscus}         & William Mintz Fields & & (Teco)\\
     \textit{Spalax carmeli}       & Anne Dupressoir, Eviator Nevo & GSE68763 & SRR2016467 \\
-    \textit{Spalax galili}        & Eviator Nevo                  & GSE68763 & SRR2016467 \\
+    \textit{Spalax galili}        & Eviator Nevo                  & GSE68763 & SRR2016466 \\
     \textit{Sus scrofa}           & \citet{Ahanda.ea2012:Predictionofaltered3-} &  SRP014902 & SRR543893 \\
     \bottomrule
   \end{tabular}
   \caption{Species, experiment and species numbers used in the analyses presented in this paper}
   \label{tab:srr_numbers}
 \end{table}
+
+\clearpage
 
 \subsection{Species Alignment}
 
@@ -274,7 +277,7 @@ load("../go_annotation/go_tissue_analysis")
 
 
 
-\begin{figure}
+\begin{figure}[hb]
 <<transcriptome.mapping.figure,fig.width=8,fig.height=8,echo=FALSE>>=
 star.logs.unmapped <- 
     star.logs[grepl("%",field) & 
@@ -509,6 +512,62 @@ genes.expression.table <- function(species.name,min.fpkm=50) {
 \section{Gene Expression}
 
 \subsection{Gene Evolution Trees}
+
+\begin{figure}[hb]
+<<adam12.evolution.tree,echo=FALSE,out.height="0.6\\textheight",fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="ADAM12" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
+                 gene.tree.table,gene.tree.expression,min.fpkm=5,
+                 axis.text.size=5,
+                 fontsize=8
+                 )
+@ 
+\caption{\genetreeexplanation{\textit{ADAM12}}}
+\label{fig:adam12_evolution_tree}
+\end{figure}
+
+\begin{figure}
+<<kiss1.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="KISS1" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
+                 gene.tree.table,gene.tree.expression,min.fpkm=5,
+                 axis.text.size=5,
+                 axis.text.angle=0,
+                 fontsize=5
+                 )
+@ 
+\caption{\genetreeexplanation{\textit{KISS1}}}
+\label{fig:kiss1_evolution_tree}
+\end{figure}
+
+\begin{figure}
+<<gpc3.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="GPC3" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
+                 gene.tree.table,gene.tree.expression,min.fpkm=5,
+                 axis.text.size=5,
+                 fontsize=8
+                 )
+@ 
+\caption{\genetreeexplanation{\textit{GPC3}}}
+\label{fig:gpc3_evolution_tree}
+\end{figure}
+
 
 \begin{figure}
 <<fstl1.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
@@ -846,6 +905,16 @@ output.top.genes.table <- function(data,output=TRUE) {
 
 @ 
 
+\begin{table}[hb]
+  \footnotesize
+<<human.lineage.specific,echo=FALSE,results="asis">>=
+hum.all.lin.spec <- placenta.lineage.specific.table("hum.all")
+setkey(hum.all.lin.spec,"Human Symbol")
+@ 
+\caption{Genes whose expression changed in \human
+  as compared to all other analyzed species.}
+\label{tab:human_lineage_specific}
+\end{table}
 
 \begin{table}[hb]
   \footnotesize

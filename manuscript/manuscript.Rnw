@@ -665,8 +665,10 @@ $\le 0.05$.
 All of the code used to produce every analysis presented in this paper
 is available at
 \url{https://github.com/uiuc-cgm/placenta-viviparous.git}. All of the
-sequences used are deposited in SRA, and can be obtained using
-\DLA{add GSE label for the experiment}.
+sequences used are deposited in SRA, and can be obtained under the
+series
+\href{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE79121}{GSE79121}.
+
 
 \section{Results}
 

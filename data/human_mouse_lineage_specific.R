@@ -70,7 +70,7 @@ comparisons <- list("hum.all"=list(group1="homo sapiens",
                                    )
                     )
 
-human.mouse.linage.specific.analysis <- list()
+human.mouse.lineage.specific.analysis <- list()
 for (c.n in names(comparisons)) {
     results <- data.table(placenta.lineage.specific[,human_name])
     setnames(results,"human_name")
@@ -90,10 +90,9 @@ for (c.n in names(comparisons)) {
             ]
     results[,fdr:=p.adjust(results[,p.value],method="BH")]
     results[,analysis.name:=c.n]
-    human.mouse.linage.specific.analysis[[c.n]] <- results
+    human.mouse.lineage.specific.analysis[[c.n]] <- results
 }
-human.mouse.linage.specific.analysis <- rbindlist(human.mouse.linage.specific.analysis)
+human.mouse.lineage.specific.analysis <- rbindlist(human.mouse.lineage.specific.analysis)
 
-save(human.mouse.linage.specific.analysis,
-     placenta.lineage.specific,
+save(human.mouse.lineage.specific.analysis,
      file=args[length(args)])

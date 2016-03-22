@@ -1035,8 +1035,13 @@ for (this.species in names(species.names)) {
     this.caption <- paste0("\\textit{",
                            capfirst(this.species),"} Placental Gene Expression of all genes with FPKM $\\ge 50$")
     cat(paste0("\\subsection{\\textit{",capfirst(this.species),"} Placental Gene Expression}\n\n"))
+    xt.align <- c("r","l","l","p{2.5in}","r")
+    if (this.species == "homo sapiens" || this.species == "ateles fusciceps") {
+        xt.align <- xt.align[-2]
+    }
     print(xtable(genes.expression.table(species.name=this.species),
                  caption=this.caption,
+                 align=xt.align,
                  label=paste0("tab:all_",gsub(" ","_",this.species),"_placenta")
                  ),
           booktabs=TRUE,

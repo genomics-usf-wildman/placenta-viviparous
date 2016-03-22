@@ -934,7 +934,7 @@ lineage by t-test.
 <<human.lineage.specific,echo=FALSE,results="asis">>=
 hum.all.lin.spec <-
     placenta.lineage.specific.table("hum.all",
-                                    lineage.table=human.mouse.linage.specific.analysis,
+                                    lineage.table=human.mouse.lineage.specific.analysis,
                                     members=40)
 setkey(hum.all.lin.spec,"Human Symbol")
 @ 

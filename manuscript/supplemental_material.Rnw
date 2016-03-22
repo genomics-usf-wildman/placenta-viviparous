@@ -514,7 +514,28 @@ genes.expression.table <- function(species.name,min.fpkm=50) {
 \subsubsection{Pre-eclampsia genes}
 
 \begin{figure}[hb]
-<<adam12.evolution.tree,echo=FALSE,out.height="0.6\\textheight",fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+<<crh.evolution.tree,echo=FALSE,out.height="0.6\\textheight",fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
+
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="CRH" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
+                 gene.tree.table,gene.tree.expression,
+                 min.fpkm=1,
+                 axis.text.size=5,
+                 axis.text.angle=0,
+                 fontsize=8
+                 )
+@ 
+\caption{\genetreeexplanation{\textit{CRH}}}
+\label{fig:crh_evolution_tree}
+\end{figure}
+
+
+\begin{figure}[hb]
+<<adam12.evolution.tree,echo=FALSE,out.height="0.6\\textheight",fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
 
 tree.id <-
     genes.to.tree[combined.fpkm[gene_short_name=="ADAM12" & species=="homo sapiens",gene_id],tree]
@@ -522,9 +543,12 @@ gene.tree.table <- trees[[tree.id]]$table
 gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
-                 gene.tree.table,gene.tree.expression,min.fpkm=5,
-                 axis.text.size=5,
-                 fontsize=8
+                 gene.tree.table,
+                 gene.tree.expression,
+                 subtree=c("ENSMODG00000010538","ENSSSCG00000010746"),
+                 min.fpkm=0.1,
+                 axis.text.size=4,
+                 fontsize=5
                  )
 @ 
 \caption{\genetreeexplanation{\textit{ADAM12}}}
@@ -540,13 +564,14 @@ gene.tree.table <- trees[[tree.id]]$table
 gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
-                 gene.tree.table,gene.tree.expression,min.fpkm=5,
+                 gene.tree.table,gene.tree.expression,
+                 min.fpkm=0.1,
                  axis.text.size=5,
                  axis.text.angle=0,
                  fontsize=5
                  )
 @ 
-\caption{\genetreeexplanation{\textit{KISS1}}}
+\caption{\genetreeexplanation[0.1]{\textit{KISS1}}}
 \label{fig:kiss1_evolution_tree}
 \end{figure}
 
@@ -559,13 +584,15 @@ gene.tree.table <- trees[[tree.id]]$table
 gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
-                 gene.tree.table,gene.tree.expression,min.fpkm=5,
+                 gene.tree.table,gene.tree.expression,
+                 subtree=c("ENSSSCG00000005498","ENSG00000182752"),
+                 min.fpkm=0.1,
                  axis.text.size=5,
                  axis.text.angle=0,
                  fontsize=5
                  )
 @ 
-\caption{\genetreeexplanation{\textit{PAPPA}}}
+\caption{\genetreeexplanation[0.1]{\textit{PAPPA}}}
 \label{fig:pappa_evolution_tree}
 \end{figure}
 
@@ -579,8 +606,9 @@ gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
                  subtree=c("ENSMODG00000008630","ENSSSCG00000026296"),
-                 gene.tree.table,gene.tree.expression,min.fpkm=5,
-                 axis.text.size=5,
+                 gene.tree.table,gene.tree.expression,
+                 min.fpkm=1,
+                 axis.text.size=3.5,
                  fontsize=5
                  )
 @ 
@@ -590,7 +618,7 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
 
 
 \begin{figure}
-<<gpc3.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+<<gpc3.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
 
 tree.id <-
     genes.to.tree[combined.fpkm[gene_short_name=="GPC3" & species=="homo sapiens",gene_id],tree]
@@ -598,15 +626,21 @@ gene.tree.table <- trees[[tree.id]]$table
 gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
-                 gene.tree.table,gene.tree.expression,min.fpkm=5,
-                 axis.text.size=5,
-                 fontsize=8
+                 gene.tree.table,
+                 subtree=c("ENSCAFG00000018864","ENSLAFG00000025706"),
+                 gene.tree.expression,
+                 min.fpkm=1,
+                 axis.text.size=3.5,
+                 fontsize=6
                  )
 @ 
 \caption{\genetreeexplanation{\textit{GPC3}}}
 \label{fig:gpc3_evolution_tree}
 \end{figure}
 
+\clearpage
+
+\subsubsection{Primate Specific Evolution}
 
 \begin{figure}
 <<fstl1.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
@@ -617,7 +651,9 @@ gene.tree.table <- trees[[tree.id]]$table
 gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
-                 gene.tree.table,gene.tree.expression,min.fpkm=5,
+                 gene.tree.table,
+                 gene.tree.expression,
+                 min.fpkm=1,
                  axis.text.size=5,
                  fontsize=8
                  )
@@ -635,7 +671,9 @@ gene.tree.table <- trees[[tree.id]]$table
 gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
 gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
 plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
-                 gene.tree.table,gene.tree.expression,min.fpkm=1,
+                 gene.tree.table,
+                 gene.tree.expression,
+                 min.fpkm=1,
                  axis.text.size=5,
                  fontsize=4)
 @ 

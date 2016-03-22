@@ -168,20 +168,18 @@ load("../go_annotation/go_tissue_analysis")
 
 \subsection{Sequence Source}
 
-\DLA{Add in SRR and GSE numbers for everything here once I have them.}
-
 \begin{table}
   \raggedright
   \begin{tabular}{c >{\raggedright}p{1.5in} c >{\raggedright\arraybackslash}p{2in}}
     \toprule
     Species                       & Collector & Experiment & Sample(s) \\
     \midrule
-    \textit{Ateles fusciceps}     & Kurt Benirschke & GSE79121 & \\
-    \textit{Bos taurus}           & Bob Kreft & GSE79121 & \\
-    \textit{Canis familiaris}     & Dalen Agnew & GSE79121 & (Bounty Hubler) \\
-    \textit{Dasypus novemcinctus} & Richard Truman, Vincent J. Lynch& GSE79121 & \\
+    \textit{Ateles fusciceps}     & Kurt Benirschke & GSE79121 & SRX1629201 \\
+    \textit{Bos taurus}           & Bob Kreft & GSE79121 & SRX1629203 \\
+    \textit{Canis familiaris}     & Dalen Agnew & GSE79121 & SRX1629204 \\
+    \textit{Dasypus novemcinctus} & Richard Truman, Vincent J. Lynch& GSE79121 & SRX1629200 \\
     \textit{Equus caballus}       & \citet{Coleman.ea2010:Structuralannotationofequine} & GSM1139275 & SRR850299,  SRR850300 \\
-    \textit{Loxodonta africana}   & Kurt Benirschke & GSE79121 & \\
+    \textit{Loxodonta africana}   & Kurt Benirschke & GSE79121 & SRX1629205 \\
     \textit{Homo sapiens}         & \citet{Hughes.ea2015:Evaluatingintra-andinter-individual} & GSE66622 
                                              & SRR1850945,
                                                SRR1850946, 
@@ -209,7 +207,7 @@ load("../go_annotation/go_tissue_analysis")
                                                SRR1851004, 
                                                SRR1851011, 
                                                SRR1851012 \\
-    \textit{Monodelphis domestica} & Karen Smith, Gunter Wagner & GSE79121 & \\
+    \textit{Monodelphis domestica} & Karen Smith, Gunter Wagner & GSE79121 & SRX1629207 \\
     \textit{Mus musculus}         & \citet{Wang.ea2011:surveyfornovelimprinted} & GSE29690 
                                      & SRR243594, 
                                        SRR243595, 
@@ -229,7 +227,7 @@ load("../go_annotation/go_tissue_analysis")
                                        SRR243592, 
                                        SRR243593\\
     \textit{Ovis aries}           & \citet{Archibald.ea2010:sheepgenomereferencesequence} & ERP005642 & ERR489144, ERR489145\\
-    \textit{Pan paniscus}         & William Mintz Fields & GSE79121 & (Teco) \\
+    \textit{Pan paniscus}         & William Mintz Fields & GSE79121 & SRX1629202 \\
     \textit{Spalax carmeli}       & Anne Dupressoir, Eviator Nevo & GSE68763 & SRR2016467 \\
     \textit{Spalax galili}        & Eviator Nevo                  & GSE68763 & SRR2016466 \\
     \textit{Sus scrofa}           & \citet{Ahanda.ea2012:Predictionofaltered3-} &  SRP014902 & SRR543893 \\

@@ -2050,28 +2050,33 @@ igfrelated.expression.nozero <-
 igf.exp.long <- melt(log10(igfrelated.expression.nozero+1)[rev(1:nrow(igfrelated.expression.nozero)),])
 colnames(igf.exp.long)[1:3] <- c("gene","species","fpkm")
 
+### Pre-eclampsia genes FSTL3 EPAS1 ADAM12 GPC3 TGFB1 PAPPA
+
+pe.expression.nozero <-
+    gene.expression.nozero(c("ADAM12","CRH","KISS1","PAPPA"))
+
+pe.exp.long <- melt(log10(pe.expression.nozero+1)[rev(1:nrow(pe.expression.nozero)),])
+colnames(pe.exp.long)[1:3] <- c("gene","species","fpkm")
+
+
 igf.exp.long$type <- "IGF Related"
 gal.exp.long$type <- "Galectin"
 hor.exp.long$type <- "Hormone"
+pe.exp.long$type <- "PE"
 
-### scalerange <- range(c(igf.exp.long$fpkm,gal.exp.long$fpkm,hor.exp.long$fpkm),na.rm=TRUE)
-### gradientends <- scalerange + rep(c(0,100,200), each=2)
-### colorends <- c("white", "red", "white", "green", "white", "blue")
-### 
-### gal.exp.long$fpkm <- gal.exp.long$fpkm+100
-### hor.exp.long$fpkm <- hor.exp.long$fpkm+200
 
 combined.long <-
     rbind(igf.exp.long,
           gal.exp.long,
-          hor.exp.long)
+          hor.exp.long,
+          pe.exp.long
+          )
 combined.long$species <-
     factor(gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",capfirst(combined.long$species)),
            levels=gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",capfirst(names(species.names))))
 
 common.plot.options <- 
     list(geom_tile(aes(fill = fpkm), colour = "white"),
-##         scale_fill_gradientn(colours = colorends, values = rescale(gradientends)),
          scale_fill_gradient(low = grad.def[["low"]],
                              high = grad.def[["high"]],
                              space = grad.def[["space"]],
@@ -2091,7 +2096,8 @@ print(ggplot(combined.long, aes(y=gene, x=species))
       + common.plot.options
       )
 @ 
-\caption{Expression of Hormone Genes, Galectins, and IGF related genes}
+\caption{Expression of 1:1 Human orthologs of Hormone Genes, Galectins,
+  genes implicated in pre-eclampsia (PE), and \textit{IGF}-related genes}
 \label{fig:hormone_genes}
 \end{figure}
 

@@ -241,7 +241,8 @@ load("../go_annotation/go_tissue_analysis")
 
 \subsection{Species Alignment}
 
-\begin{table}
+\begin{table}[hb]
+  \centering
   \begin{tabular}{c c c c}
     \toprule
     Species                       & Common Name        & Reference & Read Length \\
@@ -279,16 +280,16 @@ load("../go_annotation/go_tissue_analysis")
 <<transcriptome.mapping.figure,fig.width=8,fig.height=8,echo=FALSE>>=
 star.logs.unmapped <- 
     star.logs[grepl("%",field) & 
-                  grepl("unmapped",field) & 
+                  grepl("unmapped|too many loci",field) & 
                       !grepl("too many mismatches",field),]
 star.logs.unmapped <- 
-    star.logs.unmapped[,field:=capfirst(gsub("\\% of reads unmapped: ","",field))]
+    star.logs.unmapped[,field:=capfirst(gsub("\\% of reads (unmapped:|mapped to) ","",field))]
 pushViewport(viewport(layout=grid.layout(ncol=1,nrow=2,heights=c(2,1))))
 print(ggplot(star.logs.unmapped,
              aes(x=capfirst(species),y=as.numeric(gsub("%","",value))))
       + geom_boxplot()
       + facet_grid(field~.,scales="free")
-      + ylab("Percent of Reads")
+      + ylab("Percentage of Reads Unmapped")
       + xlab(NULL)
       + theme_bw()
       + theme(legend.position="top",

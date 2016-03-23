@@ -2445,9 +2445,13 @@ involved in the development of villi via cell proliferation
 gene is not found in primates. Expansion of these genes with high
 expression in \elephant may indicate an elaboration of this system.
 
-\subsection{Annexin Complex}
+\subsection{Annexin and Fetal Immunotolerance}
 
-\subsection{Human Specific Expression Shifts and the Evolution of Pre-eclampsia}
+
+\DLA{Finish out this section siting Aarli work and Linke work}
+
+
+\subsection{\human Specific Expression Shifts and the Evolution of Pre-eclampsia}
 
 The \human placenta is distinctive from many other primates in that it
 possesses a deeply invasive trophoblast that penetrates the inner

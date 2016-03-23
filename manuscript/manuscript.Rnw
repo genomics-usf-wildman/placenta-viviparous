@@ -836,10 +836,9 @@ source("/home/don/projects/xtable/pkg/R/print.xtable.R")
 
 placenta.lineage.specific.table <- function(analysis,output=TRUE,lineage.table=placenta.lineage.specific.analysis,members=5) {
     temp.table <- 
-        head(lineage.table[analysis.name==analysis &
-                           p.value <= 0.05][order(p.value),
-                                            list(human_name,p.value,fdr,fc),],
-             n=members)
+        lineage.table[analysis.name==analysis &
+                      p.value <= 0.05][order(p.value),
+                                       list(human_name,p.value,fdr,fc),]
     temp.table <- data.table(temp.table)
     setkey(temp.table,"human_name")
     temp.table <- 
@@ -850,7 +849,8 @@ placenta.lineage.specific.table <- function(analysis,output=TRUE,lineage.table=p
               )
     setkey(temp.table,"Human Symbol")
     if (output) {
-        display.table <- temp.table[order(`p (t-test)`),]
+        display.table <- temp.table[order(`p (t-test)`),][1:members,]
+
         display.table <-
             display.table[,`Human Symbol`:=paste0("\\textit{",xtable.sanitize.text(`Human Symbol`),
                                                   "}")]

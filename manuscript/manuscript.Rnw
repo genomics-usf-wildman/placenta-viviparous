@@ -931,20 +931,6 @@ lineage by t-test.
 
 \begin{table}
   \footnotesize
-<<human.lineage.specific,echo=FALSE,results="asis">>=
-hum.all.lin.spec <-
-    placenta.lineage.specific.table("hum.all",
-                                    lineage.table=human.mouse.lineage.specific.analysis,
-                                    members=40)
-setkey(hum.all.lin.spec,"Human Symbol")
-@ 
-\caption{Genes whose expression changed significantly in \human
-  as compared to all other analyzed species.}
-\label{tab:human_lineage_specific}
-\end{table}
-
-\begin{table}
-  \footnotesize
 <<top.50.human.expressed.genes,echo=FALSE,results="asis">>=
 output.top.genes.table(top.genes.table(species.name="homo sapiens"))
 @ 
@@ -1028,7 +1014,50 @@ glucose transport (\textit{SLC2A1}) among others
 (\cref{tab:top50_human_placenta}, Supplemental
 \cref{tab:all_homo_sapiens_placenta}).
 
-\DLA{Discuss pre-eclampsia specific genes here to make this point stronger}
+\paragraph{Pre-eclampsia \human Lineage Specific Genes}
+
+\begin{table}
+  \footnotesize
+<<human.lineage.specific,echo=FALSE,results="asis">>=
+hum.all.lin.spec <-
+    placenta.lineage.specific.table("hum.all",
+                                    lineage.table=human.mouse.lineage.specific.analysis,
+                                    members=40)
+setkey(hum.all.lin.spec,"Human Symbol")
+@ 
+\caption{Genes whose expression changed significantly in \human
+  as compared to all other analyzed species.}
+\label{tab:human_lineage_specific}
+\end{table}
+
+
+Using a mixed-effects linear model to account for repeated testing of
+\human and \mouse, we identified multiple genes which are
+differentially expressed in the \human lineage in comparison to all
+other lineages (\cref{tab:human_lineage_specific}). These genes
+include multiple genes which are thought to be involved in
+pre-eclampsia. Notably, \textit{CRH}
+(FDR=\Sexpr{hum.all.lin.spec["CRH",`FDR`]},
+FC=\Sexpr{hum.all.lin.spec["CRH",`Fold Change`]}, Supplemental
+\cref{fig:adam12_evolution_tree}), has been shown to be more highly
+expressed in placentas from pre-eclamptic pregnancies
+\cite{Petsas.ea2012:Aberrantexpressionofcorticotropin-releasing,Paiva.ea2011:MeasurementofmRNAtranscripts},
+where it is hypothesized to activate decidual macrophages. Likewise,
+\textit{KISS1} (\Sexpr{hum.all.lin.spec["KISS1",`FDR`]},
+FC=\Sexpr{hum.all.lin.spec["KISS1",`Fold Change`]}, Supplemental
+\cref{fig:kiss1_evolution_tree}) also shows increased expression in
+pre-eclamptic placentas
+\cite{Vazquez-Alaniz.ea2011:Comparativeexpressionprofilesfor}, and is
+involved in modulating trophoblast invasion. Two other genes,
+\textit{PAPPA} (\Sexpr{hum.all.lin.spec["PAPPA",`FDR`]},
+FC=\Sexpr{hum.all.lin.spec["PAPPA",`Fold Change`]} Supplemental
+\cref{fig:pappa_evolution_tree}) and \textit{ADAM12}
+(\Sexpr{hum.all.lin.spec["ADAM12",`FDR`]},
+FC=\Sexpr{hum.all.lin.spec["ADAM12",`Fold Change`]}, Supplemental
+\cref{fig:adam12_evolution_tree}) are also differentially expressed
+but are negatively correlated with pre-eclampsia
+\cite{Spencer.ea2008:ADAM12sinmaternalserum}.
+
 
 \begin{figure}
 <<psg.ctsl.evolution.tree,echo=FALSE,fig.width=16,fig.height=16,warning=FALSE,message=FALSE>>=
@@ -2050,7 +2079,7 @@ igfrelated.expression.nozero <-
 igf.exp.long <- melt(log10(igfrelated.expression.nozero+1)[rev(1:nrow(igfrelated.expression.nozero)),])
 colnames(igf.exp.long)[1:3] <- c("gene","species","fpkm")
 
-### Pre-eclampsia genes FSTL3 EPAS1 ADAM12 GPC3 TGFB1 PAPPA
+### Pre-eclampsia genes ADAM12 CRH KISS1 PAPPA
 
 pe.expression.nozero <-
     gene.expression.nozero(c("ADAM12","CRH","KISS1","PAPPA"))

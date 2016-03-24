@@ -430,28 +430,27 @@ species (\human [human], \bonobo [bonobo], \dog [domestic dog], \cow
 short-tailed opossum], \galili [blind mole rat from Upper Galilee],
 \carmeli [blind mole rat from northern Israel]
 \cite{Nevo2001:adaptiveradiationofblindsubterraneanmole}). Information
-on specimen ID, place and time of collection, and collector is shown
-for each sample in Supplemental \cref{tab:srr_numbers}. In the case of
-\bonobo, \cow, and \elephant, the placenta was collected at term upon
-expulsion from the mother following delivery. Placental tissue from
-\human was collected upon delivery via a cesarean section. Near-term
-placental tissue from \dog was collected upon the death of the mother
-from a car accident. Placental tissue from \opossum was sampled at
-fetal stage 32, roughly one day prior to birth. Only the fetal portion
-of the placenta was sampled at the maternal-fetal interface (i.e.
-villous portion for \human, \bonobo, \dog, and \elephant; cotyledon
-for \cow; diffuse placenta for \opossum). All tissues were collected
-and stored in RNAlater (Life Technologies, Carlsbad, CA) until RNA
-isolation could be performed. Tissues were homogenized in Trizol, and
-total RNA was isolated following the manufacturer's instructions. RNA
-was further purified using RNeasy Midi Kit (Qiagen, Valencia, CA), in
-conjunction with the RNase-Free DNase Set (Qiagen, Valencia, CA),
-following the manufacturer’s protocol to remove any contaminating DNA
-from the sample. Total RNA was then evaluated on a Nanodrop 1000
-(Thermo Scientific, Wilmington, DE) and an Agilent Bioanalyzer 2100
-(Santa Clara, CA) to confirm concentration and quality of the
-isolation. RNA quality was assessed using A260/A280 and A260/A230
-absorbance values.
+on specimen ID, and collector is shown for each sample in Supplemental
+\cref{tab:srr_numbers}. In the case of \bonobo, \cow, and \elephant,
+the placenta was collected at term upon expulsion from the mother
+following delivery. Placental tissue from \human was collected upon
+delivery via a cesarean section. Near-term placental tissue from \dog
+was collected upon the death of the mother from a car accident.
+Placental tissue from \opossum was sampled at fetal stage 32, roughly
+one day prior to birth. Only the fetal portion of the placenta was
+sampled at the maternal-fetal interface (i.e. villous portion for
+\human, \bonobo, \dog, and \elephant; cotyledon for \cow; diffuse
+placenta for \opossum). All tissues were collected and stored in
+RNAlater (Life Technologies, Carlsbad, CA) until RNA isolation could
+be performed. Tissues were homogenized in Trizol, and total RNA was
+isolated following the manufacturer's instructions. RNA was further
+purified using RNeasy Midi Kit (Qiagen, Valencia, CA), in conjunction
+with the RNase-Free DNase Set (Qiagen, Valencia, CA), following the
+manufacturer’s protocol to remove any contaminating DNA from the
+sample. Total RNA was then evaluated on a Nanodrop 1000 (Thermo
+Scientific, Wilmington, DE) and an Agilent Bioanalyzer 2100 (Santa
+Clara, CA) to confirm concentration and quality of the isolation. RNA
+quality was assessed using A260/A280 and A260/A230 absorbance values.
 
 % \DLA{Add details for new sequences and fix numbers}
 

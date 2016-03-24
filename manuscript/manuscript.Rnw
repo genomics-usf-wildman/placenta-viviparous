@@ -484,12 +484,14 @@ The quality of reads was evaluated using FASTQC v0.11.2
 (\url{http://www.bioinformatics.babraham.ac.uk/projects/fastqc/}).
 Transcriptomes without a suitable reference genome (\smonkey, \galili,
 \carmeli; italic reference in Supplemental
-\cref{tab:ref_genome_aligned_species}) were assembled 
-using Trinity v2014-07-17 \cite{Haas.ea2013:Denovotranscriptsequence}
-and annotated using Diamond
-\cite{Buchfink.ea2015:Fastandsensitiveprotein} against either the
-\human or \mouse transcriptome
-(Supplemental \cref{tab:ref_genome_aligned_species}).
+\cref{tab:ref_genome_aligned_species}) were assembled using Trinity
+v2014-07-17 \cite{Haas.ea2013:Denovotranscriptsequence} and annotated
+using Diamond \cite{Buchfink.ea2015:Fastandsensitiveprotein} against
+either the \human or \mouse transcriptome (Supplemental
+\cref{tab:ref_genome_aligned_species}). For annotation using Diamond,
+the match with the highest bitscore was chosen as the annotation;
+transcripts where the highest scoring match had a bitscore below 40
+were left unannotated.
 % 
 All transcriptomes were then aligned to the appropriate reference (or
 assembled) genome using STAR v2.4.2a
@@ -503,7 +505,6 @@ The genome of the closely-related \textit{P. troglodytes} was used as
 a reference for \bonobo. The separation between the two recognized Pan
 species is generally perceived to be $\approx 1$ million years
 \cite{Prüfer.ea2012:bonobogenomecomparedwith}.
-
 
 \begin{figure}
 <<species.tree,fig.width=8,fig.height=6,echo=FALSE>>=

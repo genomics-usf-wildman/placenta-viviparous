@@ -579,8 +579,8 @@ package
 A total of \Sexpr{combined.fpkm[species!="homo sapiens" & mean_fpkm >=
   1,length(unique(human_name))]} 1:1 orthologous genes were expressed
 in at least one species. Of these, \Sexpr{combined.fpkm[species!="homo
-  sapiens" & mean_fpkm >= 10,length(unique(human_name))]} 1:1
-orthologous genes with \ac{FPKM} $\ge 10$ were retained for future
+  sapiens" & mean_fpkm >= 100,length(unique(human_name))]} 1:1
+orthologous genes with \ac{FPKM} $\ge 100$ were retained for future
 analyses of gene expression evolution described below.
 
 Significant shifts in expression levels between groups of species were
@@ -588,87 +588,23 @@ calculated using Student's t test on 1:1 orthologs using the mean of
 each species to avoid large biases towards samples with $n \gg 1$ and
 considered significant if the \ac{FDR} as estimated by the Benjamini
 and Hochberg procedure \cite{Benjamini1995:bh_procedure} was
-$\le 0.05$.
+$\le 0.05$. For \human and \mouse lineage specific calculations, a
+type-III anova was calculated using
+lme4~\cite{Bates.ea2015:FittingLinearMixed-EffectsModels} with each
+species having separate random effects.
 
-% We used the software \ac{OUCH} in the R statistical environment to
-% investigate significant shifts in gene expression levels over
-% time\cite{Butler.2004:phlogeneticcomparativeanalysis}. \ac{OUCH}
-% institutes an \ac{OU} model of evolution, which allows for different
-% optima for quantitative trait values along user-specified branches of
-% a phylogenetic tree. The \ac{OU} model explicitly accounts for change
-% in quantitative trait values by introducing two parameters into the
-% model of stochastic Brownian motion of change in trait value along a
-% phylogenetic tree through time. These parameters are $\theta$, an
-% optimum trait value, and $\alpha$, the strength of selection
-% (interpreted as “pull” toward the optimum). In addition, the \ac{OU}
-% model can also integrate evolutionary change by assuming that each
-% user-specified set of braches has its own separate \ac{OU} parameters
-% \cite{Butler.2004:phlogeneticcomparativeanalysis}.
-% 
-% \DLA{The description of the OU process is terrible; it needs to be
-%   completely redone}
-% 
-% Various \ac{OU} branch models were tested against a model in which no
-% variation in optima ($\theta$) among branches was allowed. The
-% following branches were specified in separate models to have a
-% different optimum than all other branches: human, bonobo, mouse, dog,
-% cow, elephant, opossum, human+bonobo, Euarchontoglires, and
-% Boreoeutheria. Likelihood values were computed for each branch model
-% and compared to an \ac{OU} model with one optimum using likelihood
-% ratio tests with df=1. We filtered out genes with universally low
-% expression levels, and included only genes in which expression in at
-% least one species had an $\mathrm{FPKM}\ge10$ as described above. We
-% corrected for multiple testing using the \ac{FDR} and using the
-% Benjamini-Hochberg correction\cite{Benjamini1995:bh_procedure}. We
-% used the time-calibrated phylogenetic tree of
-% \cite{Meredith.ea2011:ImpactsofCretaceousTerrestrial} with all species
-% not used in this analyses pruned.
-% 
-% We also calculated the enrichment of functional categories in the
-% lists of genes which displayed a significant shift in expression on
-% each branch using the same methodology as in the per-species gene
-% lists \DLA{reference the tables once this analysis is complete}.
-
-% \subsection{Correlation of Tissue Specific Index with Lineage Specific Genes}
-% 
-% To evaluate the extent of tissue specificity of each gene, we
-% calculated the \ac{TSI} based on human RNASeq data in 3267 samples in
-% 126 tissues the Roadmap Epigenomics
-% \cite{Bernstein.ea2010:NIHRoadmapEpigenomicsMapping} and GTEx projects
-% \cite{Gtexconsortium.2015:Thegenotypetissueexpression} as well
-% additional placenta
-% \cite{Hughes.ea2015:Evaluatingintra-andinter-individual} and uterus
-% \cite{Chan.ea2014:Assessmentofmyometrialtranscriptome} samples from
-% SRA. The \ac{TSI} measures the extent to which a specific gene has
-% predominant expression in only one tissue
-% \cite{Yanai.ea2005:Genome-widemidrangetranscriptionprofiles}. A gene
-% expressed in only one tissue would have a \ac{TSI} of 1, whereas a
-% gene expressed in all tissues would have a \ac{TSI} of 0.
-
-% \subsection{Validation of Primate Expression using Spider Monkey Placenta Transcriptome}
-% 
-% To verify expression levels in human and bonobo, we also generated
-% RNA-Seq data for the placenta transcriptome of the black-headed spider
-% monkey (\textit{Ateles fusciceps}) using similar protocols discussed above.
-% Ateles is outside the clade, which includes hominids and can be used
-% to polarize expression values of highly expressed genes in Homo and
-% Pan. We sampled placental tissue from an Ateles placenta expelled from
-% the mother shortly after birth (see Supplemental Table X). We used
-% similar procedures discussed above to extract and sequence this
-% sample. [DEREK—I’m unsure how to proceed on describing this so as to
-% not step on Natalie’s toes]
-% 
-% \DLA{Complete discussion of the ateles placenta}
-
-\subsection{Sequence Deposition and Code}
+\subsection{Sequences, FPKMs, and Code}
 
 All of the code used to produce every analysis presented in this paper
 is available at
 \url{https://github.com/uiuc-cgm/placenta-viviparous.git}. All of the
-sequences used are deposited in SRA, and can be obtained under the
-series
-\href{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE79121}{GSE79121}.
-
+sequences used are deposited in SRA, and new sequences for this work
+can be obtained under the series
+\href{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE79121}{GSE79121}
+(Supplemental \cref{tab:srr_numbers}). The mean FPKM for gene in each
+species with ortholog annotations are located in the supplemental data
+files \Sexpr{english.join(paste0(gsub(" ","_",
+  star.logs[,unique(species)]),"_mean_fpkm.txt"))}.
 
 \section{Results}
 

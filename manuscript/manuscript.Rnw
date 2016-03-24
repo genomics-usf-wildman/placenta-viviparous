@@ -1182,18 +1182,6 @@ to overcome multiple testing.
 
 \subsubsection{\mouse Placenta Transcriptome}
 
-\begin{table}
-<<mouse.lineage.specific,echo=FALSE,results="asis">>=
-mou.all.lin.spec <-
-    placenta.lineage.specific.table("mou.all",
-                                    lineage.table=human.mouse.linage.specific.analysis)
-setkey(mou.all.lin.spec,"Human Symbol")
-@ 
-\caption{Genes whose expression changed significantly in \mouse
-  as compared to all other analyzed species.}
-\label{tab:mouse_lineage_specific}
-\end{table}
-
 \begin{table}[h]
   \footnotesize
 <<top.50.mouse.expressed.genes,echo=FALSE,results="asis">>=
@@ -1255,6 +1243,32 @@ Finally, \textit{Peg10}, an imprinted gene required for proper
 formation of the placenta in mice is also highly expressed
 (\Sexpr{gene.expression("mus_musculus","Peg10")}), as previously
 reported \cite{Ono.ea2006:DeletionofPeg10imprinted}.
+
+% \paragraph{\mouse Lineage Specific Genes}
+
+\begin{table}
+  \footnotesize
+<<mouse.lineage.specific,echo=FALSE,results="asis">>=
+mou.all.lin.spec <-
+    placenta.lineage.specific.table("mou.all",
+                                    lineage.table=human.mouse.lineage.specific.analysis,
+                                    members=40
+                                    )
+setkey(mou.all.lin.spec,"Human Symbol")
+@ 
+\caption{\lineagetableexplanationtypeiii{\mouse}{all other analyzed species}}
+\label{tab:mouse_lineage_specific}
+\end{table}
+
+Using a mixed-effects linear model to account for repeated testing of
+\human and \mouse, we identified multiple genes which are
+differentially expressed in the \mouse lineage in comparison to all
+other lineages (\cref{tab:mouse_lineage_specific}). Notable
+mouse-specific increases in expression include include genes like
+\textit{Slc38a4} which are involved in nutrient transport and are
+implicated in fetal growth restriction
+\cite{Sharma.ea2016:Tpbpa-Cre-mediateddeletionofTFAP2C}.
+
 
 \subsubsection{\galili Placenta Transcriptome}
 

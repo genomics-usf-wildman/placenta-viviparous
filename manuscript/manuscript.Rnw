@@ -218,42 +218,29 @@ grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = NA
 % \section{Abstract}
   \parttitle{Background} The placenta is arguably the most
   anatomically variable organ in mammals. Understanding gene
-  expression patterns among placentas from multiple species can
-  illuminate the molecular basis of placenta function as well as
-  potentially enrich our knowledge of the biology of obstetrical
-  syndromes.
+  expression patterns among placentas from multiple species
+  illuminates the molecular basis of placenta function as well
+  obstetrical syndromes affecting humans.
 
-  \parttitle{Results} We measured the expression profiles of the term
-  placenta of \Sexpr{star.logs[,length(unique(species))]} species of
-  therian (i.e. marsupials and “placental”) mammals using RNA-Seq. We
-  identified multiple genes and transcripts which are differentially
-  expressed across lineages including prolactin, relaxin, and
-  galectins, as well as identifying the non-housekeeping genes which
-  are core to placenta function (such as components of annexin
-  complexes) in all \Sexpr{star.logs[,length(unique(species))]}
-  species studied.
+  \parttitle{Results} We measured the expression profiles of
+  \Sexpr{star.logs[,length(unique(file))]} term placenta of
+  \Sexpr{star.logs[,length(unique(species))]} species of mammals. We
+  found lineage-specific differential expression of prolactin,
+  relaxin, and galectins as well as increased expression of the
+  pre-eclampsia associated genes \textit{ADAM12}, \textit{CRH}, and
+  \textit{PAPPA} in humans. We also identified genes which are
+  expressed in all placentas, including genes with immune-modulating
+  properties (\textit{ANXA2}, \textit{ANXA1}, \textit{S100A11}, and
+  \textit{S100A10}) and cell-cell interactions (\textit{LAMC1},
+  \textit{LUM}, and \textit{LGALS1}).
 
-  \parttitle{Conclusions} While there are multiple non-housekeeping
-  genes which are highly expressed in all placentas examined and are
-  likely to be involved in the basic functions of the mammalian
-  placenta, we see incredible lineage-specific diversity in the
-  expression and expansion of many genes. These lineage-specific genes
-  are likely to play a role in the anatomical variability of the
-  placenta and may also be implicated in important human placental
-  disorders such as pre-eclampsia.
-
-  \DLA{Complete rewrite abstract to make the points that we have found
-    stronger and less weak.}
-
-% We identified significant shifts in gene expression along specific
-% evolutionary lineages using a model of character evolution. Genes that
-% showed significant elevation in expression along the human lineage
-% ($\mathrm{FDR}\le 0.01$) were enriched in GO categories such as
-% angiogenesis, tube morphogenesis, cell migration, and regulation of
-% inflammatory response. Three of these genes (KISS1, ADAM12, GPC3)
-% showed exceptionally high expression in humans; these genes are
-% implicated in pre-eclampsia and may indicate that the risk of
-% pre-eclampsia recently emerged on the human lineage.
+  \parttitle{Conclusions} A diverse array of genes are differentially
+  expressed and are likely to play a role in the anatomical
+  variability of the placenta in the placentas of mammalian lineages.
+  However, the expression of a subset of
+  \Sexpr{core.placenta.transcriptome.long[,length(unique(human_name))]}
+  genes is essential for the proper functioning of the placenta in all
+  species analyzed.
 
 \textbf{Keywords:} mammal, gene expression, evolution, RNA-seq, placenta
 

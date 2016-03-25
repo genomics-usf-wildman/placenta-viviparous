@@ -837,8 +837,7 @@ output.top.genes.table <- function(data,output=TRUE) {
 pri.all.lin.spec <- placenta.lineage.specific.table("pri.all")
 setkey(pri.all.lin.spec,"Human Symbol")
 @ 
-\caption{Genes whose expression changed significantly in the primate
-  order as compared to all other analyzed species.}
+\caption{\linagetableexplanation{primates}}
 \label{tab:primate_lineage_specific}
 \end{table}
 
@@ -962,8 +961,7 @@ hum.all.lin.spec <-
                                     members=40)
 setkey(hum.all.lin.spec,"Human Symbol")
 @ 
-\caption{Genes whose expression changed significantly in \human
-  as compared to all other analyzed species.}
+\caption{\lineagetableexplanationtypeiii{\human}{all other analyzed species}}
 \label{tab:human_lineage_specific}
 \end{table}
 
@@ -1179,7 +1177,9 @@ We examined the expression of three rodents, \mouse, \carmeli, and
 \galili{}. We did not detect any significant changes on the Rodentia
 lineage in comparison to all other analyzed species (Supplemental
 \cref{tab:rodentia_lineage_specific}), likely because of a lack power
-to overcome multiple testing.
+to overcome the multiple testing correction. Additional species and/or
+samples in each of these lineages will be necessary to detect lineage
+specific shifts.
 
 \subsubsection{\mouse Placenta Transcriptome}
 

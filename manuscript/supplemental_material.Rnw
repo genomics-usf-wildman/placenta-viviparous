@@ -985,23 +985,11 @@ output.top.genes.table <- function(data,output=TRUE) {
 
 \begin{table}[hb]
   \footnotesize
-<<human.lineage.specific,echo=FALSE,results="asis">>=
-hum.all.lin.spec <- placenta.lineage.specific.table("hum.all")
-setkey(hum.all.lin.spec,"Human Symbol")
-@ 
-\caption{Genes whose expression changed in \human
-  as compared to all other analyzed species.}
-\label{tab:human_lineage_specific}
-\end{table}
-
-\begin{table}[hb]
-  \footnotesize
 <<rodentia.lineage.specific,echo=FALSE,results="asis">>=
 rod.all.lin.spec <- placenta.lineage.specific.table("rod.all")
 setkey(rod.all.lin.spec,"Human Symbol")
 @ 
-\caption{Genes whose expression changed in the Rodentia
-  order as compared to all other analyzed species.}
+\caption{\lineagetableexplanation{the rodentia order}{all other species}}
 \label{tab:rodentia_lineage_specific}
 \end{table}
 
@@ -1011,8 +999,8 @@ setkey(rod.all.lin.spec,"Human Symbol")
 lau.all.lin.spec <- placenta.lineage.specific.table("lau.all")
 setkey(lau.all.lin.spec,"Human Symbol")
 @ 
-\caption{Genes whose expression changed in the Laurasiatheria
-  superorder as compared to all other analyzed species.}
+\caption{\lineagetableexplanation{the laurasiatheria
+    superorder}{all other species}}
 \label{tab:laurasiatheria_lineage_specific}
 \end{table}
 
@@ -1022,8 +1010,7 @@ setkey(lau.all.lin.spec,"Human Symbol")
 eua.lau.lin.spec <- placenta.lineage.specific.table("eua.lau")
 setkey(eua.lau.lin.spec,"Human Symbol")
 @ 
-\caption{Genes whose expression changed between the
-  Euarchontoglires and Laurasiatherian superorder.}
+\caption{\linagetableexplanation{ the euarchontoglires superorder}{ the laurasiatherian superorder}}
 \label{tab:laurasiatheria_euarchontoglires_lineage_specific}
 \end{table}
 

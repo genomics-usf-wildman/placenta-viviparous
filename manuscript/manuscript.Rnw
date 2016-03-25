@@ -981,7 +981,7 @@ include multiple genes which are thought to be involved in
 pre-eclampsia. Notably, \textit{CRH}
 (FDR=\Sexpr{hum.all.lin.spec["CRH",`FDR`]},
 FC=\Sexpr{hum.all.lin.spec["CRH",`Fold Change`]}, Supplemental
-\cref{fig:adam12_evolution_tree}), has been shown to be more highly
+\cref{fig:crh_evolution_tree}), has been shown to be more highly
 expressed in placentas from pre-eclamptic pregnancies
 \cite{Petsas.ea2012:Aberrantexpressionofcorticotropin-releasing,Paiva.ea2011:MeasurementofmRNAtranscripts},
 where it is hypothesized to activate decidual macrophages. Likewise,

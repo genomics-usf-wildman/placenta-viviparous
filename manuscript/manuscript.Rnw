@@ -954,7 +954,7 @@ glucose transport (\textit{SLC2A1}) among others
 (\cref{tab:top50_human_placenta}, Supplemental
 \cref{tab:all_homo_sapiens_placenta}).
 
-\paragraph{Pre-eclampsia \human Lineage Specific Genes}
+% \paragraph{Pre-eclampsia \human Lineage Specific Genes}
 
 \begin{table}
   \footnotesize
@@ -2092,14 +2092,14 @@ express \textit{HOXA11} highly either
 (\Sexpr{gene.expression("loxodonta_africana","HOXA11",complete=TRUE)},
 Supplemental \cref{fig:hoxa11_evolution_tree}).
 
-\subsubsection{\ac{GH} family}
+\subsubsection{Growth hormone family}
 
-The \ac{GH} family has expanded in anthropoid primates, resulting in
-approximately 5 genes in \human (\textit{GH1}, \textit{GH2},
-\textit{CSH1}, \textit{CSH2}, \textit{CSHL1}) and at least three in
-\bonobo (two \textit{GH2} and \textit{GH1}; owing to the similarity
-between the two \textit{GH1} in \textit{Pan troglodytes} we cannot
-reliably distinguish transcripts between the two). All show
+The growth hormone family of genes has expanded in anthropoid
+primates, resulting in approximately 5 genes in \human (\textit{GH1},
+\textit{GH2}, \textit{CSH1}, \textit{CSH2}, \textit{CSHL1}) and at
+least three in \bonobo (two \textit{GH2} and \textit{GH1}; owing to
+the similarity between the two \textit{GH1} in \textit{P. troglodytes}
+we cannot reliably distinguish transcripts between the two). All show
 substantial expression in the \human placenta
 (\cref{fig:csh1_evolution_tree}). The expression of the \ac{GH} family
 in placenta appears to be primate specific, and likely existed at the
@@ -2183,17 +2183,17 @@ bone and relaxing uterine musculature in preparation for labor. In
 of relaxin in the term placenta, with little evidence in other species
 examined here (Supplemental \cref{fig:rln2_evolution_tree}). \textit{RLN} is known
 to be produced in the placenta of the pregnant \dog and is used in the
-diagnosis of canine pregnancy
+diagnosis of \dog pregnancy
 \cite{Steinetz.ea1989:Serumrelaxinandprogesterone,Tsutsui.ea1991:Determinationofsourceof},
 the luteal ovary and placenta of \pig
 \cite{Hisaw.ea1948:Relaxininovaryof}, and the placenta of \horse
 \cite{Klonisch.ea1997:Placentallocalizationofrelaxin}. However, the
 source of relaxin produced by pregnant \elephant remains unclear
-\cite{Meyer.ea2004:Speciesandfetalgender}. The high rise in relaxin in
+\cite{Meyer.ea2004:Speciesandfetalgender}. The high rise in \textit{RLN} in
 \elephant has been suggested to be a major signal for the initiation
 of labor \cite{Niemuller.ea1998:Plasmaconcentrationsofimmunoreactive}.
 Here we show that the placenta of elephants show high expression of
-relaxin and is likely a major source of \textit{RLN} at term. In
+\textit{RLN} and is likely a major source of \textit{RLN} at term. In
 contrast to the results of
 \cite{Evans.ea1993:mouserelaxingenenucleotide}, we also see expression
 of \textit{RLN} in the placenta of \mouse and \carmeli.

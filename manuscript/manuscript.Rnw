@@ -603,7 +603,7 @@ can be obtained under the series
 \href{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE79121}{GSE79121}
 (Supplemental \cref{tab:srr_numbers}). The mean FPKM for gene in each
 species with ortholog annotations are located in the supplemental data
-files \Sexpr{english.join(paste0(gsub(" ","_",
+files \Sexpr{english.join(paste0(gsub(" ","\\_",
   star.logs[,unique(species)]),"_mean_fpkm.txt"))}.
 
 \section{Results}
@@ -790,6 +790,7 @@ placenta.lineage.specific.table <- function(analysis,output=TRUE,lineage.table=p
         display.table <-
             display.table[,`Human Symbol`:=paste0("\\textit{",xtable.sanitize.text(`Human Symbol`),
                                                   "}")]
+        setnames(display.table,"Fold Change","$\\mathrm{log}_2$ FC")
         print(xtable(display.table,
                      display=c("s","s","s","e","g","f"),
                      align=c("c","c","p{2in}","r","r","r")
@@ -2262,7 +2263,7 @@ expression in the fetal portion of the mouse placenta
 \cref{fig:nppc_evolution_tree,fig:nppb_evolution_tree}). While we do
 find high expression of at least one of these genes in \dog, \cow, and
 \elephant, the expression pattern does not follow the placental
-organization (endotheliochorial for \dog and \elphant,
+organization (endotheliochorial for \dog and \elephant,
 synepitheliochorial for \cow and \sheep), so it is unlikely that
 expression of these genes are essential for specific placental
 organizations.

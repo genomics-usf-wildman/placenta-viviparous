@@ -2368,120 +2368,54 @@ maternal immune response. Although there are speculative cases of
 eclampsia in great apes
 \cite{Baird1981:Eclampsiainlowlandgorilla,Stout.ea1969:Glomerularcapillaryendothelialswelling,Thornton.ea1992:Convulsionsinpregnancyin},
 it is exceedingly rare in these species
-\cite{Carter.ea2011:Evolutionofinvasiveplacentation}. It is possible
-that a comparative evolutionary approach to gene expression can
-identify genes that have divergent expression patterns from other
-mammals as well as association with pre-eclampsia.
+\cite{Carter.ea2011:Evolutionofinvasiveplacentation}. 
 
-Functional annotation clusters significantly enriched on the human
-lineage (blood vessel development, extracellular matrix, tube
-morphogenesis) seem to suggest involvement in remodeling of tissues
-and increased blood flow, both of which may correlate with the
-invasion of the trophoblast (\cref{tab:go_terms_all_species}). In
-addition, clusters such as cytokines and defense response
-(\cref{tab:go_terms_all_species}) also indicate an a significant
-change in expression of the immune response that may be involved in
-immunosupression at the maternal-fetal boundary to further allow
-invasion of fetal tissues.
-
-\DLA{Make the discussion of pre-eclampsia clearer and more defined;
-  possibly include some of the discuss below. Also, this is not
-  necessarily a shift on the human line.}
-
-% I haven't actually done this analysis, so commented out
-
-% Many genes that both show expression shifts on the human lineage and
-% have very high expression (FPKM>200) are directly related to the
-% highly invasive nature of the human placenta. For example, GPC3,
-% glypican 3, is an imprinted gene and cell growth regulator, associated
-% with Simpson-Golabi-Behmel fetal overgrowth syndrome, and involved in
-% intrauterine growth restriction (Monk and Moore, 2004; Pilia et al.,
-% 1996). GPC3 has the highest expression in humans (Table 2), but is
-% also expressed in other mammals to a lesser degree, especially those
-% with invasive hemochorial placentas like bonobos (\ac{FPKM}= 199.924),
-% spider monkeys (\ac{FPKM}= 96.24), and the mouse (\ac{FPKM}= 80.7545)
-% (Supplemental Tables X-XX). ADAM12 increases the availability of
-% insulin-like growth factors that lead to the promotion of cell growth
-% and placental invasion (Laigaard et al., 2005). (Hou et al., 2009)
-% found evidence of adaptive evolution in ADAM12 on the primate lineage,
-% and like GPC3 it is expressed in the bonobo (\ac{FPKM}= 46.1553), spider
-% monkey (\ac{FPKM}=30.41) and mouse (\ac{FPKM}=2.25391) as well, although to a
-% lesser degree (Supplemental Tables X-XX). RHOBTB3 is imprinted and
-% associated with trophoblast invasion as well (Bilban et al., 2010;
-% Yuen et al., 2011). In addition, one other gene, KISS1, shows
-% exceptional abundance in the human placenta (Table 2); however due to
-% its absence in elephant Ensmebl gene annotations, it was not part of
-% the 1:1 orthologues examined in the comparative study. Here, it is
-% only expressed in the term placentas of humans (Table 2) and bonobos
-% (\ac{FPKM}=17.6394; Supplemental Table X). KISS1 is thought to be involved
-% in the regulation of trophoblast invasion, and shows highest
-% expression in the first trimester of pregnancy (Bilban et al., 2004;
-% Reynolds et al., 2009).
-% 
-% In addition, several other genes that show expression shifts on the
-% human lineage also have major effects on placental function. Genes
-% such as TXK and EBI3 are intimately involved in the immune system in
-% the placenta. TXK is involved in natural killer cell differentiation
-% (Bezman et al., 2012). EBI3 is implicated in natural killer cell
-% function an maternal-fetal immunomodulation in the syncytiotrophoblast
-% (Devergne et al., 2001). KYNU and KMO are interacting genes that are
-% involved in tryptophan metabolism, which may be involved in
-% immunosupression and the prevention of fetal rejection (Takikawa,
-% 2005). THSD7A is a thrombospondin, which inhibits endothelial cell
-% migration and tube morphogenesis (Wang et al., 2010).
-% 
-% Many genes that show evidence of a shift on the human lineage show
-% evidence of implication in pre-eclampsia, including ADAM12 (Gack et
-% al., 2005; Laigaard et al., 2005) MAOA (Carrasco et al., 2000;
-% Bottalico et al., 2004), BCL2 (Ishihara et al., 2002), GPC3 (Gui et
-% al., 2012; Ogawa, 2007), TMEM8A, CLIC3, EBI3, FLT1, BCL6, SYDE1, and
-% MAN1C1 (Enquobahrie et al., 2008; Winn et al., 2009; Nishizawa, 2011).
-% In addition KISS1 is also involved in pre-eclampsia as well (Sado et
-% al., 2011; Qiao et al, 2012). Due to the association of many genes
-% that show human-specific shifts as well as high expression, we
-% conclude that pre-eclampsia is possibly a symptom of recent evolution
-% of gene expression on the human lineage. Although many genes such as
-% GPC3 and ADAM12 show distinctive relatively high expression in bonobo,
-% this expression has intensified on the human lineage. Sequencing of
-% more placentas of nonhuman primates, including other individuals of
-% the genus Pan will help to further characterize this transition.
+The identification of multiple genes (\textit{CRH}, \textit{ADAM12},
+\textit{KISS1}, \textit{PAPPA}, \textit{IL1RL1}, and \textit{PLAC1};
+\cref{tab:human_lineage_specific}) which are associated with
+pre-eclampsia which have increased expression on the \human lineage
+may explain the larger proportion of pre-eclampsia observed in humans.
+However, there are still genes which are associated with pre-eclampsia
+which are also more highly expressed in the \mouse lineage such as
+\textit{Afp} and \textit{Gjb2}. Furthermore, the onset of
+pre-eclampsia is well before term; all of our placentas are term
+placentas and provide limited information about the transcriptome
+during the onset of pre-eclampsia.
 
 \section{Conclusion}
     
-\DLA{Totally rewrite the conclusion; it's terrible}
+We analyzed the sequenced transcriptome of
+\Sexpr{star.logs[,length(unique(file))]} placentas from
+\Sexpr{star.logs[,length(unique(species))]} species spanning the
+phylogenetic tree of mammals. This wealth of data revealed both
+lineage-specific expansions and differential expression of gene
+families as well as a set of core, non-housekeeping genes which are
+critical for the proper organization and functioning of the placenta.
 
-We sequenced \Sexpr{star.logs[,length(unique(species))]} placentas
-spanning the phylogenetic tree of mammals. This revealed a dynamic
-expression pattern of expression of lineage-specific expansions of
-gene families and differential gene expression that agreed with the
-scenario of an “arms race” between maternal and fetal tissues that
-have shaped such disparate gene expression profiles. In addition, we
-highlighted the broad spectrum of hormone gene expression in multiple
-species that suggested that there is a lack of conservation in hormone
-signaling during mammalian pregnancy. Major differences between
-expression in marsupial and eutherian mammals at term seemed to be
-correlated with the differences between choriovitelline and
-chorioamniotic placenta, with the marsupial placenta more enriched in
-genes which contribute to the active generation of energy. We also
-identified that galectin expression, especially that of
-\textit{LGALS1}, is a common feature of all mammalian placentas and
-was most likely present in the ancestral therian. Also, we identified
-two new expansions of genes that are highly expressed in the \elephant
-placenta that may be involved in trophoplast differentiation and immune
-system function, mirroring expansions in other groups such as
-primates, rodents, and ruminants. We also quantified significant
-lineage-specific shifts in gene expression, concentrating on the
-identification of genes that showed gene expression changes on the
-human lineage. We cautiously propose that many of these genes may be
-related to the invasive nature of the trophoblast in \human, although
-we note that in many of these genes, there is in some cases
-substantial expression in the \bonobo as well. These genes have the
-potential to spur further research and may be at the root of
-obstetrical disorders such as pre-eclampsia. We propose that more
-placentas from diverse lineages, especially those of marsupials and
-primates, to further identify genes and expression levels that are
-specific to marsupials and eutherians, as well as confirm the identity
-of human-specific expression shifts.
+There is diversity in the placental expression of hormones, including
+estrogen, progesterone, prolactin, relaxin, natriuretic peptides, and
+the growth hormone family amount the species and lineages analyzed. We
+also identified genes differentially expressed on the \human lineage
+which are implicated in pre-eclampsia, including \textit{ADAM12},
+\textit{CRH}, and \textit{KISS1}.
+
+The core placenta transcriptome was also identified, which contains
+genes which are involved in maternal-fetal tolerance, such as the
+annexins, and genes responsible for cell-cell and cell-matrix
+interactions, such as \textit{LGALS1}. These genes were almost
+certainly present in the ancestral therian placenta. We hypothesize
+that modifications to their expression or function will compromise the
+development and organization of the placenta.
+
+This study has identified many tantalizing molecular pathways which
+illuminate the vast diversity of placental morphology and may explain
+some placental malfunctions in \human{}. However, the strength of our
+hypotheses are limited by our limited data; more placentas from
+multiple members of diverse clades and different timepoints are still
+needed to come to a more complete understanding of the genomic and
+molecular basis for placenta morphology and function. We look forward
+to collecting and analyzing such a dataset.
+
 
 
 \begin{backmatter}

@@ -61,9 +61,8 @@ calculate.t.test <- function(x,g1,g2){
 calculate.fc <- function(x,g1,g2){
     fc <- NA
     try({fc <- mean(as.numeric(x[g1]))/mean(as.numeric(x[g2]))
-        if (fc < 1) {fc <- -1/fc}
         if (any(!is.finite(fc))) {
-            fc <- max(c(mean(as.numeric(x[g1])),mean(as.numeric(x[g2])),na.rm=TRUE))
+            fc <- log2(max(c(mean(as.numeric(x[g1])),mean(as.numeric(x[g2])),na.rm=TRUE)))
         }},
         silent=TRUE)
     return(fc)

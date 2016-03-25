@@ -37,6 +37,18 @@
   \textit{H.sa.}). Genes with duplicate gene names in the same species
   (or no gene named defined) are listed by the Ensemble gene ID.}
 
+\newcommand{\lineagetableexplanation}[3]%
+[A two-sided t test was used to calculate p values.]{%
+  Genes whose expression changed in #2 as compared to #3. #1 FDR
+  is the False Discovery Rate as estimated by the Benjamini and
+  Hochberg procedure \cite{Benjamini1995:bh_procedure}.
+  $\mathrm{log}_2$ FC is the base-2 logarithm of the fold change from
+  #2 to #3 .}
+
+\newcommand{\lineagetableexplanationtypeiii}[2]{%
+  \lineagetableexplanation[A nested type-III anova was used to
+  calculate p values.]{#1}{#2}}
+
 
 
 %%% Local Variables:

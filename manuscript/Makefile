@@ -23,6 +23,9 @@ bmcart.cls:
 %.pdf: %.tex $(wildcard *.bib) $(wildcard *.cls)
 	latexmk -f -pdf -pdflatex='xelatex -interaction=nonstopmode %O %S' -bibtex -use-make $<
 
+references_clean.bib: manuscript.tex references.bib
+	biber manuscript --output-format bibtex --output-file $@
+
 manuscript.pdf: manuscript.tex common_latex.tex acronyms.tex supplemental_material.aux
 
 supplemental_material.pdf: manuscript.tex common_latex.tex acronyms.tex

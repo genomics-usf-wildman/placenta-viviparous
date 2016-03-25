@@ -770,7 +770,7 @@ load("../data/placenta_lineage_specific")
 load("../data/human_mouse_lineage_specific")
 source("/home/don/projects/xtable/pkg/R/print.xtable.R")
 
-placenta.lineage.specific.table <- function(analysis,output=TRUE,lineage.table=placenta.lineage.specific.analysis,members=5) {
+placenta.lineage.specific.table <- function(analysis,output=TRUE,lineage.table=placenta.lineage.specific.analysis,members=5,orderbyfc=FALSE,fdr.cutoff=1) {
     temp.table <- 
         lineage.table[analysis.name==analysis &
                       p.value <= 0.05][order(p.value),
@@ -785,7 +785,11 @@ placenta.lineage.specific.table <- function(analysis,output=TRUE,lineage.table=p
               )
     setkey(temp.table,"Human Symbol")
     if (output) {
-        display.table <- temp.table[order(`p (t-test)`),][1:members,]
+        display.table <- temp.table[`FDR`<=fdr.cutoff,][order(`p (t-test)`),]
+        if (orderbyfc) {
+            display.table <- temp.table[order(-abs(`Fold Change`)),]
+        }
+        display.table <- display.table[1:members,]
 
         display.table <-
             display.table[,`Human Symbol`:=paste0("\\textit{",xtable.sanitize.text(`Human Symbol`),
@@ -958,7 +962,10 @@ glucose transport (\textit{SLC2A1}) among others
 hum.all.lin.spec <-
     placenta.lineage.specific.table("hum.all",
                                     lineage.table=human.mouse.lineage.specific.analysis,
-                                    members=40)
+                                    members=40,
+                                    orderbyfc=TRUE,
+                                    fdr.cutoff=0.001
+                                    )
 setkey(hum.all.lin.spec,"Human Symbol")
 @ 
 \caption{\lineagetableexplanationtypeiii{\human}{all other analyzed species}}
@@ -1253,7 +1260,9 @@ reported \cite{Ono.ea2006:DeletionofPeg10imprinted}.
 mou.all.lin.spec <-
     placenta.lineage.specific.table("mou.all",
                                     lineage.table=human.mouse.lineage.specific.analysis,
-                                    members=40
+                                    members=40,
+                                    orderbyfc=TRUE,
+                                    fdr.cutoff=0.001
                                     )
 setkey(mou.all.lin.spec,"Human Symbol")
 @ 
@@ -1264,12 +1273,25 @@ setkey(mou.all.lin.spec,"Human Symbol")
 Using a mixed-effects linear model to account for repeated testing of
 \human and \mouse, we identified multiple genes which are
 differentially expressed in the \mouse lineage in comparison to all
-other lineages (\cref{tab:mouse_lineage_specific}). Notable
+other lineages (\cref{tab:mouse_lineage_specific}). \mouse
+\textit{Gkn2} (FDR=\Sexpr{mou.all.lin.spec["GKN2",`FDR`]},
+FC=\Sexpr{mou.all.lin.spec["GKN2",`Fold Change`]}) has been shown to
+have a pattern of expression distinct from the \human pattern, and has
+been suggested to be important for placental development
+\cite{Fahlbusch.ea2015:Trophoblastexpressiondynamicsof}. Notable
 mouse-specific increases in expression include include genes like
-\textit{Slc38a4} which are involved in nutrient transport and are
-implicated in fetal growth restriction
-\cite{Sharma.ea2016:Tpbpa-Cre-mediateddeletionofTFAP2C}.
-
+\textit{Slc38a4} (FDR=\Sexpr{mou.all.lin.spec["SLC38A4",`FDR`]},
+FC=\Sexpr{mou.all.lin.spec["SLC38A4",`Fold Change`]}) and \textit{Afp}
+(FDR=\Sexpr{mou.all.lin.spec["AFP",`FDR`]},
+FC=\Sexpr{mou.all.lin.spec["AFP",`Fold Change`]}) which are implicated
+in fetal growth restriction
+\cite{Sharma.ea2016:Tpbpa-Cre-mediateddeletionofTFAP2C} and placenta
+abnormalities in humans
+\cite{Waller.ea1996:associationbetweenmaternalserum}, and
+\textit{Cnx2} (FDR=\Sexpr{mou.all.lin.spec["CNX2",`FDR`]},
+FC=\Sexpr{mou.all.lin.spec["CNX2",`Fold Change`]}) which is critical
+for the exchange of metabolites in the placenta labyrinth
+\cite{Gabriel.ea1998:Transplacentaluptakeofglucose}.
 
 \subsubsection{\galili Placenta Transcriptome}
 

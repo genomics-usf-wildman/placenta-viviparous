@@ -1010,7 +1010,7 @@ setkey(lau.all.lin.spec,"Human Symbol")
 eua.lau.lin.spec <- placenta.lineage.specific.table("eua.lau")
 setkey(eua.lau.lin.spec,"Human Symbol")
 @ 
-\caption{\linagetableexplanation{ the euarchontoglires superorder}{ the laurasiatherian superorder}}
+\caption{\lineagetableexplanation{ the euarchontoglires superorder}{ the laurasiatherian superorder}}
 \label{tab:laurasiatheria_euarchontoglires_lineage_specific}
 \end{table}
 

@@ -2283,22 +2283,6 @@ must interpret differences between the opossum and eutherian placentas
 with caution, as highly expressed genes and functional annotation
 clusters may represent didelphid or \opossum specific adaptations.
 
-% Genes that show a significant shift on the \opossum lineage include
-% functional annotation clusters that correspond to active generation of
-% energy, transport, and lipid breakdown via the peroxisome (Table 10;
-% Supplemental Table X). The choriovitelline placenta of both didelphids
-% and the tammar wallaby are known to be involved in glycolysis and
-% protein synethsis (Freyer et al., 2003). This implies that the
-% choriovitelline placenta in marsupials is an active site of metabolism
-% and molecular synthesis, as well as the transport of nutrients from
-% the maternal tissues. This is a distinct difference that is not seen
-% in significant shifts on other lineages, and may be due to the
-% formation of the placenta in the opossum from the yolk sac. In
-% addition, the urea cycle is a highly enriched functional annotation
-% cluster which directly correlates with the high levels of urea in the
-% Monodelphis placenta (Freyer et al., 2007). This is potentially a
-% Monodelphis-specific characteristic as discussed above.
-
 The \opossum placenta shows expression of genes that either do not
 exist in eutherians or are not found in the term eutherian placenta
 (\cref{tab:top50_opossum_placenta}). The existence of embryonic forms

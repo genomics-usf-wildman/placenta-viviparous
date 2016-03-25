@@ -1,0 +1,104 @@
+#+DATE: \today
+#+OPTIONS: ^:nil
+#+OPTIONS: toc:nil
+#+OPTIONS: num:0
+#+TITLE: Cover Letter
+#+AUTHOR: Don Leigh Armstrong
+#+LATEX_CMD: xelatex
+#+LATEX_CLASS: letter
+#+LATEX_HEADER: \usepackage[letterpaper,left=1.1in,right=1.1in,top=1.1in,bottom=1.1in]{geometry}
+#+LATEX_HEADER: \usepackage{fancyhdr}
+#+LATEX_HEADER: \usepackage[nomargin,inline,draft]{fixme}
+#+LATEX_HEADER: % \usepackage[backend=biber,hyperref=true,style=numeric-comp]{biblatex}
+#+LATEX_HEADER: \usepackage[usenames,dvipsnames]{color}
+#+LATEX_HEADER: \usepackage[x11names,svgnames]{xcolor}
+#+LATEX_HEADER: \newcommand{\DLA}[1]{\textcolor{red}{\fxnote{DLA: #1}}}
+#+LATEX_HEADER: % \addbibresource{references.bib}
+#+LATEX_HEADER: % \bibliography{references}
+#+LATEX_HEADER: \hypersetup{colorlinks=true, linkcolor=Black, citecolor=Black, filecolor=Black, urlcolor=Black, unicode=true,breaklinks=true}
+#+LATEX_HEADER: \urlstyle{same}
+#+LATEX_HEADER: \usepackage{enumitem}
+#+LATEX_HEADER: \setlist{noitemsep}
+#+LATEX_HEADER: \setlist{nosep}
+#+LATEX_HEADER: \name{Don Armstrong}
+#+LATEX_HEADER: \address{Don Armstrong\\
+#+LATEX_HEADER: Institute for Genomic Biology\\
+#+LATEX_HEADER: University of Illinois at Urbana-Champaign\\
+#+LATEX_HEADER: 1206 West Gregory Drive\\
+#+LATEX_HEADER: Urbana, 61801\\
+#+LATEX_HEADER: \href{mailto:don@donarmstrong.com}{don@donarmstrong.com}\\
+#+LATEX_HEADER: }
+#+LATEX_HEADER: \pagestyle{plain}
+#+LATEX_HEADER: \definecolor{uiucblue}{rgb}{.2,.2,.4}
+#+LATEX_HEADER: \fancypagestyle{empty}{%
+#+LATEX_HEADER: \fancyhf{}%
+#+LATEX_HEADER: \fancyheadoffset[L]{0.5in}%
+#+LATEX_HEADER: \fancyhead[C]{%
+#+LATEX_HEADER: \includegraphics{./uofi_mark}}}
+#+LATEX_HEADER: \renewcommand{\headrulewidth}{0pt}
+#+LATEX_HEADER: \signature{\includegraphics[width=4cm]{./signature}\\Don Armstrong}
+#+LATEX_HEADER: \renewcommand{\maketitle}{}
+#+LATEX_HEADER: \makeatletter
+#+LATEX_HEADER: \renewcommand{\closing}[1]{\par\nobreak\vspace{\parskip}%
+#+LATEX_HEADER:   \stopbreaks
+#+LATEX_HEADER:   \noindent
+#+LATEX_HEADER:   \ifx\@empty\fromaddress\else
+#+LATEX_HEADER:   \hspace*{\longindentation}\fi
+#+LATEX_HEADER:   \parbox{\indentedwidth}{\raggedright
+#+LATEX_HEADER:        \ignorespaces #1\\[0\medskipamount]%
+#+LATEX_HEADER:        \ifx\@empty\fromsig
+#+LATEX_HEADER:            \fromname
+#+LATEX_HEADER:        \else \fromsig \fi\strut}%
+#+LATEX_HEADER:    \par}
+#+LATEX_HEADER: \makeatother
+#+LATEX_HEADER: \expandafter\def\expandafter\UrlBreaks\expandafter{\UrlBreaks\do\-}
+
+#+BEGIN_LATEX
+\begin{letter}{%
+Louisa Flintoft \\
+Editor of Genome Biology \\
+BioMed Central \\
+236 Gray's Inn Road \\
+London WC1X 8HB \\
+United Kingdom
+}\opening{%
+#+END_LATEX
+Dear Dr. Fintoft,
+#+BEGIN_LATEX
+}
+#+END_LATEX
+
+We would appreciate your consideration of our manuscript entitled "The
+evolution of gene expression in the term placenta of viviparous
+mammals" for publication in Genome Biology as a research article.
+
+This is the most complete examination of the mammalian placental
+transcriptome yet presented; we include results from 14 different
+mammals (55 placentas total). The breadth of this dataset has enabled
+us to identify a set of genes which are required for placenta
+function; a set which includes genes responsible for immune system
+modulation, nutrient transport, and organ structure. We have also
+identified lineage specific differential expression of genes, some of
+which are implicated in pre-eclampsia in humans. We believe that our
+work will serve as the basis for understanding the molecular basis of
+placental structure and function.
+
+In the interest of reproducibility, we also will provide all of the
+code utilized to produce the analyses presented in this paper on
+github, along with the raw data (already submitted to SRA) and
+processed data (as supplemental data files in your journal) necessary
+to do so.
+
+We suggest the following individuals as reviewers:
+
+1. 
+2. 
+3. 
+
+Thank you for your consideration; we look forward to publishing in
+your journal.
+
+#+BEGIN_LATEX
+\closing{Sincerely,}
+\end{letter}
+#+END_LATEX

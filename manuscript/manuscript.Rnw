@@ -590,8 +590,8 @@ can be obtained under the series
 \href{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE79121}{GSE79121}
 (Supplemental \cref{tab:srr_numbers}). The mean FPKM for gene in each
 species with ortholog annotations are located in the supplemental data
-files \Sexpr{english.join(paste0(gsub(" ","\\_",
-  star.logs[,unique(species)]),"_mean_fpkm.txt"))}.
+files \Sexpr{english.join(gsub("_","\\\\_",paste0(gsub(" ","_",
+  star.logs[,unique(species)]),"_mean_fpkm.txt")))}.
 
 \section{Results}
 
@@ -828,7 +828,7 @@ output.top.genes.table <- function(data,output=TRUE) {
 pri.all.lin.spec <- placenta.lineage.specific.table("pri.all")
 setkey(pri.all.lin.spec,"Human Symbol")
 @ 
-\caption{\linagetableexplanation{primates}}
+\caption{\lineagetableexplanation{primates}{all other analyzed species}}
 \label{tab:primate_lineage_specific}
 \end{table}
 

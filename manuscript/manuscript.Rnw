@@ -2315,10 +2315,22 @@ involved in the development of villi via cell proliferation
 gene is not found in primates. Expansion of these genes with high
 expression in \elephant may indicate an elaboration of this system.
 
-\subsection{Annexin and Fetal Immunotolerance}
+\subsection{Core placenta transcriptome}
 
-
-\DLA{Finish out this section siting Aarli work and Linke work}
+The transcriptomes from multiple different species enabled us to
+identify the set of expressed genes which are common to all placentas.
+Components of the annexin complexes, including including
+\textit{ANXA2}, \textit{ANXA1}, \textit{S100A11}, and \textit{S100A10}
+are expressed in all placentas examined, and argue for the evolution
+importance of annexins in placenta function, where they likely
+establish maternal-fetal
+tolerance\cite{Liu.ea2015:AnnexinA2complexeswith,Hutchinson.ea2011:Molecularregulatorsofresolution,Aarli.ea1997:Suppressiveeffectonlymphoproliferation}.
+We suggest that further research into molecular role of these annexin
+complexes may illuminate how immune tolerance is maintained during
+placentation. The core placenta transcriptome is also enriched in
+genes involved in maintaining the structure of the placenta and
+transporting proteins, as would be expected given the function of the
+placenta.
 
 
 \subsection{\human Specific Expression Shifts and the Evolution of Pre-eclampsia}
@@ -2390,9 +2402,9 @@ The core placenta transcriptome was also identified, which contains
 genes which are involved in maternal-fetal tolerance, such as the
 annexins, and genes responsible for cell-cell and cell-matrix
 interactions, such as \textit{LGALS1}. These genes were almost
-certainly present in the ancestral therian placenta. We hypothesize
-that modifications to their expression or function will compromise the
-development and organization of the placenta.
+certainly present in the placenta of the common mammalian ancestor. We
+hypothesize that modifications to their expression or function will
+compromise the development and organization of the placenta.
 
 This study has identified many tantalizing molecular pathways which
 illuminate the vast diversity of placental morphology and may explain

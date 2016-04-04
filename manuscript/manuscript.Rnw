@@ -1592,7 +1592,7 @@ include members of annexin complexes
 hemoglobin subunits
 (\Sexpr{gene.expression("ovis_aries","ENSOARG00000010944",complete=TRUE)}),
 an ortholog of \textit{SSLP1},
-\Sexpr{gene.expression("ovis_aries","SORD1",complete=TRUE)}, two
+\Sexpr{gene.expression("ovis_aries","SOLD1",complete=TRUE)}, two
 cathespins (\Sexpr{gene.expression("ovis_aries","CTSL",complete=TRUE)}
 and \Sexpr{gene.expression("ovis_aries","CTSB",complete=TRUE)}), and
 placentally expressed transcript 1

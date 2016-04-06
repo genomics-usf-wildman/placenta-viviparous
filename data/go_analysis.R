@@ -23,6 +23,7 @@ res.table <-
                         classic=result.fisher,
                         orderBy="classic",
                         topNodes=length(result.fisher@score)))
+res.table[,classic:=gsub("< ","",classic)]
 res.table[,classic.fdr:=p.adjust(method="BH",classic)]
 res.table[,Ontology:=args[3]]
 

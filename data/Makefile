@@ -117,6 +117,12 @@ placenta_go_results_mf: go_analysis.R placenta_core_transcriptome
 placenta_go_results_bp: go_analysis.R placenta_core_transcriptome
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,2,$^) placenta.transcriptome.list BP $@
 
+placenta_go_results_permissive_mf: go_analysis.R placenta_core_transcriptome
+	$(R) $(ROPTS) -f $< --args $(wordlist 2,2,$^) placenta.transcriptome.list.permissive MF $@
+
+placenta_go_results_permissive_bp: go_analysis.R placenta_core_transcriptome
+	$(R) $(ROPTS) -f $< --args $(wordlist 2,2,$^) placenta.transcriptome.list.permissive BP $@
+
 
 ortholog_expression_matrix.txt: ortholog_expression_matrix.R combined_fpkm housekeeping_genes_superset
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@

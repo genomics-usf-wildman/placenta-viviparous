@@ -38,21 +38,21 @@ combined.fpkm.wide[,median_expression :=
                              1,median)]
 combined.fpkm.wide[,max_expression :=
                        apply(combined.fpkm.wide[,-1,with=FALSE],1,max.na.zero)]
-combined.fpkm.wide[,fifth_min_expression :=
+combined.fpkm.wide[,all_but_four_expression :=
                        apply(combined.fpkm.wide[,-1,with=FALSE],1,function(x){min.but.one(x,4)})]
-combined.fpkm.wide[,fourth_min_expression :=
+combined.fpkm.wide[,all_but_three_expression :=
                        apply(combined.fpkm.wide[,-1,with=FALSE],1,function(x){min.but.one(x,3)})]
-combined.fpkm.wide[,third_min_expression :=
+combined.fpkm.wide[,all_but_two_expression :=
                        apply(combined.fpkm.wide[,-1,with=FALSE],1,function(x){min.but.one(x,2)})]
-combined.fpkm.wide[,second_min_expression :=
+combined.fpkm.wide[,all_but_one_expression :=
                        apply(combined.fpkm.wide[,-1,with=FALSE],1,min.but.one)]
-combined.fpkm.wide[,min_expression :=
+combined.fpkm.wide[,all_expression :=
                        apply(combined.fpkm.wide[,-1,with=FALSE],1,min.na.zero)]
 setkey(combined.fpkm.wide,"human_name")
 
 ## all genes which are not housekeeping genes which have minimum 
 core.placenta.transcriptome.long <- 
-    data.table(melt(combined.fpkm.wide[min_expression >= 10,
+    data.table(melt(combined.fpkm.wide[all_expression >= 10,
                                        ][order(-median_expression)
                                          ][!(human_name %in% 
                                                  housekeeping.genes.superset[,gene_short_name])],
@@ -68,11 +68,11 @@ core.placenta.transcriptome.long[,human_name:=
 core.placenta.transcriptome.genes.shape <-
     combined.fpkm.wide[,list(human_name,
                              median_expression,
-                             min_expression,
-                             second_min_expression,
-                             third_min_expression,
-                             fourth_min_expression,
-                             fifth_min_expression,
+                             all_expression,
+                             all_but_one_expression,
+                             all_but_two_expression,
+                             all_but_three_expression,
+                             all_but_four_expression,
                              max_expression)]
 
 all.genes <- combined.fpkm.wide[!is.na(human_name),unique(human_name)]
@@ -81,6 +81,11 @@ placenta.transcriptome.genes <-
 
 pts <- data.table(all.genes=all.genes)
 pts <- pts[,placenta.ts:=all.genes %in% placenta.transcriptome.genes]
+pts <- pts[,placenta.ts.permissive:=all.genes %in%
+                core.placenta.transcriptome.genes.shape[all_but_four_expression > 10 &
+                                                        ! is.na(human_name),
+                                                        unique(human_name)]
+           ]
 pts <- pts[,housekeeping:=all.genes %in% housekeeping.genes.superset[,gene_short_name]]
 pts <- pts[,egid:=as.vector(unlist(sapply(mget(all.genes,org.Hs.egSYMBOL2EG,ifnotfound=NA),
                                           function(x){x[1]})))]
@@ -93,8 +98,16 @@ names(pts.list) <- pts[!is.na(egid) & ! housekeeping,egid]
 placenta.transcriptome.list <-
     pts.list
 
+## this is the same as the placenta.transcriptome.list, but only 10 species
+pts.list <- factor(as.integer(pts[!is.na(egid) & ! housekeeping,placenta.ts.permissive]))
+names(pts.list) <- pts[!is.na(egid) & ! housekeeping,egid]
+
+placenta.transcriptome.list.permissive <-
+    pts.list
+
 save(core.placenta.transcriptome.long,
      placenta.transcriptome.list,
+     placenta.transcriptome.list.permissive,
      core.placenta.transcriptome.genes.shape,
      pts,
      file=args[length(args)])

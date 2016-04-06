@@ -29,11 +29,11 @@
 \usepackage{longtable}
 \usepackage{pdflscape}
 \usepackage{amsmath}
-\usepackage{sfmath}
+% \usepackage{sfmath}
 \usepackage[backend=biber,natbib=true,hyperref=true,citestyle=numeric-comp,style=nature,autocite=inline]{biblatex}
 \addbibresource{references.bib}
 % \usepackage[noblocks,auth-sc]{authblk}
-\usepackage[hyperfigures,bookmarks,colorlinks,linkcolor=black,urlcolor=black]{hyperref}
+\usepackage[hyperfigures,bookmarks,colorlinks,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
 %\usepackage[hyperfigures,bookmarks,colorlinks,citecolor=black,filecolor=black,linkcolor=black,urlcolor=black]{hyperref}
 % Floats at end for journals
 \usepackage[nolists,figuresfirst,nomarkers,heads]{endfloat}
@@ -258,7 +258,7 @@ The main role of the placenta in viviparous mammals is the transfer of
 nutrients, oxygen, and waste between mother and offspring. Although
 these functions are conserved among mammals, the placenta is perhaps
 the most variable organ in terms of structure and form
-\cite{Mossman.1937:comparativemorphogenesisofthe}. Species differ in
+\cite{Mossman.1937:comparativemorphogenesisofthe,Moffett.ea2006:Immunologyofplacentationin}. Species differ in
 the shape of attachment (i.e., discoid, diffuse, cotyledonary,
 zonary), degree of invasiveness of fetal tissues into maternal tissues
 (i.e. epitheliochorial, endotheliochorial, hemochorial), and degree of
@@ -443,8 +443,6 @@ Scientific, Wilmington, DE) and an Agilent Bioanalyzer 2100 (Santa
 Clara, CA) to confirm concentration and quality of the isolation. RNA
 quality was assessed using A260/A280 and A260/A230 absorbance values.
 
-% \DLA{Add details for new sequences and fix numbers}
-
 \subsection{Sequencing}
 
 All RNA-Seq mRNA isolation, library construction, and Illumina
@@ -467,7 +465,7 @@ placenta in \mouse
 \cite{Archibald.ea2010:sheepgenomereferencesequence}, and \pig
 \cite{Ahanda.ea2012:Predictionofaltered3-} were obtained from the
 \ac{SRA} (Supplemental \cref{tab:srr_numbers}) and analyzed using the
-same methodology as mRNAs sequenced specifically for this study.
+same methodology as RNAs sequenced specifically for this study.
 
 \subsection{Transcriptome Assembly, Alignment, and Quantification}
 
@@ -594,8 +592,8 @@ can be obtained under the series
 \href{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE79121}{GSE79121}
 (Supplemental \cref{tab:srr_numbers}). The mean FPKM for gene in each
 species with ortholog annotations are located in the supplemental data
-files \Sexpr{english.join(gsub("_","\\\\_",paste0(gsub(" ","_",
-  star.logs[,unique(species)]),"_mean_fpkm.txt")))}.
+file all\_species\_mean\_fpkm.txt.xz and the per-sample FPKM values are in
+all\_species\_per\_sample\_fpkm.txt.xz.
 
 \section{Results}
 
@@ -733,6 +731,9 @@ gene.expression <- function(species.name,gene,complete=FALSE,units=TRUE) {
                               (gene_short_name==gene | 
                                gene_id==gene),
                           mean_fpkm][1]
+    if (is.na(fpkm)) {
+        stop("FPKM is NA!!!!")
+    }
     if (units || complete)
         fpkm <- formatC(fpkm,digits=0,format="f")
     if (units) {
@@ -785,7 +786,7 @@ placenta.lineage.specific.table <- function(analysis,output=TRUE,lineage.table=p
         display.table <-
             display.table[,`Human Symbol`:=paste0("\\textit{",xtable.sanitize.text(`Human Symbol`),
                                                   "}")]
-        setnames(display.table,"Fold Change","$\\mathrm{log}_2$ FC")
+        setnames(display.table,"Fold Change","$\\text{log}_2$ FC")
         print(xtable(display.table,
                      display=c("s","s","s","e","g","f"),
                      align=c("c","c","p{2in}","r","r","r")
@@ -842,7 +843,7 @@ lineage in comparison to all other analyzed species are listed in
 \cref{tab:primate_lineage_specific}. \textit{FSTL1} has significantly
 higher expression in the primate lineage
 (Supplemental \cref{fig:fstl1_evolution_tree},
-$\mathrm{FDR}=\Sexpr{pri.all.lin.spec["FSTL1",`FDR`]}$), is implicated
+$\text{FDR}=\Sexpr{pri.all.lin.spec["FSTL1",`FDR`]}$), is implicated
 in BMP signaling, and has previously been implicated in inflammation
 and invasiveness
 \cite{Mouillet.ea2015:expressionandpost-transcriptionalregulation}. Of
@@ -893,7 +894,7 @@ the highest \ac{FPKM} value
 in \human is \textit{CSH1}, followed by \textit{CSH2}, and \textit{CSHL1}, all
 three of which are members of a distinct expansion of the growth
 hormone gene family within hominoids (\cref{fig:galectins_evolution_tree}). Another member of the growth
-hormone gene family, \ac{GH2} (\ac{FPKM}=%
+hormone gene family, \ac{GH2} (%
 \Sexpr{gene.expression(species.name="homo sapiens",gene="GH2")}), %
 is also expressed to a high degree in the \human placenta
 (\cref{tab:top50_human_placenta}).
@@ -930,7 +931,7 @@ gonadotropin hormones (\cref{tab:top50_human_placenta}). The genes
 producing the beta subunits of the chorionic gonadotropins
 (\textit{CGB}, \textit{CGB1}, \textit{CGB2}, \textit{CGB5},
 \textit{CGB7}, \textit{CGB8}) have reasonable expression
-($\mathrm{FPKM} \ge \Sexpr{cgb.min.expression}$), and the sum of their
+($\text{FPKM} \ge \Sexpr{cgb.min.expression}$), and the sum of their
 expression is on the order of the expression of
 \textit{CGA} ($\sum \mathit{CGBs}=\Sexpr{cgb.sum.expression}$ FPKM) .
 %
@@ -1193,7 +1194,7 @@ output.top.genes.table(top.genes.table(species.name="mus musculus"))
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
 in the term placenta of \mouse are shown in
 \cref{tab:top50_mouse_placenta} with a list of all genes with
-$\mathrm{FPKM} \ge 50$ in Supplemental
+$\text{FPKM} \ge 50$ in Supplemental
 \cref{tab:all_mus_musculus_placenta}. The top expressed genes include
 \Sexpr{gene.expression("mus_musculus","Mir6236",complete=TRUE)}, whose
 target \textit{in silico} is the orphan G-coupled receptor
@@ -1227,7 +1228,7 @@ in further discussion. The prolactin-related genes
 very highly expressed in \mouse in, with %
 \Sexpr{combined.fpkm[species=="mus musculus" &
   grepl("Prl(\\d.\\d)?",gene_short_name), sum(mean_fpkm >= 1)]}
-prolactin related genes having $\mathrm{FPKM} \ge 1$
+prolactin related genes having $\text{FPKM} \ge 1$
 (\cref{fig:prolactin_evolution_tree}, Supplemental
 \cref{fig:prolactin_receptor_evolution_tree}). The cathespins have
 also expanded in rodents, with six showing high expression
@@ -1445,7 +1446,8 @@ of the short reads to these four miRNA is due to miss-annotation of
 the \cow genome.
 % 
 Several members of the ruminant-specific pregnancy-associated
-glycoprotein family show especially high expression in \cow placenta
+glycoprotein family \cite{Green.ea2000:Pregnancy-associatedbovineandovine} 
+show especially high expression in \cow placenta
 (\cref{tab:top50_cow_placenta}, \cref{fig:pag2_prss16_ctsl_psg_evolution_tree}~D, and
 Supplemental \cref{tab:all_bos_taurus_placenta}) including
 %
@@ -1460,7 +1462,7 @@ Supplemental \cref{tab:all_bos_taurus_placenta}) including
 28 members of this family have $FPKM \ge 1$, and this family of
 genes has greatly expanded in ruminants (\cow and \sheep{}) although
 the expression levels of this family are higher in \cow than in \sheep
-\cref{fig:pag2_prss16_ctsl_psg_evolution_tree}~D. Other genes with high expression
+(\cref{fig:pag2_prss16_ctsl_psg_evolution_tree}~D). Other genes with high expression
 include genes involved with regulation of growth (\textit{IGF2},
 \textit{PHLDA2}), imprinted genes (\textit{DLK1}, \textit{PHLDA2}),
 and \textit{CSH1}, a gene that is a member of a ruminant specific
@@ -1473,7 +1475,7 @@ the cow placenta including %
 \Sexpr{gene.expression("bos taurus","PRP6",complete=TRUE)}, %
 \Sexpr{gene.expression("bos taurus","PRP8",complete=TRUE)}, and %
 \Sexpr{gene.expression("bos taurus","PRP7",complete=TRUE)}, %
-with a total of 14 with $\mathrm{FPKM} \ge 1$.
+with a total of 14 with $\text{FPKM} \ge 1$.
 %
 \textit{SSLP1} (\textit{SOLD1} in \sheep{}), a gene expressed in the
 cotyledonary villi of the ruminiant placenta and involved in cell
@@ -1658,15 +1660,15 @@ and
 \cref{fig:sslp1_evolution_tree}), which is also expressed in \cow and
 \dog placentas (\cref{tab:top50_dog_placenta,tab:top50_cow_placenta}).
 Placental expression of the hormones relaxin (\textit{RLN}, %
-\Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000036090")})
+\Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000017411")})
 and prolactin (\textit{PRL}) are exceptionally high in the elephant
 when compared to other mammals
 (\cref{fig:rln2_evolution_tree,fig:prolactin_evolution_tree}). There
 is little to no placental expression of the estrogen synthase gene,
 \textit{CYP19A1}
 (\Sexpr{gene.expression("loxodonta_africana","CYP19A1")}) and the
-enzyme that produces progesterone HSD3B1
-(\Sexpr{gene.expression("loxodonta_africana","HSD3B")}). Other genes
+enzyme that produces progesterone, \textit{HSD3B1}
+(\Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000027896")}). Other genes
 with high expression in the elephant placenta include genes involved
 in oxidative stress
 (\Sexpr{gene.expression("loxodonta_africana","TXN",complete=TRUE)}),
@@ -1690,7 +1692,7 @@ output.top.genes.table(top.genes.table(species.name="dasypus novemcinctus"))
 
 The top 50 expressed genes in the term placenta of \armadillo are
 shown in \cref{tab:top50_armadillo_placenta} with a list of all genes
-with $\mathrm{FPKM}\ge 50$ in Supplemental
+with $\text{FPKM}\ge 50$ in Supplemental
 \cref{tab:all_dasypus_novemcinctus_placenta}. The gene with the
 highest expression is
 \Sexpr{gene.expression("dasypus_novemcinctus","ENSDNOG00000045029",complete=TRUE)}
@@ -1799,7 +1801,8 @@ respectively).
 
 \begin{figure}
 <<core.placenta.transcriptome,fig.width=8,fig.height=12,out.height="0.8\\textheight",echo=FALSE>>=
-print(ggplot(core.placenta.transcriptome.long[!grepl("(min|median|max)_expression",Species),],
+print(ggplot(core.placenta.transcriptome.long[!grepl("(min|median|max|all)_expression|all_but_",
+                                                     Species),],
              aes(y=human_name,x=gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",capfirst(Species))))
       + geom_raster(aes(fill=log10(FPKM)))
       + scale_x_discrete(expand=c(0,0))
@@ -1836,7 +1839,7 @@ genes comprising the core placenta transcriptome are shown in
 \cref{fig:core_placenta_transcriptome} ordered by their median
 transcription level in \ac{FPKM}. We considered a gene to be core to
 the placenta transcriptome if a 1:1 ortholog of that gene was
-expressed with $\mathrm{FPKM} \ge 10$ in all species studied and was
+expressed with $\text{FPKM} \ge 10$ in all species studied and was
 not a human housekeeping gene according to
 \citet{Eisenberg.ea2013:Humanhousekeepinggenesrevisited}.
 Supplemental \cref{fig:core_placenta_transcriptome_shape} shows the number of genes
@@ -1858,10 +1861,15 @@ interaction as well as vesicle trafficking and von Willibrand Factor
 secretion. The expression regulation of another core gene,
 \textit{TIMP3}, has been implicated in pre-eclampsia
 \cite{Ma.ea2014:Down-regulationofTIMP3leads,Xiang.ea2013:PromoterhypomethylationofTIMP3}.
-Supplemental \cref{tab:core_placenta_go_terms} lists the significant enrichment of
-\ac{GO} terms in the core placenta transcriptome; notable terms
-include those involved in cytoskeletal structure, protein transport,
-membrane protein structure, and inflammation resolution.
+Supplemental \cref{tab:core_placenta_go_terms} lists the significant
+enrichment of \ac{GO} terms in the core placenta transcriptome;
+notable terms include those involved in cytoskeletal structure,
+protein transport, membrane protein structure, and inflammation
+resolution. Increasing the permissiveness of the core placenta
+transcriptome by only requiring 10 of 14 species to express 1:1
+orthologs with FPKM $>10$ and results in the same terms also being
+significantly enriched, along with additional terms (Supplemental
+\cref{tab:core_placenta_go_terms}).
 
 
 % SPINT2 -- Serine Peptidase inhibitor
@@ -1897,7 +1905,7 @@ orthologs which had \ac{FPKM} values in the top 1\% of expressed genes
 (Supplemental %
 \cref{tab:go_terms_enriched_top_one_dasypus_novemcinctus,tab:go_terms_enriched_top_one_equus_caballus,tab:go_terms_enriched_top_one_homo_sapiens,tab:go_terms_enriched_top_one_loxodonta_africana,tab:go_terms_enriched_top_one_monodelphis_domestica,tab:go_terms_enriched_top_one_mus_musculus,tab:go_terms_enriched_top_one_ovis_aries,tab:go_terms_enriched_top_one_pan_paniscus,tab:go_terms_enriched_top_one_sus_scrofa,tab:go_terms_enriched_top_one_ateles_fusciceps,tab:go_terms_enriched_top_one_spalax_galili,tab:go_terms_enriched_top_one_spalax_carmeli,tab:go_terms_enriched_top_one_bos_taurus,tab:go_terms_enriched_top_one_canis_familiaris}) using topGO \cite{topGO:2.20.0}. %
 %
-Significant enrichment in genes ($\mathrm{FDR}\le0.05$) in the top 1\%
+Significant enrichment in genes ($\text{FDR}\le0.05$) in the top 1\%
 of \ac{FPKM} values in at least 12 of the
 \Sexpr{length(species.names)} species included clusters such as
 membrane organization , locomotion, tissue development, extracellular
@@ -2015,8 +2023,9 @@ print(ggplot(combined.long, aes(y=gene, x=species))
       + common.plot.options
       )
 @ 
-\caption{Expression of 1:1 Human orthologs of Hormone Genes, Galectins,
-  genes implicated in pre-eclampsia (PE), and \textit{IGF}-related genes}
+\caption{Expression in $\text{log}_{10}(\text{FPKM})$ of 1:1 \human
+  orthologs of Hormone Genes, Galectins, genes implicated in
+  pre-eclampsia (PE), and \textit{IGF}-related genes}
 \label{fig:hormone_genes}
 \end{figure}
 
@@ -2045,11 +2054,17 @@ different timepoints and in different clades.
 
 The elephant is strikingly the only mammal analyzed that shows high
 expression of the primarily pituitary hormone prolactin (\textit{PRL})
-in the placenta, although we see high expression of genes which
+in the term placenta, although we see high expression of genes which
 resulted from duplications of \textit{PRL} in the \mouse, \carmeli,
-and \cow (Supplemental \cref{fig:prolactin_evolution_tree}). All afrotherians yet
-analyzed contain only one prolactin gene, and prolactin has undergone
-adaptive evolution on the \elephant lineage
+and \cow (Supplemental \cref{fig:prolactin_evolution_tree}). The
+results in \mouse are relatively consistent with the temporal
+expression results of
+\citet{Simmons.ea2008:Spatialandtemporalexpression}. For example, we
+see very high expression of \textit{Prl3b1} and \textit{Prl8a9} in the
+term placentas of \mouse, but low expression of \textit{Prl7a1} and
+\textit{Prl8a2} which are expressed at earlier embryonic stages. %
+All afrotherians yet analyzed contain only one prolactin gene, and
+prolactin has undergone adaptive evolution on the \elephant lineage
 \cite{Wallis2009:ProlactininAfrotheriacharacterization}.
 \citet{Yamamoto.ea2011:PlacentationinAfricanelephant} noted the
 presence of a prolactin in the trophoblast of the elephant placenta
@@ -2076,8 +2091,8 @@ alternative, that \textit{HOXA11} expression is responsible for
 \cite{Lynch.ea2008:Adaptivechangesintranscription} seems not to be the
 case in placenta, as the rodent with the highest \textit{HOXA11}
 expression, \galili
-(\Sexpr{gene.expression("spalax_galili","Hoxa11",complete=TRUE)})
-is the rodent with the lowest expression of \textit{PRL}
+(\Sexpr{gene.expression("spalax_galili","Hoxa11",complete=TRUE)}) is
+the rodent with the lowest expression of \textit{PRL}
 (\cref{fig:prolactin_evolution_tree}), and \elephant also does not
 express \textit{HOXA11} highly either
 (\Sexpr{gene.expression("loxodonta_africana","HOXA11",complete=TRUE)},
@@ -2095,9 +2110,9 @@ substantial expression in the \human placenta
 (\cref{fig:csh1_evolution_tree}). The expression of the \ac{GH} family
 in placenta appears to be primate specific, and likely existed at the
 time of the last common ancestor between all extant anthropoids
-\cite{Papper.ea2009:Ancientoriginofplacental}. There is some evidence
-that increased expression of these genes may be correlated with
-overall birth weight of offspring in \human
+\cite{Papper.ea2009:Ancientoriginofplacental,Soares2004:prolactinandgrowthhormone}.
+There is some evidence that increased expression of these genes may be
+correlated with overall birth weight of offspring in \human
 \cite{Männik.ea2010:Differentialexpressionprofileof}, and it is
 possible that the extreme expression levels of these genes may be due
 to high birth weight. \human placental \ac{GH} genes are involved in

@@ -10,6 +10,7 @@
 \usepackage[bf]{caption}
 \usepackage{rotating}
 \usepackage{wrapfig}
+\usepackage{amsmath}
 \usepackage{booktabs}
 \usepackage{float}
 \usepackage{multirow}
@@ -25,7 +26,7 @@
 \usepackage[backend=biber,natbib=true,hyperref=true,style=nature,citestyle=numeric-comp,autocite=inline]{biblatex}
 \addbibresource{references.bib}
 \usepackage[noblocks,auth-sc]{authblk}
-\usepackage[hyperfigures,bookmarks,colorlinks,linkcolor=black,urlcolor=black]{hyperref}
+\usepackage[hyperfigures,bookmarks,colorlinks,linkcolor=black,urlcolor=blue,citecolor=blue]{hyperref}
 %\usepackage[hyperfigures,bookmarks,colorlinks,citecolor=black,filecolor=black,linkcolor=black,urlcolor=black]{hyperref}
 % Floats at end for journals
 % \usepackage[nolists,figuresfirst,nomarkers,heads,nofighead,notabhead]{endfloat}
@@ -116,6 +117,7 @@ library("ggplot2")
 library("reshape2")
 library("xtable")
 library("grid")
+library("scales")
 library("gridExtra")
 library("ape")
 library("ggtree")
@@ -132,12 +134,10 @@ for (a in paste0("../common_r_code/",c("to_latex.R","plot_tree_matrix.R","utilit
 }
 @ 
 
-<<load.data,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../data/",c("combined_fpkm","gene_trees","housekeeping_genes_superset","placenta_core_transcriptome","placenta_go_results_bp","palcenta_go_results_mf","hugo_nomenclature","gene_annotation")))>>=
+<<load.data,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../data/",c("combined_fpkm","gene_trees","housekeeping_genes_superset","placenta_core_transcriptome","hugo_nomenclature","gene_annotation")))>>=
 for (a in paste0("../data/",c("combined_fpkm","gene_trees",
                               "housekeeping_genes_superset",
                               "placenta_core_transcriptome",
-                              "placenta_go_results_bp",
-                              "placenta_go_results_mf",
                               "hugo_nomenclature",
                               "gene_annotation"
                               ))) {
@@ -170,16 +170,17 @@ load("../go_annotation/go_tissue_analysis")
 
 \begin{table}
   \raggedright
-  \begin{tabular}{c >{\raggedright}p{1.5in} c >{\raggedright\arraybackslash}p{2in}}
+  \small
+  \begin{tabular}{c >{\raggedright}p{1.5in} c >{\raggedright\arraybackslash}p{2in} c}
     \toprule
-    Species                       & Collector & Experiment & Sample(s) \\
+    Species                       & Collector & Experiment & Sample(s) & Library \\
     \midrule
-    \textit{Ateles fusciceps}     & Kurt Benirschke & GSE79121 & SRX1629201 \\
-    \textit{Bos taurus}           & Bob Kreft & GSE79121 & SRX1629203 \\
-    \textit{Canis familiaris}     & Dalen Agnew & GSE79121 & SRX1629204 \\
-    \textit{Dasypus novemcinctus} & Richard Truman, Vincent J. Lynch& GSE79121 & SRX1629200 \\
-    \textit{Equus caballus}       & \citet{Coleman.ea2010:Structuralannotationofequine} & GSM1139275 & SRR850299,  SRR850300 \\
-    \textit{Loxodonta africana}   & Kurt Benirschke & GSE79121 & SRX1629205 \\
+    \textit{Ateles fusciceps}     & Kurt Benirschke & GSE79121 & SRX1629201 & Total\\
+    \textit{Bos taurus}           & Bob Kreft & GSE79121 & SRX1629203 & Total \\
+    \textit{Canis familiaris}     & Dalen Agnew & GSE79121 & SRX1629204 & Total \\
+    \textit{Dasypus novemcinctus} & Richard Truman, Vincent J. Lynch& GSE79121 & SRX1629200 & Total\\
+    \textit{Equus caballus}       & \citet{Coleman.ea2010:Structuralannotationofequine} & GSM1139275 & SRR850299,  SRR850300 & mRNA \\
+    \textit{Loxodonta africana}   & Kurt Benirschke & GSE79121 & SRX1629205 & Total \\
     \textit{Homo sapiens}         & \citet{Hughes.ea2015:Evaluatingintra-andinter-individual} & GSE66622 
                                              & SRR1850945,
                                                SRR1850946, 
@@ -206,8 +207,8 @@ load("../go_annotation/go_tissue_analysis")
                                                SRR1851003, 
                                                SRR1851004, 
                                                SRR1851011, 
-                                               SRR1851012 \\
-    \textit{Monodelphis domestica} & Karen Smith, Gunter Wagner & GSE79121 & SRX1629207 \\
+                                               SRR1851012  & mRNA \\
+    \textit{Monodelphis domestica} & Karen Smith, Gunter Wagner & GSE79121 & SRX1629207 & Total \\
     \textit{Mus musculus}         & \citet{Wang.ea2011:surveyfornovelimprinted} & GSE29690 
                                      & SRR243594, 
                                        SRR243595, 
@@ -225,15 +226,17 @@ load("../go_annotation/go_tissue_analysis")
                                        SRR243590, 
                                        SRR243591, 
                                        SRR243592, 
-                                       SRR243593\\
-    \textit{Ovis aries}           & \citet{Archibald.ea2010:sheepgenomereferencesequence} & ERP005642 & ERR489144, ERR489145\\
-    \textit{Pan paniscus}         & William Mintz Fields & GSE79121 & SRX1629202 \\
-    \textit{Spalax carmeli}       & Anne Dupressoir, Eviator Nevo & GSE68763 & SRR2016467 \\
-    \textit{Spalax galili}        & Eviator Nevo                  & GSE68763 & SRR2016466 \\
-    \textit{Sus scrofa}           & \citet{Ahanda.ea2012:Predictionofaltered3-} &  SRP014902 & SRR543893 \\
+                                       SRR243593 & mRNA \\
+    \textit{Ovis aries}           & \citet{Archibald.ea2010:sheepgenomereferencesequence} & ERP005642 & ERR489144, ERR489145 & Total \\
+    \textit{Pan paniscus}         & William Mintz Fields & GSE79121 & SRX1629202 & Total\\
+    \textit{Spalax carmeli}       & Anne Dupressoir, Eviator Nevo & GSE68763 & SRR2016467 & Total\\
+    \textit{Spalax galili}        & Eviator Nevo                  & GSE68763 & SRR2016466 & Total\\
+    \textit{Sus scrofa}           & \citet{Ahanda.ea2012:Predictionofaltered3-} &  SRP014902 & SRR543893 & mRNA \\
     \bottomrule
   \end{tabular}
-  \caption{Species, experiment and species numbers used in the analyses presented in this paper}
+  \caption{Species, experiment and species numbers used in the analyses presented in this paper. 
+    The Library column indicates the type of RNA selection performed: Total indicates rRNA depletion; 
+    mRNA indicates poly-A selection.}
   \label{tab:srr_numbers}
 \end{table}
 
@@ -360,108 +363,7 @@ print(ggplot(star.logs.wide,
 
 \clearpage
 
-\section{Gene Ontology Analyses}
-
-<<go.analysis.all.tissue,echo=FALSE,results="asis">>=
-go.analysis.wide <- 
-    data.table(dcast(data=go.results,
-                     formula=GO.ID+type+Term+Ontology~species,
-                     value.var="FDR"))
-go.analysis.wide <- 
-    go.analysis.wide[,`n(FDR ≤ 0.05)`:=apply(go.analysis.wide[,-(1:4),with=FALSE],1,
-                                         function(x){sum(as.numeric(as.character(x)) <= 0.05)})]
-go.analysis.wide <- 
-    go.analysis.wide[,`max(FDR ≤ 0.05)`:=apply(go.analysis.wide[,-(1:4),with=FALSE],1,
-                                           function(x){if (!any(is.finite(x) & x<=0.05)) {
-                                                           return(NA)
-                                                       } else {
-                                                           max(x[is.finite(x) & x<=0.05],na.rm=TRUE)
-                                                       }})]
-go.analysis.wide.table <- 
-    go.analysis.wide[!is.na(`n(FDR ≤ 0.05)`) & `n(FDR ≤ 0.05)` >= 12 &
-                         grepl("Top 1% No Housekeeping",type),
-                     list(GO.ID,Term,Ontology,`n(FDR ≤ 0.05)`,`max(FDR ≤ 0.05)`)]
-go.analysis.wide.table <- 
-    go.analysis.wide.table[order(Ontology,-`n(FDR ≤ 0.05)`,`max(FDR ≤ 0.05)`)]
-setnames(go.analysis.wide.table,"GO.ID","GO ID")
-
-print(xtable(go.analysis.wide.table,
-             display=c("d","s","s","s","d","e"),
-             align=  c("c","c","c","c","c","c"),
-             caption="GO terms with significant enrichment ($\\mathrm{FDR}\\le0.05$)
-  in 12 or more of the species analyzed from genes in the top 1\\% of
-  expression. $n(\\mathrm{FDR}\\le0.05)$ is the number of species with
-  significant enrichment ($\\mathrm{FDR}\\le 0.05$) in the GO term
-  listed. $max(\\mathrm{FDR}\\le0.05)$ is the maximum FDR value in all
-  species with an FDR of less than $0.05$.",
-  label="tab:go_terms_all_species"
-  ),
-  math.style.exponents=TRUE,
-  include.rownames=FALSE,
-  booktabs=TRUE,
-  floating=FALSE,
-  tabular.environment="longtable",
-  caption.placement="top",
-  size="\\footnotesize"
-  )
-
-@ 
-
-\clearpage
-
-\subsection{Top 100 Transcripts Enrichment}
-
-<<go.analysis.all.species,echo=FALSE,results="asis">>=
-for (this.species in names(species.names)) {
-    cat(paste0("\\subsubsection{Significantly enriched ($\\mathrm{FDR}\\le0.05$) GO terms in ",
-                           " the top 100 \\textit{",
-                           capfirst(this.species),"} expressed transcripts}\n\n"))
-    this.caption <- paste0("Significantly enriched ($\\mathrm{FDR}\\le0.05$) GO terms in ",
-                           " the top 100 \\textit{",capfirst(this.species),"} expressed transcripts")
-    this.label <- paste0("tab:go_terms_enriched_",gsub(" ","_",this.species))
-    print(xtable(go.results[grepl("100 No Housekeeping",type) & FDR <= 0.05 & species == this.species,
-                            list(GO.ID,Term,FDR,Ontology)
-                            ][order(FDR)],
-                 caption=this.caption,
-                 label=this.label,
-                 display=c("s","s","s","e","s")
-                 ),
-          size="\\small",
-          booktabs=TRUE,
-          tabular.environment="longtable",
-          caption.placement="top",
-          floating=FALSE)
-}
-@ 
-
-\clearpage
-
-\subsection{Top 1\% Transcripts Enrichment}
-
-<<go.analysis.top.5p.all.species,echo=FALSE,results="asis">>=
-for (this.species in names(species.names)) {
-    cat(paste0("\\subsubsection{Significantly enriched ($\\mathrm{FDR}\\le0.05$) GO terms in ",
-                           " the top 1\\% of \\textit{",
-                           capfirst(this.species),"} expressed transcripts}\n\n"))
-    this.caption <- paste0("Significantly enriched ($\\mathrm{FDR}\\le0.05$) GO terms in ",
-                           " the top 1\\% of \\textit{",
-                           capfirst(this.species),"} expressed transcripts.")
-    print(xtable(go.results[grepl("Top 1% No Housekeeping",type) & FDR <= 0.05 & species == this.species,
-                            list(GO.ID,Term,FDR,Ontology)
-                            ][order(FDR)],
-                 caption=this.caption,
-                 label=paste0("tab:go_terms_enriched_top_one_",gsub(" ","_",this.species)),
-                 display=c("s","s","s","e","s")
-                 ),
-          size="\\small",
-          booktabs=TRUE, 
-          tabular.environment="longtable",
-          caption.placement="top",
-          floating=FALSE)
-}
-@ 
-
-\clearpage
+\section{Species Expression}
 
 <<genes.expression,echo=FALSE,results="hide">>=
 genes.expression.table <- function(species.name,min.fpkm=50) {
@@ -508,11 +410,143 @@ genes.expression.table <- function(species.name,min.fpkm=50) {
 }
 @ 
 
-\section{Gene Expression}
+<<top.expressed.genes,echo=FALSE,results="asis">>=
+for (this.species in names(species.names)) {
+    this.caption <- paste0("\\textit{",
+                           capfirst(this.species),"} Placental Gene Expression of all genes with FPKM $\\ge 50$")
+    cat(paste0("\\subsubsection{\\textit{",capfirst(this.species),"} Placental Gene Expression}\n\n"))
+    xt.align <- c("r","l","l","p{2.5in}","r")
+    if (this.species == "homo sapiens" || this.species == "ateles fusciceps") {
+        xt.align <- xt.align[-2]
+    }
+    print(xtable(genes.expression.table(species.name=this.species),
+                 caption=this.caption,
+                 align=xt.align,
+                 label=paste0("tab:all_",gsub(" ","_",this.species),"_placenta")
+                 ),
+          booktabs=TRUE,
+          tabular.environment="longtable",
+          floating=FALSE,
+          caption.placement="top",
+          sanitize.text.function=genes.table.sanitize,
+          size="\\tiny"
+          )
+}
+@ 
 
-\subsection{Gene Evolution Trees}
+\clearpage
 
-\subsubsection{Pre-eclampsia genes}
+\section{Gene Ontology Analyses}
+
+<<go.analysis.all.tissue,echo=FALSE,results="asis">>=
+go.analysis.wide <- 
+    data.table(dcast(data=go.results,
+                     formula=GO.ID+type+Term+Ontology~species,
+                     value.var="FDR"))
+go.analysis.wide <- 
+    go.analysis.wide[,`n(FDR ≤ 0.05)`:=apply(go.analysis.wide[,-(1:4),with=FALSE],1,
+                                         function(x){sum(as.numeric(as.character(x)) <= 0.05)})]
+go.analysis.wide <- 
+    go.analysis.wide[,`max(FDR ≤ 0.05)`:=apply(go.analysis.wide[,-(1:4),with=FALSE],1,
+                                           function(x){if (!any(is.finite(x) & x<=0.05)) {
+                                                           return(NA)
+                                                       } else {
+                                                           max(x[is.finite(x) & x<=0.05],na.rm=TRUE)
+                                                       }})]
+go.analysis.wide.table <- 
+    go.analysis.wide[!is.na(`n(FDR ≤ 0.05)`) & `n(FDR ≤ 0.05)` >= 12 &
+                         grepl("Top 1% No Housekeeping",type),
+                     list(GO.ID,Term,Ontology,`n(FDR ≤ 0.05)`,`max(FDR ≤ 0.05)`)]
+go.analysis.wide.table <- 
+    go.analysis.wide.table[order(Ontology,-`n(FDR ≤ 0.05)`,`max(FDR ≤ 0.05)`)]
+setnames(go.analysis.wide.table,"GO.ID","GO ID")
+
+print(xtable(go.analysis.wide.table,
+             display=c("d","s","s","s","d","e"),
+             align=  c("c","c","c","c","c","c"),
+             caption="GO terms with significant enrichment ($\\text{FDR}\\le0.05$)
+  in 12 or more of the species analyzed from genes in the top 1\\% of
+  expression. $n(\\text{FDR}\\le0.05)$ is the number of species with
+  significant enrichment ($\\text{FDR}\\le 0.05$) in the GO term
+  listed. $max(\\text{FDR}\\le0.05)$ is the maximum FDR value in all
+  species with an FDR of less than $0.05$.",
+  label="tab:go_terms_all_species"
+  ),
+  math.style.exponents=TRUE,
+  include.rownames=FALSE,
+  booktabs=TRUE,
+  floating=FALSE,
+  tabular.environment="longtable",
+  caption.placement="top",
+  size="\\footnotesize"
+  )
+
+@ 
+
+\clearpage
+
+\subsection{Top 1\% Transcripts Enrichment}
+
+<<go.analysis.top.5p.all.species,echo=FALSE,results="asis">>=
+for (this.species in names(species.names)) {
+    cat(paste0("\\subsubsection{Significantly enriched ($\\text{FDR}\\le0.05$) GO terms in ",
+                           " the top 1\\% of \\textit{",
+                           capfirst(this.species),"} expressed transcripts}\n\n"))
+    this.caption <- paste0("Significantly enriched ($\\text{FDR}\\le0.05$) GO terms in ",
+                           " the top 1\\% of \\textit{",
+                           capfirst(this.species),"} expressed transcripts.")
+    print(xtable(go.results[grepl("Top 1% No Housekeeping",type) & FDR <= 0.05 & species == this.species,
+                            list(GO.ID,Term,FDR,Ontology)
+                            ][order(FDR)],
+                 caption=this.caption,
+                 label=paste0("tab:go_terms_enriched_top_one_",gsub(" ","_",this.species)),
+                 display=c("s","s","s","e","s")
+                 ),
+          size="\\small",
+          booktabs=TRUE, 
+          math.style.exponents=TRUE,
+          include.rownames=FALSE,
+          tabular.environment="longtable",
+          caption.placement="top",
+          floating=FALSE)
+}
+@ 
+
+\clearpage
+
+
+\subsection{Top 100 Transcripts Enrichment}
+
+<<go.analysis.all.species,echo=FALSE,results="asis">>=
+for (this.species in names(species.names)) {
+    cat(paste0("\\subsubsection{Significantly enriched ($\\text{FDR}\\le0.05$) GO terms in ",
+                           " the top 100 \\textit{",
+                           capfirst(this.species),"} expressed transcripts}\n\n"))
+    this.caption <- paste0("Significantly enriched ($\\text{FDR}\\le0.05$) GO terms in ",
+                           " the top 100 \\textit{",capfirst(this.species),"} expressed transcripts")
+    this.label <- paste0("tab:go_terms_enriched_",gsub(" ","_",this.species))
+    print(xtable(go.results[grepl("100 No Housekeeping",type) & FDR <= 0.05 & species == this.species,
+                            list(GO.ID,Term,FDR,Ontology)
+                            ][order(FDR)],
+                 caption=this.caption,
+                 label=this.label,
+                 display=c("s","s","s","e","s")
+                 ),
+          size="\\small",
+          booktabs=TRUE,
+          math.style.exponents=TRUE,
+          include.rownames=FALSE,
+          tabular.environment="longtable",
+          caption.placement="top",
+          floating=FALSE)
+}
+@ 
+
+\clearpage
+
+\section{Gene Evolution Trees}
+
+\subsection{Pre-eclampsia genes}
 
 \begin{figure}[hb]
 <<crh.evolution.tree,echo=FALSE,out.height="0.6\\textheight",fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
@@ -641,7 +675,7 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
 
 \clearpage
 
-\subsubsection{Primate Specific Evolution}
+\subsection{Primate Specific Evolution}
 
 \begin{figure}
 <<fstl1.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
@@ -662,6 +696,8 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
 \caption{\genetreeexplanation{follistatin-like 1 \textit{FSTL1}}}
 \label{fig:fstl1_evolution_tree}
 \end{figure}
+
+\subsection{Other Gene Trees}
 
 \begin{figure}
 <<serpine.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
@@ -920,7 +956,7 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 
 \clearpage
 
-\subsection{Clade specific Expression}
+\section{Clade specific Expression}
 
 <<load.placenta.lineage.specific,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../data/",c("placenta_lineage_specific")))>>=
 load("../data/placenta_lineage_specific")
@@ -1016,71 +1052,87 @@ setkey(eua.lau.lin.spec,"Human Symbol")
 
 \clearpage
 
-\subsection{Species Expression}
-
-<<top.expressed.genes,echo=FALSE,results="asis">>=
-for (this.species in names(species.names)) {
-    this.caption <- paste0("\\textit{",
-                           capfirst(this.species),"} Placental Gene Expression of all genes with FPKM $\\ge 50$")
-    cat(paste0("\\subsection{\\textit{",capfirst(this.species),"} Placental Gene Expression}\n\n"))
-    xt.align <- c("r","l","l","p{2.5in}","r")
-    if (this.species == "homo sapiens" || this.species == "ateles fusciceps") {
-        xt.align <- xt.align[-2]
-    }
-    print(xtable(genes.expression.table(species.name=this.species),
-                 caption=this.caption,
-                 align=xt.align,
-                 label=paste0("tab:all_",gsub(" ","_",this.species),"_placenta")
-                 ),
-          booktabs=TRUE,
-          tabular.environment="longtable",
-          floating=FALSE,
-          caption.placement="top",
-          sanitize.text.function=genes.table.sanitize,
-          size="\\tiny"
-          )
-}
-@ 
-
-\clearpage
-
 \section{Core Placenta Transcriptome}
 
 \begin{table}
 \footnotesize
-<<go.analysis,warning=FALSE,message=FALSE,echo=FALSE,results="asis">>=
+<<go.analysis,warning=FALSE,message=FALSE,echo=FALSE,results="asis",cache.extra=tools::md5sum(paste0("../data/placenta_go_results_",c("bp","mf","permissive_bp","permissive_mf")))>>=
+load("../data/placenta_go_results_mf")
+load("../data/placenta_go_results_bp")
+load("../data/placenta_go_results_permissive_mf")
+load("../data/placenta_go_results_permissive_bp")
+
 placenta.go.results <- rbindlist(list(head(n=20,placenta_go_results_mf[classic.fdr < 0.05,]),
                              head(n=20,placenta_go_results_bp[classic.fdr < 0.05,])))
 placenta.go.results <- placenta.go.results[,Annotated:=NULL]
-setnames(placenta.go.results,"Significant","# Core")
+setnames(placenta.go.results,"Significant","Core")
 setnames(placenta.go.results,"classic","p value")
 setnames(placenta.go.results,"classic.fdr","FDR")
 setnames(placenta.go.results,"GO.ID","GO ID")
 setnames(placenta.go.results,"Term","GO Term")
-print(xtable(placenta.go.results,
+
+placenta.go.results.permissive <-
+    rbindlist(list(placenta_go_results_permissive_mf,
+                   placenta_go_results_permissive_bp))
+setnames(placenta.go.results.permissive,"Significant","Core")
+setnames(placenta.go.results.permissive,"classic","p value")
+setnames(placenta.go.results.permissive,"classic.fdr","Permissive FDR")
+setnames(placenta.go.results.permissive,"GO.ID","GO ID")
+setnames(placenta.go.results.permissive,"Term","GO Term")
+setkey(placenta.go.results,"GO ID")
+setkey(placenta.go.results.permissive,"GO ID")
+
+combined.placenta.go.results <-
+    placenta.go.results.permissive[,list(`GO ID`,`Permissive FDR`)
+                                   ][placenta.go.results][order(Ontology,FDR),]
+combined.placenta.go.results <-
+    combined.placenta.go.results[,`p value`:=as.numeric(`p value`)]
+setcolorder(combined.placenta.go.results,
+            c("Ontology",
+              "GO ID",
+              "GO Term",
+              "Core",
+              "Expected",
+              "p value",
+              "FDR",
+              "Permissive FDR"))
+combined.placenta.go.results <-
+    combined.placenta.go.results[,`p value`:=NULL]
+setnames(combined.placenta.go.results,"Ontology","Ont.")
+setnames(combined.placenta.go.results,"Expected","Exp.")
+print(xtable(combined.placenta.go.results,
              digits=2,
-             display=c("d","s","s","d","f","e","e","s")),
+             display=c("d","s","s","s","d","f","e","e")),
       include.rownames=FALSE,
       booktabs=TRUE,
+      math.style.exponents=TRUE,
       floating=FALSE
       )
 @ 
 \caption{GO terms most significantly enriched
   (\Sexpr{placenta.go.results[,sum(Ontology=="MF")]} MF,
-  \Sexpr{placenta.go.results[,sum(Ontology=="BP")]} BP)
-  in the core placenta transcriptome as compared to all genes
-  with 1:1 human orthologs in all species. “\# Core” is the
-  number of genes in the core transcriptome for each GO term;
-  “Expected” is the number of genes expected in the core
-  transcriptome for each term; “p-value” are the odds of this
-  occurring by chance calculated by the Fisher exact test for
-  each term; “FDR” is the false discovery rate as estimated by
-  the Benjamini and Hochberg procedure \cite{Benjamini1995:bh_procedure}.}
+  \Sexpr{placenta.go.results[,sum(Ontology=="BP")]} BP) in
+  the core placenta transcriptome ($\text{FPKM}>10$ in 14
+  of 14 species) as compared to all genes with 1:1 human orthologs in
+  all species. “Ont.” is the GO Ontology, where MF is molecular function 
+  and BP is biological process; “Core” is the number of genes in the core
+  transcriptome for each GO term; “Exp.” is the number of genes
+  expected in the core transcriptome for each term; 
+  “FDR” is the false discovery rate as estimated by the
+  Benjamini and Hochberg procedure \cite{Benjamini1995:bh_procedure} based on
+  p values calculated by the Fisher Exact Test; 
+  “Permissive FDR” is the FDR resulting from the equivalent GO
+  analysis using the permissive core placenta transcriptome 
+  (1:1 orthologs with expression of at least 10 FPKM at least 10 of 14 species) 
+  showing that the enriched GO terms are relatively insensitive to the precise
+  set of species included.}
 \label{tab:core_placenta_go_terms}
 \end{table}
 
+
 \begin{figure}
 <<core.placenta.transcriptome.distribution,fig.width=8,fig.height=8,out.height="0.8\\textheight",echo=FALSE,message=FALSE>>=
+num.species <- star.logs.wide[,length(unique(species))]
 calculate.distribution.shape <- 
     function(min.vector) {
         min.vector <- sort(min.vector,decreasing=TRUE)
@@ -1092,72 +1144,105 @@ calculate.distribution.shape <-
 cptg.nh <- core.placenta.transcriptome.genes.shape[!(human_name %in% housekeeping.genes.superset[,gene_short_name])]
 
 cpt.distribution.shape <- 
-    lapply(c("min_expression",
-             "second_min_expression",
-             "third_min_expression",
-             "fourth_min_expression",
-             "fifth_min_expression"),
+    lapply(c("all_expression",
+             "all_but_one_expression",
+             "all_but_two_expression",
+             "all_but_three_expression",
+             "all_but_four_expression"),
            function(x){
-               calculate.distribution.shape(cptg.nh[,x,with=FALSE][[1]])[,`Lowest Expression`:=x]
+               calculate.distribution.shape(cptg.nh[,x,with=FALSE][[1]])[,`Minimum Expression in`:=x]
            })
+fix.expression.names <- function(x){
+    x <- gsub("^all_expression$",
+              paste0(num.species," of ",num.species," species"),
+              x
+              )
+    nc.levels <- paste0(num.species," of ",num.species," species")
+    ## number coutner
+    nc <- c("one"=1,"two"=2,"three"=3,"four"=4)
+    for (a in names(nc)) {
+        x <- gsub(paste0("^all_but_",a,"_expression$"),
+              paste0(num.species-nc[a]," of ",num.species," species"),
+              x
+              )
+        nc.levels <-
+            c(nc.levels,
+              paste0(num.species-nc[a]," of ",num.species," species"))
+    }
+    return(factor(x,levels=nc.levels))
+}
+
 cpt.distribution.shape <- 
     rbindlist(cpt.distribution.shape)
 
 cpt.distribution.shape <- 
-    cpt.distribution.shape[,`Lowest Expression`:=
-                               gsub("^min_expression$","First",
-                                    `Lowest Expression`)]
-cpt.distribution.shape <- 
-    cpt.distribution.shape[,`Lowest Expression`:=
-                               factor(gsub("^(.)(.+)_min_expression$","\\U\\1\\L\\2",
-                                           `Lowest Expression`,perl=TRUE),
-                                      levels=c("First","Second","Third","Fourth","Fifth"))
-                           ]
+    cpt.distribution.shape[,`Minimum Expression in`:=
+                                fix.expression.names(`Minimum Expression in`)]
+
 setnames(cpt.distribution.shape,
          "FPKM",
          "Expression (FPKM)")
-         
 
-print(ggplot(cpt.distribution.shape[`Expression (FPKM)` > 1,],
-             aes(x=`Expression (FPKM)`,color=`Lowest Expression`,y=num_genes))
+print(ggplot(cpt.distribution.shape[`Expression (FPKM)` > 0.1,],
+             aes(x=`Expression (FPKM)`,color=`Minimum Expression in`,y=num_genes))
       + geom_line(lwd=1)
-      + xlab(expression(FPKM))
-      + ylab("Genes with N-th Lowest Expression")
-      + scale_y_log10()
-      + scale_x_log10()
+      + xlab("Minimum Expression cutoff (FPKM)")
+      + ylab("Genes with N-th Minimum Expression")
+      + scale_y_log10(breaks = trans_breaks("log10", function(x) 10^x),
+                      labels = trans_format("log10", math_format(10^.x)))
+      + scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
+                      labels = trans_format("log10", math_format(10^.x)))
       + geom_vline(xintercept=10)
       + geom_segment(mapping=aes(y=V1,
                          yend=V1,
                          xend=10,
-                         x=100,
-                         color=`Lowest Expression`),
+                         x=1000,
+                         color=`Minimum Expression in`),
                      data=cpt.distribution.shape[`Expression (FPKM)` > 10,
-                                              max(num_genes),`Lowest Expression`],
+                                              max(num_genes),`Minimum Expression in`],
                      arrow=arrow(length=unit(0.5,"cm"))
                    )
-      + geom_text(mapping=aes(x=100,
+      + geom_text(mapping=aes(x=1000,
                       y=V1,
                       label=paste0(V1," genes"),override=TRUE),
                   data=cpt.distribution.shape[`Expression (FPKM)` > 10,
-                      max(num_genes),`Lowest Expression`],
+                      max(num_genes),`Minimum Expression in`],
                   show_guide=FALSE,
                   hjust=0
                   )
-      + guides(color=guide_legend(title="Lowest\nExpression"))
+      + guides(color=guide_legend(title="Minimum\nExpression in"))
       )
 @ 
-\caption{Distribution shape of placenta core genes. The vertical axis shows
-  the number of orthologous gene sets included in the core placenta
-  transcriptome if the least expression cutoff (or second-least, etc.)
-  was set to the horizontal axis. For example, if the cutoff is set to 10
-  (vertical black line), 37 genes would be included if the FPKM of all
-  species must be at least 10, 134 genes would be included if all but
-  one species must have FPKM of at least 10. 655 genes would be
-  included if all but five species must have FPKM of at least 10.}
+\caption{Distribution shape of placenta core genes. The vertical axis
+  shows the number of 1:1 orthologous genes included in the core
+  placenta transcriptome if %
+  \Sexpr{cpt.distribution.shape[,levels(`Minimum Expression in`)[1]]}
+  %
+  (or %
+  \Sexpr{cpt.distribution.shape[,levels(`Minimum Expression in`)[2]]},
+  % 
+  etc.) have a minimum expression in FPKM equal to the horizontal axis.
+  For example, if the cutoff is set to 10 (vertical black line), 
+  % 
+  \Sexpr{cpt.distribution.shape[`Expression (FPKM)` > 10 
+    & `Minimum Expression in` == '14 of 14 species',max(num_genes)]}
+  %
+  genes would be included if the FPKM of a set of 1:1 orthologs of all 14 species must be at
+  least 10, %
+  \Sexpr{cpt.distribution.shape[`Expression (FPKM)` > 10 
+    & `Minimum Expression in` == "13 of 14 species",max(num_genes)]}
+  %
+  1:1 orthologs would be included if 13 of 14 species have an
+   with an FPKM of at least 10, and 
+  \Sexpr{cpt.distribution.shape[`Expression (FPKM)` > 10 
+    & `Minimum Expression in` == '10 of 14 species',max(num_genes)]}
+  genes would be included if 10 of 14 species
+  must have an FPKM of at least 10.}
 \label{fig:core_placenta_transcriptome_shape}
 \end{figure}
 
 
+\clearpage
  
 \printbibliography
 

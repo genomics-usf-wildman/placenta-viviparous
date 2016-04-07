@@ -227,7 +227,7 @@ grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = NA
   obstetrical syndromes affecting humans.
 
   \parttitle{Results} We measured the expression profiles of
-  \Sexpr{star.logs[,length(unique(file))]} term placenta of
+  \Sexpr{star.logs[,length(unique(file))]} term placentas of
   \Sexpr{star.logs[,length(unique(species))]} species of mammals. We
   found lineage-specific differential expression of prolactin,
   relaxin, and galectins as well as increased expression of the
@@ -488,12 +488,15 @@ assembled) genome using STAR v2.4.2a
 values in \ac{FPKM}
 \cite{Trapnell.ea2010:Transcriptassemblyandquantification} were
 quantified using Cufflinks v2.2.1
-\cite{Trapnell.ea2009:TopHatdiscoveringsplicejunctions}.
+\cite{Trapnell.ea2009:TopHatdiscoveringsplicejunctions} (Supplemental
+\cref{tab:all_ateles_fusciceps_placenta,tab:all_homo_sapiens_placenta,tab:all_pan_paniscus_placenta,tab:all_mus_musculus_placenta,tab:all_spalax_galili_placenta,tab:all_spalax_carmeli_placenta,tab:all_bos_taurus_placenta,tab:all_ovis_aries_placenta,tab:all_sus_scrofa_placenta,tab:all_equus_caballus_placenta,tab:all_canis_familiaris_placenta,tab:all_loxodonta_africana_placenta,tab:all_dasypus_novemcinctus_placenta,tab:all_monodelphis_domestica_placenta}).
 %
 The genome of the closely-related \textit{P. troglodytes} was used as
 a reference for \bonobo. The separation between the two recognized Pan
 species is generally perceived to be $\approx 1$ million years
-\cite{Prüfer.ea2012:bonobogenomecomparedwith}.
+\cite{Prüfer.ea2012:bonobogenomecomparedwith}. %
+%
+
 
 \begin{figure}
 <<species.tree,fig.width=8,fig.height=6,echo=FALSE>>=
@@ -533,7 +536,9 @@ print(pp %>%
       %>% phylopic("a9f4ebd5-53d7-4de9-9e66-85ff6c2d513e",color="#CCCC44",alpha=0.5,node=13,width=0.18)
       )
 @ 
-\caption{Species tree for organisms studied}
+\caption{Species tree for organisms studied showing the relationship
+  between species. Silhouettes of species were obtained from
+  \url{http://phylopic.org}. }
 \label{fig:species_tree}
 \end{figure}
 
@@ -765,7 +770,8 @@ source("/home/don/projects/xtable/pkg/R/print.xtable.R")
 placenta.lineage.specific.table <- function(analysis,output=TRUE,lineage.table=placenta.lineage.specific.analysis,members=5,orderbyfc=FALSE,fdr.cutoff=1) {
     temp.table <- 
         lineage.table[analysis.name==analysis &
-                      p.value <= 0.05][order(p.value),
+                      p.value <= 0.05 &
+                      fdr <= fdr.cutoff][order(p.value),
                                        list(human_name,p.value,fdr,fc),]
     temp.table <- data.table(temp.table)
     setkey(temp.table,"human_name")
@@ -893,7 +899,7 @@ the highest \ac{FPKM} value
 %
 in \human is \textit{CSH1}, followed by \textit{CSH2}, and \textit{CSHL1}, all
 three of which are members of a distinct expansion of the growth
-hormone gene family within hominoids (\cref{fig:galectins_evolution_tree}). Another member of the growth
+hormone gene family within hominoids (Supplemental \cref{fig:galectins_evolution_tree}). Another member of the growth
 hormone gene family, \ac{GH2} (%
 \Sexpr{gene.expression(species.name="homo sapiens",gene="GH2")}), %
 is also expressed to a high degree in the \human placenta
@@ -1459,7 +1465,7 @@ Supplemental \cref{tab:all_bos_taurus_placenta}) including
 \Sexpr{gene.expression("bos taurus","ENSBTAG00000024611",complete=TRUE)}, %
 \Sexpr{gene.expression("bos taurus","PAG12",complete=TRUE)}. %
 %
-28 members of this family have $FPKM \ge 1$, and this family of
+28 members of this family have $\text{FPKM} \ge 1$, and this family of
 genes has greatly expanded in ruminants (\cow and \sheep{}) although
 the expression levels of this family are higher in \cow than in \sheep
 (\cref{fig:pag2_prss16_ctsl_psg_evolution_tree}~D). Other genes with high expression
@@ -1649,7 +1655,7 @@ which
 \Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000031933",complete=TRUE)})
 are members of an \elephant{}-specific expansion of 11 genes closely
 related to the thymus-specific serine protease gene \textit{PRSS16}
-\cref{fig:pag2_prss16_ctsl_psg_evolution_tree}~C The other 8
+(\cref{fig:pag2_prss16_ctsl_psg_evolution_tree}~C). The other 8
 \textit{PRSS16}-like genes are also expressed to a lesser degree
 (\Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000026505",complete=TRUE)}).
 Two other novel genes with high expression are related to the gene
@@ -1801,9 +1807,14 @@ respectively).
 
 \begin{figure}
 <<core.placenta.transcriptome,fig.width=8,fig.height=12,out.height="0.8\\textheight",echo=FALSE>>=
-print(ggplot(core.placenta.transcriptome.long[!grepl("(min|median|max|all)_expression|all_but_",
-                                                     Species),],
-             aes(y=human_name,x=gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",capfirst(Species))))
+cptl <-
+    core.placenta.transcriptome.long[!grepl("(min|median|max|all)_expression|all_but_",
+                                            Species),]
+cptl <- cptl[,Species:=factor(gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",capfirst(Species)),
+                              levels=gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",
+                                          capfirst(names(species.names))))]
+print(ggplot(cptl,
+             aes(y=human_name,x=Species))
       + geom_raster(aes(fill=log10(FPKM)))
       + scale_x_discrete(expand=c(0,0))
       + scale_y_discrete(expand=c(0,0))
@@ -1820,15 +1831,20 @@ print(ggplot(core.placenta.transcriptome.long[!grepl("(min|median|max|all)_expre
       + theme(legend.position="top",
               axis.ticks = element_blank(),
               axis.text.y = element_text(face="italic"),
-              axis.text.x = element_text(angle = 340, hjust = 0.1, vjust=1,face="italic"))
+              axis.text.x = element_text(angle = 90, hjust = 1, vjust=0,face="italic"))
       )
 @ 
 \caption{Core Placenta Transcriptome.
   \Sexpr{core.placenta.transcriptome.long[,length(unique(human_name))]}
-  genes expressed (\ac{FPKM}$ \ge 10$) in the placenta of all organisms
-  studied with housekeeping
-  genes \cite{Eisenberg.ea2013:Humanhousekeepinggenesrevisited}
-  removed.}
+  1:1 \human ortholog genes expressed (\ac{FPKM}$ \ge 10$) in the
+  placenta of all \Sexpr{star.logs[,length(unique(species))]} species
+  studied with housekeeping genes
+  \cite{Eisenberg.ea2013:Humanhousekeepinggenesrevisited} removed
+  ordered (from top to bottom) by median expression. Supplemental
+  \cref{fig:core_placenta_transcriptome_shape} shows the shape of the
+  distribution of the number of genes in the core placenta
+  transcriptome if different FPKM and species restriction criteria are
+  utilized.}
 \label{fig:core_placenta_transcriptome}
 \end{figure}
 
@@ -2016,7 +2032,7 @@ common.plot.options <-
                axis.ticks = element_blank(),
                panel.background = element_blank(),
                axis.text.y = element_text(face="italic"),
-               axis.text.x = element_text(angle = 300, hjust = 0, vjust=1,face="italic")),
+               axis.text.x = element_text(angle = 90, hjust = 1, vjust=0,face="italic")),
          facet_grid(type~.,scale="free_y",space="free_y")
          )
 print(ggplot(combined.long, aes(y=gene, x=species))
@@ -2025,7 +2041,9 @@ print(ggplot(combined.long, aes(y=gene, x=species))
 @ 
 \caption{Expression in $\text{log}_{10}(\text{FPKM})$ of 1:1 \human
   orthologs of Hormone Genes, Galectins, genes implicated in
-  pre-eclampsia (PE), and \textit{IGF}-related genes}
+  pre-eclampsia (PE), and \textit{IGF}-related genes. Empty locations
+  indicate no detectable expression and/or no 1:1 \human ortholog in
+  that species.}
 \label{fig:hormone_genes}
 \end{figure}
 

@@ -19,3 +19,5 @@ supplemental_cache
 *.lof
 *.lot
 *.toc
+*.fff
+*.ttt

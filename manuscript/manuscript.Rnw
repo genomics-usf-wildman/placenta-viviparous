@@ -29,11 +29,11 @@
 \usepackage{longtable}
 \usepackage{pdflscape}
 \usepackage{amsmath}
-% \usepackage{sfmath}
+\usepackage{sansmath}
 \usepackage[backend=biber,natbib=true,hyperref=true,citestyle=numeric-comp,style=nature,autocite=inline]{biblatex}
 \addbibresource{references.bib}
 % \usepackage[noblocks,auth-sc]{authblk}
-\usepackage[hyperfigures,bookmarks,colorlinks,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
+\usepackage[hyperfigures,bookmarks,colorlinks,linkcolor=black,urlcolor=black,citecolor=blue]{hyperref}
 %\usepackage[hyperfigures,bookmarks,colorlinks,citecolor=black,filecolor=black,linkcolor=black,urlcolor=black]{hyperref}
 % Floats at end for journals
 \usepackage[nolists,figuresfirst,nomarkers,heads]{endfloat}
@@ -183,8 +183,8 @@ grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = NA
 \dochead{Research}%
 \title{The evolution of gene expression in the term placenta of viviparous mammals}%
 %
-\author[addressref={aff1},email={don@donarmstrong.com},noteref={n1}]{\inits{DL}\fnm{Don L} \snm{Armstrong}}
-\author[addressref={aff2},email={1mmcgowen1@gmail.com},noteref={n1}]{\inits{MR}\fnm{Michael R.} \snm{McGowen}}
+\author[addressref={aff1},noteref={n1},email={don@donarmstrong.com}]{\inits{DL}\fnm{Don L} \snm{Armstrong}}
+\author[addressref={aff2},noteref={n1},email={1mmcgowen1@gmail.com}]{\inits{MR}\fnm{Michael R.} \snm{McGowen}}
 \author[addressref={aff1},email={aweckle@illinois.edu}]{\inits{AL}\fnm{Amy} \snm{Weckle}}
 \author[addressref={aff3},email={jacaravas@gmail.com}]{\inits{J}\fnm{Jason} \snm{Caravas}}
 \author[addressref={aff4},email={agnewd@dcpah.msu.edu}]{\inits{D}\fnm{Dalen} \snm{Agnew}}

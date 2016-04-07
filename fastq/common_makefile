@@ -87,13 +87,16 @@ STAR_INDEX_DIR=$(BOWTIE_INDEX_DIR)/star/
 GENOME_FASTQ=$(FASTA)
 STAR_INDEX_OPTIONS?=
 
+star_indexes: $(STAR_INDEX_DIR)/SA
+
 ifdef USE_TRINITY
 GENOME_FASTQ=$(SPECIES)_trinity.Trinity.fasta
 STAR_INDEX_OPTIONS=--genomeChrBinNbits 10
-endif
-
-star_indexes: $(STAR_INDEX_DIR)/SA
 $(STAR_INDEX_DIR)/SA: $(GENOME_FASTQ)
+else
+STAR_INDEX_OPTIONS=--genomeChrBinNbits 10 --sjdbGTFfile $(GTF)
+$(STAR_INDEX_DIR)/SA: $(GENOME_FASTQ) $(GTF)
+endif
 	$(MODULE) load STAR/2.4.2a; \
 	mkdir -p $(STAR_INDEX_DIR); \
 	STAR --genomeFastaFiles  $(GENOME_FASTQ) \
@@ -103,15 +106,19 @@ $(STAR_INDEX_DIR)/SA: $(GENOME_FASTQ)
 		--runThreadN $(CORES) \
 		--genomeDir $(STAR_INDEX_DIR)
 
+ifdef USE_TRINITY
 STAR_OPTIONS?=
 $(SPECIES)_placenta_star.bam: $(TRIMMED_FASTQ_FILES) $(STAR_INDEX_DIR)/SA
+else
+STAR_OPTIONS?=--quantMode GeneCounts --sjdbGTFfile $(GTF)
+$(SPECIES)_placenta_star.bam: $(TRIMMED_FASTQ_FILES) $(STAR_INDEX_DIR)/SA $(GTF)
+endif
 	$(MODULE) load STAR/2.4.2a; \
 	mkdir -p $(SPECIES)_star; \
 	STAR --outFileNamePrefix $(SPECIES)_star/ \
 		--outSAMtype BAM SortedByCoordinate \
 		--runThreadN $(CORES) \
         --outSAMstrandField intronMotif \
-        --quantMode GeneCounts \
 		--genomeDir $(STAR_INDEX_DIR) \
 		$(STAR_OPTIONS) \
 		--readFilesCommand "gzip -dc" \

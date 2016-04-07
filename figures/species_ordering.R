@@ -4,7 +4,7 @@ species.ordering <-
       "ateles fusciceps",
       "mus musculus",
       "spalax carmeli",
-      "nannospalax galili",
+      "spalax galili",
       "bos taurus",
       "canis familiaris",
       "dasypus novemcinctus",

@@ -4,7 +4,7 @@
 R ?= R
 ROPTS=-q --no-save --no-restore-data
 
-all: manuscript.pdf supplemental_material.pdf
+all: references.bib manuscript.pdf supplemental_material.pdf
 
 bmcart.cls:
 	wget -O temp.zip "http://media.biomedcentral.com/content/production/bmc_article-tex.zip"
@@ -25,6 +25,13 @@ bmcart.cls:
 
 references_clean.bib: manuscript.tex references.bib
 	biber manuscript --output-format bibtex --output-file $@
+
+references.bib:
+	if ! [ -e references.bib ]; then \
+		ln references_clean.bib $@; \
+	else \
+		touch $@; \
+	fi;
 
 manuscript.pdf: manuscript.tex common_latex.tex acronyms.tex supplemental_material.aux
 

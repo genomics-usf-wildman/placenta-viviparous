@@ -1365,7 +1365,7 @@
 \newif\if@firstnote \@firstnotetrue
 
 \newenvironment{bmc@artnotes}{%
-  \def\note{\@ifnextchar[{\@bmcart_dlanote}{\note@nopars}}%
+  \def\note{\@ifnextchar[{\@bmcartnote}{\note@nopars}}%
   \def\contributionnote##1{\gdef\contributing@text{##1}}%
   \note@size%
 }{}
@@ -1375,32 +1375,32 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% \artnote
 
-\def\bmcart_dlanote{\@ifnextchar[{\@bmcart_dlanote}{\@bmcart_dlanote[]}}
+\def\bmcartnote{\@ifnextchar[{\@bmcartnote}{\@bmcartnote[]}}
 
-\define@key{bmcart_dlanote}{id}{%
-   \def\bmcart_dlanote@id{#1}%
-   \@ifundefined{bmcart_dlanote@id@list}{\xdef\bmcart_dlanote@id@list{#1}}{\xdef\bmcart_dlanote@id@list{\bmcart_dlanote@id@list,#1}}}                      
+\define@key{bmcartnote}{id}{%
+   \def\bmcartnote@id{#1}%
+   \@ifundefined{bmcartnote@id@list}{\xdef\bmcartnote@id@list{#1}}{\xdef\bmcartnote@id@list{\bmcartnote@id@list,#1}}}                      
 
-\define@key{bmcart_dlanote}{symbol}{\def\bmcart_dlanote@symbol{#1}}
+\define@key{bmcartnote}{symbol}{\def\bmcartnote@symbol{#1}}
 
 
-\def\@bmcart_dlanote[#1]#2{{%
-  \setkeys{bmcart_dlanote}{#1}%
-  \expandafter\protected@xdef\csname bmcart_dlanote@\bmcart_dlanote@id\endcsname{#2}%
-  \@ifundefined{bmcart_dlanote@symbol}{}{\expandafter\protected@xdef\csname bmcart_dlanote@symbol@\bmcart_dlanote@id\endcsname{\bmcart_dlanote@symbol}}
+\def\@bmcartnote[#1]#2{{%
+  \setkeys{bmcartnote}{#1}%
+  \expandafter\protected@xdef\csname bmcartnote@\bmcartnote@id\endcsname{#2}%
+  \@ifundefined{bmcartnote@symbol}{}{\expandafter\protected@xdef\csname bmcartnote@symbol@\bmcartnote@id\endcsname{\bmcartnote@symbol}}
 }}
 
 
 \def\printartnote#1{%
 \bgroup
-  \@ifundefined{bmcart_dlanote@symbol@#1}%
+  \@ifundefined{bmcartnote@symbol@#1}%
     {\leavevmode\thanksmark{#1}}%
-    {\edef\@tempa{\csname bmcart_dlanote@symbol@#1\endcsname}\leavevmode\thanksmark[\@tempa]{#1}}%
-  \@nameuse{bmcart_dlanote@#1}%
+    {\edef\@tempa{\csname bmcartnote@symbol@#1\endcsname}\leavevmode\thanksmark[\@tempa]{#1}}%
+  \@nameuse{bmcartnote@#1}%
 \egroup}
 
 \def\printartnotes{%
-   \@ifundefined{bmcart_dlanote@id@list}{}{\@for\bmcnote@id:=\bmcart_dlanote@id@list\do{\printartnote{\bmcnote@id}}}%  
+   \@ifundefined{bmcartnote@id@list}{}{\@for\bmcnote@id:=\bmcartnote@id@list\do{\printartnote{\bmcnote@id}}}%  
    \global\let\printartnotes\relax%
 }
 

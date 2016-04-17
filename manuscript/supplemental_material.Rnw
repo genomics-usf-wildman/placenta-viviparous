@@ -415,7 +415,7 @@ genes.expression.table <- function(species.name,min.fpkm=50) {
 for (this.species in names(species.names)) {
     this.caption <- paste0("\\textit{",
                            capfirst(this.species),"} Placental Gene Expression of all genes with FPKM $\\ge 50$")
-    cat(paste0("\\subsubsection{\\textit{",capfirst(this.species),"} Placental Gene Expression}\n\n"))
+    cat(paste0("\\clearpage\\subsubsection{\\textit{",capfirst(this.species),"} Placental Gene Expression}\n\n"))
     xt.align <- c("r","l","l","p{2.5in}","r")
     if (this.species == "homo sapiens" || this.species == "ateles fusciceps") {
         xt.align <- xt.align[-2]

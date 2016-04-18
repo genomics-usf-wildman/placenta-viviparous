@@ -254,17 +254,17 @@ load("../go_annotation/go_tissue_analysis")
     \textit{Ateles fusciceps}     & Spider monkey      & \textit{Homo sapiens} & 100 \\
     \textit{Bos taurus}           & Cow                & UMD3.1     & 75 \\
     \textit{Canis familiaris}     & Dog                & CanFam3.1  & 150 \\
-    \textit{Dasypus novemcinctus} & 9-Banded Armadillo & DASNOV3    & 100 \\
+    \textit{Dasypus novemcinctus} & Nine-Banded Armadillo & DASNOV3    & 100 \\
     \textit{Equus caballus}       & Horse              & EquCab2    & 100 \\ 
-    \textit{Loxodonta africana}   & Elephant           & loxAfr3    & 75 \\
+    \textit{Loxodonta africana}   & African savanna elephant           & loxAfr3    & 75 \\
     \textit{Homo sapiens}         & Human              & GRCh38     & 75, 150 \\
-    \textit{Monodelphis domestica} & Opossum           & BROAD05    & 75 \\
+    \textit{Monodelphis domestica} & Gray short-tailed opossum           & BROAD05    & 75 \\
     \textit{Mus musculus}         & Mouse              & GRCm38     & 35,44,150 \\
     \textit{Ovis aries}           & Sheep              & Oar\_v3.1   & 151 \\
     \textit{Pan paniscus}         & Bonobo             & CHIMP2.1.4 & 150 \\
-    \textit{Spalax carmeli}       & Blind mole rat     & \textit{Mus musculus} & 100 \\
-    \textit{Spalax galili}   & Blind mole rat     & \textit{Mus musculus} & 100 \\
-    \textit{Sus scrofa}           & Duroc (pig)        & Sscrofa10.2 & 51 \\
+    \textit{Spalax carmeli}       & Blind mole rat from Upper Galilee    & \textit{Mus musculus} & 100 \\
+    \textit{Spalax galili}   & Blind mole rat from Northern Israel    & \textit{Mus musculus} & 100 \\
+    \textit{Sus scrofa}           & Domestic pig (Duroc)        & Sscrofa10.2 & 51 \\
     \bottomrule
   \end{tabular}
   \caption{Species names, common names, reference genomes and read 

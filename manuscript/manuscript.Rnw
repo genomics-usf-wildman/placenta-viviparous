@@ -391,7 +391,7 @@ expression that may be related to obstetrical disorders such as
 pre-eclampsia.
 
 \begin{table}
-  \begin{tabular}{c c c c}
+  \begin{tabular}{c >{\raggedright \centering}p{1in} c c c}
     \toprule
     Species                       & Common Name & Gestation (days) & \multicolumn{1}{p{1in}}{\centering Average Litter Size}  & Source \\
     \midrule

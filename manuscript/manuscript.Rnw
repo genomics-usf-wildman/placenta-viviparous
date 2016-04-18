@@ -2063,12 +2063,15 @@ pregnalone
 (\cite{Simard.ea2005:Molecularbiologyof3beta-hydroxysteroid},
 Supplemental \cref{fig:progesterone_evolution_tree}) is also highly
 expressed in \human, \bonobo, \cow, \horse, and \dog, but is not
-highly expressed in \smonkey. The diversity of \textit{CYP19A1} and
-\textit{HSD3B1} expression levels in in primates and ungulates seen
-here points to the need for more complete sampling of placentas at
-different timepoints and in different clades.
-
-\DLA{discuss progesterone withdrawal and the lou muglin review}
+highly expressed in \smonkey, \sheep, \pig, \elephant, \armadillo, or
+\opossum. This is consistent with the previously observed local
+progesterone withdrawal in \sheep, and the leuteo-placental shift of
+progesterone expression in boreoeutheria in contrast to afrotherians
+which do not show such a shift
+\cite{Swaggart.ea2015:Genomicsofpretermbirth}. The diversity of
+\textit{CYP19A1} and \textit{HSD3B1} expression levels in in primates
+and ungulates seen here points to the need for more complete sampling
+of placentas at different timepoints and in different clades.
 
 \subsubsection{Prolactin}
 

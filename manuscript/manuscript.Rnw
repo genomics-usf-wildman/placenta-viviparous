@@ -395,20 +395,20 @@ pre-eclampsia.
     \toprule
     Species                       & Common Name & Gestation (days) & \multicolumn{1}{p{1in}}{\centering Average Litter Size}  & Source \\
     \midrule
-    \textit{Ateles fusciceps}     & spider monkey & 224 & 1 & \citet{Ernest2003:lifehistorycharacteristicsofplacental}\\
-    \textit{Bos taurus}           & domestic cow & 278 & 1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
-    \textit{Canis familiaris}     & domestic dog & 61 & 4 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
-    \textit{Dasypus novemcinctus} & nine-banded armadillo & 150 & 4 & \citet{Smith1984:amazingarmadillo} \\
-    \textit{Equus caballus}       & domestic horse & 336 & 1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation}\\
-    \textit{Loxodonta africana}   & African avanna elephant & 644 & 1 & \citet{Ernest2003:lifehistorycharacteristicsofplacental}\\
-    \textit{Homo sapiens}         & human & 270 & 1.1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
-    \textit{Monodelphis domestica}& gray short-tailed opossum & 15 & 7.1 & \citet{Harder.ea1993:Gestationandplacentationin} \\
-    \textit{Mus musculus}         & mouse & 20 & 6.1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
-    \textit{Spalax galili}   & blind mole rat from Upper Galilee & 28-42 & 4 & \citet{Nevo1997:mosiacevolutionofsubterranianmammals} \\
-    \textit{Ovis aries}           & domestic sheep & 151 & 1.35 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
-    \textit{Pan paniscus}         & bonobo & 223 & 1 & \citet{Ernest2003:lifehistorycharacteristicsofplacental} \\
-    \textit{Spalax carmeli}       & blind mole rat from northern Israel & 28-42 & 4 & \citet{Nevo1997:mosiacevolutionofsubterranianmammals}\\
-    \textit{Sus scrofa}           & domestic pig & 114 & 5.8 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
+    \textit{Ateles fusciceps}     & Spider monkey & 224 & 1 & \citet{Ernest2003:lifehistorycharacteristicsofplacental}\\
+    \textit{Bos taurus}           & Cow & 278 & 1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
+    \textit{Canis familiaris}     & Dog & 61 & 4 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
+    \textit{Dasypus novemcinctus} & Nine-banded Armadillo & 150 & 4 & \citet{Smith1984:amazingarmadillo} \\
+    \textit{Equus caballus}       & Horse & 336 & 1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation}\\
+    \textit{Loxodonta africana}   & African savanna elephant & 644 & 1 & \citet{Ernest2003:lifehistorycharacteristicsofplacental}\\
+    \textit{Homo sapiens}         & Human & 270 & 1.1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
+    \textit{Monodelphis domestica}& Gray short-tailed opossum & 15 & 7.1 & \citet{Harder.ea1993:Gestationandplacentationin} \\
+    \textit{Mus musculus}         & Mouse & 20 & 6.1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
+    \textit{Spalax galili}   & Blind mole rat from Upper Galilee & 28-42 & 4 & \citet{Nevo1997:mosiacevolutionofsubterranianmammals} \\
+    \textit{Ovis aries}           & Domestic sheep & 151 & 1.35 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
+    \textit{Pan paniscus}         & Bonobo & 223 & 1 & \citet{Ernest2003:lifehistorycharacteristicsofplacental} \\
+    \textit{Spalax carmeli}       & Blind mole rat from northern Israel & 28-42 & 4 & \citet{Nevo1997:mosiacevolutionofsubterranianmammals}\\
+    \textit{Sus scrofa}           & Domestic pig (Duroc) & 114 & 5.8 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
     \bottomrule
   \end{tabular}
   \caption{Gestational periods in days and average liter sizes for studied species.}

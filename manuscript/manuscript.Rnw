@@ -2403,12 +2403,11 @@ pre-eclampsia is a human disease that occurs in 4\% of pregnancies in
 the United States
 \cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current}. Pre-eclampsia
 can be attributed to the lack of adequate invasion of maternal tissue,
-and is noted by the onset of hypertension and proteinuria %
-%
-\DLA{Discuss the new ACOG requirements for diagnosis which does not
-  require proteinuria.}
-%
-\cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current}. Some cases of
+and is noted by the onset of hypertension and proteinuria (or in the
+absence of proteinuria, thrombocytopenia, impaired liver function,
+renal insufficiency, pulmonary edema, or cerebral or visual
+disturbances) %
+\cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current,ACOG2013:hypertensionpregnancy}. Some cases of
 pre-eclampsia can develop into eclampsia, a more severe condition
 resulting in seizures during pregnancy and death. Lack of invasion in
 pre-eclampsia may be attributed to the inefficiency of growth

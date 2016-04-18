@@ -163,6 +163,7 @@ star.logs.wide[,`% bad reads`:=(as.numeric(`% of reads mapped to too many loci`)
                             as.numeric(`% of reads unmapped: too short`))]
 star.logs.wide[,`% good reads`:=100-`% bad reads`]
 star.logs.wide[,input.reads:=as.numeric(input.reads)]
+star.logs.wide[,input.read.length:=as.numeric(input.read.length)]
 setkey(hugo.nomenclature,"Approved Symbol")
 @ 
 
@@ -611,9 +612,8 @@ Supplemental \cref{fig:transcriptome_statistics} shows the RNAseq read and
 alignment statistics for all species. For transcriptomes sequenced
 with 75 bp %
 %
-(\Sexpr{species(star.logs.wide[input.read.length > 70 & input.read.length < 80,unique(species)])})
+(\Sexpr{species(star.logs.wide[input.read.length > 70 & input.read.length < 80,unique(species)])}),%
 %
-,
 the number of trimmed reads ranged from %
 \Sexpr{star.logs.wide[input.read.length > 70 & input.read.length < 80,min(as.numeric(input.reads))]} 
 %
@@ -622,12 +622,11 @@ to %
 with an average of \Sexpr{star.logs.wide[input.read.length > 70 & input.read.length < 80,mean(`% good reads`)]}\% of reads 
 mapping to the respective reference genome (\cref{tab:ref_genome_aligned_species}). 
 %
-For transcriptomes sequenced with 150 bp, %
+For transcriptomes sequenced with 150 bp %
 % The mismatch here is because we're reporting trimmed reads here, not
 % full length reads
-(\Sexpr{species(star.logs.wide[input.read.length > 120 & input.read.length < 160,unique(species)])})
+(\Sexpr{species(star.logs.wide[input.read.length > 120 & input.read.length < 160,unique(species)])}),
 %
-,
 the number of trimmed reads ranged from %
 \Sexpr{star.logs.wide[input.read.length > 120 & input.read.length < 160,min(as.numeric(input.reads))]} 
 %
@@ -639,12 +638,11 @@ of reads mapping to the
 respective reference genome (\cref{tab:ref_genome_aligned_species}).
 %
 %
-For transcriptomes sequenced with 35 bp, %
+For transcriptomes sequenced with 35 bp %
 % The mismatch here is because we're reporting trimmed reads here, not
 % full length reads
-(\Sexpr{species(star.logs.wide[input.read.length < 40 ,unique(species)])})
+(\Sexpr{species(star.logs.wide[input.read.length < 40 ,unique(species)])}),
 %
-,
 the number of trimmed reads ranged from %
 \Sexpr{star.logs.wide[input.read.length < 40 ,min(as.numeric(input.reads))]} 
 %

@@ -522,7 +522,7 @@ print(pp %>%
       %>% phylopic("071ee517-a0f1-4d19-aa29-812b9f86cb53",color="#22BBBB",alpha=0.5,node=5,width=0.15)
       ## pig
       %>% phylopic("008d6d88-d1be-470a-8c70-73625c3fb4fb",color="#33AA11",alpha=0.5,node=6,width=0.12)
-      ## sheep
+      ## sheep -- this is a male, the sample is female, but there aren't any females in phylopic
       %>% phylopic("cbea1964-89bf-4ce1-99b0-58fe0f9170b3",color="#004411",alpha=0.5,node=7,width=0.18)
       ## cow
       %>% phylopic("415714b4-859c-4d1c-9ce0-9e1081613df7",color="#881111",alpha=0.5,node=8,width=0.12)

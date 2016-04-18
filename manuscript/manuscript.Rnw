@@ -1553,7 +1553,7 @@ output.top.genes.table(top.genes.table(species.name="equus caballus"))
 \end{table}
 
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
-in the term placenta of \textit{Equus caballus} are shown in
+in the term placenta of \horse are shown in
 \cref{tab:top50_horse_placenta} with a list of all highly expressed
 genes in Supplemental \cref{tab:all_equus_caballus_placenta}. The gene
 with the highest expression was the relaxin,

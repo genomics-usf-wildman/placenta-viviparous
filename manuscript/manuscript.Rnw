@@ -162,6 +162,7 @@ star.logs.wide[,`% bad reads`:=(as.numeric(`% of reads mapped to too many loci`)
                             as.numeric(`% of reads unmapped: too many mismatches`)+
                             as.numeric(`% of reads unmapped: too short`))]
 star.logs.wide[,`% good reads`:=100-`% bad reads`]
+star.logs.wide[,input.reads:=as.numeric(input.reads)]
 setkey(hugo.nomenclature,"Approved Symbol")
 @ 
 

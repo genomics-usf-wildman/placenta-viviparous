@@ -242,10 +242,12 @@ grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = NA
   \parttitle{Conclusions} A diverse array of genes are differentially
   expressed and are likely to play a role in the anatomical
   variability of the placenta in the placentas of mammalian lineages.
-  However, the expression of a subset of
+  However, using the strictest filtering strategy the expression of only
   \Sexpr{core.placenta.transcriptome.long[,length(unique(human_name))]}
   genes is essential for the proper functioning of the placenta in all
   species analyzed.
+
+\DLA{Include something about pre-eclampsia}
 
 \textbf{Keywords:} mammal, gene expression, evolution, RNA-seq, placenta
 
@@ -261,7 +263,7 @@ these functions are conserved among mammals, the placenta is perhaps
 the most variable organ in terms of structure and form
 \cite{Mossman.1937:comparativemorphogenesisofthe,Moffett.ea2006:Immunologyofplacentationin}. Species differ in
 the shape of attachment (i.e., discoid, diffuse, cotyledonary,
-zonary), degree of invasiveness of fetal tissues into maternal tissues
+zonary), degree of intimacy between fetal tissues and maternal tissues
 (i.e. epitheliochorial, endotheliochorial, hemochorial), and degree of
 interdigitation of maternal-fetal tissue (i.e., villous, folded,
 trabecular, lamellar, labrynthine)
@@ -275,7 +277,7 @@ specific aspects of placental morphology
 The placenta arose at some point before the origin of extant mammals,
 a group that includes marsupials, monotremes, and eutherian or
 “placental mammals”. The term “placental mammals” is misleading, as
-extant yinotherians (such as \textit{Ornithorhynchus anatinus}, the
+extant monotremes (such as \textit{Ornithorhynchus anatinus}, the
 platypus) possess a rudimentary placenta, as do marsupials, although
 the direct apposition to maternal tissues lasts for a proportionally
 shorter time during gestation
@@ -312,7 +314,7 @@ These include independent expansions of the prolactins in \mouse,
 in \cow, genes related to the thymus-specific serine protease
 \textit{PRSS16} in \textit{Loxodona africana} (in this work),
  and the expansion of the growth hormone
-and chorionic gonadotropin beta genes in hominoid primates
+and chorionic gonadotropin beta genes in anthropoid primates
 \cite{Haig2008:Placentalgrowthhormone-relatedproteins,Rawn.ea2008:evolutionregulationandfunction}.
 Expression patterns of specific genes also can vary widely between
 species. For example, the expression of orthologous genes in the
@@ -390,7 +392,7 @@ pre-eclampsia.
 \begin{table}
   \begin{tabular}{c c c c}
     \toprule
-    Species                       & Gestation (days) & Litter Size  & Source \\
+    Species                       & Gestation (days) & \multicolumn{1}{p{1in}}{\centering Average Litter Size}  & Source \\
     \midrule
     \textit{Ateles fusciceps}     & 224 & 1 & \citet{Ernest2003:lifehistorycharacteristicsofplacental}\\
     \textit{Bos taurus}           & 278 & 1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
@@ -900,7 +902,7 @@ the highest \ac{FPKM} value
 %
 in \human is \textit{CSH1}, followed by \textit{CSH2}, and \textit{CSHL1}, all
 three of which are members of a distinct expansion of the growth
-hormone gene family within hominoids (Supplemental \cref{fig:galectins_evolution_tree}). Another member of the growth
+hormone gene family within catarrhines (Supplemental \cref{fig:galectins_evolution_tree}). Another member of the growth
 hormone gene family, \ac{GH2} (%
 \Sexpr{gene.expression(species.name="homo sapiens",gene="GH2")}), %
 is also expressed to a high degree in the \human placenta
@@ -944,8 +946,8 @@ expression is on the order of the expression of
 %
 %
 Other highly expressed genes in the top 50 include members of the
-hemoglobin family (e.g. \textit{HBA1}, \textit{HBB}, \textit{HBG2},
-\textit{HBA2}), the maternally imprinted long noncoding RNA gene
+hemoglobin family (e.g. \textit{HBA1}, \textit{HBA2}, \textit{HBB},
+and \textit{HBG2}), the maternally imprinted long noncoding RNA gene
 \textit{H19}, genes coding for proteins required for growth and/or
 cell proliferation (\textit{ADAM12}, \textit{KISS1}, \textit{IGF2},
 \textit{GPC3}, \textit{CSF3R}), anticoagulation (\textit{TFPI2}), and
@@ -1363,12 +1365,12 @@ expansion seen in \mouse.
 
 \subsection{Laurasiatheria}
 
-We examined the expression of five Laurasiatherians: \cow, \sheep,
+We examined the expression of five laurasiatherians: \cow, \sheep,
 \pig, \horse, and \dog. We were unable to detect any significant
 differences after correcting for multiple testing between
-Laurasiatherians and all other analyzed species
+laurasiatherians and all other analyzed species
 (Supplemental \cref{tab:laurasiatheria_lineage_specific}) or between
-Laurasiatherians and Euarchontoglires
+laurasiatherians and Euarchontoglires
 (Supplemental \cref{tab:laurasiatheria_euarchontoglires_lineage_specific}).
 
 \subsubsection{\dog Placenta Transcriptome}
@@ -1553,7 +1555,7 @@ output.top.genes.table(top.genes.table(species.name="equus caballus"))
 \end{table}
 
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
-in the term placenta of \textit{Equus Caballus} are shown in
+in the term placenta of \textit{Equus caballus} are shown in
 \cref{tab:top50_horse_placenta} with a list of all highly expressed
 genes in Supplemental \cref{tab:all_equus_caballus_placenta}. The gene
 with the highest expression was the relaxin,
@@ -1869,7 +1871,7 @@ transcriptome, including \textit{ANXA2}, \textit{ANXA1},
 resolution of the inflammation response through inhibition of
 phospholipase A2 activity and signaling through the formyl peptide
 receptor family, and has previously been hypothesized to be important
-for the maintenance of the anti-inflammatory during pregnancy
+for the maintenance of the anti-inflammatory state during pregnancy
 \cite{Hutchinson.ea2011:Molecularregulatorsofresolution}. ANXA2 is
 known to interact with S100A10, S100A6, S100A11, and S100A4
 \cite{Liu.ea2015:AnnexinA2complexeswith}, and there is evidence for
@@ -2068,6 +2070,7 @@ highly expressed in \smonkey. The diversity of \textit{CYP19A1} and
 here points to the need for more complete sampling of placentas at
 different timepoints and in different clades.
 
+\DLA{discuss progesterone withdrawal and the lou muglin review}
 
 \subsubsection{Prolactin}
 
@@ -2309,7 +2312,7 @@ with caution, as highly expressed genes and functional annotation
 clusters may represent didelphid or \opossum specific adaptations.
 
 The \opossum placenta shows expression of genes that either do not
-exist in eutherians or are not found in the term eutherian placenta
+exist in eutherians or are not expressed in the term eutherian placenta
 (\cref{tab:top50_opossum_placenta}). The existence of embryonic forms
 of hemoglobin in fetal tissues at term, as evidenced by the expression
 of \textit{HBE} and \textit{HBZ} is a feature of marsupials that is
@@ -2353,6 +2356,8 @@ involved in the development of villi via cell proliferation
 gene is not found in primates. Expansion of these genes with high
 expression in \elephant may indicate an elaboration of this system.
 
+\DLA{Alu was primate specific? Check to see whether this is real.}
+
 \subsection{Core placenta transcriptome}
 
 The transcriptomes from multiple different species enabled us to
@@ -2382,7 +2387,7 @@ resources by the developing fetus to feed the expanded size of the
 human brain
 \cite{Carter.ea2011:Evolutionofinvasiveplacentation,Robillard.ea2002:Evolutionaryadaptationstopre-eclampsiaeclampsia}.
 \human have the largest brain in terms of relative size and this
-differs markedly from closely related great apes
+differs markedly from closely related apes
 \cite{Boddy.ea2012:Comparativeanalysisofencephalization}. Deep
 penetration of the myometrium occurs in chimpanzees and gorillas, but
 this penetration may be accelerated in humans
@@ -2395,7 +2400,11 @@ pre-eclampsia is a human disease that occurs in 4\% of pregnancies in
 the United States
 \cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current}. Pre-eclampsia
 can be attributed to the lack of adequate invasion of maternal tissue,
-and is noted by the onset of hypertension and proteinuria
+and is noted by the onset of hypertension and proteinuria %
+%
+\DLA{Discuss the new ACOG requirements for diagnosis which does not
+  require proteinuria.}
+%
 \cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current}. Some cases of
 pre-eclampsia can develop into eclampsia, a more severe condition
 resulting in seizures during pregnancy and death. Lack of invasion in
@@ -2430,11 +2439,11 @@ families as well as a set of core, non-housekeeping genes which are
 critical for the proper organization and functioning of the placenta.
 
 There is diversity in the placental expression of hormones, including
-estrogen, progesterone, prolactin, relaxin, natriuretic peptides, and
-the growth hormone family amount the species and lineages analyzed. We
-also identified genes differentially expressed on the \human lineage
-which are implicated in pre-eclampsia, including \textit{ADAM12},
-\textit{CRH}, and \textit{KISS1}.
+estrogen, progesterone, prolactin, relaxin, the growth hormone family, and
+natriuretic peptides among the species and lineages analyzed.
+We also identified genes differentially expressed on the \human
+lineage which are implicated in pre-eclampsia, including
+\textit{ADAM12}, \textit{CRH}, and \textit{KISS1}.
 
 The core placenta transcriptome was also identified, which contains
 genes which are involved in maternal-fetal tolerance, such as the

@@ -243,12 +243,14 @@ grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = NA
   \parttitle{Conclusions} A diverse array of genes are differentially
   expressed and are likely to play a role in the anatomical
   variability of the placenta in the placentas of mammalian lineages.
-  However, using the strictest filtering strategy the expression of only
+  Furthermore, multiple genes which are associated with pre-eclampsia
+  (\textit{CRH}, \textit{ADAM12}, \textit{KISS1}, \textit{PAPPA},
+  \textit{IL1RL1}, and \textit{PLAC1}) show increased expression on
+  the human lineage. Still, using the strictest filtering strategy the
+  expression we find that a core set of only
   \Sexpr{core.placenta.transcriptome.long[,length(unique(human_name))]}
   genes is essential for the proper functioning of the placenta in all
   species analyzed.
-
-\DLA{Include something about pre-eclampsia}
 
 \textbf{Keywords:} mammal, gene expression, evolution, RNA-seq, placenta
 
@@ -2351,13 +2353,13 @@ placenta are homologues of \textit{SSLP1}, a gene with predominant
 expression in the seminal vesicle in mouse
 \cite{Li.ea2006:SSLP-1secretedLy-6protein}. Homologues of
 \textit{SSLP1} are also expressed in \cow, \dog, \horse, and \sheep.
-\textit{SSLP1} also contains an Alu retrotransposon and may be
+\textit{SSLP1} also contains an Alu-like retrotransposon and may be
 involved in the development of villi via cell proliferation
 \cite{Ushizawa.ea2009:Characterizationandexpressionanalysis}. This
 gene is not found in primates. Expansion of these genes with high
 expression in \elephant may indicate an elaboration of this system.
 
-\DLA{Alu was primate specific? Check to see whether this is real.}
+% Bovine has their own alu-like sequence: PMID 7835712
 
 \subsection{Core placenta transcriptome}
 

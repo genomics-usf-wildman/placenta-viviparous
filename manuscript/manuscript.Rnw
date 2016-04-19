@@ -40,6 +40,7 @@
 \renewcommand{\efloatseparator}{\mbox{}}
 %\AtBeginFigures{\newpage \renewcommand{\efloatseparator}{\mbox{}}\section*{Figure Legends}}
 %\AtBeginTables{\newpage \section*{Tables}\renewcommand{\efloatseparator}{\mbox{}}}
+\renewcommand{\includegraphics}[2][]{}
 \usepackage[nomargin,inline,draft]{fixme}
 \newcommand{\DLA}[1]{\textcolor{red}{\fxnote{DLA: #1}}}
 \newcommand{\DEW}[1]{\textcolor{purple}{\fxnote{DEW: #1}}}

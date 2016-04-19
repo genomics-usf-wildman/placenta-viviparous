@@ -95,7 +95,7 @@ We suggest the following individuals as reviewers:
    University of Kansas
 2. Jay Cross <jcross@ucalgary.ca> Professor of Molecular Genetics at the
    University of Calgary
-3. Ashley Moffet <am485@cam.ac.uk> Professor of Pathology at the
+3. Ashley Moffett <am485@cam.ac.uk> Professor of Pathology at the
    University Cambridge
 4. Chris Burge <cburge@mit.edu> Professor of Biology and Biological
    Engineering at MIT

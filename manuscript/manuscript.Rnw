@@ -2353,7 +2353,7 @@ placenta are homologues of \textit{SSLP1}, a gene with predominant
 expression in the seminal vesicle in mouse
 \cite{Li.ea2006:SSLP-1secretedLy-6protein}. Homologues of
 \textit{SSLP1} are also expressed in \cow, \dog, \horse, and \sheep.
-\textit{SSLP1} also contains an Alu-like retrotransposon and may be
+\textit{SSLP1} also contains an SINE repeat and may be
 involved in the development of villi via cell proliferation
 \cite{Ushizawa.ea2009:Characterizationandexpressionanalysis}. This
 gene is not found in primates. Expansion of these genes with high

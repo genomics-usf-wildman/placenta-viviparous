@@ -246,8 +246,8 @@ grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = NA
   Furthermore, multiple genes which are associated with pre-eclampsia
   (\textit{CRH}, \textit{ADAM12}, \textit{KISS1}, \textit{PAPPA},
   \textit{IL1RL1}, and \textit{PLAC1}) show increased expression on
-  the human lineage. Still, using the strictest filtering strategy the
-  expression we find that a core set of only
+  the human lineage. Still, using the strictest filtering strategy
+  we find a core set of only
   \Sexpr{core.placenta.transcriptome.long[,length(unique(human_name))]}
   genes is essential for the proper functioning of the placenta in all
   species analyzed.

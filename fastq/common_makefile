@@ -111,7 +111,6 @@ $(SPECIES)_placenta_star.bam: $(TRIMMED_FASTQ_FILES) $(STAR_INDEX_DIR)/SA
 		--outSAMtype BAM SortedByCoordinate \
 		--runThreadN $(CORES) \
         --outSAMstrandField intronMotif \
-        --quantMode GeneCounts \
 		--genomeDir $(STAR_INDEX_DIR) \
 		$(STAR_OPTIONS) \
 		--readFilesCommand "gzip -dc" \

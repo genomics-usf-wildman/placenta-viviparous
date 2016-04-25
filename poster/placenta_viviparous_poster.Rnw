@@ -1,0 +1,295 @@
+\documentclass[a0paper,landscape]{tikzposter}
+\usepackage{fontspec}
+\setmainfont{FreeSerif}
+\setsansfont{FreeSans}
+\setmonofont{FreeMono}
+\usepackage{url}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage[bf]{caption}
+\usepackage{rotating}
+\usepackage{wrapfig}
+\usepackage{fancybox}
+\usepackage{booktabs}
+% \usepackage{multirow}
+\usepackage{acronym}
+\usepackage{qrcode}
+\usepackage[backend=biber,natbib=true,hyperref=true,style=nature]{biblatex}
+\addbibresource{references.bib}
+% \usepackage[nomargin,inline,draft]{fixme}
+% \newcommand{\DLA}[1]{\textcolor{red}{\fxnote{DLA: #1}}}
+\usepackage[hyperfigures,bookmarks,colorlinks,citecolor=black,filecolor=black,linkcolor=black,urlcolor=black]{hyperref}
+\usepackage{texshade}
+\usepackage{tikz}
+\usepackage{nameref}
+\usepackage{zref-xr,zref-user}
+\renewcommand*{\bibfont}{\small}
+
+% The textpos package is necessary to position textblocks at arbitary 
+% places on the page.  Use showboxes option to show outlines of textboxes.
+% \usepackage[absolute]{textpos}
+\usepackage[absolute,showboxes]{textpos}
+
+\usepackage{multirow}
+\usepackage{array}
+
+\title{The Evolution of Gene Expression in the Term Placenta of
+  Viviparous Mammals} 
+
+\author{Don L. Armstrong, Michael R. McGowen, Amy Weckle, Jason
+  Caravas, Dalen Agnew, Sue Savage-Rumbaugh, Eviatar Nevo, Chong J.
+  Kim, Günter P. Wagner, Roberto Romero, and Derek Wildman}
+\institute{Institute for Genomic Biology, Computing Genomes for
+  Reproductive Health, University of Illinois, Urbana-Champaign}
+\usetheme{Default}
+
+% use this
+% http://www.identitystandards.illinois.edu/graphicstandardsmanual/othermedia/posterpresentation.html
+\definecolorstyle{UofI}{
+  \definecolor{boldBlue}{HTML}{002058}
+  \definecolor{boldOrange}{HTML}{E87722}
+  \definecolor{professionalBlue}{HTML}{606EB2}
+  \definecolor{professionalOrange}{HTML}{D45D00}
+  }{
+    \colorlet{backgroundcolor}{professionalBlue}
+    \colorlet{framecolor}{black}
+    \colorlet{titlefgcolor}{boldBlue}
+    \colorlet{titlebgcolor}{white}
+    \colorlet{blockbodybgcolor}{white}
+    \colorlet{blocktitlebgcolor}{professionalOrange}
+    \colorlet{blocktitlefgcolor}{boldBlue}
+    }
+\usecolorstyle{UofI}
+\defineblockstyle{UofIMinimal}{
+    titlewidthscale=1, bodywidthscale=1, titleleft,
+    titleoffsetx=0pt, titleoffsety=0pt, bodyoffsetx=0pt, bodyoffsety=0pt,
+    bodyverticalshift=0pt, roundedcorners=0, linewidth=0.2cm,
+    titleinnersep=1cm, bodyinnersep=1cm
+}{
+    \begin{scope}[line width=\blocklinewidth, rounded corners=\blockroundedcorners]
+       \ifBlockHasTitle %
+           \draw[draw=none,fill=blockbodybgcolor]
+               (blockbody.south west) rectangle (blocktitle.north east);
+           \draw[color=blocktitlebgcolor, loosely dashed]
+               (blocktitle.south west) -- (blocktitle.south east);%
+       \else
+             \draw[draw=none,fill=blockbodybgcolor]
+                 (blockbody.south west) rectangle (blockbody.north east);
+        \fi
+    \end{scope}
+}
+
+\useblockstyle{UofIMinimal}
+\definebackgroundstyle{UofIVertical}{
+    \draw[line width=0pt, bottom color=backgroundcolor, 
+    top color=white] (bottomleft) rectangle (topright);
+}
+\usebackgroundstyle{UofIVertical}
+\definetitlestyle{UofITitle}{
+    width=\paperwidth, roundedcorners=0, linewidth=0pt, innersep=12mm,
+    titletotopverticalspace=5mm, titletoblockverticalspace=10mm,
+    titlegraphictotitledistance=10pt
+}{}
+\usetitlestyle{UofITitle}
+
+\makeatletter
+\renewcommand\TP@maketitle{%
+   \begin{minipage}{0.8\textwidth}
+        \color{titlefgcolor}
+        {\bfseries \Huge \sc \@title \par}
+        \vspace*{1em}
+        {\huge \@author \par}
+        \vspace*{1em}
+        {\LARGE \@institute}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}{0.2\linewidth}
+      \includegraphics[width=0.8\linewidth,height=6cm,keepaspectratio]{figures/igb_wordmark}
+    \end{minipage}
+}
+\makeatother
+
+\begin{document}
+
+
+<<load.libraries,echo=FALSE,results="hide",warning=FALSE,message=FALSE,error=FALSE,cache=FALSE>>=
+opts_chunk$set(dev="cairo_pdf",out.width="\\textwidth",out.height="0.7\\textheight",out.extra="keepaspectratio")
+opts_chunk$set(cache=TRUE, autodep=TRUE)
+options(device = function(file, width = 8, height = 7, ...) {
+  cairo_pdf(tempfile(), width = width, height = height, ...)
+})
+options(scipen = -2, digits = 0)
+library("data.table")
+library("ggplot2")
+library("reshape2")
+library("xtable")
+library("grid")
+library("gridExtra")
+library("ape")
+library("ggtree")
+library("topGO")
+library("org.Hs.eg.db")
+library("scales")
+library("magrittr")
+library("tidyr")
+
+@ 
+
+<<source.to.latex,echo=FALSE,message=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../common_r_code/",c("to_latex.R","plot_tree_matrix.R","utility_functions.R")))>>=
+for (a in paste0("../common_r_code/",c("to_latex.R","plot_tree_matrix.R","utility_functions.R"))) {
+    source(a)
+}
+@ 
+
+<<load.data,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../data/",c("combined_fpkm","gene_trees","housekeeping_genes_superset","placenta_core_transcriptome","placenta_go_results_bp","placenta_go_results_mf","hugo_nomenclature","gene_annotation")))>>=
+for (a in paste0("../data/",c("combined_fpkm","gene_trees",
+                              "housekeeping_genes_superset",
+                              "placenta_core_transcriptome",
+                              "placenta_go_results_bp",
+                              "placenta_go_results_mf",
+                              "hugo_nomenclature",
+                              "gene_annotation"
+                              ))) {
+    load(a)
+}
+combined.fpkm[,species:=factor(species,levels=names(species.names))]
+setkey(genes.to.tree,"gene_id")
+star.logs[,value:=gsub("%$","",value)]
+star.logs.wide <- 
+    data.table(dcast(star.logs,species+file~field))
+setnames(star.logs.wide,
+         "Average input read length",
+         "input.read.length")
+setnames(star.logs.wide,
+         "Number of input reads",
+         "input.reads")
+setnames(star.logs.wide,
+         "Uniquely mapped reads number",
+         "unique.map.reads")
+star.logs.wide[,`% bad reads`:=(as.numeric(`% of reads mapped to too many loci`)+
+                            as.numeric(`% of reads unmapped: other`)+
+                            as.numeric(`% of reads unmapped: too many mismatches`)+
+                            as.numeric(`% of reads unmapped: too short`))]
+star.logs.wide[,`% good reads`:=100-`% bad reads`]
+star.logs.wide[,input.reads:=as.numeric(input.reads)]
+star.logs.wide[,input.read.length:=as.numeric(input.read.length)]
+setkey(hugo.nomenclature,"Approved Symbol")
+@ 
+
+<<load.go.results,echo=FALSE,results="hide",cache.extra=tools::md5sum("../go_annotation/go_tissue_analysis")>>=
+load("../go_annotation/go_tissue_analysis")
+
+@ 
+
+<<plot.defaults,echo=FALSE,results="hide">>=
+grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = NA)
+
+@ 
+
+\input{acronyms}
+
+
+\maketitle
+
+\begin{columns}
+
+  \column{0.25}
+
+  \block{Introduction}{
+    
+    
+%     Our approach identified MIR1914, MIR126, SNORD12, and SNORD5 as
+%     uterus specific. CGB, LGALS13, and members of the PSG family were
+%     identified as placenta specific. The accuracy of the classifier
+%     was verified using RNAseq transcriptome data not in the training
+%     set. We show the applicability of the classifier to simulated EVs
+%     by down sampling reads to $10^5$ reads and biasing the reads to
+%     account for preferential association of RNA motifs with EV
+%     packaging machinery. When coupled with single-EV sequencing, our
+%     classifier enables clinicians to monitor disease-specific markers
+%     over the course of treatment without biopsies, increasing the
+%     ability of clinicians to adapt treatment modalities to the
+%     individual patient. 
+  }
+  
+  \block{Methods}{     
+}
+
+
+\column{0.25}
+
+\begin{figure}
+<<species.tree,fig.width=8,fig.height=6,echo=FALSE>>=
+species.tree <- 
+    read.tree(text="(Monodelphis_domestica,((Dasypus_novemcinctus,Loxodonta_africana)Atlantogenata,((Canis_familiaris,(Equus_caballus,(Sus_scrofa,(Ovis_aries,Bos_taurus))))Laurasiatheria,(((Spalax_carmeli,Spalax_galili),Mus_Musculus)Rodentia,((Pan_paniscus,Homo_sapiens),Ateles_fuciceps)Primates)Euarchontoglires)Boreoeutheria)Eutheria);")
+pp <- ggtree(species.tree)+
+    geom_text(aes(label=label),hjust=0,size=5,fontface="italic")+
+    scale_x_continuous(limits=c(0,10))
+print(pp %>%
+      ## monodelphis
+      phylopic("91324e57-b3f1-42e0-abe3-43e5bc8aa4c6", color="#86B875",alpha=0.5,node=1,width=0.2)
+      ## Armadillo
+      %>% phylopic("5d59b5ce-c1dd-40f6-b295-8d2629b9775e", color="#44EEBB",alpha=0.5,node=2,width=0.15)
+      ## elephant
+      %>% phylopic("80db1004-bc9f-4318-84e7-cdd9639a1f3e",color="#BB1111",alpha=0.5,node=3,width=0.15)
+      ## dog
+      %>% phylopic("4d83a0cd-cf06-4a32-9a5a-0a6b644158c1",color="#FFAACC",alpha=0.5,node=4,width=0.15)
+      ## horse
+      %>% phylopic("071ee517-a0f1-4d19-aa29-812b9f86cb53",color="#22BBBB",alpha=0.5,node=5,width=0.15)
+      ## pig
+      %>% phylopic("008d6d88-d1be-470a-8c70-73625c3fb4fb",color="#33AA11",alpha=0.5,node=6,width=0.12)
+      ## sheep -- this is a male, the sample is female, but there aren't any females in phylopic
+      %>% phylopic("cbea1964-89bf-4ce1-99b0-58fe0f9170b3",color="#004411",alpha=0.5,node=7,width=0.18)
+      ## cow
+      %>% phylopic("415714b4-859c-4d1c-9ce0-9e1081613df7",color="#881111",alpha=0.5,node=8,width=0.12)
+      ## s carmeli
+      %>% phylopic("287c58ad-009b-4878-9a9e-59fd7e0fe66f",color="#881188",alpha=0.5,node=9,width=0.1)
+      ## n galili
+      %>% phylopic("287c58ad-009b-4878-9a9e-59fd7e0fe66f",color="#888888",alpha=0.5,node=10,width=0.1)
+      ## mouse
+      %>% phylopic("6b2b98f6-f879-445f-9ac2-2c2563157025",color="#BB11CC",alpha=0.5,node=11,width=0.18)
+      ## bonobo
+      %>% phylopic("f06b4dd0-094e-4f37-9105-25fdb4eb1b02",color="#1111FF",alpha=0.5,node=12,width=0.18)
+      ## spider monkey
+      %>% phylopic("aceb287d-84cf-46f1-868c-4797c4ac54a8",color="#FF11FF",alpha=0.5,node=14,width=0.25)
+      ## human
+      %>% phylopic("a9f4ebd5-53d7-4de9-9e66-85ff6c2d513e",color="#CCCC44",alpha=0.5,node=13,width=0.18)
+      )
+@ 
+\caption{Species tree for organisms studied showing the relationship
+  between species. Silhouettes of species were obtained from
+  \url{http://phylopic.org}. }
+\label{fig:species_tree}
+\end{figure}
+
+
+\column{0.25}
+
+\column{0.25}
+
+\block{Conclusions}{
+}
+
+\block{References}{ 
+
+  \begin{center}
+    \mbox{}\vspace{-\baselineskip}
+    \printbibliography[heading=none]
+  \end{center}
+}
+
+\block{Code and Datasets}{
+The code and underlying data for this poster can be found at
+\begin{center}
+\qrcode[padding]{http://dla2.us/p/pv2016}
+\url{http://dla2.us/p/pv2016}
+\end{center}
+% 
+}
+\block{}{
+  \includegraphics[width=\linewidth,height=6cm,keepaspectratio]{figures/uofi_mark}
+}
+
+\end{columns}
+
+\end{document}

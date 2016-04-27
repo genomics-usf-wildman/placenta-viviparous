@@ -10,11 +10,12 @@
 \usepackage{rotating}
 \usepackage{wrapfig}
 \usepackage{fancybox}
+\usepackage{xspace}
 \usepackage{booktabs}
 % \usepackage{multirow}
 \usepackage{acronym}
 \usepackage{qrcode}
-\usepackage[backend=biber,natbib=true,hyperref=true,style=nature]{biblatex}
+\usepackage[backend=biber,maxnames=1,natbib=true,hyperref=true,style=nature]{biblatex}
 \addbibresource{references.bib}
 % \usepackage[nomargin,inline,draft]{fixme}
 % \newcommand{\DLA}[1]{\textcolor{red}{\fxnote{DLA: #1}}}
@@ -42,6 +43,22 @@
 \institute{Institute for Genomic Biology, Computing Genomes for
   Reproductive Health, University of Illinois, Urbana-Champaign}
 \usetheme{Default}
+
+% species names
+\newcommand{\smonkey}[0]{\textit{A. fusciceps}\xspace}
+\newcommand{\cow}[0]{\textit{B. taurus}\xspace}
+\newcommand{\dog}[0]{\textit{C. familiaris}\xspace}
+\newcommand{\armadillo}[0]{\textit{D. novemcinctus}\xspace}
+\newcommand{\horse}[0]{\textit{E. caballus}\xspace}
+\newcommand{\elephant}[0]{\textit{L. africana}\xspace}
+\newcommand{\human}[0]{\textit{H. sapiens}\xspace}
+\newcommand{\opossum}[0]{\textit{M. domestica}\xspace}
+\newcommand{\mouse}[0]{\textit{M. musculus}\xspace}
+\newcommand{\galili}[0]{\textit{N. galili}\xspace}
+\newcommand{\sheep}[0]{\textit{O. aries}\xspace}
+\newcommand{\bonobo}[0]{\textit{P. paniscus}\xspace}
+\newcommand{\carmeli}[0]{\textit{S. carmeli}\xspace}
+\newcommand{\pig}[0]{\textit{S. scrofa}\xspace}
 
 % use this
 % http://www.identitystandards.illinois.edu/graphicstandardsmanual/othermedia/posterpresentation.html
@@ -103,8 +120,10 @@
         {\LARGE \@institute}
     \end{minipage}%
     \hfill
-    \begin{minipage}{0.2\linewidth}
-      \includegraphics[width=0.8\linewidth,height=6cm,keepaspectratio]{figures/igb_wordmark}
+    \begin{minipage}{0.13\linewidth}
+      \begin{flushright}
+        \includegraphics[width=\linewidth,height=6cm,keepaspectratio]{figures/igb_wordmark}
+      \end{flushright}
     \end{minipage}
 }
 \makeatother
@@ -113,7 +132,7 @@
 
 
 <<load.libraries,echo=FALSE,results="hide",warning=FALSE,message=FALSE,error=FALSE,cache=FALSE>>=
-opts_chunk$set(dev="cairo_pdf",out.width="\\textwidth",out.height="0.7\\textheight",out.extra="keepaspectratio")
+opts_chunk$set(dev="cairo_pdf",out.width="0.9\\colwidth",out.extra="keepaspectratio")
 opts_chunk$set(cache=TRUE, autodep=TRUE)
 options(device = function(file, width = 8, height = 7, ...) {
   cairo_pdf(tempfile(), width = width, height = height, ...)
@@ -193,11 +212,50 @@ grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = NA
 
 \begin{columns}
 
-  \column{0.25}
+  \column{0.2}
 
   \block{Introduction}{
+\begin{itemize}
+\item Function and Evolution of Placenta
+    \begin{itemize}
+    \item Major function is the transfer of nutrients, oxygen, and
+      waste between mother and offspring
+    \item Highly variable structure and form in mammals, even though
+      major function is conserved
+    \item Likely arose before the origin of therian mammals
+    \item Form relatively well characterized, but diversity of
+      molecular environment understudied
+    \item Role in the evolutionary interplay between maternal and fetal
+      strategies
+    \end{itemize}
+
+  \item Impacts on Human Health
+    \begin{itemize}
+    \item Humans possess a deeply invasive trophoblast layer that can
+      penetrate the myometrium of the uterus
+      \cite{Carter.ea2011:Evolutionofinvasiveplacentation}.
+    \item Defects in placental growth can lead to pre-eclampsia, which can
+      cause hypertension, proteinuria, and mortality of mother and/or
+      infant \cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current}.
+    \item Pre-eclampsia has been seen in \textit{Pan troglodytes}
+      \cite{Stout.ea1969:Glomerularcapillaryendothelialswelling}, and
+      \textit{Gorilla gorilla}
+      \cite{Thornton.ea1992:Convulsionsinpregnancyin}
+    \item Far higher incidence in \textit{Homo sapiens}, with as many as 
+      4\% of pregnancies United States affected
+      \cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current}.
+    \end{itemize}
     
-    
+  \item Hypotheses
+    \begin{itemize}
+    \item Gene expression patterns correlate with placenta morphology
+    \item Altered expression of genes correlates with invasiveness, and
+      therefore pre-eclampsia
+    \item Maternal/Fetal evolutionary strategies will be reflected in gene
+      expression patterns
+    \end{itemize}
+  \end{itemize}
+  
 %     Our approach identified MIR1914, MIR126, SNORD12, and SNORD5 as
 %     uterus specific. CGB, LGALS13, and members of the PSG family were
 %     identified as placenta specific. The accuracy of the classifier
@@ -212,14 +270,190 @@ grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = NA
 %     individual patient. 
   }
   
-  \block{Methods}{     
+  \block{Methods}{
+    \small
+    \begin{itemize}
+    \item Fetal placenta tissue from 9 mammalian species collected;
+      total RNA isolated and sequenced using Illumina GA II with an
+      average read size of 150nt
+    \item Additional mammalian placenta sequences obtained from SRA
+    \item QCed using FASTQC, aligned using STAR, and quantified using
+      Cufflinks. Species missing suitable reference (Spider monkey,
+      \textit{S. galili}, \textit{S. carmeli}) were assembled using
+      Trinity and annotated using Diamond against the Human or Mouse
+      transcriptome.
+    \item Ensembl build 80 was the source of annotation.
+    \item Enrichment in human and mouse were calculated using a
+      type-III anova, all other enrichments used Student's t test.
+    \end{itemize}
+  }
+
+
+\column{0.2}
+
+<<top.genes.function,echo=FALSE,results="hide">>=
+top.genes.table <- function(species.name,n=50) {
+    alignment.species <- species.name
+    if (alignment.species=="pan paniscus") {
+        alignment.species <- "pan troglodytes"
+    } else if (alignment.species=="ateles fusciceps") {
+        alignment.species <- "homo sapiens"
+    } else if (grepl("spalax",alignment.species)) {
+        alignment.species <- "mus musculus"
+    }
+    temp <- 
+        combined.fpkm[species==species.name &
+                      !(!is.na(human_name) & 
+                        human_name %in% housekeeping.genes.superset[,gene_short_name]) &
+                      ! (gene_biotype %in% c("Mt_tRNA","Mt_rRNA","rRNA")) &
+                      !grepl("((RNA\\d|MT)-|^RP[SL]P?\\d+[ABCD]?[L]?$)",human_name) &
+                      !grepl("((RNA\\d|MT)-|^RP[SL]P?\\d+[ABCD]?[L]?$)",human_alignment_symbol) &
+                      !grepl("(^[Mm][Tt]-|^R[pP][lsLS]\\d+[abcdABCD]?[lL]?(?:-.+)?$|rRNA$)",
+                             gene_short_name)
+                      ][order(-mean_fpkm)][,list(name_or_id,
+                                                 human_alignment_symbol,
+                                                 human_name,mean_fpkm,sd_fpkm,n_fpkm)]
+    ## remove any genes which have a null name_or_id; they are probably from unassembled contigs
+    temp <- temp[!(is.na(name_or_id)|name_or_id==""),]
+    temp <- temp[!duplicated(name_or_id)][1:n]
+    temp[,used_alignment:=FALSE]
+    temp[is.na(human_name) & !is.na(human_alignment_symbol),
+                    used_alignment:=TRUE]
+    temp[is.na(human_name),human_name:=human_alignment_symbol]
+    setkey(temp,"human_name")
+    temp <- 
+        hugo.nomenclature[temp][order(-mean_fpkm),
+                                list(name_or_id,used_alignment,`Approved Symbol`,`Approved Name`,
+                                     mean_fpkm,sd_fpkm,n_fpkm)]
+    temp[!is.na(name_or_id),
+         name_or_id:=paste0("\\href{http://www.ensembl.org/",
+                             capfirst(gsub(" ","_",alignment.species)),
+                             "/Gene/Summary?g=",name_or_id,"}{\\textit{",
+                             xtable.sanitize.text(name_or_id),"}}")]
+    temp[!is.na(`Approved Name`),
+         `Approved Name`:=paste0("\\href{http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=",`Approved Symbol`,"}{",xtable.sanitize.text(`Approved Name`),"}")]
+    temp[!is.na(`Approved Symbol`),
+         `Approved Symbol`:=paste0("\\href{http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=",`Approved Symbol`,"}{\\textit{",xtable.sanitize.text(`Approved Symbol`),"}}")]
+    temp[used_alignment==TRUE,`Approved Symbol`:=paste0("(",`Approved Symbol`,")")]
+    temp[,used_alignment:=NULL]
+    temp[,sem_fpkm:=as.numeric(NA)]
+    temp[n_fpkm>1,sem_fpkm:=sd_fpkm/sqrt(n_fpkm)]
+    temp[,sd_fpkm:=NULL]
+    temp[,n_fpkm:=NULL]
+    setnames(temp,c("Gene symbol","Human Symbol","Human Name","FPKM","SEM"))
+    if (temp[,all(is.na(`SEM`))]) {
+        temp[,`SEM`:=NULL]
+    }
+    if (species.name=="homo sapiens" || species.name=="ateles fusciceps") {
+        temp[,`Human Symbol`:=NULL]
+    }
+    temp[,`FPKM`:=round(`FPKM`)]
+    return(temp)
+}
+gene.expression <- function(species.name,gene,complete=FALSE,units=TRUE) {
+    species.name <- gsub("_"," ",species.name)
+    fpkm <- combined.fpkm[species==species.name &
+                              (gene_short_name==gene | 
+                               gene_id==gene),
+                          mean_fpkm][1]
+    if (is.na(fpkm)) {
+        stop("FPKM is NA!!!!")
+    }
+    if (units || complete)
+        fpkm <- formatC(fpkm,digits=0,format="f")
+    if (units) {
+        fpkm <- paste0(fpkm,
+                       "\\ \\text{FPKM}")
+    }
+    if (complete) {
+        if (any(grepl("^ENS.+G\\d+$",gene))) {
+            fpkm <- paste0("\\text{",gene,"} = ",
+                           fpkm)
+        } else {
+            fpkm <- paste0("\\text{\\textit{",gene,"}} = ",
+                           fpkm)
+        }
+    }
+    if (units || complete) {
+        fpkm <- paste0("$",fpkm,"$")
+    }
+    return(fpkm)
+}
+    
+@ 
+
+<<load.placenta.lineage.specific,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../data/",c("placenta_lineage_specific","human_mouse_lineage_specific")))>>=
+load("../data/placenta_lineage_specific")
+load("../data/human_mouse_lineage_specific")
+source("/home/don/projects/xtable/pkg/R/print.xtable.R")
+
+placenta.lineage.specific.table <- function(analysis,output=TRUE,lineage.table=placenta.lineage.specific.analysis,members=5,orderbyfc=FALSE,fdr.cutoff=1) {
+    temp.table <- 
+        lineage.table[analysis.name==analysis &
+                      p.value <= 0.05 &
+                      fdr <= fdr.cutoff][order(p.value),
+                                       list(human_name,p.value,fdr,fc),]
+    temp.table <- data.table(temp.table)
+    setkey(temp.table,"human_name")
+    temp.table <- 
+        hugo.nomenclature[temp.table][,list(`Approved Symbol`,
+                                            `Approved Name`,p.value,fdr,fc)]
+    setnames(temp.table,
+              c("Human Symbol","Human Name","p (t-test)","FDR","Fold Change")
+              )
+    setkey(temp.table,"Human Symbol")
+    if (output) {
+        display.table <- temp.table[`FDR`<=fdr.cutoff,][order(`p (t-test)`),]
+        if (orderbyfc) {
+            display.table <- temp.table[order(-abs(`Fold Change`)),]
+        }
+        display.table <- display.table[1:members,]
+        display.table[,`p (t-test)`:=NULL]
+        display.table <-
+            display.table[,`Human Symbol`:=paste0("\\textit{",xtable.sanitize.text(`Human Symbol`),
+                                                  "}")]
+        setnames(display.table,"Fold Change","$\\mathrm{log}_2$ FC")
+        print(xtable(display.table,
+                     display=c("s","s","s","g","f"),
+                     align=c("c","c","p{3.3in}","r","r")
+                     ),
+              booktabs=TRUE,
+              floating=FALSE,
+              math.style.exponents=TRUE,
+              sanitize.text.function=genes.table.sanitize,
+              include.rownames=FALSE)
+        
+    }
+    return(invisible(temp.table[order(`p (t-test)`),]))
+}
+output.top.genes.table <- function(data,output=TRUE) {
+    if (output) {
+        table.display <- c("s","s","s","d")
+        table.align <- c("c","c","p{3in}","r")
+        if (any(colnames(data) %in% "SEM"))  {
+            table.display <- c(table.display,"d")
+            table.align <- c(table.align,"r")
+        }
+        if (any(colnames(data) %in% "Human Symbol"))  {
+            table.align <- c("c",table.align)
+            table.display <- c("s",table.display)
+        }
+        print(xtable(data,
+                     display=table.display,
+                     align=table.align
+                     ),
+              booktabs=TRUE,
+              floating=FALSE,
+              sanitize.text.function=genes.table.sanitize,
+              include.rownames=FALSE)
+    }
 }
 
+@ 
 
-\column{0.25}
-
-\begin{figure}
-<<species.tree,fig.width=8,fig.height=6,echo=FALSE>>=
+\block{Phylogeny of Species}{
+\centering
+<<species.tree,fig.width=10,fig.height=8,echo=FALSE>>=
 species.tree <- 
     read.tree(text="(Monodelphis_domestica,((Dasypus_novemcinctus,Loxodonta_africana)Atlantogenata,((Canis_familiaris,(Equus_caballus,(Sus_scrofa,(Ovis_aries,Bos_taurus))))Laurasiatheria,(((Spalax_carmeli,Spalax_galili),Mus_Musculus)Rodentia,((Pan_paniscus,Homo_sapiens),Ateles_fuciceps)Primates)Euarchontoglires)Boreoeutheria)Eutheria);")
 pp <- ggtree(species.tree)+
@@ -256,18 +490,305 @@ print(pp %>%
       %>% phylopic("a9f4ebd5-53d7-4de9-9e66-85ff6c2d513e",color="#CCCC44",alpha=0.5,node=13,width=0.18)
       )
 @ 
-\caption{Species tree for organisms studied showing the relationship
+\captionof{figure}{Species tree for organisms studied showing the relationship
   between species. Silhouettes of species were obtained from
   \url{http://phylopic.org}. }
 \label{fig:species_tree}
-\end{figure}
+}
+
+% \block{Variation in Gestational Period and Litter Size}{
+%   \small
+%   \begin{tabular}{>{\raggedright \centering}p{2in} >{\raggedright \centering}p{2.5in} c c }
+%     \toprule
+%     Species                       & Common Name & \multicolumn{1}{p{1in}}{\centering Gestation (days)} & \multicolumn{1}{p{1in}}{\centering Average Litter Size} \\
+%     \midrule
+%     \textit{Ateles fusciceps}     & Spider monkey & 224 & 1 \\
+%     \textit{Bos taurus}           & Cow & 278 & 1 \\
+%     \textit{Canis familiaris}     & Dog & 61 & 4 \\
+%     \textit{Dasypus novemcinctus} & Nine-banded Armadillo & 150 & 4 \\
+%     \textit{Equus caballus}       & Horse & 336 & 1 \\
+%     \textit{Loxodonta africana}   & African savanna elephant & 644 & 1 \\
+%     \textit{Homo sapiens}         & Human & 270 & 1.1 \\
+%     \textit{Monodelphis domestica}& Gray short-tailed opossum & 15 & 7.1 \\
+%     \textit{Mus musculus}         & Mouse & 20 & 6.1 \\
+%     \textit{Spalax galili}   & Blind mole rat from Upper Galilee & 28-42 & 4 \\
+%     \textit{Ovis aries}           & Domestic sheep & 151 & 1.35 \\
+%     \textit{Pan paniscus}         & Bonobo & 223 & 1 \\
+%     \textit{Spalax carmeli}       & Blind mole rat from northern Israel & 28-42 & 4 \\
+%     \textit{Sus scrofa}           & Domestic pig (Duroc) & 114 & 5.8 \\
+%     \bottomrule
+%   \end{tabular}
+%   \captionof{table}{Gestational periods in days and average liter sizes for studied species.}
+% }
+
+% \block{Variations in Placenta Morphology}{
+% \begin{tabular}{c c c}
+%   \toprule
+%   Species & Interhemal Membrane & Pattern \\
+%   \midrule
+%   \smonkey & hemochorial & trabecular \\
+%   \cow     & epitheliochorial & villous \\
+%   \dog     & endotheliochorial & labyrinthine \\
+%   \armadillo & hemochorial & trabecular \\
+%   \horse & epitheliochorial & villous \\
+%   \elephant & endotheliochorial & labyrinthine \\
+%   \human & hemochorial & villous \\
+% % http://onlinelibrary.wiley.com/doi/10.1002/jez.1402660511/pdf
+%   \opossum & epitheliochorial & choriovitelline \\
+%   \mouse & hemotrichorial & labyrinthine \\
+%   \galili & hemotrichorial & labyrinthine \\
+%   \sheep & epitheliochorial & villous \\
+%   \bonobo & hemochorial & villous \\
+% % http://www.biolreprod.org/content/early/2014/10/17/biolreprod.114.124818.short
+%   \carmeli & hemotrichorial & labyrinthine \\
+%   \pig & epitheliochorial & diffuse \\
+%   \bottomrule
+% \end{tabular}
+% }
 
 
-\column{0.25}
+\block{Human-specific Genes}{
+{\small
+<<human.lineage.specific,echo=FALSE,results="asis">>=
+hum.all.lin.spec <-
+    placenta.lineage.specific.table("hum.all",
+                                    lineage.table=human.mouse.lineage.specific.analysis,
+                                    members=10,
+                                    orderbyfc=TRUE,
+                                    fdr.cutoff=0.001
+                                    )
+setkey(hum.all.lin.spec,"Human Symbol")
+@
+}
+\captionof{table}{1:1 Human orthologous genes whose expression
+  changed on the human lineage as opposed to all other analyzed
+  species.}
+}
 
-\column{0.25}
+\block{Primate-specific Genes}{
+{\small
+<<primate.lineage.specific,echo=FALSE,results="asis">>=
+pri.all.lin.spec <- placenta.lineage.specific.table("pri.all")
+setkey(pri.all.lin.spec,"Human Symbol")
+@ 
+}
+}
+
+
+
+\column{0.2}
+
+\block{Core Placenta Transcriptome}{
+<<core.placenta.transcriptome,fig.width=8,fig.height=12,out.height="0.8\\textheight",echo=FALSE>>=
+cptl <-
+    core.placenta.transcriptome.long[!grepl("(min|median|max|all)_expression|all_but_",
+                                            Species),]
+cptl <- cptl[,Species:=factor(gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",capfirst(Species)),
+                              levels=gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",
+                                          capfirst(names(species.names))))]
+print(ggplot(cptl,
+             aes(y=human_name,x=Species))
+      + geom_raster(aes(fill=log10(FPKM)))
+      + scale_x_discrete(expand=c(0,0))
+      + scale_y_discrete(expand=c(0,0))
+      + scale_fill_gradient(low = grad.def[["low"]],
+                            high = grad.def[["high"]],
+                            space = grad.def[["space"]],
+                            na.value = grad.def[["na.value"]],
+                            limits=c(0,4),
+                            guide=guide_colorbar(title=expression(log[10](FPKM)))
+                            )
+      + ylab("Human Ortholog Name")
+      + xlab("Species")
+      + theme_grey()
+      + theme(legend.position="top",
+              axis.ticks = element_blank(),
+              axis.text.y = element_text(face="italic"),
+              axis.text.x = element_text(angle = 90, hjust = 1, vjust=0,face="italic"))
+      )
+@ 
+\captionof{figure}{Core Placenta Transcriptome.
+  \Sexpr{core.placenta.transcriptome.long[,length(unique(human_name))]}
+  1:1 human ortholog genes expressed (\ac{FPKM}$ \ge 10$) in the
+  placenta of all \Sexpr{star.logs[,length(unique(species))]} species
+  studied with housekeeping genes
+  \cite{Eisenberg.ea2013:Humanhousekeepinggenesrevisited} removed
+  ordered (from top to bottom) by median expression.}
+\label{fig:core_placenta_transcriptome}
+}
+
+\block{\textit{PRSS16} Expression}{
+<<prss16.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="PRSS16" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,
+                 vp=viewport(layout.pos.col=1,layout.pos.row=2,clip="off"),
+                 fontsize=4,
+                 width=3,
+                 axis.text.size=3.5,
+                 offset.ratio=1.2
+                 )
+
+@ 
+\captionof{figure}{\textit{PRSS16} is highly expressed and massively
+  expanded in \elephant, but not in \armadillo. It is currently
+  unknown whether this high expression and expansion is a shared
+  feature afrotherians.}
+}
+
+
+\column{0.2}
+
+\block{\textit{CGA} Expression}{
+
+<<kiss1.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+
+plot.label.size <- 4.5
+tree.id <-
+    genes.to.tree[combined.fpkm[gene_short_name=="KISS1" & species=="homo sapiens",gene_id],tree]
+gene.tree.table <- trees[[tree.id]]$table
+gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
+gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
+plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,
+                 offset.ratio=1,
+                 fontsize=8,
+                 axis.text.size=5
+                 )
+@ 
+\captionof{figure}{\textit{KISS1}, which is implicated in
+  pre-eclampsia, is significantly more expressed on the human lineage
+  in comparison to all other lineages eamined. }
+}
+
+\block{Hormones, Galectins, \textit{IGF} and Pre-eclampsia}{
+<<hormone.genes.plot,echo=FALSE,fig.width=8,fig.height=10,warning=FALSE,message=FALSE>>=
+
+gene.expression.nozero <- function(genes) {
+    temp <-
+        data.matrix.dt(dcast(combined.fpkm[human_name %in% genes,],
+                             human_name~species,
+                             value.var="FPKM",
+                             fun.aggregate=function(x){x[1]}))
+    temp <-
+        temp[apply(temp,1,function(x){sum(x,na.rm=TRUE)})>5,]
+    return(temp)
+}
+
+### hormone genes
+hormone.genes <- c("CGA","CGB","CGB1","CGB2","CGB5","CGB8","CSH1","CSH2","CSHL1","CYP19A1",
+                   "GH2","GHRH","HSD3B1","HSD3B2","HSD17B2","HSD17B1","NPPB","NPPC","PRL","RLN1")
+hormone.expression.nozero <-
+    gene.expression.nozero(hormone.genes)
+
+hor.exp.long <- melt(log10(hormone.expression.nozero+1)[rev(1:nrow(hormone.expression.nozero)),])
+colnames(hor.exp.long)[1:3] <- c("gene","species","fpkm")
+hor.exp.long <- hor.exp.long[hor.exp.long$gene!="IGF2",]
+
+### galectin genes
+galectin.genes <- unique(grep("^LGALS",combined.fpkm[,human_name],value=TRUE))
+
+galectin.expression.nozero <-
+    gene.expression.nozero(galectin.genes)
+
+gal.exp.long <- melt(log10(galectin.expression.nozero+1)[rev(1:nrow(galectin.expression.nozero)),])
+colnames(gal.exp.long)[1:3] <- c("gene","species","fpkm")
+
+### IGF related genes
+
+igfrelated.genes <- unique(grep("^IGF",combined.fpkm[,human_name],value=TRUE))
+
+igfrelated.expression.nozero <-
+    gene.expression.nozero(igfrelated.genes)
+
+igf.exp.long <- melt(log10(igfrelated.expression.nozero+1)[rev(1:nrow(igfrelated.expression.nozero)),])
+colnames(igf.exp.long)[1:3] <- c("gene","species","fpkm")
+
+### Pre-eclampsia genes ADAM12 CRH KISS1 PAPPA
+
+pe.expression.nozero <-
+    gene.expression.nozero(c("ADAM12","CRH","KISS1","PAPPA"))
+
+pe.exp.long <- melt(log10(pe.expression.nozero+1)[rev(1:nrow(pe.expression.nozero)),])
+colnames(pe.exp.long)[1:3] <- c("gene","species","fpkm")
+
+
+igf.exp.long$type <- "IGF Related"
+gal.exp.long$type <- "Galectin"
+hor.exp.long$type <- "Hormone"
+pe.exp.long$type <- "PE"
+
+
+combined.long <-
+    rbind(igf.exp.long,
+          gal.exp.long,
+          hor.exp.long,
+          pe.exp.long
+          )
+combined.long$species <-
+    factor(gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",capfirst(combined.long$species)),
+           levels=gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",capfirst(names(species.names))))
+
+common.plot.options <- 
+    list(geom_raster(aes(fill = fpkm)),
+         scale_fill_gradient(low = grad.def[["low"]],
+                             high = grad.def[["high"]],
+                             space = grad.def[["space"]],
+                             na.value = grad.def[["na.value"]],
+                             guide=guide_colorbar(title=expression(log[10](FPKM)))),
+         ylab("Human Ortholog Name"),
+         xlab("Species"),
+         theme_grey(),
+         theme(legend.position = "top",
+               axis.ticks = element_blank(),
+               panel.background = element_blank(),
+               axis.text.y = element_text(face="italic"),
+               axis.text.x = element_text(angle = 90, hjust = 1, vjust=0,face="italic")),
+         facet_grid(type~.,scale="free_y",space="free_y")
+         )
+print(ggplot(combined.long, aes(y=gene, x=species))
+      + common.plot.options
+      )
+@ 
+\captionof{figure}{Expression in $\mathrm{log}_{10}(\mathrm{FPKM})$ of 1:1 \human
+  orthologs of Hormone Genes, Galectins, genes implicated in
+  pre-eclampsia (PE), and \textit{IGF}-related genes. Empty locations
+  indicate no detectable expression and/or no 1:1 \human\ ortholog in
+  that species.}
+}
+
+\column{0.2}
 
 \block{Conclusions}{
+\begin{itemize}
+\item Expression resource of
+  \Sexpr{star.logs[,length(unique(species))]} species representing the
+  breadth of mammalia for future research.
+
+\item Lineage-specific expansions of gene families and differential
+  gene expression
+
+\item Components of annexin complexes, including \textit{ANXA2},
+  \textit{ANXA1}, \textit{S100A11}, and \textit{S100A10} are expressed
+  in all placentas examined, and argue for the evolution importance of
+  annexins in placenta function, where they likely establish
+  maternal-fetal
+  tolerance\cite{Liu.ea2015:AnnexinA2complexeswith}.
+
+
+\item We identified of multiple genes (\textit{CRH},
+  \textit{ADAM12}, \textit{KISS1}, \textit{PAPPA}, \textit{IL1RL1},
+  and \textit{PLAC1}) which are associated with pre-eclampsia which
+  have increased expression on the \human lineage and may explain
+  larger proportion of pre-eclampsia observed in humans.
+
+\item Placenta samples from additional species and time points are
+  needed to more completely understand the complex molecular milieu
+  of the developing placenta.
+
+\end{itemize}
 }
 
 \block{References}{ 
@@ -278,15 +799,13 @@ print(pp %>%
   \end{center}
 }
 
-\block{Code and Datasets}{
+\block{}{
 The code and underlying data for this poster can be found at
 \begin{center}
 \qrcode[padding]{http://dla2.us/p/pv2016}
 \url{http://dla2.us/p/pv2016}
 \end{center}
-% 
-}
-\block{}{
+
   \includegraphics[width=\linewidth,height=6cm,keepaspectratio]{figures/uofi_mark}
 }
 

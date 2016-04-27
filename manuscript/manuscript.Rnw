@@ -2366,7 +2366,7 @@ expression in \elephant may indicate an elaboration of this system.
 
 The transcriptomes from multiple different species enabled us to
 identify the set of expressed genes which are common to all placentas.
-Components of the annexin complexes, including including
+Components of the annexin complexes, including
 \textit{ANXA2}, \textit{ANXA1}, \textit{S100A11}, and \textit{S100A10}
 are expressed in all placentas examined, and argue for the evolution
 importance of annexins in placenta function, where they likely

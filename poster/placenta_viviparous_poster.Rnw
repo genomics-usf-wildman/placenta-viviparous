@@ -642,7 +642,7 @@ plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.
 
 \column{0.2}
 
-\block{\textit{CGA} Expression}{
+\block{\textit{KISS1} Expression}{
 
 <<kiss1.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
 

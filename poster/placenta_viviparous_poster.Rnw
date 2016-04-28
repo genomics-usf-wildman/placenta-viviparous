@@ -219,14 +219,14 @@ grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = NA
 \item Function and Evolution of Placenta
     \begin{itemize}
     \item Major function is the transfer of nutrients, oxygen, and
-      waste between mother and offspring
+      waste between mother and offspring.
     \item Highly variable structure and form in mammals, even though
-      major function is conserved
-    \item Likely arose before the origin of therian mammals
+      major function is conserved.
+    \item Likely arose before the origin of therian mammals.
     \item Form relatively well characterized, but diversity of
-      molecular environment understudied
+      molecular environment understudied.
     \item Role in the evolutionary interplay between maternal and fetal
-      strategies
+      strategies.
     \end{itemize}
 
   \item Impacts on Human Health
@@ -240,7 +240,7 @@ grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = NA
     \item Pre-eclampsia has been seen in \textit{Pan troglodytes}
       \cite{Stout.ea1969:Glomerularcapillaryendothelialswelling}, and
       \textit{Gorilla gorilla}
-      \cite{Thornton.ea1992:Convulsionsinpregnancyin}
+      \cite{Thornton.ea1992:Convulsionsinpregnancyin}.
     \item Far higher incidence in \textit{Homo sapiens}, with as many as 
       4\% of pregnancies United States affected
       \cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current}.
@@ -248,11 +248,12 @@ grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = NA
     
   \item Hypotheses
     \begin{itemize}
-    \item Gene expression patterns correlate with placenta morphology
-    \item Altered expression of genes correlates with invasiveness, and
-      therefore pre-eclampsia
-    \item Maternal/Fetal evolutionary strategies will be reflected in gene
-      expression patterns
+    \item Mechanisms of maintaining maternal-fetal tolerance will be
+      conserved.
+    \item Altered expression of genes correlates with invasiveness,
+      and therefore pre-eclampsia
+    \item Maternal/Fetal evolutionary strategies will be reflected in
+      gene expression patterns
     \end{itemize}
   \end{itemize}
   

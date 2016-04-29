@@ -604,17 +604,16 @@ print(ggplot(cptl,
       + theme_grey()
       + theme(legend.position="top",
               axis.ticks = element_blank(),
+              plot.margin = unit(c(0,0,0,0),"mm"),
               axis.text.y = element_text(face="italic"),
               axis.text.x = element_text(angle = 90, hjust = 1, vjust=0,face="italic"))
       )
 @ 
-\captionof{figure}{Core Placenta Transcriptome.
-  \Sexpr{core.placenta.transcriptome.long[,length(unique(human_name))]}
-  1:1 human ortholog genes expressed (\ac{FPKM}$ \ge 10$) in the
-  placenta of all \Sexpr{star.logs[,length(unique(species))]} species
-  studied with housekeeping genes
-  \cite{Eisenberg.ea2013:Humanhousekeepinggenesrevisited} removed
-  ordered (from top to bottom) by median expression.}
+\captionof{figure}{\Sexpr{core.placenta.transcriptome.long[,length(unique(human_name))]}
+  1:1 human ortholog genes expressed (\ac{FPKM}$ \ge 10$) in
+  placentas of all \Sexpr{star.logs[,length(unique(species))]} species
+  studied ordered by median expression without housekeeping genes
+  \cite{Eisenberg.ea2013:Humanhousekeepinggenesrevisited}.}
 \label{fig:core_placenta_transcriptome}
 }
 
@@ -744,6 +743,7 @@ common.plot.options <-
          theme_grey(),
          theme(legend.position = "top",
                axis.ticks = element_blank(),
+               plot.margin = unit(c(0,0,0,0),"mm"),
                panel.background = element_blank(),
                axis.text.y = element_text(face="italic"),
                axis.text.x = element_text(angle = 90, hjust = 1, vjust=0,face="italic")),

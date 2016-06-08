@@ -86,7 +86,21 @@ pts <- pts[,placenta.ts.permissive:=all.genes %in%
                                                         ! is.na(human_name),
                                                         unique(human_name)]
            ]
+pts[,placenta.ts.all:=all.genes %in%
+         core.placenta.transcriptome.genes.shape[all_expression > 10 &
+                                                 ! is.na(human_name),
+                                                 unique(human_name)]]
+pts[,placenta.ts.one:=all.genes %in%
+         core.placenta.transcriptome.genes.shape[all_expression > 1 &
+                                                 ! is.na(human_name),
+                                                 unique(human_name)]]
+expressed.housekeeping.genes <-
+    core.placenta.transcriptome.genes.shape[max_expression > 10 &
+                                            human_name %in%
+                                            housekeeping.genes.superset[,gene_short_name]
+                                            ][,unique(human_name)]
 pts <- pts[,housekeeping:=all.genes %in% housekeeping.genes.superset[,gene_short_name]]
+pts <- pts[,expressed.housekeeping:=all.genes %in% expressed.housekeeping.genes]
 pts <- pts[,egid:=as.vector(unlist(sapply(mget(all.genes,org.Hs.egSYMBOL2EG,ifnotfound=NA),
                                           function(x){x[1]})))]
 ## this list contains all possible genes with a 0 if it is not in the

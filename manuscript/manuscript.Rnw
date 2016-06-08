@@ -1891,6 +1891,13 @@ orthologs with FPKM $>10$ and results in the same terms also being
 significantly enriched, along with additional terms (Supplemental
 \cref{tab:core_placenta_go_terms}).
 
+In contrast to the shape of the number of genes included in the core
+placenta transcriptome, the set of \human housekeeping genes expressed
+all placentas is flatter (Supplemental
+\cref{fig:core_housekeeping_transcriptome_shape}), and includes more
+of the total fraction of genes. However, there is still a large
+difference between the set of housekeeping genes which are expressed
+in \human and those which are expressed in all placentas.
 
 % SPINT2 -- Serine Peptidase inhibitor
 

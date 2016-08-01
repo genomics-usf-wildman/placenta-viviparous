@@ -1,0 +1,15 @@
+species	shape	interdigitation	barrier
+monodelphis domestica	discoidal	folded	epitheliochorial
+ateles fusciceps	discoidal	trabecular	hemochorial
+homo sapiens	discoidal	villous	hemochorial
+pan paniscus	discoidal	villous	hemochorial
+bos taurus	cotyledonary	villous	epitheliochroial
+canis familiaris	zonary	lamellar	endotheliochorial
+dasypus novemcinctus	discoidal	villous	hemochorial
+equus caballus	diffuse	villous	epitheliochorial
+loxodonta africana	zonary	villous	endotheliochorial
+mus musculus	discoidal	labyrinthine	hemotrichorial
+spalax galili	discoidal	labyrinthine	hemotrichorial
+spalax carmeli	discoidal	labyrinthine	hemotrichorial
+ovis aries	cotyledonary	villous	epitheliochorial
+sus scrofa	cotyledonary	villous	epitheliochorial

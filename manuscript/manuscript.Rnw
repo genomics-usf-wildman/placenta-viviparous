@@ -181,55 +181,50 @@ grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = NA
 % Acronyms
 \input{acronyms}
 
-\begin{frontmatter}
-\begin{fmbox}
-\dochead{Research}%
-\title{The evolution of gene expression in the term placenta of viviparous mammals}%
+\title{The core transcriptome of the mammal placenta}%
 %
-\author[addressref={aff1},noteref={n1},email={don@donarmstrong.com}]{\inits{DL}\fnm{Don L} \snm{Armstrong}}
-\author[addressref={aff2},noteref={n1},email={1mmcgowen1@gmail.com}]{\inits{MR}\fnm{Michael R.} \snm{McGowen}}
-\author[addressref={aff1},email={aweckle@illinois.edu}]{\inits{AL}\fnm{Amy} \snm{Weckle}}
-\author[addressref={aff3},email={jacaravas@gmail.com}]{\inits{J}\fnm{Jason} \snm{Caravas}}
-\author[addressref={aff4},email={agnewd@dcpah.msu.edu}]{\inits{D}\fnm{Dalen} \snm{Agnew}}
-\author[addressref={aff5},email={kbenirschke@ucsd.edu}]{\inits{K}\fnm{Kurt} \snm{Benirschke}}
-\author[addressref={aff6},email={suerumbaugh@gmail.com}]{\inits{S}\fnm{Sue} \snm{Savage-Rumbaugh}}
-\author[addressref={aff11},email={nevo@research.haifa.ac.il}]{\inits{E}\fnm{Eviatar} \snm{Nevo}}
-\author[addressref={aff7,aff8},email={cjkim@med.wayne.edu}]{\inits{CJ}\fnm{Chong J} \snm{Kim}}
-\author[addressref={aff9},email={gunter.wagner@yale.edu}]{\inits{GP}\fnm{Günter P.} \snm{Wagner}}
-\author[addressref={aff7},email={prbchiefstaff@med.wayne.edu}]{\inits{R}\fnm{Roberto} \snm{Romero}}
-\author[addressref={aff1,aff6,aff10},corref={aff1},email={wildmand@illinois.edu}]{\inits{DE}\fnm{Derek E.} \snm{Wildman}}
-\address[id=aff1]{Institute for Genomic Biology, University of Illinois at Urbana-Champaign, Urbana, IL, USA}
-\address[id=aff2]{School of Biological and Chemical Sciences, Queen Mary, University of London, London, UK}
-\address[id=aff3]{Center for Molecular Medicine and Genetics, Wayne State University School of Medicine, Detroit, MI, USA}
-\address[id=aff4]{Diagnostic Center for Population and Animal Health, College of Veterinary Medicine, Michigan State University, East Lansing, MI, USA}
-\address[id=aff5]{Department of Pathology, University of California San Diego, La Jolla, CA, USA}
-\address[id=aff6]{Great Ape Trust/Bonobo Hope Sanctuary, Des Moines, IA, USA}
-\address[id=aff7]{Perinatology Research Branch, Eunice Kennedy Shriver National Institute of Child Health and Human Development (NICHD), National Institutes of Health (NIH), Detroit, MI, USA}
-\address[id=aff8]{Department of Pathology, Wayne State University School of Medicine, Detroit, MI, USA}
-\address[id=aff9]{Department of Ecology and Evolutionary Biology and Yale Systems Biology Institute, Yale University, New Haven, CT, USA}
-\address[id=aff10]{Department of Molecular and Integrative Physiology, University of Illinois at Urbana-Champaign, Urbana, IL, USA}
-\address[id=aff11]{The Institute of Evolution, University of Haifa, Haifa, Israel}
+\author[affigb]{Don L. Armstrong\fnref{n1}}
+\ead{don@donarmstrong.com}
+\author[afflon]{Michael R. McGowen\fnref{n1}}
+\ead{1mmcgowen1@gmail.com}
+\author[affigb]{Amy Weckle}
+\ead{aweckle@illinois.edu}
+\author[affwayne]{Jason Caravas}
+\ead{jacaravas@gmail.com}
+\author[affmich]{Dalen Agnew}
+\ead{agnewd@dcpah.msu.edu}
+\author[affuscd]{Kurt Benirschke}
+\ead{kbenirschke@ucsd.edu}
+\author[affapetrust]{Sue Savage-Rumbaugh}
+\ead{suerumbaugh@gmail.com}
+\author[affhaifa]{Eviatar Nevo}
+\ead{nevo@research.haifa.ac.il}
+\author[affnih,affwaynepath]{Chong J Kim}
+\ead{cjkim@med.wayne.edu}
+\author[affyale]{Günter P. Wagner}
+\ead{gunter.wagner@yale.edu}
+\author[affnih]{Roberto Romero}
+\ead{prbchiefstaff@med.wayne.edu}
+\author[affigb,affapetrust,affmip]{Derek E. Wildman\corref{cor1}}
+\ead{wildmand@illinois.edu}
+\cortext[cor1]{Corresponding author}
+\address[affigb]{Institute for Genomic Biology, University of Illinois at Urbana-Champaign, Urbana, IL, USA}
+\address[afflon]{School of Biological and Chemical Sciences, Queen Mary, University of London, London, UK}
+\address[affwayne]{Center for Molecular Medicine and Genetics, Wayne State University School of Medicine, Detroit, MI, USA}
+\address[affmich]{Diagnostic Center for Population and Animal Health, College of Veterinary Medicine, Michigan State University, East Lansing, MI, USA}
+\address[affuscd]{Department of Pathology, University of California San Diego, La Jolla, CA, USA}
+\address[affapetrust]{Great Ape Trust/Bonobo Hope Sanctuary, Des Moines, IA, USA}
+\address[affnih]{Perinatology Research Branch, Eunice Kennedy Shriver National Institute of Child Health and Human Development (NICHD), National Institutes of Health (NIH), Detroit, MI, USA}
+\address[affwaynepath]{Department of Pathology, Wayne State University School of Medicine, Detroit, MI, USA}
+\address[affyale]{Department of Ecology and Evolutionary Biology and Yale Systems Biology Institute, Yale University, New Haven, CT, USA}
+\address[affmip]{Department of Molecular and Integrative Physiology, University of Illinois at Urbana-Champaign, Urbana, IL, USA}
+\address[affhaifa]{The Institute of Evolution, University of Haifa, Haifa, Israel}
 
-\begin{artnotes}
-\end{artnotes}
-
-\begin{artnotes}
-\note[id=n1]{Equal contributor} % note, connected to author
-\end{artnotes}
-
-\end{fmbox}
-% \twocolumn
-
-\begin{abstractbox}
 \begin{abstract}
-% \section{Abstract}
-  \parttitle{Background} The placenta is arguably the most
-  anatomically variable organ in mammals. Understanding gene
-  expression patterns among placentas from multiple species
-  illuminates the molecular basis of placenta function as well
-  obstetrical syndromes affecting humans.
+  \textbf{Background} The placenta is arguably the most
+  anatomically variable organ in mammals. 
 
-  \parttitle{Results} We measured the expression profiles of
+  \textbf{Results} We measured the expression profiles of
   \Sexpr{star.logs[,length(unique(file))]} term placentas of
   \Sexpr{star.logs[,length(unique(species))]} species of mammals. We
   found lineage-specific differential expression of prolactin,

@@ -914,7 +914,7 @@ mentioned.genes.table[,`Approved Name`:=NULL]
 ### order by species and then by FPKM
 setorder(mentioned.genes.table,`Approved Symbol`,species,-mean_fpkm)
 ### italicize species names
-mentioned.genes.table[,species:=paste0("\\textit{",gsub("^(.)","\\U\\1",species,perl=TRUE),"}")]
+mentioned.genes.table[,species:=paste0("\\textit{",gsub("^(.)\\S+","\\U\\1.",species,perl=TRUE),"}")]
 setnames(mentioned.genes.table,c("Species","Gene Symbol",
                                  "Human Symbol",
                                  ## "Human Name",
@@ -934,6 +934,7 @@ output.mentioned.genes.table <- function(subset.table=quote(TRUE),
         mgt.subset[,`Human Symbol`:=NULL]
         mgt.display <- mgt.display[-4]
         mgt.align <- mgt.align[-4]
+        mgt.align[3] <- ">{\\raggedright \\centering}p{1.2in}"
     }
         
     print(xtable(mgt.subset,
@@ -952,21 +953,21 @@ output.mentioned.genes.table <- function(subset.table=quote(TRUE),
 
 \subsection{Primate Placenta Transcriptomes}
 
-\begin{table}
+\begin{table}[htb]
 \footnotesize
 <<primate.genes,echo=FALSE,results="asis">>=
-output.mentioned.genes.table(subset.table=quote(grepl("Homo|Ateles|Pan",Species)),
-                             human.symbol=FALSE
+output.mentioned.genes.table(subset.table=quote(grepl("sapiens|fusciceps|paniscus",Species)),
+                             human.symbol=TRUE
                              )
 @ 
 \caption{Notable genes ordered by species and \ac{FPKM}. Gene
   symbol is the gene symbol or Ensembl gene id. Human Name is the HUGO
   name corresponding to the human symbol. A complete table of 
   genes with \ac{FPKM} $\ge 50$ is located in the supplemental material }
-\label{tab:notable_genes}
+\label{tab:notable_primate_genes}
 \end{table}
 
-\begin{table}
+\begin{table}[htb]
   \footnotesize
 <<primate.lineage.specific,echo=FALSE,results="asis">>=
 pri.all.lin.spec <- placenta.lineage.specific.table("pri.all")
@@ -1132,8 +1133,8 @@ but are negatively correlated with pre-eclampsia
 \cite{Spencer.ea2008:ADAM12sinmaternalserum}.
 
 
-\begin{figure}
-<<psg.ctsl.evolution.tree,echo=FALSE,fig.width=16,fig.height=16,warning=FALSE,message=FALSE>>=
+\begin{figure*}
+<<psg.ctsl.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
 plot.label.size <- 3
 axis.text.size <- 3.5
 
@@ -1310,6 +1311,20 @@ Supplementary \cref{tab:all_ateles_fusciceps_placenta}.
 
 
 \subsection{Rodentia Placenta Transcriptomes}
+
+\begin{table}
+  \footnotesize
+<<rodentia.genes,echo=FALSE,results="asis">>=
+output.mentioned.genes.table(subset.table=quote(grepl("musculus|galili|carmeli",Species)),
+                             human.symbol=TRUE
+                             )
+@ 
+\caption{Notable genes ordered by species and \ac{FPKM}. Gene
+  symbol is the gene symbol or Ensembl gene id. Human Name is the HUGO
+  name corresponding to the human symbol. A complete table of 
+  genes with \ac{FPKM} $\ge 50$ is located in the supplemental material }
+\label{tab:notable_non_primate_genes}
+\end{table}
 
 We examined the expression of three rodents, \mouse, \carmeli, and
 \galili{}. We did not detect any significant changes on the Rodentia

@@ -9,7 +9,7 @@ PERL?=perl
 
 all: combined_ancestral_states combined_ancestral_plots.pdf
 
-combined_ancestral_states: ancestral_state.R combined_fpkm_per_sample gene_trees gene_list.txt
+combined_ancestral_states: ancestral_state.R combined_fpkm gene_trees gene_list.txt
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,3,$^) $(shell cat gene_list.txt) $@
 
 

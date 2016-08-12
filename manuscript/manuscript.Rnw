@@ -1,46 +1,35 @@
 %\documentclass[english,12pt]{article}
-\documentclass[doublespacing]{bmcart_dla}
+\documentclass[5p]{elsarticle_dla}
 \usepackage{fontspec}
-\setmainfont{FreeSans}
+\setmainfont{FreeSerif}
 \setsansfont{FreeSans}
 \setmonofont{FreeMono}
-\setmathrm{FreeSans}
+\setmathrm{FreeSerif}
 \setmathsf{FreeSans}
-\setmathtt{FreeSans}
+\setmathtt{FreeSerif}
 %\usepackage[letterpaper,left=1in,right=1in,top=1in,bottom=1in,headheight=14pt]{geometry}
 \usepackage[letterpaper]{geometry}
-\usepackage{url}
-% \usepackage{fancyhdr}
+%\usepackage{url}
 \usepackage{graphicx}
-% \usepackage[bf]{caption}
-\usepackage{rotating}
-\usepackage{wrapfig}
+%\usepackage{rotating}
+%\usepackage{wrapfig}
 \usepackage{booktabs}
-\usepackage{float}
+%\usepackage{float}
 \usepackage{multirow}
-\usepackage{setspace}
-\usepackage{wrapfig}
-% \usepackage{txfonts}
-%\usepackage[plain]{fancyref}
+%\usepackage{setspace}
 \usepackage{acronym}
 \usepackage{array}
-\usepackage{dcolumn}
-\usepackage{adjustbox}
 \usepackage{longtable}
-\usepackage{pdflscape}
 \usepackage{amsmath}
-\usepackage{sansmath}
 \usepackage[backend=biber,natbib=true,hyperref=true,citestyle=numeric-comp,style=nature,autocite=inline]{biblatex}
 \addbibresource{references.bib}
-% \usepackage[noblocks,auth-sc]{authblk}
 \usepackage[hyperfigures,bookmarks,colorlinks,linkcolor=black,urlcolor=black,citecolor=blue]{hyperref}
-%\usepackage[hyperfigures,bookmarks,colorlinks,citecolor=black,filecolor=black,linkcolor=black,urlcolor=black]{hyperref}
 % Floats at end for journals
-\usepackage[nolists,figuresfirst,nomarkers,heads]{endfloat}
-\renewcommand{\efloatseparator}{\mbox{}}
+% \usepackage[nolists,figuresfirst,nomarkers,heads]{endfloat}
+% \renewcommand{\efloatseparator}{\mbox{}}
 %\AtBeginFigures{\newpage \renewcommand{\efloatseparator}{\mbox{}}\section*{Figure Legends}}
 %\AtBeginTables{\newpage \section*{Tables}\renewcommand{\efloatseparator}{\mbox{}}}
-\renewcommand{\includegraphics}[2][]{}
+% \renewcommand{\includegraphics}[2][]{}
 \usepackage[nomargin,inline,draft]{fixme}
 \newcommand{\DLA}[1]{\textcolor{red}{\fxnote{DLA: #1}}}
 \newcommand{\DEW}[1]{\textcolor{purple}{\fxnote{DEW: #1}}}
@@ -50,7 +39,7 @@
 \usepackage{nameref}
 \usepackage{xspace}
 % this package will stretch the font slightly if necessary.
-\usepackage{microtype}
+% \usepackage{microtype}
 \usepackage{zref-xr,zref-user}
 \zxrsetup{toltxlabel}
 \zexternaldocument*{supplemental_material}
@@ -95,13 +84,14 @@
 % \setlength{\emergencystretch}{20em}
 % make the afill smaller
 % \renewcommand\Affilfont{\itshape\small}
-\renewcommand\cite[1]{\autocite{#1}}
+%\renewcommand\cite[1]{\autocite{#1}}
+%\renewcommand\citet[1]{\textcite{#1}}
 % \pagestyle{fancy}
 
 \input{common_latex}
 
 \begin{document}
-\raggedright
+% \raggedright
 
 
 <<load.libraries,echo=FALSE,results="hide",warning=FALSE,message=FALSE,error=FALSE,cache=FALSE>>=
@@ -236,7 +226,7 @@ grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = NA
   \textit{S100A10}) and cell-cell interactions (\textit{LAMC1},
   \textit{LUM}, and \textit{LGALS1}).
 
-  \parttitle{Conclusions} A diverse array of genes are differentially
+  \textbf{Conclusions} A diverse array of genes are differentially
   expressed and are likely to play a role in the anatomical
   variability of the placenta in the placentas of mammalian lineages.
   Furthermore, multiple genes which are associated with pre-eclampsia
@@ -391,9 +381,15 @@ expression that may be related to obstetrical disorders such as
 pre-eclampsia.
 
 \begin{table}
-  \begin{tabular}{c >{\raggedright \centering}p{1in} c c c}
+  \small
+  \begin{tabular}{>{\raggedright }p{0.7in}
+                  >{\raggedright }p{0.7in}
+                  c c 
+                  p{0.65in}}
     \toprule
-    Species                       & Common Name & Gestation (days) & \multicolumn{1}{p{1in}}{\centering Average Litter Size}  & Source \\
+    {\centering Species  }                     & {\centering Common Name }& 
+       \multicolumn{1}{p{0.43in}}{\raggedright \centering Gestation (days)} & 
+       \multicolumn{1}{p{0.3in}}{\raggedright \centering Litter Size}  & Source \\
     \midrule
     \textit{Ateles fusciceps}     & Spider monkey & 224 & 1 & \citet{Ernest2003:lifehistorycharacteristicsofplacental}\\
     \textit{Bos taurus}           & Cow & 278 & 1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
@@ -1202,7 +1198,7 @@ grid.text(c("A","B","C","D"),
 @ 
 \caption{\genetreeexplanation{(A) \textit{PSG1}, (B) \textit{CTSL}, (C) \textit{PRSS16}, and (D) \textit{PAG2}}}
 \label{fig:pag2_prss16_ctsl_psg_evolution_tree}
-\end{figure}
+\end{figure*}
 
 
 \subsubsection{\bonobo Placenta Transcriptome}
@@ -2583,7 +2579,7 @@ pre-eclampsia is well before term; all of our placentas are term
 placentas and provide limited information about the transcriptome
 during the onset of pre-eclampsia.
 
-\section{Conclusion}
+\subsection{Conclusion}
     
 We analyzed the sequenced transcriptome of
 \Sexpr{star.logs[,length(unique(file))]} placentas from
@@ -2619,7 +2615,7 @@ to collecting and analyzing such a dataset.
 
 
 
-\begin{backmatter}
+%\begin{backmatter}
   \section*{Competing interests}
   The authors declare that they have no competing interests.
   

@@ -800,11 +800,12 @@ placenta.lineage.specific.table <- function(analysis,output=TRUE,lineage.table=p
         display.table <-
             display.table[,`Human Symbol`:=paste0("\\textit{",xtable.sanitize.text(`Human Symbol`),
                                                   "}")]
+        display.table[,`Human Name`:=NULL]
         # setnames(display.table,"Human Symbol","\\multicolumn{1}{p{0.5in}}{Human Symbol}")6
         setnames(display.table,"Fold Change","$\\text{log}_2$ FC")
         print(xtable(display.table,
-                     display=c("s","s","s","e","g","f"),
-                     align=c("c","p{0.5in}","p{1in}","r","r","r")
+                     display=c("s","s","e","g","f"),
+                     align=c("c","p{0.5in}","r","r","r")
                      ),
               booktabs=TRUE,
               floating=FALSE,

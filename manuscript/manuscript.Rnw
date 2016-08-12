@@ -248,11 +248,13 @@ grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = NA
   genes is essential for the proper functioning of the placenta in all
   species analyzed.
 
-\textbf{Keywords:} mammal, gene expression, evolution, RNA-seq, placenta
-
 \end{abstract}
-\end{abstractbox}
-\end{frontmatter}
+
+\begin{keyword}
+mammal \sep  gene expression \sep evolution \sep RNA-seq \sep placenta
+\end{keyword}
+
+\maketitle
 
 \section{Background}
 

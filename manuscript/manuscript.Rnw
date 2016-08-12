@@ -871,18 +871,18 @@ lineage by t-test.
 \subsubsection{\human Placenta Transcriptome}
 \label{sec:human_placenta}
 
-\begin{table}
-  \footnotesize
-<<top.50.human.expressed.genes,echo=FALSE,results="asis">>=
-output.top.genes.table(top.genes.table(species.name="homo sapiens"))
-@ 
-\caption{The top 50 genes by \ac{FPKM} in \human which are not
-  annotated as Mt\_rRNA, Mt\_tRNA, rRNA or a housekeeping gene. Gene
-  symbol is the gene symbol or Ensembl gene id. Human Name is the HUGO
-  name corresponding to the human symbol. A complete list of all genes
-  is in \cref{tab:all_homo_sapiens_placenta}.}
-\label{tab:top50_human_placenta}
-\end{table}
+% \begin{table}
+%   \footnotesize
+% <<top.50.human.expressed.genes,echo=FALSE,results="asis">>=
+% output.top.genes.table(top.genes.table(species.name="homo sapiens"))
+% @ 
+% \caption{The top 50 genes by \ac{FPKM} in \human which are not
+%   annotated as Mt\_rRNA, Mt\_tRNA, rRNA or a housekeeping gene. Gene
+%   symbol is the gene symbol or Ensembl gene id. Human Name is the HUGO
+%   name corresponding to the human symbol. A complete list of all genes
+%   is in \cref{tab:all_homo_sapiens_placenta}.}
+% \label{tab:top50_human_placenta}
+% \end{table}
 
 <<cgb.min.expression,results="hide",echo=FALSE,warnings=FALSE>>=
 cgb.min.expression <- 
@@ -1076,16 +1076,16 @@ grid.text(c("A","B","C","D"),
 
 \subsubsection{\bonobo Placenta Transcriptome}
 
-\begin{table}
-  \footnotesize
-<<top.50.bonobo.expressed.genes,echo=FALSE,results="asis">>=
-top.bonobo.genes <- top.genes.table(species.name="pan paniscus")
-output.top.genes.table(top.bonobo.genes)
-setkey(top.bonobo.genes,"Gene symbol")
-@ 
-\caption{\tableexplanation{\bonobo}{tab:all_pan_paniscus_placenta}}
-\label{tab:top50_bonobo_placenta}
-\end{table}
+% \begin{table}
+%   \footnotesize
+% <<top.50.bonobo.expressed.genes,echo=FALSE,results="asis">>=
+% top.bonobo.genes <- top.genes.table(species.name="pan paniscus")
+% output.top.genes.table(top.bonobo.genes)
+% setkey(top.bonobo.genes,"Gene symbol")
+% @ 
+% \caption{\tableexplanation{\bonobo}{tab:all_pan_paniscus_placenta}}
+% \label{tab:top50_bonobo_placenta}
+% \end{table}
 
 The top 50 expressed genes as measured by \ac{FPKM} in the term
 placenta of \bonobo are shown in \cref{tab:top50_bonobo_placenta}
@@ -1192,14 +1192,14 @@ specific shifts.
 
 \subsubsection{\mouse Placenta Transcriptome}
 
-\begin{table}[h]
-  \footnotesize
-<<top.50.mouse.expressed.genes,echo=FALSE,results="asis">>=
-output.top.genes.table(top.genes.table(species.name="mus musculus"))
-@ 
-\caption{\tableexplanation{\mouse}{tab:all_mus_musculus_placenta}}
-\label{tab:top50_mouse_placenta}
-\end{table}
+% \begin{table}[h]
+%   \footnotesize
+% <<top.50.mouse.expressed.genes,echo=FALSE,results="asis">>=
+% output.top.genes.table(top.genes.table(species.name="mus musculus"))
+% @ 
+% \caption{\tableexplanation{\mouse}{tab:all_mus_musculus_placenta}}
+% \label{tab:top50_mouse_placenta}
+% \end{table}
 
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
 in the term placenta of \mouse are shown in
@@ -1297,14 +1297,14 @@ for the exchange of metabolites in the placenta labyrinth
 
 \subsubsection{\galili Placenta Transcriptome}
 
-\begin{table}[h]
-  \footnotesize
-<<top.50.n.galili.expressed.genes,echo=FALSE,results="asis">>=
-output.top.genes.table(top.genes.table(species.name="spalax galili"))
-@ 
-\caption{\tableexplanation{\galili}{tab:all_spalax_galili_placenta}}
-\label{tab:top50_n_galili_placenta}
-\end{table}
+% \begin{table}[h]
+%   \footnotesize
+% <<top.50.n.galili.expressed.genes,echo=FALSE,results="asis">>=
+% output.top.genes.table(top.genes.table(species.name="spalax galili"))
+% @ 
+% \caption{\tableexplanation{\galili}{tab:all_spalax_galili_placenta}}
+% \label{tab:top50_n_galili_placenta}
+% \end{table}
 
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
 in the term placenta of \galili are shown in
@@ -1332,14 +1332,14 @@ transmembrane protein of currently unknown function,
 
 \subsubsection{\carmeli Placenta Transcriptome}
 
-\begin{table}[h]
-  \footnotesize
-<<top.50.s.carmeli.expressed.genes,echo=FALSE,results="asis">>=
-output.top.genes.table(top.genes.table(species.name="spalax carmeli"))
-@ 
-\caption{\tableexplanation{\carmeli}{tab:all_spalax_carmeli_placenta}}
-\label{tab:top50_s_carmeli_placenta}
-\end{table}
+% \begin{table}[h]
+%   \footnotesize
+% <<top.50.s.carmeli.expressed.genes,echo=FALSE,results="asis">>=
+% output.top.genes.table(top.genes.table(species.name="spalax carmeli"))
+% @ 
+% \caption{\tableexplanation{\carmeli}{tab:all_spalax_carmeli_placenta}}
+% \label{tab:top50_s_carmeli_placenta}
+% \end{table}
 
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
 in the term placenta of \carmeli are shown in
@@ -1376,14 +1376,14 @@ laurasiatherians and Euarchontoglires
 
 \subsubsection{\dog Placenta Transcriptome}
 
-\begin{table}
-  \footnotesize
-<<top.50.dog.expressed.genes,echo=FALSE,results="asis">>=
-output.top.genes.table(top.genes.table(species.name="canis familiaris"))
-@ 
-\caption{\tableexplanation{\dog}{tab:all_canis_familiaris_placenta}}
-\label{tab:top50_dog_placenta}
-\end{table}
+% \begin{table}
+%   \footnotesize
+% <<top.50.dog.expressed.genes,echo=FALSE,results="asis">>=
+% output.top.genes.table(top.genes.table(species.name="canis familiaris"))
+% @ 
+% \caption{\tableexplanation{\dog}{tab:all_canis_familiaris_placenta}}
+% \label{tab:top50_dog_placenta}
+% \end{table}
 
 The top 50 non-housekeeping expressed genes as measured by \ac{FPKM}
 in the term placenta of \dog are shown in
@@ -1424,14 +1424,14 @@ and expression of \textit{HSD3B7} is also low
 
 \subsubsection{\cow Placenta Transcriptome}
 
-\begin{table}
-  \footnotesize
-<<top.50.cow.expressed.genes,echo=FALSE,results="asis">>=
-output.top.genes.table(top.genes.table(species.name="bos taurus"))
-@ 
-\caption{\tableexplanation{\cow}{tab:all_bos_taurus_placenta}}
-\label{tab:top50_cow_placenta}
-\end{table}
+% \begin{table}
+%   \footnotesize
+% <<top.50.cow.expressed.genes,echo=FALSE,results="asis">>=
+% output.top.genes.table(top.genes.table(species.name="bos taurus"))
+% @ 
+% \caption{\tableexplanation{\cow}{tab:all_bos_taurus_placenta}}
+% \label{tab:top50_cow_placenta}
+% \end{table}
 
 The top 50 expressed genes as measured by \ac{FPKM} in the term
 placenta of the \cow are shown in \cref{tab:top50_cow_placenta} with a
@@ -1501,14 +1501,14 @@ comparatively greater expression of \textit{HSD3B} %
 
 \subsubsection{\pig Placenta Transcriptome}
 
-\begin{table}[h]
-  \footnotesize
-<<top.50.pig.expressed.genes,echo=FALSE,results="asis">>=
-output.top.genes.table(top.genes.table(species.name="sus scrofa"))
-@ 
-\caption{\tableexplanation{\pig}{tab:all_sus_scrofa_placenta}}
-\label{tab:top50_pig_placenta}
-\end{table}
+% \begin{table}[h]
+%   \footnotesize
+% <<top.50.pig.expressed.genes,echo=FALSE,results="asis">>=
+% output.top.genes.table(top.genes.table(species.name="sus scrofa"))
+% @ 
+% \caption{\tableexplanation{\pig}{tab:all_sus_scrofa_placenta}}
+% \label{tab:top50_pig_placenta}
+% \end{table}
 
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
 in the term placenta of \textit{Sus scrofa} are shown in
@@ -1546,14 +1546,14 @@ and multiple cytoskeleton and extracellular matrix proteins
 
 \subsubsection{\horse Placenta Transcriptome}
 
-\begin{table}[h]
-  \footnotesize
-<<top.50.horse.expressed.genes,echo=FALSE,results="asis">>=
-output.top.genes.table(top.genes.table(species.name="equus caballus"))
-@ 
-\caption{\tableexplanation{\horse}{tab:all_equus_caballus_placenta}}
-\label{tab:top50_horse_placenta}
-\end{table}
+% \begin{table}[h]
+%   \footnotesize
+% <<top.50.horse.expressed.genes,echo=FALSE,results="asis">>=
+% output.top.genes.table(top.genes.table(species.name="equus caballus"))
+% @ 
+% \caption{\tableexplanation{\horse}{tab:all_equus_caballus_placenta}}
+% \label{tab:top50_horse_placenta}
+% \end{table}
 
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
 in the term placenta of \horse are shown in
@@ -1579,21 +1579,21 @@ similar to the pattern of expression seen in \pig and \dog.
 
 \subsubsection{\sheep Placenta Transcriptome}
 
-\begin{table}[h]
-  \footnotesize
-<<top.50.sheep.expressed.genes,echo=FALSE,results="asis">>=
-top.sheep.genes <- top.genes.table(species.name="ovis aries",n=200)
-top.sheep.genes <-
-    top.sheep.genes[!grepl("\\{(7SK|.+_([SM]RP|nuc)|SNOR[AD]\\d+|U\\d+|HIST.*)\\}",
-                           `Gene symbol`) &
-                    !grepl("\\((7SK|.+_([SM]RP|nuc)|SNOR[AD]\\d+|U\\d+|HIST.*)\\)",
-                           `Human Symbol`)
-                   ,][1:50,]
-output.top.genes.table(top.sheep.genes)
-@ 
-\caption{\tableexplanation{\sheep}{tab:all_ovis_aries_placenta}}
-\label{tab:top50_sheep_placenta}
-\end{table}
+% \begin{table}[h]
+%   \footnotesize
+% <<top.50.sheep.expressed.genes,echo=FALSE,results="asis">>=
+% top.sheep.genes <- top.genes.table(species.name="ovis aries",n=200)
+% top.sheep.genes <-
+%     top.sheep.genes[!grepl("\\{(7SK|.+_([SM]RP|nuc)|SNOR[AD]\\d+|U\\d+|HIST.*)\\}",
+%                            `Gene symbol`) &
+%                     !grepl("\\((7SK|.+_([SM]RP|nuc)|SNOR[AD]\\d+|U\\d+|HIST.*)\\)",
+%                            `Human Symbol`)
+%                    ,][1:50,]
+% output.top.genes.table(top.sheep.genes)
+% @ 
+% \caption{\tableexplanation{\sheep}{tab:all_ovis_aries_placenta}}
+% \label{tab:top50_sheep_placenta}
+% \end{table}
 
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
 in the term placenta of \sheep are shown in
@@ -1620,14 +1620,14 @@ play a role in cellular migration
 \subsection{Atlantogenata (Afrotheria + Xenartha)}
 \subsubsection{\elephant Placenta Transcriptome}
 
-\begin{table}
-\footnotesize
-<<top.50.elephant.expressed.genes,echo=FALSE,results="asis">>=
-output.top.genes.table(top.genes.table(species.name="loxodonta africana"))
-@ 
-\caption{\tableexplanation{\elephant}{tab:top50_elephant_placenta}}
-\label{tab:top50_elephant_placenta}
-\end{table}
+% \begin{table}
+% \footnotesize
+% <<top.50.elephant.expressed.genes,echo=FALSE,results="asis">>=
+% output.top.genes.table(top.genes.table(species.name="loxodonta africana"))
+% @ 
+% \caption{\tableexplanation{\elephant}{tab:top50_elephant_placenta}}
+% \label{tab:top50_elephant_placenta}
+% \end{table}
 
 
 The top 50 expressed genes as measured by \ac{FPKM} in the term
@@ -1691,14 +1691,14 @@ gene predominantly expressed in the endometrium of the uterus in humans
 
 \subsubsection{\armadillo Placenta Transcriptome}
 
-\begin{table}
-\footnotesize
-<<top.50.armadillo.expressed.genes,echo=FALSE,results="asis">>=
-output.top.genes.table(top.genes.table(species.name="dasypus novemcinctus"))
-@ 
-\caption{\tableexplanation{\armadillo}{tab:all_dasypus_novemcinctus_placenta}}
-\label{tab:top50_armadillo_placenta}
-\end{table}
+% \begin{table}
+% \footnotesize
+% <<top.50.armadillo.expressed.genes,echo=FALSE,results="asis">>=
+% output.top.genes.table(top.genes.table(species.name="dasypus novemcinctus"))
+% @ 
+% \caption{\tableexplanation{\armadillo}{tab:all_dasypus_novemcinctus_placenta}}
+% \label{tab:top50_armadillo_placenta}
+% \end{table}
 
 The top 50 expressed genes in the term placenta of \armadillo are
 shown in \cref{tab:top50_armadillo_placenta} with a list of all genes
@@ -1743,14 +1743,14 @@ complex are also highly expressed, including
 
 \subsubsection{\opossum Placenta Transcriptome}
 
-\begin{table}
-  \footnotesize
-<<top.50.opossum.expressed.genes,echo=FALSE,results="asis">>=
-output.top.genes.table(top.genes.table(species.name="monodelphis domestica"))
-@ 
-\caption{\tableexplanation{\opossum}{tab:all_monodelphis_domestica_placenta}}
-\label{tab:top50_opossum_placenta}
-\end{table}
+% \begin{table}
+%   \footnotesize
+% <<top.50.opossum.expressed.genes,echo=FALSE,results="asis">>=
+% output.top.genes.table(top.genes.table(species.name="monodelphis domestica"))
+% @ 
+% \caption{\tableexplanation{\opossum}{tab:all_monodelphis_domestica_placenta}}
+% \label{tab:top50_opossum_placenta}
+% \end{table}
 
 The top 50 expressed genes as measured by \ac{FPKM} in the term
 placenta of the \opossum are shown in
@@ -2517,9 +2517,9 @@ to collecting and analyzing such a dataset.
   of Health and Human Services (N01-HD-3342), and the National Science
   Foundation BCS-0827546.
 
-  \printaddresses
+%  \printaddresses
 
-\end{backmatter}
+%\end{backmatter}
 
 \printbibliography
 

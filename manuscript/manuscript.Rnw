@@ -888,7 +888,8 @@ mentioned.genes.table[!is.na(name_or_id),
                       name_or_id:=paste0("\\href{http://www.ensembl.org/",
                                          capfirst(gsub(" ","_",alignment.species)),
                                          "/Gene/Summary?g=",name_or_id,"}{\\textit{",
-                                         xtable.sanitize.text(name_or_id),"}}")]
+                                         gsub("(ENS[^0-9]+)","\\1\\\\linebreak[0]",
+                                              xtable.sanitize.text(name_or_id)),"}}")]
 mentioned.genes.table[!is.na(`Approved Name`),
                       `Approved Name`:=paste0("\\href{http://www.ensembl.org/",
                                               "Homo_sapiens/Gene/Summary?g=",

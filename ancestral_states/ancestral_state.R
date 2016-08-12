@@ -3,7 +3,7 @@ library("data.table")
 library("phytools")
 
 ### arguments for debugging
-args <- c("combined_fpkm_per_sample","gene_trees","CYP19A1","combined_ancestral_states")
+args <- c("combined_fpkm","gene_trees","CYP19A1","combined_ancestral_states")
 
 args <- commandArgs(trailingOnly=TRUE)
 
@@ -26,6 +26,9 @@ calculate.ancestral.state <- function(gene,small.distance=0.001) {
     tree.id <-
         genes.to.tree[combined.fpkm[gene_short_name==gene & species=="homo sapiens",gene_id],
                       unique(tree)]
+    if (is.null(tree.id))
+        stop(paste0("Unable to find tree for",gene))
+    message(paste("gene is",gene,"tree id is",tree.id))
     tree.data <- trees[[tree.id]]$tree.dat
     tree.data <- gsub(":0([\\),])",paste0(":",small.distance,"\\1"),tree.data)
     gene.tree <- read.tree(text=tree.data)

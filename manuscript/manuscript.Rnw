@@ -127,13 +127,13 @@ library("tidyr")
 
 @ 
 
-<<source.to.latex,echo=FALSE,message=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../common_r_code/",c("to_latex.R","plot_tree_matrix.R","utility_functions.R")))>>=
+<<source.to.latex,echo=FALSE,message=FALSE,results="hide",cache.extra=file.info(paste0("../common_r_code/",c("to_latex.R","plot_tree_matrix.R","utility_functions.R")))[,"mtime"]>>=
 for (a in paste0("../common_r_code/",c("to_latex.R","plot_tree_matrix.R","utility_functions.R"))) {
     source(a)
 }
 @ 
 
-<<load.data,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../data/",c("combined_fpkm","gene_trees","housekeeping_genes_superset","placenta_core_transcriptome","placenta_go_results_bp","placenta_go_results_mf","hugo_nomenclature","gene_annotation")))>>=
+<<load.data,echo=FALSE,results="hide",cache.extra=file.info(paste0("../data/",c("combined_fpkm","gene_trees","housekeeping_genes_superset","placenta_core_transcriptome","placenta_go_results_bp","placenta_go_results_mf","hugo_nomenclature","gene_annotation")))[,"mtime"]>>=
 for (a in paste0("../data/",c("combined_fpkm","gene_trees",
                               "housekeeping_genes_superset",
                               "placenta_core_transcriptome",

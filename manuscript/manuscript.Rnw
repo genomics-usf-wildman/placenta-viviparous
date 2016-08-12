@@ -734,8 +734,15 @@ top.genes.table <- function(species.name,n=50) {
     temp[,`FPKM`:=round(`FPKM`)]
     return(temp)
 }
+@ 
+
+<<gene.expression,results="hide",echo=FALSE>>=
+mentioned.genes <- load_cache(label="save_mentioned_genes",object="saved_mentioned_genes",list())
 gene.expression <- function(species.name,gene,complete=FALSE,units=TRUE) {
     species.name <- gsub("_"," ",species.name)
+    mentioned.genes[[paste0(species.name,"_",gene)]] <<-
+        list("species.name"=species.name,
+             "gene"=gene)
     fpkm <- combined.fpkm[species==species.name &
                               (gene_short_name==gene | 
                                gene_id==gene),
@@ -796,10 +803,11 @@ placenta.lineage.specific.table <- function(analysis,output=TRUE,lineage.table=p
         display.table <-
             display.table[,`Human Symbol`:=paste0("\\textit{",xtable.sanitize.text(`Human Symbol`),
                                                   "}")]
+        # setnames(display.table,"Human Symbol","\\multicolumn{1}{p{0.5in}}{Human Symbol}")6
         setnames(display.table,"Fold Change","$\\text{log}_2$ FC")
         print(xtable(display.table,
                      display=c("s","s","s","e","g","f"),
-                     align=c("c","c","p{2in}","r","r","r")
+                     align=c("c","p{0.5in}","p{1in}","r","r","r")
                      ),
               booktabs=TRUE,
               floating=FALSE,
@@ -835,7 +843,130 @@ output.top.genes.table <- function(data,output=TRUE) {
 
 @ 
 
+<<mentioned.genes.table.functions,echo=FALSE,results="asis">>=
+mentioned.genes.table <- list()
+if (length(mentioned.genes)==0) {
+    mentioned.genes.table[["No genes"]] <-
+        data.table(species="No genes",
+                   name_or_id="No genes",
+                   human_alignment_symbol="NOGENE",
+                   human_name="NONAME",
+                   mean_fpkm = 0,
+                   sd_fpkm = 1,
+                   n_fpkm = 2)
+}
+for (entry in names(mentioned.genes)) {
+    mentioned.genes.table[[entry]] <-
+        combined.fpkm[species==mentioned.genes[[entry]][["species.name"]] &
+                      (gene_short_name==mentioned.genes[[entry]][["gene"]] | 
+                       gene_id==mentioned.genes[[entry]][["gene"]]),
+                      list(species,
+                           name_or_id,
+                           human_alignment_symbol,
+                           human_name,
+                           mean_fpkm,
+                           sd_fpkm,
+                           n_fpkm)]
+}
+mentioned.genes.table <-
+    rbindlist(mentioned.genes.table)
+mentioned.genes.table[,used_alignment:=FALSE]
+mentioned.genes.table[is.na(human_name) & !is.na(human_alignment_symbol),
+                      used_alignment:=TRUE]
+mentioned.genes.table[is.na(human_name),human_name:=human_alignment_symbol]
+setkey(mentioned.genes.table,"human_name")
+mentioned.genes.table <- 
+    hugo.nomenclature[mentioned.genes.table][,
+                                             list(species,
+                                                  name_or_id,
+                                                  used_alignment,
+                                                  `Approved Symbol`,
+                                                  `Approved Name`,
+                                                  mean_fpkm,sd_fpkm,n_fpkm)]
+mentioned.genes.table[,alignment.species:=species]
+mentioned.genes.table[alignment.species=="pan paniscus",alignment.species:="pan troglodytes"]
+mentioned.genes.table[alignment.species=="ateles fusciceps",alignment.species:="homo sapiens"]
+mentioned.genes.table[grepl("spalax",alignment.species),alignment.species:="mus musculus"]
+mentioned.genes.table[!is.na(name_or_id),
+                      name_or_id:=paste0("\\href{http://www.ensembl.org/",
+                                         capfirst(gsub(" ","_",alignment.species)),
+                                         "/Gene/Summary?g=",name_or_id,"}{\\textit{",
+                                         xtable.sanitize.text(name_or_id),"}}")]
+mentioned.genes.table[!is.na(`Approved Name`),
+                      `Approved Name`:=paste0("\\href{http://www.ensembl.org/",
+                                              "Homo_sapiens/Gene/Summary?g=",
+                                              `Approved Symbol`,"}{",
+                                              xtable.sanitize.text(`Approved Name`),
+                                              "}")]
+mentioned.genes.table[!is.na(`Approved Symbol`),
+                      `Approved Symbol`:=paste0("\\href{http://www.ensembl.org/",
+                                                "Homo_sapiens/Gene/Summary?g=",
+                                                `Approved Symbol`,
+                                                "}{\\textit{",
+                                                xtable.sanitize.text(`Approved Symbol`),
+                                                "}}")]
+mentioned.genes.table[used_alignment==TRUE,`Approved Symbol`:=paste0("(",`Approved Symbol`,")")]
+mentioned.genes.table[,sem_fpkm:=as.numeric(NA)]
+mentioned.genes.table[n_fpkm>1,sem_fpkm:=sd_fpkm/sqrt(n_fpkm)]
+mentioned.genes.table[,used_alignment:=NULL]
+mentioned.genes.table[,alignment.species:=NULL]
+mentioned.genes.table[,sd_fpkm:=NULL]
+mentioned.genes.table[,n_fpkm:=NULL]
+mentioned.genes.table[,`Approved Name`:=NULL]
+### order by species and then by FPKM
+setorder(mentioned.genes.table,`Approved Symbol`,species,-mean_fpkm)
+### italicize species names
+mentioned.genes.table[,species:=paste0("\\textit{",gsub("^(.)","\\U\\1",species,perl=TRUE),"}")]
+setnames(mentioned.genes.table,c("Species","Gene Symbol",
+                                 "Human Symbol",
+                                 ## "Human Name",
+                                 "FPKM","SEM"))
+mentioned.genes.table[,`FPKM`:=round(`FPKM`)]
+
+output.mentioned.genes.table <- function(subset.table=quote(TRUE),
+                                         human.symbol=TRUE) {
+    mgt.subset <- mentioned.genes.table[eval(subset.table)]
+    mgt.display <- c("s","s","s","s","d","d")
+    mgt.align <- c("c","c",
+                   ">{\\raggedright \\centering}p{0.5in}",
+                   ">{\\raggedright \\centering}p{0.5in}",
+                   ##">{\\raggedright}p{4in}",
+                   "r","r")
+    if (!human.symbol) {
+        mgt.subset[,`Human Symbol`:=NULL]
+        mgt.display <- mgt.display[-4]
+        mgt.align <- mgt.align[-4]
+    }
+        
+    print(xtable(mgt.subset,
+                 display=mgt.display,
+                 align=mgt.align
+                 ),
+          math.style.exponents=TRUE,
+          booktabs=TRUE,
+          floating=FALSE,
+          sanitize.text.function=genes.table.sanitize,
+          include.rownames=FALSE)
+}
+@ 
+
+
+
 \subsection{Primate Placenta Transcriptomes}
+
+\begin{table}
+\footnotesize
+<<primate.genes,echo=FALSE,results="asis">>=
+output.mentioned.genes.table(subset.table=quote(grepl("Homo|Ateles|Pan",Species)),
+                             human.symbol=FALSE
+                             )
+@ 
+\caption{Notable genes ordered by species and \ac{FPKM}. Gene
+  symbol is the gene symbol or Ensembl gene id. Human Name is the HUGO
+  name corresponding to the human symbol. A complete table of 
+  genes with \ac{FPKM} $\ge 50$ is located in the supplemental material }
+\label{tab:notable_genes}
+\end{table}
 
 \begin{table}
   \footnotesize
@@ -2522,5 +2653,9 @@ to collecting and analyzing such a dataset.
 %\end{backmatter}
 
 \printbibliography
+
+<<save_mentioned_genes,echo=FALSE,results="hide">>=
+saved_mentioned_genes <- mentioned.genes
+@ 
 
 \end{document}

@@ -17,7 +17,10 @@ bmcart.cls:
 %.png: %.svg
 	inkscape -D -e $@ -d 300 $<
 
+## we require double evaluation here because we use load_cache to
+## replay the results of analyses
 %.tex: %.Rnw
+	$(R) --encoding=utf-8 -e "library('knitr'); knit('$<')"
 	$(R) --encoding=utf-8 -e "library('knitr'); knit('$<')"
 
 %.pdf: %.tex $(wildcard *.bib) $(wildcard *.cls)

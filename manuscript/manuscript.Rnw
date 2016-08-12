@@ -1270,16 +1270,16 @@ the hormone adrenomedullin (\textit{ADM}).
 
 \subsubsection{\smonkey Transcriptome}
 
-\begin{table}
-  \footnotesize
-<<top.50.spider.monkey.expressed.genes,echo=FALSE,results="asis">>=
-top.spider.monkey.genes <- top.genes.table(species.name="ateles fusciceps")
-output.top.genes.table(top.spider.monkey.genes)
-setkey(top.spider.monkey.genes,"Gene symbol")
-@ 
-\caption{\tableexplanation{\smonkey}{tab:all_ateles_fusciceps_placenta}}
-\label{tab:top50_spider_monkey_placenta}
-\end{table}
+% \begin{table}
+%   \footnotesize
+% <<top.50.spider.monkey.expressed.genes,echo=FALSE,results="asis">>=
+% top.spider.monkey.genes <- top.genes.table(species.name="ateles fusciceps")
+% output.top.genes.table(top.spider.monkey.genes)
+% setkey(top.spider.monkey.genes,"Gene symbol")
+% @ 
+% \caption{\tableexplanation{\smonkey}{tab:all_ateles_fusciceps_placenta}}
+% \label{tab:top50_spider_monkey_placenta}
+% \end{table}
 
 For the term placenta of \smonkey, assembled contigs from RNA-seq were
 aligned using against \human and the best alignment was chosen as the

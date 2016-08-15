@@ -1,7 +1,18 @@
 library("data.table")
 library("phytools")
-
-plot.ancestral.state.tree <- function(gene_selector,genes.to.tree,combined.fpkm,trees,small.distance=0.0001) {
+##' Plot the Ancestral State Tree
+##'
+##' See examples in manuscript.Rnw for more details
+##' @title plot.ancestral.state.tree
+##' @param gene_selector quoted expression to be eval() which selects the genes to include
+##' @param genes.to.tree genes.to.tree object
+##' @param combined.fpkm combined.fpkm object
+##' @param trees trees object 
+##' @param small.distance distance to replace 0 with; default is 0.0001
+##' @param ... Additional options passed to contMap
+##' @return whatever contMap() returns
+##' @author Don Armstrong
+plot.ancestral.state.tree <- function(gene_selector,genes.to.tree,combined.fpkm,trees,small.distance=0.0001,...) {
     capfirst <- function(s, strict = FALSE) {
         paste(toupper(substring(s, 1, 1)),
         {s <- substring(s, 2); if(strict) tolower(s) else s},
@@ -35,23 +46,65 @@ plot.ancestral.state.tree <- function(gene_selector,genes.to.tree,combined.fpkm,
     gene.tree.expression <-
         combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
     
+    gene.tree.expression[,duplicate_gene_id:=gene_id]
+
     gene.tree.subset <-
         drop.tip(gene.tree,
                  gene.tree$tip.label[!(gene.tree$tip.label %in%
                                        gene.tree.expression[,gene_id])])
     
+    for (duplicate.gene_id in unique(gene.tree.expression[duplicated(gene_id),gene_id])) {
+        num.duplicates <- gene.tree.expression[,sum(gene_id==duplicate.gene_id)]
+        duplicate.tree.struct <-
+            paste0("(",
+                   paste(paste0(rep.int(duplicate.gene_id,num.duplicates),
+                                "_",
+                                seq.int(1,num.duplicates),
+                                ":",small.distance),
+                         collapse=","),
+                   "):",small.distance,";")
+        print(duplicate.tree.struct)
+        duplicate.tree <-
+            read.tree(text=duplicate.tree.struct)
+        print(duplicate.tree)
+        plot(duplicate.tree)
+        gene.tree.expression[gene_id==duplicate.gene_id,
+                             duplicate_gene_id:=paste0(rep.int(duplicate.gene_id,num.duplicates),
+                                                       "_",
+                                                       seq.int(1,num.duplicates))]
+        
+        gene.tree.subset <-
+            bind.tree(gene.tree.subset,
+                      duplicate.tree,
+                      where=which(gene.tree.subset$tip==duplicate.gene_id))
+    }
+
+    ## replace any 0 distances in the tree with small.distance
+    gene.tree.subset <-
+        read.tree(text=gsub(":0([\\),])",paste0(":",small.distance,"\\1"),
+                            write.tree(gene.tree.subset)))
+
     gene.tree.expression <-
-        gene.tree.expression[gene_id %in% gene.tree.subset$tip.label,]
+        gene.tree.expression[duplicate_gene_id %in% gene.tree.subset$tip.label,]
     # gene.tree.expression[,log_FPKM:=log10(FPKM+1)]
     
     gene.tree.expression <-
-        gene.tree.expression[,list(gene_id,gene_short_name,FPKM,species)]
+        gene.tree.expression[,list(gene_id,duplicate_gene_id,gene_short_name,FPKM,species)]
     gene.tree.expression[,species:=gsub("^(.)[^ ]* +([^ ][^ ])[^ ]* *$","\\U\\1.\\L\\2",
                                         species,
                                         perl=TRUE
                                         )]
-    gene.tree.expression[gene_short_name=="-",gene_short_name:=gene_id]
-    
-    contMap(combined.anc.states[[gene]]$tree,
-            combined.anc.states[[gene]]$expression.vector)
+    gene.tree.expression[gene_short_name=="-",
+                         gene_short_name:=gsub("ENS[^0-9]+00+0","0…0",
+                                               gsub("_\\d+$","",gene_id))]
+    gene.tree.expression[,species_gene:=paste0(species," ",gene_short_name)]
+    setkey(gene.tree.expression,duplicate_gene_id)
+    gene.tree.expression <- gene.tree.expression[gene.tree.subset$tip.label,]
+    gene.tree.expression.vector <- gene.tree.expression[,FPKM]
+    names(gene.tree.expression.vector) <-
+        gene.tree.expression[,species_gene]
+    gene.tree.subset$tip.label <- gene.tree.expression[,species_gene]
+    contMap(gene.tree.subset,
+            log2(gene.tree.expression.vector+1),
+            leg.txt="log₂(FPKM+1)",...)
 }

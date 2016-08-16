@@ -134,7 +134,7 @@ plot.ancestral.state.tree <- function(gene_selector,genes.to.tree,combined.fpkm,
     return(ggtree(f.tr,aes(color=log10(fpkm+1)),size=1)+
            # geom_tiplab(color="black")+
            scale_color_gradient(low="grey90",high="blue",
-                                limits=c(0,4),6
+                                limits=c(0,5),
                                 guide=guide_colorbar(title=expression(log[10](FPKM))))+
            theme(legend.position="bottom"))
 }

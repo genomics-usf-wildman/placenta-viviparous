@@ -95,7 +95,7 @@
 
 
 <<load.libraries,echo=FALSE,results="hide",warning=FALSE,message=FALSE,error=FALSE,cache=FALSE>>=
-opts_chunk$set(dev="cairo_pdf",out.width="\\colwidth",out.height="0.7\\textheight",out.extra="keepaspectratio")
+opts_chunk$set(dev="cairo_pdf",out.width="\\columnwidth",out.height="0.7\\textheight",out.extra="keepaspectratio")
 opts_chunk$set(cache=TRUE, autodep=TRUE)
 options(device = function(file, width = 8, height = 7, ...) {
   cairo_pdf(tempfile(), width = width, height = height, ...)
@@ -114,7 +114,7 @@ library("org.Hs.eg.db")
 library("scales")
 library("magrittr")
 library("tidyr")
-
+library("phytools")
 @ 
 
 <<source.to.latex,echo=FALSE,message=FALSE,results="hide",cache.extra=file.info(paste0("../common_r_code/",c("to_latex.R","plot_tree_matrix.R","utility_functions.R")))[,"mtime"]>>=

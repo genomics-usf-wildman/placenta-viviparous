@@ -163,8 +163,15 @@ load("../go_annotation/go_tissue_analysis")
 
 @ 
 
+<<load_plot_ancestral_trees,message=FALSE,echo=FALSE,results="hide",cache.extra=file.info(paste0("../common_r_code/",c("plot_ancestral_state_tree.R")))[,"mtime"]>>=
+for (a in paste0("../common_r_code/",c("plot_ancestral_state_tree.R"))) {
+    source(a)
+}
+@ 
+
 <<plot.defaults,echo=FALSE,results="hide">>=
-grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = NA)
+#grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = NA)
+grad.def <- list(low = "gray90", high = "blue", space = "Lab", na.value = NA)
 
 @ 
 
@@ -1130,70 +1137,52 @@ but are negatively correlated with pre-eclampsia
 \cite{Spencer.ea2008:ADAM12sinmaternalserum}.
 
 
-\begin{figure*}
-<<psg.ctsl.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
-plot.label.size <- 3
-axis.text.size <- 3.5
-
+\begin{figure*}[htb]
+<<psg.ctsl.evolution.tree,echo=FALSE,out.width="\\textwidth",fig.width=8,fig.height=8>>=
 pushViewport(viewport(layout=grid.layout(nrow=2,ncol=2),clip="off"))
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="PSG1" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,min.fpkm=1,
-                 vp=viewport(layout.pos.col=1,layout.pos.row=1,clip="off"),
-                 axis.text.size=axis.text.size,
-                 fontsize=plot.label.size,
-                 )
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="CTSL" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(gene.tree,gene.tree.table,gene.tree.expression,min.fpkm=1,
-                 subtree=c("ENSMODG00000002844","ENSMUSG00000055679"),
-                 vp=viewport(layout.pos.col=2,layout.pos.row=1,clip="off"),
-                 fontsize=4,
-                 width=3,
-                 axis.text.size=axis.text.size,
-                 offset.ratio=1
-                 )
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="PRSS16" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,
-                 vp=viewport(layout.pos.col=1,layout.pos.row=2,clip="off"),
-                 fontsize=4,
-                 width=3,
-                 axis.text.size=axis.text.size,
-                 offset.ratio=1.2
-                 )
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="PAG2" & species=="bos taurus",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),
-                 gene.tree.table,gene.tree.expression,min.fpkm=1,
-                 subtree=c("ENSSSCG00000006792",
-                           "ENSBTAG00000046085"),
-                 vp=viewport(layout.pos.col=2,layout.pos.row=2,clip="off"),
-                 axis.text.size=axis.text.size,
-                 fontsize=plot.label.size,
-                 offset.ratio=0.6
-                 )
-
+print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="PSG1" & species=="homo sapiens"),
+                                genes.to.tree=genes.to.tree,
+                                combined.fpkm=combined.fpkm,
+                                subtree=c("ENSG00000221826","ENSG00000124469"),
+                                trees=trees
+                                )+
+      geom_tiplab(size=2,color="black",fontface="italic")+xlim(0,0.2)+
+      theme(legend.position="none"),
+      vp=viewport(layout.pos.col=1,layout.pos.row=1,clip="off"))
+print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="CTSL" & species=="homo sapiens"),
+                                genes.to.tree=genes.to.tree,
+                                combined.fpkm=combined.fpkm,
+                                subtree=c("ENSMODG00000002844","ENSMUSG00000055679"),
+                                trees=trees)+
+      geom_tiplab(size=2,color="black",fontface="italic")+xlim(0,1)+
+      theme(legend.position="none"),
+      vp=viewport(layout.pos.col=2,layout.pos.row=1,clip="off"))
+print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="PRSS16" &
+                                                    species=="homo sapiens"),
+                                genes.to.tree=genes.to.tree,
+                                subtree=c(   "ENSG00000112812",
+                                          "ENSLAFG00000032211"),
+                                combined.fpkm=combined.fpkm,
+                                trees=trees)+
+      geom_tiplab(size=2,color="black",fontface="italic")+xlim(0,1.2)+
+      theme(legend.position="none"),
+      vp=viewport(layout.pos.col=1,layout.pos.row=2,clip="off"))
+print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="PAG2" &
+                                                    species=="bos taurus"),
+                                genes.to.tree=genes.to.tree,
+                                combined.fpkm=combined.fpkm,
+                                subtree=c("ENSSSCG00000013097",
+                                          "ENSBTAG00000046085"),
+                                trees=trees) +
+      geom_tiplab(size=2,color="black",fontface="italic") +
+      xlim(0,0.8),
+      vp=viewport(layout.pos.col=2,layout.pos.row=2,clip="off"))
 popViewport(1)
+
 grid.text(c("A","B","C","D"),
           x=unit(c(0,0.5,0,0.5),"npc"),y=unit(c(1,1,0.5,0.5),"npc"),
           just=c("left","top"),
-          gp=gpar(fontsize="48")
+          gp=gpar(fontsize="24")
           )
 @ 
 \caption{\genetreeexplanation{(A) \textit{PSG1}, (B) \textit{CTSL}, (C) \textit{PRSS16}, and (D) \textit{PAG2}}}
@@ -2102,7 +2091,7 @@ in many species. Here we quantified the extreme disparity in genes
 with hormone products or enzymatic products that directly produce
 hormones in multiple mammalian species (\cref{fig:hormone_genes}).
 
-\begin{figure}
+\begin{figure}[htb]
 <<hormone.genes.plot,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
 
 gene.expression.nozero <- function(genes) {
@@ -2295,41 +2284,34 @@ increasing blood flow, replacing maternal pituitary expression of
 \cite{Alsat.ea1998:Physiologicalroleofhuman,Lacroix.ea2005:Stimulationofhumantrophoblast,Schiessl.ea2007:Roleofplacentalgrowth},
 and it is likely that they have the same function in \bonobo.
 
-\begin{figure}
-<<chorionic.somatomammotropin.alpha.evolution.tree,echo=FALSE,fig.width=12,fig.height=12,warning=FALSE,message=FALSE>>=
+\begin{figure}[htb]
+<<chorionic.somatomammotropin.alpha.evolution.tree,echo=FALSE,fig.width=4,fig.height=4,warning=FALSE,message=FALSE>>=
 
-plot.label.size <- 4.5
 pushViewport(viewport(layout=grid.layout(nrow=1,ncol=2,widths=c(2,3))))
 
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="CGA" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,
-                 vp=viewport(layout.pos.col=1,layout.pos.row=1),
-                 offset.ratio=0.7,
-                 fontsize=plot.label.size,
-                 axis.text.size=3.5
-                 )
-
-tree.id <-
-    genes.to.tree[combined.fpkm[gene_short_name=="CGB1" & species=="homo sapiens",gene_id],tree]
-gene.tree.table <- trees[[tree.id]]$table
-gene.tree.expression <- combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-gene.tree <- read.tree(text=trees[[tree.id]]$tree.dat)
-plot.tree.matrix(read.tree(text=trees[[tree.id]]$tree.dat),gene.tree.table,gene.tree.expression,
-                 vp=viewport(layout.pos.col=2,layout.pos.row=1),
-                 subtree=c("ENSMODG00000013768","ENSG00000104818"),
-                 offset.ratio=1,
-                 fontsize=plot.label.size,
-                 axis.text.size=3.5
-                 )
+print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="CGA" &
+                                                    species=="homo sapiens"),
+                                genes.to.tree=genes.to.tree,
+                                combined.fpkm=combined.fpkm,
+                                trees=trees
+                                )+
+      geom_tiplab(size=2,color="black",fontface="italic")+xlim(0,0.8)+
+      theme(legend.position="none"),
+      vp=viewport(layout.pos.col=1,layout.pos.row=1,clip="off"))
+print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="CGB1" &
+                                                    species=="homo sapiens"),
+                                genes.to.tree=genes.to.tree,
+                                subtree=c("ENSMODG00000013768","ENSG00000104818"),
+                                combined.fpkm=combined.fpkm,
+                                trees=trees
+                                )+
+      geom_tiplab(size=2,color="black",fontface="italic")+xlim(0,1),
+      vp=viewport(layout.pos.col=2,layout.pos.row=1,clip="off"))
 popViewport(1)
 grid.text(c("A","B"),
           x=unit(c(0,2/5),"npc"),y=unit(c(1,1),"npc"),
           just=c("left","top"),
-          gp=gpar(fontsize="48")
+          gp=gpar(fontsize="24")
           )
 @ 
 \caption{\genetreeexplanation{(A) \textit{CGA} (B) \textit{CGB}}}

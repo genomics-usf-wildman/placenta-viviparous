@@ -1,5 +1,7 @@
 library("data.table")
 library("phytools")
+library("magrittr")
+library("geiger")
 ##' Plot the Ancestral State Tree
 ##'
 ##' See examples in manuscript.Rnw for more details
@@ -12,7 +14,7 @@ library("phytools")
 ##' @param ... Additional options passed to contMap
 ##' @return whatever contMap() returns
 ##' @author Don Armstrong
-plot.ancestral.state.tree <- function(gene_selector,genes.to.tree,combined.fpkm,trees,small.distance=0.0001,...) {
+plot.ancestral.state.tree <- function(gene_selector,genes.to.tree,combined.fpkm,trees,subtree=NULL,small.distance=0.0001) {
     capfirst <- function(s, strict = FALSE) {
         paste(toupper(substring(s, 1, 1)),
         {s <- substring(s, 2); if(strict) tolower(s) else s},
@@ -45,13 +47,31 @@ plot.ancestral.state.tree <- function(gene_selector,genes.to.tree,combined.fpkm,
     ## pull expression values for this tree
     gene.tree.expression <-
         combined.fpkm[gene_id %in% gene.tree.table[,gene_id]]
-    
-    gene.tree.expression[,duplicate_gene_id:=gene_id]
 
     gene.tree.subset <-
         drop.tip(gene.tree,
                  gene.tree$tip.label[!(gene.tree$tip.label %in%
                                        gene.tree.expression[,gene_id])])
+    if (!is.null(subtree)) {
+        gene.tree.mrca <- mrca(gene.tree.subset)
+        top.node <- gene.tree.mrca[subtree[1],subtree[2]]
+        gene.tree.subset <-
+            drop.tip(gene.tree.subset,
+                     gene.tree.subset$tip.label[!(gene.tree.subset$tip.label %in%
+                                                  tips(gene.tree.subset,
+                                                       top.node))])
+    }
+    gene.tree.expression <-
+        gene.tree.expression[gene_id %in% gene.tree.subset$tip.label,]
+
+    gene.tree.expression[,duplicate_gene_id:=gene_id]
+
+    gene.tree.subset <-
+        drop.tip(gene.tree.subset,
+                 gene.tree.subset$tip.label[!(gene.tree.subset$tip.label %in%
+                                              gene.tree.expression[,gene_id])])
+
+
     
     for (duplicate.gene_id in unique(gene.tree.expression[duplicated(gene_id),gene_id])) {
         num.duplicates <- gene.tree.expression[,sum(gene_id==duplicate.gene_id)]
@@ -63,16 +83,15 @@ plot.ancestral.state.tree <- function(gene_selector,genes.to.tree,combined.fpkm,
                                 ":",small.distance),
                          collapse=","),
                    "):",small.distance,";")
-        print(duplicate.tree.struct)
+        ## print(duplicate.tree.struct)
         duplicate.tree <-
             read.tree(text=duplicate.tree.struct)
-        print(duplicate.tree)
-        plot(duplicate.tree)
+        ## print(duplicate.tree)
+        ## plot(duplicate.tree)
         gene.tree.expression[gene_id==duplicate.gene_id,
                              duplicate_gene_id:=paste0(rep.int(duplicate.gene_id,num.duplicates),
                                                        "_",
                                                        seq.int(1,num.duplicates))]
-        
         gene.tree.subset <-
             bind.tree(gene.tree.subset,
                       duplicate.tree,
@@ -89,22 +108,33 @@ plot.ancestral.state.tree <- function(gene_selector,genes.to.tree,combined.fpkm,
     # gene.tree.expression[,log_FPKM:=log10(FPKM+1)]
     
     gene.tree.expression <-
-        gene.tree.expression[,list(gene_id,duplicate_gene_id,gene_short_name,FPKM,species)]
+        gene.tree.expression[,list(gene_id,duplicate_gene_id,
+                                   gene_short_name,`mean_fpkm`,species)]
     gene.tree.expression[,species:=gsub("^(.)[^ ]* +([^ ][^ ])[^ ]* *$","\\U\\1.\\L\\2",
                                         species,
                                         perl=TRUE
                                         )]
     gene.tree.expression[gene_short_name=="-",
-                         gene_short_name:=gsub("ENS[^0-9]+00+0","0…0",
+                         gene_short_name:=gsub("ENS[^0-9]+00+0","0..0",
                                                gsub("_\\d+$","",gene_id))]
     gene.tree.expression[,species_gene:=paste0(species," ",gene_short_name)]
     setkey(gene.tree.expression,duplicate_gene_id)
     gene.tree.expression <- gene.tree.expression[gene.tree.subset$tip.label,]
-    gene.tree.expression.vector <- gene.tree.expression[,FPKM]
+    gene.tree.expression.vector <- gene.tree.expression[,mean_fpkm]
     names(gene.tree.expression.vector) <-
         gene.tree.expression[,species_gene]
     gene.tree.subset$tip.label <- gene.tree.expression[,species_gene]
-    contMap(gene.tree.subset,
-            log2(gene.tree.expression.vector+1),
-            leg.txt="log₂(FPKM+1)",...)
+    theanc <- fastAnc(gene.tree.subset,gene.tree.expression.vector)
+    f.tr <- fortify(gene.tree.subset)
+    f.tr$fpkm <- NA
+    f.tr$fpkm[f.tr$isTip] <-
+        as.numeric(gene.tree.expression.vector[f.tr$label[f.tr$isTip]])
+    f.tr$fpkm[!f.tr$isTip] <-
+        theanc[as.character(f.tr$node[!f.tr$isTip])]
+    return(ggtree(f.tr,aes(color=log10(fpkm+1)),size=1)+
+           # geom_tiplab(color="black")+
+           scale_color_gradient(low="grey90",high="blue",
+                                limits=c(0,4),6
+                                guide=guide_colorbar(title=expression(log[10](FPKM))))+
+           theme(legend.position="bottom"))
 }

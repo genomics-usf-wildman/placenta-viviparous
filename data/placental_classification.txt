@@ -12,4 +12,4 @@ mus musculus	discoidal	labyrinthine	hemotrichorial
 spalax galili	discoidal	labyrinthine	hemotrichorial
 spalax carmeli	discoidal	labyrinthine	hemotrichorial
 ovis aries	cotyledonary	villous	epitheliochorial
-sus scrofa	cotyledonary	villous	epitheliochorial
+sus scrofa	diffuse	villous	epitheliochorial

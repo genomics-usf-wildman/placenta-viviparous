@@ -167,14 +167,34 @@ load("../go_annotation/go_tissue_analysis")
 
 @ 
 
+\clearpage
+
 \section{Species}
+
+\subsection{Placental Classification}
+
+\begin{table}[hb]
+<<placental_classification,echo=FALSE,results="asis">>=
+placental.classification <- fread("../data/placental_classification.txt")
+print(xtable(placental.classification,
+             display=c("s","s","s","s","s"),
+             align=c("c","c","c","c","c")),
+      include.rownames=FALSE,
+      floating=FALSE,
+      booktabs=TRUE
+      )
+
+@ 
+\caption{Classification of Placenta shapes}
+\label{tab:placental_classification}
+\end{table}
 
 \subsection{Sequence Source}
 
 \begin{table}
   \raggedright
   \small
-  \begin{tabular}{c >{\raggedright}p{1.5in} c >{\raggedright\arraybackslash}p{2in} c}
+  \begin{tabular}{c >{\raggedright}p{1.2in} c >{\raggedright\arraybackslash}p{1.8in} c}
     \toprule
     Species                       & Collector & Experiment & Sample(s) & Library \\
     \midrule

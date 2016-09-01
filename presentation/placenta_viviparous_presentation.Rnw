@@ -773,6 +773,23 @@ print(ggplot(combined.long[combined.long$type=="Galectin",], aes(y=gene, x=speci
 \end{columns}
 \end{frame}
 
+\begin{frame}{EGFR}
+  \begin{figure}
+<<egfr_expression,echo=FALSE,fig.width=5,fig.height=5>>=
+print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="EGFR" &
+                                                    species=="homo sapiens"),
+                                subtree=c("ENSG00000146648","ENSMODG00000009033"),
+                                genes.to.tree=genes.to.tree,
+                                combined.fpkm=combined.fpkm,
+                                trees=trees,
+                                tree.line.width=2
+                                )+
+      geom_tiplab(size=5,color="black",fontface="italic")+xlim(0,0.4))
+
+@ 
+  \end{figure}
+\end{frame}
+
 \begin{frame}{Hormone Expression}
 \begin{columns}
 \column{0.4\textwidth}

@@ -350,7 +350,7 @@ grid.text("B",
           just=c("left","top"))
 popViewport(2)
 @ 
-\caption{RNAseq read and alignment statistics for all species. A)
+\caption[RNAseq statistics]{RNAseq read and alignment statistics for all species. A)
   Boxplot of percentages of unmapped reads in each species; 0\% of
   reads in all species were unmapped because of mismatches. B) Boxplot
   of number of RNAseq reads in each species.}
@@ -486,12 +486,12 @@ setnames(go.analysis.wide.table,"GO.ID","GO ID")
 print(xtable(go.analysis.wide.table,
              display=c("d","s","s","s","d","e"),
              align=  c("c","c","c","c","c","c"),
-             caption="GO terms with significant enrichment ($\\text{FDR}\\le0.05$)
+             caption=c("GO terms with significant enrichment ($\\text{FDR}\\le0.05$)
   in 12 or more of the species analyzed from genes in the top 1\\% of
   expression. $n(\\text{FDR}\\le0.05)$ is the number of species with
   significant enrichment ($\\text{FDR}\\le 0.05$) in the GO term
   listed. $max(\\text{FDR}\\le0.05)$ is the maximum FDR value in all
-  species with an FDR of less than $0.05$.",
+  species with an FDR of less than $0.05$.","GO terms in 12 or more species"),
   label="tab:go_terms_all_species"
   ),
   math.style.exponents=TRUE,
@@ -520,7 +520,8 @@ for (this.species in names(species.names)) {
     print(xtable(go.results[grepl("Top 1% No Housekeeping",type) & FDR <= 0.05 & species == this.species,
                             list(GO.ID,Term,FDR,Ontology)
                             ][order(FDR)],
-                 caption=this.caption,
+                 caption=c(this.caption,paste0("GO terms from \\textit{",
+                                               capfirst(this.species),"} top 1\\%")),
                  label=paste0("tab:go_terms_enriched_top_one_",gsub(" ","_",this.species)),
                  display=c("s","s","s","e","s")
                  ),
@@ -550,7 +551,8 @@ for (this.species in names(species.names)) {
     print(xtable(go.results[grepl("100 No Housekeeping",type) & FDR <= 0.05 & species == this.species,
                             list(GO.ID,Term,FDR,Ontology)
                             ][order(FDR)],
-                 caption=this.caption,
+                 caption=c(this.caption,paste0("GO terms from \\textit{",
+                                               capfirst(this.species),"} top 100")),
                  label=this.label,
                  display=c("s","s","s","e","s")
                  ),

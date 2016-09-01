@@ -14,7 +14,7 @@ library("geiger")
 ##' @param ... Additional options passed to contMap
 ##' @return whatever contMap() returns
 ##' @author Don Armstrong
-plot.ancestral.state.tree <- function(gene_selector,genes.to.tree,combined.fpkm,trees,subtree=NULL,small.distance=0.0001) {
+plot.ancestral.state.tree <- function(gene_selector,genes.to.tree,combined.fpkm,trees,subtree=NULL,small.distance=0.0001,tree.line.width=1) {
     capfirst <- function(s, strict = FALSE) {
         paste(toupper(substring(s, 1, 1)),
         {s <- substring(s, 2); if(strict) tolower(s) else s},
@@ -131,7 +131,7 @@ plot.ancestral.state.tree <- function(gene_selector,genes.to.tree,combined.fpkm,
         as.numeric(gene.tree.expression.vector[f.tr$label[f.tr$isTip]])
     f.tr$fpkm[!f.tr$isTip] <-
         theanc[as.character(f.tr$node[!f.tr$isTip])]
-    return(ggtree(f.tr,aes(color=log10(fpkm+1)),size=1)+
+    return(ggtree(f.tr,aes(color=log10(fpkm+1)),size=tree.line.width)+
            # geom_tiplab(color="black")+
            scale_color_gradient(low="grey90",high="blue",
                                 limits=c(0,5),

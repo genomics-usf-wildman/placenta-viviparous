@@ -44,49 +44,6 @@
 \zxrsetup{toltxlabel}
 \zexternaldocument*{supplemental_material}
 \usepackage[capitalize]{cleveref}
-% \newenvironment{narrow}[2]{%
-%   \begin{list}{}{%
-%       \setlength{\topsep}{0pt}%
-%       \setlength{\leftmargin}{#1}%
-%       \setlength{\rightmargin}{#2}%
-%       \setlength{\listparindent}{\parindent}%
-%       \setlength{\itemindent}{\parindent}%
-%       \setlength{\parsep}{\parskip}}%
-%   \item[]}{\end{list}}
-% \def\newblock{\hskip}
-% \newenvironment{paperquote}{%
-%   \begin{quote}%
-%      \it
-%   }%
-%   {\end{quote}}
-% \renewcommand{\textfraction}{0.15}
-% \renewcommand{\topfraction}{0.85}
-% \renewcommand{\bottomfraction}{0.65}
-% \renewcommand{\floatpagefraction}{0.60}
-%\renewcommand{\baselinestretch}{1.8}
-% \newenvironment{enumerate*}%
-%   {\begin{enumerate}%
-%     \setlength{\itemsep}{0pt}%
-%     \setlength{\parskip}{0pt}}%
-%   {\end{enumerate}}
-% \newenvironment{itemize*}%
-%   {\begin{itemize}%
-%     \setlength{\itemsep}{0pt}%
-%     \setlength{\parskip}{0pt}}%
-%   {\end{itemize}}
-% \setcounter{tocdepth}{3}
-% \oddsidemargin 0.0in 
-% \textwidth 6in
-% \raggedbottom
-% \clubpenalty = 10000
-% \widowpenalty = 10000
-% set a large emergency stretch to avoid issues with overfull boxes
-% \setlength{\emergencystretch}{20em}
-% make the afill smaller
-% \renewcommand\Affilfont{\itshape\small}
-%\renewcommand\cite[1]{\autocite{#1}}
-%\renewcommand\citet[1]{\textcite{#1}}
-% \pagestyle{fancy}
 
 \input{common_latex}
 

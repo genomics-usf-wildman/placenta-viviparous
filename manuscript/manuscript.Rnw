@@ -135,7 +135,7 @@ grad.def <- list(low = "gray90", high = "blue", space = "Lab", na.value = NA)
 % Acronyms
 \input{acronyms}
 
-\title{The core transcriptome of the mammal placenta}%
+\title{The evolution of the transcriptome of mammalian placentas}%
 %
 \author[affigb]{Don L. Armstrong\fnref{n1}}
 \ead{don@donarmstrong.com}

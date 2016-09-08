@@ -1,0 +1,2635 @@
+%\documentclass[english,12pt]{article}
+\documentclass[5p]{elsarticle_dla}
+\usepackage{fontspec}
+\setmainfont{FreeSerif}
+\setsansfont{FreeSans}
+\setmonofont{FreeMono}
+\setmathrm{FreeSerif}
+\setmathsf{FreeSans}
+\setmathtt{FreeSerif}
+%\usepackage[letterpaper,left=1in,right=1in,top=1in,bottom=1in,headheight=14pt]{geometry}
+\usepackage[letterpaper]{geometry}
+%\usepackage{url}
+\usepackage{graphicx}
+%\usepackage{rotating}
+%\usepackage{wrapfig}
+\usepackage{booktabs}
+%\usepackage{float}
+\usepackage{multirow}
+%\usepackage{setspace}
+\usepackage{acronym}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{amsmath}
+\usepackage[backend=biber,natbib=true,hyperref=true,citestyle=numeric-comp,style=nature,autocite=inline]{biblatex}
+\addbibresource{references.bib}
+\usepackage[hyperfigures,bookmarks,colorlinks,linkcolor=black,urlcolor=black,citecolor=blue]{hyperref}
+% Floats at end for journals
+% \usepackage[nolists,figuresfirst,nomarkers,heads]{endfloat}
+% \renewcommand{\efloatseparator}{\mbox{}}
+%\AtBeginFigures{\newpage \renewcommand{\efloatseparator}{\mbox{}}\section*{Figure Legends}}
+%\AtBeginTables{\newpage \section*{Tables}\renewcommand{\efloatseparator}{\mbox{}}}
+% \renewcommand{\includegraphics}[2][]{}
+\usepackage[nomargin,inline,draft]{fixme}
+\newcommand{\DLA}[1]{\textcolor{red}{\fxnote{DLA: #1}}}
+\newcommand{\DEW}[1]{\textcolor{purple}{\fxnote{DEW: #1}}}
+% \usepackage[x11names,svgnames]{xcolor}
+% \usepackage{texshade}
+% \usepackage{tikz}
+\usepackage{nameref}
+\usepackage{xspace}
+% this package will stretch the font slightly if necessary.
+% \usepackage{microtype}
+\usepackage{zref-xr,zref-user}
+\zxrsetup{toltxlabel}
+\zexternaldocument*{supplemental_material}
+\usepackage[capitalize]{cleveref}
+% \newenvironment{narrow}[2]{%
+%   \begin{list}{}{%
+%       \setlength{\topsep}{0pt}%
+%       \setlength{\leftmargin}{#1}%
+%       \setlength{\rightmargin}{#2}%
+%       \setlength{\listparindent}{\parindent}%
+%       \setlength{\itemindent}{\parindent}%
+%       \setlength{\parsep}{\parskip}}%
+%   \item[]}{\end{list}}
+% \def\newblock{\hskip}
+% \newenvironment{paperquote}{%
+%   \begin{quote}%
+%      \it
+%   }%
+%   {\end{quote}}
+% \renewcommand{\textfraction}{0.15}
+% \renewcommand{\topfraction}{0.85}
+% \renewcommand{\bottomfraction}{0.65}
+% \renewcommand{\floatpagefraction}{0.60}
+%\renewcommand{\baselinestretch}{1.8}
+% \newenvironment{enumerate*}%
+%   {\begin{enumerate}%
+%     \setlength{\itemsep}{0pt}%
+%     \setlength{\parskip}{0pt}}%
+%   {\end{enumerate}}
+% \newenvironment{itemize*}%
+%   {\begin{itemize}%
+%     \setlength{\itemsep}{0pt}%
+%     \setlength{\parskip}{0pt}}%
+%   {\end{itemize}}
+% \setcounter{tocdepth}{3}
+% \oddsidemargin 0.0in 
+% \textwidth 6in
+% \raggedbottom
+% \clubpenalty = 10000
+% \widowpenalty = 10000
+% set a large emergency stretch to avoid issues with overfull boxes
+% \setlength{\emergencystretch}{20em}
+% make the afill smaller
+% \renewcommand\Affilfont{\itshape\small}
+%\renewcommand\cite[1]{\autocite{#1}}
+%\renewcommand\citet[1]{\textcite{#1}}
+% \pagestyle{fancy}
+
+\input{common_latex}
+
+\begin{document}
+% \raggedright
+
+
+<<load.libraries,echo=FALSE,results="hide",warning=FALSE,message=FALSE,error=FALSE,cache=FALSE>>=
+opts_chunk$set(dev="cairo_pdf",out.width="\\columnwidth",out.height="0.7\\textheight",out.extra="keepaspectratio")
+opts_chunk$set(cache=TRUE, autodep=TRUE)
+options(device = function(file, width = 8, height = 7, ...) {
+  cairo_pdf(tempfile(), width = width, height = height, ...)
+})
+options(scipen = -2, digits = 0)
+library("data.table")
+library("ggplot2")
+library("reshape2")
+library("xtable")
+library("grid")
+library("gridExtra")
+library("ape")
+library("ggtree")
+library("topGO")
+library("org.Hs.eg.db")
+library("scales")
+library("magrittr")
+library("tidyr")
+library("phytools")
+@ 
+
+<<source.to.latex,echo=FALSE,message=FALSE,results="hide",cache.extra=file.info(paste0("../common_r_code/",c("to_latex.R","plot_tree_matrix.R","utility_functions.R")))[,"mtime"]>>=
+for (a in paste0("../common_r_code/",c("to_latex.R","plot_tree_matrix.R","utility_functions.R"))) {
+    source(a)
+}
+@ 
+
+<<load.data,echo=FALSE,results="hide",cache.extra=file.info(paste0("../data/",c("combined_fpkm","gene_trees","housekeeping_genes_superset","placenta_core_transcriptome","placenta_go_results_bp","placenta_go_results_mf","hugo_nomenclature","gene_annotation")))[,"mtime"]>>=
+for (a in paste0("../data/",c("combined_fpkm","gene_trees",
+                              "housekeeping_genes_superset",
+                              "placenta_core_transcriptome",
+                              "placenta_go_results_bp",
+                              "placenta_go_results_mf",
+                              "hugo_nomenclature",
+                              "gene_annotation"
+                              ))) {
+    load(a)
+}
+combined.fpkm[,species:=factor(species,levels=names(species.names))]
+setkey(genes.to.tree,"gene_id")
+star.logs[,value:=gsub("%$","",value)]
+star.logs.wide <- 
+    data.table(dcast(star.logs,species+file~field))
+setnames(star.logs.wide,
+         "Average input read length",
+         "input.read.length")
+setnames(star.logs.wide,
+         "Number of input reads",
+         "input.reads")
+setnames(star.logs.wide,
+         "Uniquely mapped reads number",
+         "unique.map.reads")
+star.logs.wide[,`% bad reads`:=(as.numeric(`% of reads mapped to too many loci`)+
+                            as.numeric(`% of reads unmapped: other`)+
+                            as.numeric(`% of reads unmapped: too many mismatches`)+
+                            as.numeric(`% of reads unmapped: too short`))]
+star.logs.wide[,`% good reads`:=100-`% bad reads`]
+star.logs.wide[,input.reads:=as.numeric(input.reads)]
+star.logs.wide[,input.read.length:=as.numeric(input.read.length)]
+setkey(hugo.nomenclature,"Approved Symbol")
+@ 
+
+<<load.go.results,echo=FALSE,results="hide",cache.extra=tools::md5sum("../go_annotation/go_tissue_analysis")>>=
+load("../go_annotation/go_tissue_analysis")
+
+@ 
+
+<<load_plot_ancestral_trees,message=FALSE,echo=FALSE,results="hide",cache.extra=file.info(paste0("../common_r_code/",c("plot_ancestral_state_tree.R")))[,"mtime"]>>=
+for (a in paste0("../common_r_code/",c("plot_ancestral_state_tree.R"))) {
+    source(a)
+}
+@ 
+
+<<plot.defaults,echo=FALSE,results="hide">>=
+#grad.def <- list(low = "#132B43", high = "#56B1F7", space = "Lab", na.value = NA)
+grad.def <- list(low = "gray90", high = "blue", space = "Lab", na.value = NA)
+
+@ 
+
+% Acronyms
+\input{acronyms}
+
+\title{The evolution of the transcriptome of mammalian placentas}%
+%
+\author[affigb]{Don L. Armstrong\fnref{n1}}
+\ead{don@donarmstrong.com}
+\author[afflon]{Michael R. McGowen\fnref{n1}}
+\ead{1mmcgowen1@gmail.com}
+\author[affigb]{Amy Weckle}
+\ead{aweckle@illinois.edu}
+\author[affwayne]{Jason Caravas}
+\ead{jacaravas@gmail.com}
+\author[affmich]{Dalen Agnew}
+\ead{agnewd@dcpah.msu.edu}
+\author[affuscd]{Kurt Benirschke}
+\ead{kbenirschke@ucsd.edu}
+\author[affapetrust]{Sue Savage-Rumbaugh}
+\ead{suerumbaugh@gmail.com}
+\author[affhaifa]{Eviatar Nevo}
+\ead{nevo@research.haifa.ac.il}
+\author[affnih,affwaynepath]{Chong J Kim}
+\ead{cjkim@med.wayne.edu}
+\author[affyale]{Günter P. Wagner}
+\ead{gunter.wagner@yale.edu}
+\author[affnih]{Roberto Romero}
+\ead{prbchiefstaff@med.wayne.edu}
+\author[affigb,affapetrust,affmip]{Derek E. Wildman\corref{cor1}}
+\ead{wildmand@illinois.edu}
+\cortext[cor1]{Corresponding author}
+\address[affigb]{Institute for Genomic Biology, University of Illinois at Urbana-Champaign, Urbana, IL, USA}
+\address[afflon]{School of Biological and Chemical Sciences, Queen Mary, University of London, London, UK}
+\address[affwayne]{Center for Molecular Medicine and Genetics, Wayne State University School of Medicine, Detroit, MI, USA}
+\address[affmich]{Diagnostic Center for Population and Animal Health, College of Veterinary Medicine, Michigan State University, East Lansing, MI, USA}
+\address[affuscd]{Department of Pathology, University of California San Diego, La Jolla, CA, USA}
+\address[affapetrust]{Great Ape Trust/Bonobo Hope Sanctuary, Des Moines, IA, USA}
+\address[affnih]{Perinatology Research Branch, Eunice Kennedy Shriver National Institute of Child Health and Human Development (NICHD), National Institutes of Health (NIH), Detroit, MI, USA}
+\address[affwaynepath]{Department of Pathology, Wayne State University School of Medicine, Detroit, MI, USA}
+\address[affyale]{Department of Ecology and Evolutionary Biology and Yale Systems Biology Institute, Yale University, New Haven, CT, USA}
+\address[affmip]{Department of Molecular and Integrative Physiology, University of Illinois at Urbana-Champaign, Urbana, IL, USA}
+\address[affhaifa]{The Institute of Evolution, University of Haifa, Haifa, Israel}
+
+\begin{abstract}
+  \textbf{Background} The placenta is arguably the most
+  anatomically variable organ in mammals. 
+
+  \textbf{Results} We measured the expression profiles of
+  \Sexpr{star.logs[,length(unique(file))]} term placentas of
+  \Sexpr{star.logs[,length(unique(species))]} species of mammals. We
+  found lineage-specific differential expression of prolactin,
+  relaxin, and galectins as well as increased expression of the
+  pre-eclampsia associated genes \textit{ADAM12}, \textit{CRH}, and
+  \textit{PAPPA} in humans. We also identified genes which are
+  expressed in all placentas, including genes with immune-modulating
+  properties (\textit{ANXA2}, \textit{ANXA1}, \textit{S100A11}, and
+  \textit{S100A10}) and cell-cell interactions (\textit{LAMC1},
+  \textit{LUM}, and \textit{LGALS1}).
+
+  \textbf{Conclusions} A diverse array of genes are differentially
+  expressed and are likely to play a role in the anatomical
+  variability of the placenta in the placentas of mammalian lineages.
+  Furthermore, multiple genes which are associated with pre-eclampsia
+  (\textit{CRH}, \textit{ADAM12}, \textit{KISS1}, \textit{PAPPA},
+  \textit{IL1RL1}, and \textit{PLAC1}) show increased expression on
+  the human lineage. Still, using the strictest filtering strategy
+  we find a core set of only
+  \Sexpr{core.placenta.transcriptome.long[,length(unique(human_name))]}
+  genes is essential for the proper functioning of the placenta in all
+  species analyzed.
+
+\end{abstract}
+
+\begin{keyword}
+mammal \sep  gene expression \sep evolution \sep RNA-seq \sep placenta
+\end{keyword}
+
+\maketitle
+
+\section{Background}
+
+The main role of the placenta in viviparous mammals is the transfer of
+nutrients, oxygen, and waste between mother and offspring. Although
+these functions are conserved among mammals, the placenta is perhaps
+the most variable organ in terms of structure and form
+\cite{Mossman.1937:comparativemorphogenesisofthe,Moffett.ea2006:Immunologyofplacentationin}. Species differ in
+the shape of attachment (i.e., discoid, diffuse, cotyledonary,
+zonary), degree of intimacy between fetal tissues and maternal tissues
+(i.e. epitheliochorial, endotheliochorial, hemochorial), and degree of
+interdigitation of maternal-fetal tissue (i.e., villous, folded,
+trabecular, lamellar, labrynthine)
+\cite{Mossman.1987:vertebratefetalmembranes}. In addition, therian
+mammals differ drastically in the number and size of their offspring,
+as well as the length of gestation, traits often associated with
+specific aspects of placental morphology
+\cite{Capellini.ea2011:Placentationandmaternalinvestment}
+(\cref{tab:gestational_periods}).
+
+The placenta arose at some point before the origin of extant mammals,
+a group that includes marsupials, monotremes, and eutherian or
+“placental mammals”. The term “placental mammals” is misleading, as
+extant monotremes (such as \textit{Ornithorhynchus anatinus}, the
+platypus) possess a rudimentary placenta, as do marsupials, although
+the direct apposition to maternal tissues lasts for a proportionally
+shorter time during gestation
+\cite{Selwood.ea2006:Trophoblastandhypoblastin,Renfree2010:ReviewMarsupialsplacentalmammals}.
+Marsupials also differ from eutherian mammals in that most possess
+only a choriovitelline placenta, produced from the fusion of the
+chorion and yolk sac, during most of gestation. Although some
+eutherian mammals may possess a choriovitelline placenta at some point
+in development, the major site of nutrient exchange in placentals
+occurs via the chorioallantoic placenta, produced from the fusion of
+the chorion and allantois
+\cite{Mossman.1987:vertebratefetalmembranes}. It is unclear whether
+the first placenta was more like that of marsupials or eutherians;
+however, using phylogenetic methods, the ancestral eutherian was
+reconstructed as possessing a relatively invasive hemochorial
+placenta, as in humans and mouse
+\cite{Elliot.ea2009:Phylogeneticevidenceforearly,Wildman.ea2006:Evolutionofmammalianplacenta}.
+
+Although the morphology of the mammalian placenta has been well
+characterized in a number of species
+\cite{Mossman.1987:vertebratefetalmembranes}, the diversity of the
+molecular environment is only beginning to be understood from a
+genetic perspective \cite{Carter2012:Evolutionofplacentalfunction}.
+Studies of certain model species (i.e., \textit{Homo sapiens},
+\textit{Mus musculus}, \textit{Bos taurus}) have revealed a stunning
+divergence in the genetics of the placenta, especially in later stages
+of pregnancy
+\cite{Carter2012:Evolutionofplacentalfunction,Hou.ea2012:Elephanttranscriptomeprovidesinsights,Knox.ea2008:Genomicevolutionofplacenta,Su.ea2002:Large-scaleanalysisofhuman}.
+For example, each lineage has evolved expansive placenta-specific gene
+families with expression patterns that can vary in space and time
+\cite{Green.ea2000:Pregnancy-associatedbovineandovine,Simmons.ea2008:Spatialandtemporalexpression}.
+These include independent expansions of the prolactins in \mouse,
+\textit{Spalax carmeli}, \textit{Spalax galili}, and \cow, \acp{PSG} in \human and \mouse, \acp{PAG}
+in \cow, genes related to the thymus-specific serine protease
+\textit{PRSS16} in \textit{Loxodona africana} (in this work),
+ and the expansion of the growth hormone
+and chorionic gonadotropin beta genes in anthropoid primates
+\cite{Haig2008:Placentalgrowthhormone-relatedproteins,Rawn.ea2008:evolutionregulationandfunction}.
+Expression patterns of specific genes also can vary widely between
+species. For example, the expression of orthologous genes in the
+placenta have been found to vary substantially between \human and
+\mouse \cite{Su.ea2002:Large-scaleanalysisofhuman}, and the
+recruitment of \textit{SIGLEC6} to placental expression in \human
+differs from both \textit{Pan troglodytes} and \mouse
+\cite{Linden.ea2007:Human-specificexpressionofSiglec-6}.
+
+One explanation for the divergent paths of the placental interface is
+the distinct evolutionary interplay between maternal and fetal
+strategies during pregnancy \cite{Haig1993:Geneticconflictsinhuman}.
+The maternal strategy is to requisition an adequate degree of
+nutrients to the fetus without risking the health of the mother, while
+the fetal strategy via paternal genes is to extract as many resources
+from the mother as possible. Therefore, an interplay between these
+extremes can set up an intricate “arms race”, involving the imprinting
+of parental alleles, expansion of gene families, and enlistment of
+existing genes to expression at the maternal-fetal interface
+\cite{Haig1993:Geneticconflictsinhuman}.
+
+One symptom of this maternal-fetal conflict is its potential affect on
+health
+\cite{Hollegaard.ea2013:Parent-offspringconflictandpersistence}. In
+addition to having an invasive hemochorial placenta, \human possess a
+deeply invasive trophoblast layer that can penetrate the myometrium of
+the uterus \cite{Carter.ea2011:Evolutionofinvasiveplacentation}.
+Defects in placental growth are known to be associated with the
+devastating condition of pre-eclampsia, which can cause hypertension,
+proteinuria, and has the potential to lead to death of the mother
+and/or infant \cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current}.
+Although cases have been documented in \textit{P. troglodytes}
+\cite{Stout.ea1969:Glomerularcapillaryendothelialswelling}, and
+\textit{Gorilla gorilla}
+\cite{Thornton.ea1992:Convulsionsinpregnancyin}, pre-eclampsia has a
+far higher incidence in \human pregnancies with as much as 4\% of
+pregnancies being affected in the United States
+\cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current}. \textit{P.
+  troglodytes} and \textit{G. gorilla} also have deeply invasive
+trophoblasts, although the progression of invasion in great apes may
+be slower than \human
+\cite{Carter.ea2011:Evolutionofinvasiveplacentation}. However,
+large-scale expression studies of great ape placentas have not been
+conducted. The increasing affordability of next-generation sequencing
+technology has enabled the large-scale study of specific tissues from
+a wide array of species to address broader phylogenetic questions in
+the evolution of gene expression
+\cite{Brawand.ea2011:evolutionofgeneexpression}.
+
+Here we use RNA-Seq
+technology to sequence and quantify the mRNA environment of mammalian
+placentas at term, including that of the \human, \textit{Pan paniscus}
+(the sister species to \textit{P. troglodytes}), \textit{Ateles
+  fusciceps}, \mouse, \galili, \carmeli, \textit{Canis familiaris},
+\cow, \elephant, \textit{Dasypus novemcinctus}, and
+\textit{Monodelphis domesticus}. These species represent four major
+branches of eutherian mammals (Euarchontoglires, Laurasiatheria,
+Afrotheria, and Xenartha) as well as marsupials. These placentas also represent a
+wide array of placental morphologies as well as traits such as number
+and size of offspring and length of gestation
+(\cref{tab:gestational_periods}). We use this data, along with
+existing RNA-Seq data from \mouse
+\cite{Wang.ea2011:surveyfornovelimprinted}, \human
+\cite{Hughes.ea2015:Evaluatingintra-andinter-individual}, \textit{Equus caballus}
+\cite{Coleman.ea2010:Structuralannotationofequine}, \textit{Ovis aries}
+\cite{Archibald.ea2010:sheepgenomereferencesequence}, and \textit{Sus scrofa}
+\cite{Ahanda.ea2012:Predictionofaltered3-} to address the major
+differences between expression in marsupial and eutherian mammals at
+term, identify the evolution of expression in important placental
+genes such as hormones and galectins, identify novel lineage-specific
+expression patterns, and quantify \human specific differences in gene
+expression that may be related to obstetrical disorders such as
+pre-eclampsia.
+
+\begin{table}
+  \small
+  \begin{tabular}{>{\raggedright }p{0.7in}
+                  >{\raggedright }p{0.7in}
+                  c c 
+                  p{0.65in}}
+    \toprule
+    {\centering Species  }                     & {\centering Common Name }& 
+       \multicolumn{1}{p{0.43in}}{\raggedright \centering Gestation (days)} & 
+       \multicolumn{1}{p{0.3in}}{\raggedright \centering Litter Size}  & Source \\
+    \midrule
+    \textit{Ateles fusciceps}     & Spider monkey & 224 & 1 & \citet{Ernest2003:lifehistorycharacteristicsofplacental}\\
+    \textit{Bos taurus}           & Cow & 278 & 1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
+    \textit{Canis familiaris}     & Dog & 61 & 4 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
+    \textit{Dasypus novemcinctus} & Nine-banded Armadillo & 150 & 4 & \citet{Smith1984:amazingarmadillo} \\
+    \textit{Equus caballus}       & Horse & 336 & 1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation}\\
+    \textit{Loxodonta africana}   & African savanna elephant & 644 & 1 & \citet{Ernest2003:lifehistorycharacteristicsofplacental}\\
+    \textit{Homo sapiens}         & Human & 270 & 1.1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
+    \textit{Monodelphis domestica}& Gray short-tailed opossum & 15 & 7.1 & \citet{Harder.ea1993:Gestationandplacentationin} \\
+    \textit{Mus musculus}         & Mouse & 20 & 6.1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
+    \textit{Spalax galili}   & Blind mole rat from Upper Galilee & 28-42 & 4 & \citet{Nevo1997:mosiacevolutionofsubterranianmammals} \\
+    \textit{Ovis aries}           & Domestic sheep & 151 & 1.35 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
+    \textit{Pan paniscus}         & Bonobo & 223 & 1 & \citet{Ernest2003:lifehistorycharacteristicsofplacental} \\
+    \textit{Spalax carmeli}       & Blind mole rat from northern Israel & 28-42 & 4 & \citet{Nevo1997:mosiacevolutionofsubterranianmammals}\\
+    \textit{Sus scrofa}           & Domestic pig (Duroc) & 114 & 5.8 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
+    \bottomrule
+  \end{tabular}
+  \caption{Gestational periods in days and average liter sizes for studied species.}
+  \label{tab:gestational_periods}
+\end{table}
+
+\section{Methods}
+
+\subsection{Collection of Placental Tissue and RNA Extraction}
+
+Fetal tissue was collected from the placenta of nine mammalian
+species (\human [human], \bonobo [bonobo], \smonkey [spider monkey], \dog [domestic dog], \cow
+[domestic cow], \elephant [African savanna elephant], \opossum [gray
+short-tailed opossum], \galili [blind mole rat from Upper Galilee],
+\carmeli [blind mole rat from northern Israel]
+\cite{Nevo2001:adaptiveradiationofblindsubterraneanmole}). Information
+on specimen ID, and collector is shown for each sample in Supplemental
+\cref{tab:srr_numbers}. In the case of \bonobo, \cow, and \elephant,
+the placenta was collected at term upon expulsion from the mother
+following delivery. Placental tissue from \human was collected upon
+delivery via a cesarean section. Near-term placental tissue from \dog
+was collected upon the death of the mother from a car accident.
+Placental tissue from \opossum was sampled at fetal stage 32, roughly
+one day prior to birth. Only the fetal portion of the placenta was
+sampled at the maternal-fetal interface (i.e. villous portion for
+\human, \bonobo, \dog, and \elephant; cotyledon for \cow; diffuse
+placenta for \opossum). All tissues were collected and stored in
+RNAlater (Life Technologies, Carlsbad, CA) until RNA isolation could
+be performed. Tissues were homogenized in Trizol, and total RNA was
+isolated following the manufacturer's instructions. RNA was further
+purified using RNeasy Midi Kit (Qiagen, Valencia, CA), in conjunction
+with the RNase-Free DNase Set (Qiagen, Valencia, CA), following the
+manufacturer’s protocol to remove any contaminating DNA from the
+sample. Total RNA was then evaluated on a Nanodrop 1000 (Thermo
+Scientific, Wilmington, DE) and an Agilent Bioanalyzer 2100 (Santa
+Clara, CA) to confirm concentration and quality of the isolation. RNA
+quality was assessed using A260/A280 and A260/A230 absorbance values.
+
+\subsection{Sequencing}
+
+All RNA-Seq mRNA isolation, library construction, and Illumina
+sequencing was performed by the Applied Genomics Technology Center
+(AGTC) at Wayne State University School of Medicine using 2.5-5 µg of
+total RNA and the standard Illumina protocol. Paired-end sequencing
+was performed using the Illumina Genome Analyzer II with an insert
+size of 230 base pairs (bp). Read lengths for species are shown in
+Supplemental \cref{tab:ref_genome_aligned_species}.
+
+\subsubsection{Additional Sequences}
+
+For more complete evolutionary comparisons additional sequences of
+placenta in \mouse
+(n=\Sexpr{star.logs[grepl("musculus",species),length(unique(file))]})
+\cite{Wang.ea2011:surveyfornovelimprinted}, \human
+(n=\Sexpr{star.logs[grepl("sapiens",species),length(unique(file))]})
+\cite{Hughes.ea2015:Evaluatingintra-andinter-individual} \horse
+\cite{Coleman.ea2010:Structuralannotationofequine}, \sheep
+\cite{Archibald.ea2010:sheepgenomereferencesequence}, and \pig
+\cite{Ahanda.ea2012:Predictionofaltered3-} were obtained from the
+\ac{SRA} (Supplemental \cref{tab:srr_numbers}) and analyzed using the
+same methodology as RNAs sequenced specifically for this study.
+
+\subsection{Transcriptome Assembly, Alignment, and Quantification}
+
+The quality of reads was evaluated using FASTQC v0.11.2
+(\url{http://www.bioinformatics.babraham.ac.uk/projects/fastqc/}).
+Transcriptomes without a suitable reference genome (\smonkey, \galili,
+\carmeli; italic reference in Supplemental
+\cref{tab:ref_genome_aligned_species}) were assembled using Trinity
+v2014-07-17 \cite{Haas.ea2013:Denovotranscriptsequence} and annotated
+using Diamond \cite{Buchfink.ea2015:Fastandsensitiveprotein} against
+either the \human or \mouse transcriptome (Supplemental
+\cref{tab:ref_genome_aligned_species}). For annotation using Diamond,
+the match with the highest bitscore was chosen as the annotation;
+transcripts where the highest scoring match had a bitscore below 40
+were left unannotated.
+% 
+All transcriptomes were then aligned to the appropriate reference (or
+assembled) genome using STAR v2.4.2a
+\cite{Dobin.ea2013:STARultrafastuniversalRNA-seq} and expression
+values in \ac{FPKM}
+\cite{Trapnell.ea2010:Transcriptassemblyandquantification} were
+quantified using Cufflinks v2.2.1
+\cite{Trapnell.ea2009:TopHatdiscoveringsplicejunctions} (Supplemental
+\cref{tab:all_ateles_fusciceps_placenta,tab:all_homo_sapiens_placenta,tab:all_pan_paniscus_placenta,tab:all_mus_musculus_placenta,tab:all_spalax_galili_placenta,tab:all_spalax_carmeli_placenta,tab:all_bos_taurus_placenta,tab:all_ovis_aries_placenta,tab:all_sus_scrofa_placenta,tab:all_equus_caballus_placenta,tab:all_canis_familiaris_placenta,tab:all_loxodonta_africana_placenta,tab:all_dasypus_novemcinctus_placenta,tab:all_monodelphis_domestica_placenta}).
+%
+The genome of the closely-related \textit{P. troglodytes} was used as
+a reference for \bonobo. The separation between the two recognized Pan
+species is generally perceived to be $\approx 1$ million years
+\cite{Prüfer.ea2012:bonobogenomecomparedwith}. %
+%
+
+
+\begin{figure}
+<<species.tree,fig.width=8,fig.height=6,out.width="\\columnwidth",echo=FALSE>>=
+species.tree <- 
+    read.tree(text="(Monodelphis_domestica,((Dasypus_novemcinctus,Loxodonta_africana)Atlantogenata,((Canis_familiaris,(Equus_caballus,(Sus_scrofa,(Ovis_aries,Bos_taurus))))Laurasiatheria,(((Spalax_carmeli,Spalax_galili),Mus_Musculus)Rodentia,((Pan_paniscus,Homo_sapiens),Ateles_fuciceps)Primates)Euarchontoglires)Boreoeutheria)Eutheria);")
+pp <- ggtree(species.tree)+
+    geom_text(aes(label=label),hjust=0,size=5,fontface="italic")+
+    scale_x_continuous(limits=c(0,10))
+print(pp %>%
+      ## monodelphis
+      phylopic("91324e57-b3f1-42e0-abe3-43e5bc8aa4c6", color="#86B875",alpha=0.3,node=1,width=0.2)
+      ## Armadillo
+      %>% phylopic("5d59b5ce-c1dd-40f6-b295-8d2629b9775e", color="#44EEBB",alpha=0.3,node=2,width=0.15)
+      ## elephant
+      %>% phylopic("80db1004-bc9f-4318-84e7-cdd9639a1f3e",color="#BB1111",alpha=0.3,node=3,width=0.15)
+      ## dog
+      %>% phylopic("4d83a0cd-cf06-4a32-9a5a-0a6b644158c1",color="#FFAACC",alpha=0.3,node=4,width=0.15)
+      ## horse
+      %>% phylopic("071ee517-a0f1-4d19-aa29-812b9f86cb53",color="#22BBBB",alpha=0.3,node=5,width=0.15)
+      ## pig
+      %>% phylopic("008d6d88-d1be-470a-8c70-73625c3fb4fb",color="#33AA11",alpha=0.3,node=6,width=0.12)
+      ## sheep -- this is a male, the sample is female, but there aren't any females in phylopic
+      %>% phylopic("cbea1964-89bf-4ce1-99b0-58fe0f9170b3",color="#004411",alpha=0.3,node=7,width=0.18)
+      ## cow
+      %>% phylopic("415714b4-859c-4d1c-9ce0-9e1081613df7",color="#881111",alpha=0.3,node=8,width=0.12)
+      ## s carmeli
+      %>% phylopic("287c58ad-009b-4878-9a9e-59fd7e0fe66f",color="#881188",alpha=0.3,node=9,width=0.1)
+      ## n galili
+      %>% phylopic("287c58ad-009b-4878-9a9e-59fd7e0fe66f",color="#888888",alpha=0.3,node=10,width=0.1)
+      ## mouse
+      %>% phylopic("6b2b98f6-f879-445f-9ac2-2c2563157025",color="#BB11CC",alpha=0.3,node=11,width=0.18)
+      ## bonobo
+      %>% phylopic("f06b4dd0-094e-4f37-9105-25fdb4eb1b02",color="#1111FF",alpha=0.3,node=12,width=0.18)
+      ## spider monkey
+      %>% phylopic("aceb287d-84cf-46f1-868c-4797c4ac54a8",color="#FF11FF",alpha=0.3,node=14,width=0.25)
+      ## human
+      %>% phylopic("a9f4ebd5-53d7-4de9-9e66-85ff6c2d513e",color="#CCCC44",alpha=0.3,node=13,width=0.18)
+      )
+@ 
+\caption{Species tree for organisms studied showing the relationship
+  between species. Silhouettes of species were obtained from
+  \url{http://phylopic.org}. }
+\label{fig:species_tree}
+\end{figure}
+
+\subsection{Exploration of Individual Transcriptome Data}
+
+To determine enrichment levels of functional categories of genes in
+highly-expressed transcripts in each transcriptome, we performed
+functional annotation cluster analyses per transcriptome using topGO
+\cite{topGO:2.20.0}. Gene Ontology clusters were considered
+significantly enriched if the \ac{FDR} as estimated by the Benjamini
+and Hochberg procedure \cite{Benjamini1995:bh_procedure} on from the
+$p$ values obtained from the Fisher Exact Test were less than or equal
+to 0.05. Enrichment tests were considered with two gene lists per
+transcriptome: annotated genes with expression levels of the top 5\%
+of the frequency distribution of \ac{FPKM} (Supplemental
+\cref{tab:go_terms_enriched_top_one_dasypus_novemcinctus,tab:go_terms_enriched_top_one_equus_caballus,tab:go_terms_enriched_top_one_homo_sapiens,tab:go_terms_enriched_top_one_loxodonta_africana,tab:go_terms_enriched_top_one_monodelphis_domestica,tab:go_terms_enriched_top_one_mus_musculus,tab:go_terms_enriched_top_one_ovis_aries,tab:go_terms_enriched_top_one_pan_paniscus,tab:go_terms_enriched_top_one_sus_scrofa,tab:go_terms_enriched_top_one_ateles_fusciceps,tab:go_terms_enriched_top_one_spalax_galili,tab:go_terms_enriched_top_one_spalax_carmeli,tab:go_terms_enriched_top_one_bos_taurus,tab:go_terms_enriched_top_one_canis_familiaris});
+the top 100 genes with the highest \ac{FPKM} (Supplemental
+\cref{tab:go_terms_enriched_dasypus_novemcinctus,tab:go_terms_enriched_equus_caballus,tab:go_terms_enriched_homo_sapiens,tab:go_terms_enriched_loxodonta_africana,tab:go_terms_enriched_monodelphis_domestica,tab:go_terms_enriched_mus_musculus,tab:go_terms_enriched_ovis_aries,tab:go_terms_enriched_pan_paniscus,tab:go_terms_enriched_sus_scrofa,tab:go_terms_enriched_ateles_fusciceps,tab:go_terms_enriched_spalax_galili,tab:go_terms_enriched_spalax_carmeli,tab:go_terms_enriched_bos_taurus,tab:go_terms_enriched_canis_familiaris}).
+Due to the paucity of annotated gene ontology terms for some species,
+gene lists were compared using the \human Gene Ontology using the 1:1
+\human ortholog. Enrichment was considered out of the set of all 1:1
+orthologs present in each species.
+
+\subsection{Comparative Analysis of Gene Expression}
+
+All 1:1 orthologs present among \opossum, \textit{Pan troglodytes},
+\cow, \dog, \elephant, \mouse, and \human were determined using
+Ensembl v.80 gene trees via Biomart
+\cite{Kasprzyk2011:BioMartdrivingparadigmchange} using the biomaRt R
+package
+\cite{Durinck.ea2009:Mappingidentifiersforintegration,Durinck.ea2005:BioMartandBioconductorpowerful}.
+A total of \Sexpr{combined.fpkm[species!="homo sapiens" & mean_fpkm >=
+  1,length(unique(human_name))]} 1:1 orthologous genes were expressed
+in at least one species. Of these, \Sexpr{combined.fpkm[species!="homo
+  sapiens" & mean_fpkm >= 100,length(unique(human_name))]} 1:1
+orthologous genes with \ac{FPKM} $\ge 100$ were retained for future
+analyses of gene expression evolution described below.
+
+Significant shifts in expression levels between groups of species were
+calculated using Student's t test on 1:1 orthologs using the mean of
+each species to avoid large biases towards samples with $n \gg 1$ and
+considered significant if the \ac{FDR} as estimated by the Benjamini
+and Hochberg procedure \cite{Benjamini1995:bh_procedure} was
+$\le 0.05$. For \human and \mouse lineage specific calculations, a
+type-III anova was calculated using
+lme4~\cite{Bates.ea2015:FittingLinearMixed-EffectsModels} with each
+species having separate random effects.
+
+\subsection{Sequences, FPKMs, and Code}
+
+All of the code used to produce every analysis presented in this paper
+is available at
+\url{https://github.com/uiuc-cgm/placenta-viviparous.git}. All of the
+sequences used are deposited in SRA, and new sequences for this work
+can be obtained under the series
+\href{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE79121}{GSE79121}
+(Supplemental \cref{tab:srr_numbers}). The mean FPKM for gene in each
+species with ortholog annotations are located in the supplemental data
+file all\_species\_mean\_fpkm.txt.xz and the per-sample FPKM values are in
+all\_species\_per\_sample\_fpkm.txt.xz.
+
+\section{Results}
+
+\subsection{Transcriptome Statistics}
+
+Supplemental \cref{fig:transcriptome_statistics} shows the RNAseq read and
+alignment statistics for all species. For transcriptomes sequenced
+with 75 bp %
+%
+(\Sexpr{species(star.logs.wide[input.read.length > 70 & input.read.length < 80,unique(species)])}),%
+%
+the number of trimmed reads ranged from %
+\Sexpr{star.logs.wide[input.read.length > 70 & input.read.length < 80,min(as.numeric(input.reads))]} 
+%
+to %
+\Sexpr{star.logs.wide[input.read.length > 70 & input.read.length < 80,max(as.numeric(input.reads))]}
+with an average of \Sexpr{star.logs.wide[input.read.length > 70 & input.read.length < 80,mean(`% good reads`)]}\% of reads 
+mapping to the respective reference genome (\cref{tab:ref_genome_aligned_species}). 
+%
+For transcriptomes sequenced with 150 bp %
+% The mismatch here is because we're reporting trimmed reads here, not
+% full length reads
+(\Sexpr{species(star.logs.wide[input.read.length > 120 & input.read.length < 160,unique(species)])}),
+%
+the number of trimmed reads ranged from %
+\Sexpr{star.logs.wide[input.read.length > 120 & input.read.length < 160,min(as.numeric(input.reads))]} 
+%
+to %
+\Sexpr{star.logs.wide[input.read.length  > 120 & input.read.length < 160,max(as.numeric(input.reads))]}
+%
+with an average of \Sexpr{star.logs.wide[input.read.length > 120 & input.read.length < 160,mean(`% good reads`)]}\% %
+of reads mapping to the
+respective reference genome (\cref{tab:ref_genome_aligned_species}).
+%
+%
+For transcriptomes sequenced with 35 bp %
+% The mismatch here is because we're reporting trimmed reads here, not
+% full length reads
+(\Sexpr{species(star.logs.wide[input.read.length < 40 ,unique(species)])}),
+%
+the number of trimmed reads ranged from %
+\Sexpr{star.logs.wide[input.read.length < 40 ,min(as.numeric(input.reads))]} 
+%
+to %
+\Sexpr{star.logs.wide[input.read.length  < 40  ,max(as.numeric(input.reads))]}
+%
+with an average of \Sexpr{star.logs.wide[input.read.length < 40, mean(`% good reads`)]}\%
+of reads mapping to the
+respective reference genome (\cref{tab:ref_genome_aligned_species}).
+The expression of all genes with \ac{FPKM} $\ge 50$ is shown in Supplemental
+\cref{tab:all_ateles_fusciceps_placenta,tab:all_homo_sapiens_placenta,tab:all_pan_paniscus_placenta,tab:all_mus_musculus_placenta,tab:all_spalax_galili_placenta,tab:all_spalax_carmeli_placenta,tab:all_bos_taurus_placenta,tab:all_ovis_aries_placenta,tab:all_sus_scrofa_placenta,tab:all_equus_caballus_placenta,tab:all_canis_familiaris_placenta,tab:all_loxodonta_africana_placenta,tab:all_dasypus_novemcinctus_placenta,tab:all_monodelphis_domestica_placenta}.
+
+<<top.genes.function,echo=FALSE,results="hide">>=
+top.genes.table <- function(species.name,n=50) {
+    alignment.species <- species.name
+    if (alignment.species=="pan paniscus") {
+        alignment.species <- "pan troglodytes"
+    } else if (alignment.species=="ateles fusciceps") {
+        alignment.species <- "homo sapiens"
+    } else if (grepl("spalax",alignment.species)) {
+        alignment.species <- "mus musculus"
+    }
+    temp <- 
+        combined.fpkm[species==species.name &
+                      !(!is.na(human_name) & 
+                        human_name %in% housekeeping.genes.superset[,gene_short_name]) &
+                      ! (gene_biotype %in% c("Mt_tRNA","Mt_rRNA","rRNA")) &
+                      !grepl("((RNA\\d|MT)-|^RP[SL]P?\\d+[ABCD]?[L]?$)",human_name) &
+                      !grepl("((RNA\\d|MT)-|^RP[SL]P?\\d+[ABCD]?[L]?$)",human_alignment_symbol) &
+                      !grepl("(^[Mm][Tt]-|^R[pP][lsLS]\\d+[abcdABCD]?[lL]?(?:-.+)?$|rRNA$)",
+                             gene_short_name)
+                      ][order(-mean_fpkm)][,list(name_or_id,
+                                                 human_alignment_symbol,
+                                                 human_name,mean_fpkm,sd_fpkm,n_fpkm)]
+    ## remove any genes which have a null name_or_id; they are probably from unassembled contigs
+    temp <- temp[!(is.na(name_or_id)|name_or_id==""),]
+    temp <- temp[!duplicated(name_or_id)][1:n]
+    temp[,used_alignment:=FALSE]
+    temp[is.na(human_name) & !is.na(human_alignment_symbol),
+                    used_alignment:=TRUE]
+    temp[is.na(human_name),human_name:=human_alignment_symbol]
+    setkey(temp,"human_name")
+    temp <- 
+        hugo.nomenclature[temp][order(-mean_fpkm),
+                                list(name_or_id,used_alignment,`Approved Symbol`,`Approved Name`,
+                                     mean_fpkm,sd_fpkm,n_fpkm)]
+    temp[!is.na(name_or_id),
+         name_or_id:=paste0("\\href{http://www.ensembl.org/",
+                             capfirst(gsub(" ","_",alignment.species)),
+                             "/Gene/Summary?g=",name_or_id,"}{\\textit{",
+                             xtable.sanitize.text(name_or_id),"}}")]
+    temp[!is.na(`Approved Name`),
+         `Approved Name`:=paste0("\\href{http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=",`Approved Symbol`,"}{",xtable.sanitize.text(`Approved Name`),"}")]
+    temp[!is.na(`Approved Symbol`),
+         `Approved Symbol`:=paste0("\\href{http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=",`Approved Symbol`,"}{\\textit{",xtable.sanitize.text(`Approved Symbol`),"}}")]
+    temp[used_alignment==TRUE,`Approved Symbol`:=paste0("(",`Approved Symbol`,")")]
+    temp[,used_alignment:=NULL]
+    temp[,sem_fpkm:=as.numeric(NA)]
+    temp[n_fpkm>1,sem_fpkm:=sd_fpkm/sqrt(n_fpkm)]
+    temp[,sd_fpkm:=NULL]
+    temp[,n_fpkm:=NULL]
+    setnames(temp,c("Gene symbol","Human Symbol","Human Name","FPKM","SEM"))
+    if (temp[,all(is.na(`SEM`))]) {
+        temp[,`SEM`:=NULL]
+    }
+    if (species.name=="homo sapiens" || species.name=="ateles fusciceps") {
+        temp[,`Human Symbol`:=NULL]
+    }
+    temp[,`FPKM`:=round(`FPKM`)]
+    return(temp)
+}
+@ 
+
+<<gene.expression,results="hide",echo=FALSE>>=
+mentioned.genes <- load_cache(label="save_mentioned_genes",object="saved_mentioned_genes",list())
+gene.expression <- function(species.name,gene,complete=FALSE,units=TRUE,mention.only=FALSE) {
+    species.name <- gsub("_"," ",species.name)
+    mentioned.genes[[paste0(species.name,"_",gene)]] <<-
+        list("species.name"=species.name,
+             "gene"=gene)
+    if (mention.only) {
+        return("")
+    }
+    fpkm <- combined.fpkm[species==species.name &
+                              (gene_short_name==gene | 
+                               gene_id==gene),
+                          mean_fpkm][1]
+    if (is.na(fpkm)) {
+        stop("FPKM is NA!!!!")
+    }
+    if (units || complete)
+        fpkm <- formatC(fpkm,digits=0,format="f")
+    if (units) {
+        fpkm <- paste0(fpkm,
+                       "\\ \\text{FPKM}")
+    }
+    if (complete) {
+        if (any(grepl("^ENS.+G\\d+$",gene))) {
+            fpkm <- paste0(gsub("(ENS)(.+)(G)0*(\\d+)","\\1\\\\linebreak[0]\\2\\\\linebreak[0]\\3...\\4",gene)," = ",
+                           fpkm)
+        } else {
+            fpkm <- paste0("\\textit{",gene,"} = ",
+                           fpkm)
+        }
+    }
+    ## if (units || complete) {
+    ##     fpkm <- paste0("$",fpkm,"$")
+    ## }
+    return(fpkm)
+}
+    
+@ 
+
+<<load.placenta.lineage.specific,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../data/",c("placenta_lineage_specific","human_mouse_lineage_specific")))>>=
+load("../data/placenta_lineage_specific")
+load("../data/human_mouse_lineage_specific")
+source("/home/don/projects/xtable/pkg/R/print.xtable.R")
+
+placenta.lineage.specific.table <- function(analysis,output=TRUE,lineage.table=placenta.lineage.specific.analysis,members=5,orderbyfc=FALSE,fdr.cutoff=1) {
+    temp.table <- 
+        lineage.table[analysis.name==analysis &
+                      p.value <= 0.05 &
+                      fdr <= fdr.cutoff][order(p.value),
+                                       list(human_name,p.value,fdr,fc),]
+    temp.table <- data.table(temp.table)
+    setkey(temp.table,"human_name")
+    temp.table <- 
+        hugo.nomenclature[temp.table][,list(`Approved Symbol`,
+                                            `Approved Name`,p.value,fdr,fc)]
+    setnames(temp.table,
+              c("Human Symbol","Human Name","p (t-test)","FDR","Fold Change")
+              )
+    setkey(temp.table,"Human Symbol")
+    if (output) {
+        display.table <- temp.table[`FDR`<=fdr.cutoff,][order(`p (t-test)`),]
+        if (orderbyfc) {
+            display.table <- temp.table[order(-abs(`Fold Change`)),]
+        }
+        display.table <- display.table[1:members,]
+
+        display.table <-
+            display.table[,`Human Symbol`:=paste0("\\textit{",xtable.sanitize.text(`Human Symbol`),
+                                                  "}")]
+        display.table[,`Human Name`:=NULL]
+        # setnames(display.table,"Human Symbol","\\multicolumn{1}{p{0.5in}}{Human Symbol}")6
+        setnames(display.table,"Fold Change","$\\text{log}_2$ FC")
+        print(xtable(display.table,
+                     display=c("s","s","e","g","f"),
+                     align=c("c","p{0.5in}","r","r","r")
+                     ),
+              booktabs=TRUE,
+              floating=FALSE,
+              math.style.exponents=TRUE,
+              sanitize.text.function=genes.table.sanitize,
+              include.rownames=FALSE)
+        
+    }
+    return(invisible(temp.table[order(`p (t-test)`),]))
+}
+output.top.genes.table <- function(data,output=TRUE) {
+    if (output) {
+        table.display <- c("s","s","s","d")
+        table.align <- c("c","c","p{3in}","r")
+        if (any(colnames(data) %in% "SEM"))  {
+            table.display <- c(table.display,"d")
+            table.align <- c(table.align,"r")
+        }
+        if (any(colnames(data) %in% "Human Symbol"))  {
+            table.align <- c("c",table.align)
+            table.display <- c("s",table.display)
+        }
+        print(xtable(data,
+                     display=table.display,
+                     align=table.align
+                     ),
+              booktabs=TRUE,
+              floating=FALSE,
+              sanitize.text.function=genes.table.sanitize,
+              include.rownames=FALSE)
+    }
+}
+
+@ 
+
+<<mentioned.genes.table.functions,echo=FALSE,results="asis">>=
+mentioned.genes.table <- list()
+if (length(mentioned.genes)==0) {
+    mentioned.genes.table[["No genes"]] <-
+        data.table(species="No genes",
+                   name_or_id="No genes",
+                   human_alignment_symbol="NOGENE",
+                   human_name="NONAME",
+                   mean_fpkm = 0,
+                   sd_fpkm = 1,
+                   n_fpkm = 2)
+}
+for (entry in names(mentioned.genes)) {
+    mentioned.genes.table[[entry]] <-
+        combined.fpkm[species==mentioned.genes[[entry]][["species.name"]] &
+                      (gene_short_name==mentioned.genes[[entry]][["gene"]] | 
+                       gene_id==mentioned.genes[[entry]][["gene"]]),
+                      list(species,
+                           name_or_id,
+                           human_alignment_symbol,
+                           human_name,
+                           mean_fpkm,
+                           sd_fpkm,
+                           n_fpkm)]
+}
+mentioned.genes.table <-
+    rbindlist(mentioned.genes.table)
+mentioned.genes.table[,used_alignment:=FALSE]
+mentioned.genes.table[is.na(human_name) & !is.na(human_alignment_symbol),
+                      used_alignment:=TRUE]
+mentioned.genes.table[is.na(human_name),human_name:=human_alignment_symbol]
+setkey(mentioned.genes.table,"human_name")
+mentioned.genes.table <- 
+    hugo.nomenclature[mentioned.genes.table][,
+                                             list(species,
+                                                  name_or_id,
+                                                  used_alignment,
+                                                  `Approved Symbol`,
+                                                  `Approved Name`,
+                                                  mean_fpkm,sd_fpkm,n_fpkm)]
+mentioned.genes.table[,alignment.species:=species]
+mentioned.genes.table[alignment.species=="pan paniscus",alignment.species:="pan troglodytes"]
+mentioned.genes.table[alignment.species=="ateles fusciceps",alignment.species:="homo sapiens"]
+mentioned.genes.table[grepl("spalax",alignment.species),alignment.species:="mus musculus"]
+mentioned.genes.table[!is.na(name_or_id),
+                      name_or_id:=paste0("\\href{http://www.ensembl.org/",
+                                         capfirst(gsub(" ","_",alignment.species)),
+                                         "/Gene/Summary?g=",name_or_id,"}{\\textit{",
+                                         gsub("(ENS[^0-9]+)","\\1\\\\linebreak[0]",
+                                              xtable.sanitize.text(name_or_id)),"}}")]
+mentioned.genes.table[!is.na(`Approved Name`),
+                      `Approved Name`:=paste0("\\href{http://www.ensembl.org/",
+                                              "Homo_sapiens/Gene/Summary?g=",
+                                              `Approved Symbol`,"}{",
+                                              xtable.sanitize.text(`Approved Name`),
+                                              "}")]
+mentioned.genes.table[!is.na(`Approved Symbol`),
+                      `Approved Symbol`:=paste0("\\href{http://www.ensembl.org/",
+                                                "Homo_sapiens/Gene/Summary?g=",
+                                                `Approved Symbol`,
+                                                "}{\\textit{",
+                                                xtable.sanitize.text(`Approved Symbol`),
+                                                "}}")]
+mentioned.genes.table[used_alignment==TRUE,`Approved Symbol`:=paste0("(",`Approved Symbol`,")")]
+mentioned.genes.table[,sem_fpkm:=as.numeric(NA)]
+mentioned.genes.table[n_fpkm>1,sem_fpkm:=sd_fpkm/sqrt(n_fpkm)]
+mentioned.genes.table[,used_alignment:=NULL]
+mentioned.genes.table[,alignment.species:=NULL]
+mentioned.genes.table[,sd_fpkm:=NULL]
+mentioned.genes.table[,n_fpkm:=NULL]
+mentioned.genes.table[,`Approved Name`:=NULL]
+### order by species and then by FPKM
+setorder(mentioned.genes.table,`Approved Symbol`,species,-mean_fpkm)
+### italicize species names
+mentioned.genes.table[,species:=paste0("\\textit{",gsub("^(.)\\S+","\\U\\1.",species,perl=TRUE),"}")]
+setnames(mentioned.genes.table,c("Species","Gene Symbol",
+                                 "Human Symbol",
+                                 ## "Human Name",
+                                 "FPKM","SEM"))
+mentioned.genes.table[,`FPKM`:=round(`FPKM`)]
+
+output.mentioned.genes.table <- function(subset.table=quote(TRUE),
+                                         human.symbol=TRUE) {
+    mgt.subset <- mentioned.genes.table[eval(subset.table)]
+    mgt.display <- c("s","s","s","s","d","d")
+    mgt.align <- c("c","c",
+                   ">{\\raggedright \\centering}p{0.5in}",
+                   ">{\\raggedright \\centering}p{0.5in}",
+                   ##">{\\raggedright}p{4in}",
+                   "r","r")
+    if (!human.symbol) {
+        mgt.subset[,`Human Symbol`:=NULL]
+        mgt.display <- mgt.display[-4]
+        mgt.align <- mgt.align[-4]
+        mgt.align[3] <- ">{\\raggedright \\centering}p{1.2in}"
+    }
+        
+    print(xtable(mgt.subset,
+                 display=mgt.display,
+                 align=mgt.align
+                 ),
+          math.style.exponents=TRUE,
+          booktabs=TRUE,
+          floating=FALSE,
+          sanitize.text.function=genes.table.sanitize,
+          include.rownames=FALSE)
+}
+@ 
+
+
+
+\subsection{Primate Placenta Transcriptomes}
+
+\begin{table}[htb]
+\footnotesize
+<<primate.genes,echo=FALSE,results="asis">>=
+output.mentioned.genes.table(subset.table=quote(grepl("sapiens|fusciceps|paniscus",Species)),
+                             human.symbol=TRUE
+                             )
+@ 
+\caption{Notable genes ordered by species and \ac{FPKM}. Gene
+  symbol is the gene symbol or Ensembl gene id. Human Name is the HUGO
+  name corresponding to the human symbol. A complete table of 
+  genes with \ac{FPKM} $\ge 50$ is located in the supplemental material }
+\label{tab:notable_primate_genes}
+\end{table}
+
+\begin{table}[htb]
+  \footnotesize
+<<primate.lineage.specific,echo=FALSE,results="asis">>=
+pri.all.lin.spec <- placenta.lineage.specific.table("pri.all")
+setkey(pri.all.lin.spec,"Human Symbol")
+@ 
+\caption{\lineagetableexplanation{primates}{all other analyzed species}}
+\label{tab:primate_lineage_specific}
+\end{table}
+
+We examined the expression of three primates, \human, \bonobo, and
+\smonkey. The genes whose expressions are different on the primate
+lineage in comparison to all other analyzed species are listed in
+\cref{tab:primate_lineage_specific}. \textit{FSTL1} has significantly
+higher expression in the primate lineage
+(Supplemental \cref{fig:fstl1_evolution_tree},
+$\text{FDR}=\Sexpr{pri.all.lin.spec["FSTL1",`FDR`]}$), is implicated
+in BMP signaling, and has previously been implicated in inflammation
+and invasiveness
+\cite{Mouillet.ea2015:expressionandpost-transcriptionalregulation}. Of
+non-primates, \horse shows the highest expression
+%
+\Sexpr{gene.expression(species.name="equus caballus",gene="FSTL1",complete=TRUE)}, 
+%
+which is still lower than the lowest primate, \smonkey
+%
+(\Sexpr{gene.expression(species.name="ateles fusciceps",gene="FSTL1",complete=TRUE)}). 
+%
+No other genes were significantly differentially expressed on this
+lineage by t-test.
+
+\subsubsection{\human Placenta Transcriptome}
+\label{sec:human_placenta}
+
+% \begin{table}
+%   \footnotesize
+% <<top.50.human.expressed.genes,echo=FALSE,results="asis">>=
+% output.top.genes.table(top.genes.table(species.name="homo sapiens"))
+% @ 
+% \caption{The top 50 genes by \ac{FPKM} in \human which are not
+%   annotated as Mt\_rRNA, Mt\_tRNA, rRNA or a housekeeping gene. Gene
+%   symbol is the gene symbol or Ensembl gene id. Human Name is the HUGO
+%   name corresponding to the human symbol. A complete list of all genes
+%   is in \cref{tab:all_homo_sapiens_placenta}.}
+% \label{tab:top50_human_placenta}
+% \end{table}
+
+<<cgb.min.expression,results="hide",echo=FALSE,warnings=FALSE>>=
+cgb.min.expression <- 
+    min(sapply(paste0("CGB",c("","1","2","5","7","8")),
+               function(x){gene.expression(species.name="homo sapiens",gene=x,units=FALSE)}))
+cgb.sum.expression <- 
+    sum(sapply(paste0("CGB",c("","1","2","5","7","8")),
+               function(x){gene.expression(species.name="homo sapiens",gene=x,units=FALSE)}))
+@ 
+
+The gene with by far the highest \ac{FPKM} value
+%
+(\Sexpr{gene.expression(species.name="homo sapiens",gene="CSH1")}) %
+%
+in \human is \textit{CSH1}, followed by \textit{CSH2}, and \textit{CSHL1}, all
+three of which are members of a distinct expansion of the growth
+hormone gene family within catarrhines (Supplemental \cref{fig:galectins_evolution_tree}). Another member of the growth
+hormone gene family, \ac{GH2} (%
+\Sexpr{gene.expression(species.name="homo sapiens",gene="GH2")}), %
+is also expressed to a high degree in the \human placenta
+(Supplemental \cref{tab:all_homo_sapiens_placenta}).
+% 
+Eleven \acp{PSG} are highly-expressed
+(\ac{FPKM}$\ge 100$) in the term placenta of \human, with \textit{PSG1} showing the
+greatest degree of expression %
+(\Sexpr{gene.expression(species.name="homo sapiens",gene="PSG1")}) % 
+and the pseudogene \textit{PSG10P} showing the least %
+(\Sexpr{gene.expression(species.name="homo sapiens",gene="PSG10P")}, \cref{fig:pag2_prss16_ctsl_psg_evolution_tree}~A) . %
+These
+genes are members of a hominoid-specific expansion of the \ac{CEA} family
+and known to be expressed by the syncytiotrophoblast
+\cite{Rawn.ea2008:evolutionregulationandfunction,Lei.ea1992:Cloningandexpressionof}. %
+%
+Genes involved in the production of estrogens (%
+\Sexpr{gene.expression(species.name="homo sapiens",gene="CYP19A1",complete=TRUE)},
+% 
+\Sexpr{gene.expression(species.name="homo sapiens",gene="HSD17B1",complete=TRUE)}, and
+% 
+\Sexpr{gene.expression(species.name="homo sapiens",gene="HSD3B1",complete=TRUE)}%
+% 
+) and progesterone (%
+\Sexpr{gene.expression(species.name="homo sapiens",gene="HSD3B1",complete=TRUE)},
+\Sexpr{gene.expression(species.name="homo sapiens",gene="CYP11A1",complete=TRUE)}, and
+\Sexpr{gene.expression(species.name="homo sapiens",gene="ADM",complete=TRUE)})
+%
+show exceptionally high expression in the human placenta, as well as %
+%
+\textit{CGA} (FPKM=\Sexpr{gene.expression(species.name="homo sapiens",gene="CGA")}, %
+%
+which generates the alpha subnit of multiple human chorionic
+gonadotropin hormones (Supplemental \cref{tab:all_homo_sapiens_placenta}). The genes
+producing the beta subunits of the chorionic gonadotropins
+(\textit{CGB}, \textit{CGB1}, \textit{CGB2}, \textit{CGB5},
+\textit{CGB7}, \textit{CGB8}) have reasonable expression
+($\text{FPKM} \ge \Sexpr{cgb.min.expression}$), and the sum of their
+expression is on the order of the expression of
+\textit{CGA} ($\sum \mathit{CGBs}=\Sexpr{cgb.sum.expression}$ FPKM) .
+%
+%
+Other highly expressed genes in the top 50 include members of the
+hemoglobin family (e.g. \textit{HBA1}, \textit{HBA2}, \textit{HBB},
+and \textit{HBG2}), the maternally imprinted long noncoding RNA gene
+\textit{H19}, genes coding for proteins required for growth and/or
+cell proliferation (\textit{ADAM12}, \textit{KISS1}, \textit{IGF2},
+\textit{GPC3}, \textit{CSF3R}), anticoagulation (\textit{TFPI2}), and
+glucose transport (\textit{SLC2A1}) among others
+(Supplemental \cref{tab:all_homo_sapiens_placenta}, Supplemental
+\cref{tab:all_homo_sapiens_placenta}).
+
+% \paragraph{Pre-eclampsia \human Lineage Specific Genes}
+
+\begin{table}
+  \footnotesize
+<<human.lineage.specific,echo=FALSE,results="asis">>=
+hum.all.lin.spec <-
+    placenta.lineage.specific.table("hum.all",
+                                    lineage.table=human.mouse.lineage.specific.analysis,
+                                    members=40,
+                                    orderbyfc=TRUE,
+                                    fdr.cutoff=0.001
+                                    )
+setkey(hum.all.lin.spec,"Human Symbol")
+@ 
+\caption{\lineagetableexplanationtypeiii{\human}{all other analyzed species}}
+\label{tab:human_lineage_specific}
+\end{table}
+
+
+Using a mixed-effects linear model to account for repeated testing of
+\human and \mouse, we identified multiple genes which are
+differentially expressed in the \human lineage in comparison to all
+other lineages (\cref{tab:human_lineage_specific}). These genes
+include multiple genes which are thought to be involved in
+pre-eclampsia. Notably, \textit{CRH}
+(FDR=\Sexpr{hum.all.lin.spec["CRH",`FDR`]},
+FC=\Sexpr{hum.all.lin.spec["CRH",`Fold Change`]}, Supplemental
+\cref{fig:crh_evolution_tree}), has been shown to be more highly
+expressed in placentas from pre-eclamptic pregnancies
+\cite{Petsas.ea2012:Aberrantexpressionofcorticotropin-releasing,Paiva.ea2011:MeasurementofmRNAtranscripts},
+where it is hypothesized to activate decidual macrophages. Likewise,
+\textit{KISS1} (\Sexpr{hum.all.lin.spec["KISS1",`FDR`]},
+FC=\Sexpr{hum.all.lin.spec["KISS1",`Fold Change`]}, Supplemental
+\cref{fig:kiss1_evolution_tree}) also shows increased expression in
+pre-eclamptic placentas
+\cite{Vazquez-Alaniz.ea2011:Comparativeexpressionprofilesfor}, and is
+involved in modulating trophoblast invasion. Two other genes,
+\textit{PAPPA} (\Sexpr{hum.all.lin.spec["PAPPA",`FDR`]},
+FC=\Sexpr{hum.all.lin.spec["PAPPA",`Fold Change`]} Supplemental
+\cref{fig:pappa_evolution_tree}) and \textit{ADAM12}
+(\Sexpr{hum.all.lin.spec["ADAM12",`FDR`]},
+FC=\Sexpr{hum.all.lin.spec["ADAM12",`Fold Change`]}, Supplemental
+\cref{fig:adam12_evolution_tree}) are also differentially expressed
+but are negatively correlated with pre-eclampsia
+\cite{Spencer.ea2008:ADAM12sinmaternalserum}.
+
+
+\begin{figure*}[htb]
+<<psg.ctsl.evolution.tree,echo=FALSE,out.width="\\textwidth",fig.width=8,fig.height=8>>=
+pushViewport(viewport(layout=grid.layout(nrow=2,ncol=2),clip="off"))
+print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="PSG1" & species=="homo sapiens"),
+                                genes.to.tree=genes.to.tree,
+                                combined.fpkm=combined.fpkm,
+                                subtree=c("ENSG00000221826","ENSG00000124469"),
+                                trees=trees
+                                )+
+      geom_tiplab(size=2,color="black",fontface="italic")+xlim(0,0.2)+
+      theme(legend.position="none"),
+      vp=viewport(layout.pos.col=1,layout.pos.row=1,clip="off"))
+print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="CTSL" & species=="homo sapiens"),
+                                genes.to.tree=genes.to.tree,
+                                combined.fpkm=combined.fpkm,
+                                subtree=c("ENSMODG00000002844","ENSMUSG00000055679"),
+                                trees=trees)+
+      geom_tiplab(size=2,color="black",fontface="italic")+xlim(0,0.8)+
+      theme(legend.position="none"),
+      vp=viewport(layout.pos.col=2,layout.pos.row=1,clip="off"))
+print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="PRSS16" &
+                                                    species=="homo sapiens"),
+                                genes.to.tree=genes.to.tree,
+                                subtree=c(   "ENSG00000112812",
+                                          "ENSLAFG00000032211"),
+                                combined.fpkm=combined.fpkm,
+                                trees=trees)+
+      geom_tiplab(size=2,color="black",fontface="italic")+xlim(0,1.2),
+      vp=viewport(layout.pos.col=1,layout.pos.row=2,clip="off"))
+print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="PAG2" &
+                                                    species=="bos taurus"),
+                                genes.to.tree=genes.to.tree,
+                                combined.fpkm=combined.fpkm,
+                                subtree=c("ENSSSCG00000013097",
+                                          "ENSBTAG00000046085"),
+                                trees=trees) +
+      geom_tiplab(size=2,color="black",fontface="italic") +
+      xlim(0,0.8)+
+      theme(legend.position="none"),
+      vp=viewport(layout.pos.col=2,layout.pos.row=2,clip="off"))
+popViewport(1)
+
+grid.text(c("A","B","C","D"),
+          x=unit(c(0,0.5,0,0.5),"npc"),y=unit(c(1,1,0.5,0.5),"npc"),
+          just=c("left","top"),
+          gp=gpar(fontsize="24")
+          )
+@ 
+\caption{\genetreeexplanation{(A) \textit{PSG1}, (B) \textit{CTSL}, (C) \textit{PRSS16}, and (D) \textit{PAG2}}}
+\label{fig:pag2_prss16_ctsl_psg_evolution_tree}
+\end{figure*}
+
+
+\subsubsection{\bonobo Placenta Transcriptome}
+
+% \begin{table}
+%   \footnotesize
+% <<top.50.bonobo.expressed.genes,echo=FALSE,results="asis">>=
+% top.bonobo.genes <- top.genes.table(species.name="pan paniscus")
+% output.top.genes.table(top.bonobo.genes)
+% setkey(top.bonobo.genes,"Gene symbol")
+% @ 
+% \caption{\tableexplanation{\bonobo}{tab:all_pan_paniscus_placenta}}
+% \label{tab:top50_bonobo_placenta}
+% \end{table}
+
+The top 50 expressed genes as measured by \ac{FPKM} in the term
+placenta of \bonobo are shown in Supplemental \cref{tab:all_pan_paniscus_placenta}
+with a list of all genes in Supplemental
+\cref{tab:all_pan_paniscus_placenta}. Expression in the \bonobo
+placenta differs somewhat from that of \human, as evidenced by the
+makeup of the top 50 genes (Supplemental \cref{tab:all_pan_paniscus_placenta}). The highest expression
+ in \bonobo is %
+\Sexpr{gene.expression("pan paniscus","PRG2",complete=TRUE)}, %
+%
+which is involved in insulin growth factor signaling and angiogenesis
+during pregnancy \cite{Weyer.ea2011:Placentalregulationofpeptide}.
+\textit{PRG2} is also expressed at relatively high levels (though
+comparatively much lower) in the human placenta
+(\Sexpr{gene.expression("homo sapiens","PRG2")};
+Supplemental \cref{tab:all_homo_sapiens_placenta}). Four \bonobo genes
+related to the chorionic somatomammotropins
+are also expressed at relatively high levels (\textit{GH1} 
+\Sexpr{gene.expression("pan paniscus","ENSPTRG00000034560",complete=TRUE)}, 
+\textit{GH1} 
+\Sexpr{gene.expression("pan paniscus","ENSPTRG00000034212",complete=TRUE)}, 
+\textit{GH2}
+\Sexpr{gene.expression("pan paniscus","ENSPTRG00000030805",complete=TRUE)}, 
+and \textit{GH2}
+\Sexpr{gene.expression("pan paniscus","ENSPTRG00000034209",complete=TRUE)}, 
+%
+\cref{tab:all_pan_paniscus_placenta}, \cref{fig:csh1_evolution_tree}).
+Placental expression of the genes involved in estrogen and
+progesterone production (\textit{CYP19A1}, \textit{HSD3B1}
+respectively) show lower expression in \bonobo as compared to \human %
+(\Sexpr{gene.expression("pan paniscus","CYP19A1",complete=TRUE)},
+\cref{fig:estrogen_evolution_tree}; %
+\Sexpr{gene.expression("pan paniscus","HSD3B1",complete=TRUE)},
+\cref{fig:progesterone_evolution_tree} and
+Supplemental \cref{tab:all_homo_sapiens_placenta}) although the expression of
+\textit{HSD3B1} is fairly similar to that of \smonkey %
+(\Sexpr{gene.expression("ateles fusciceps","HSD3B1",complete=TRUE)}. %
+In addition, \textit{CGA} is expressed in the bonobo placenta %
+(\Sexpr{gene.expression("pan paniscus","CGA")}), but at much
+lower levels than \human as well (Supplemental \cref{tab:all_homo_sapiens_placenta}).
+%
+Two Ensembl-annotated beta subunits of the chorionic gonadotropin
+genes are expressed in \bonobo, one related to \textit{CGB} and
+another related to \textit{CGB7}; both are not highly expressed
+(\cref{fig:cga_cgb_evolution_tree}). Among the other top 50 expressed
+genes, there is high expression of keratins (e.g., \textit{KRT19},
+\textit{KRT18}), heat-shock proteins (e.g., \textit{HSP90B1},
+\textit{HSPA1A}), serpins (\textit{SERPINE1}, \textit{SERPINE2},
+Supplemental \cref{fig:serpine_evolution_tree}), insulin growth factor
+2 (\textit{IGF2}) and one of its binding proteins \textit{IGFBP3}, and
+the hormone adrenomedullin (\textit{ADM}).
+
+\subsubsection{\smonkey Transcriptome}
+
+% \begin{table}
+%   \footnotesize
+% <<top.50.spider.monkey.expressed.genes,echo=FALSE,results="asis">>=
+% top.spider.monkey.genes <- top.genes.table(species.name="ateles fusciceps")
+% output.top.genes.table(top.spider.monkey.genes)
+% setkey(top.spider.monkey.genes,"Gene symbol")
+% @ 
+% \caption{\tableexplanation{\smonkey}{tab:all_ateles_fusciceps_placenta}}
+% \label{tab:top50_spider_monkey_placenta}
+% \end{table}
+
+For the term placenta of \smonkey, assembled contigs from RNA-seq were
+aligned using against \human and the best alignment was chosen as the
+annotation for each assembled contig. In the term placenta of
+\smonkey, the top 50 non-housekeeping genes
+(Supplemental \cref{tab:all_spider_monkey_placenta}) include a possible regulator
+of androgen receptor signaling
+\cite{Sampson.ea2012:PAGE4positivityisassociated}, \textit{PAGE4} %
+(\Sexpr{gene.expression("ateles_fusciceps","PAGE4")}), %
+the pregnancy specific glycoprotein \textit{PSG8}
+(\Sexpr{gene.expression("ateles_fusciceps","PSG8")}), %
+only one member of the chorionic somatotropins, \textit{GH1} %
+(\Sexpr{gene.expression("ateles_fusciceps","GH1")}), %
+a few HLA genes (\textit{HLA-A}, \textit{HLA-F},
+Supplemental \cref{tab:all_spider_monkey_placenta}), and multiple components of
+annexin complexes
+(\Sexpr{gene.expression("ateles_fusciceps","ANXA2",complete=TRUE)}, %
+\Sexpr{gene.expression("ateles_fusciceps","S100P",complete=TRUE)}, %
+\Sexpr{gene.expression("ateles_fusciceps","S100A11",complete=TRUE)}) %
+which may play a role in angiogenesis, and certainly regulate
+cell-cell interaction in the developing placenta
+\cite{Liu.ea2015:AnnexinA2complexeswith}.
+\Sexpr{gene.expression("ateles_fusciceps","AL365202.1",complete=TRUE)}
+is also highly expressed, has no known function, and is duplicated
+multiple times in \textit{Macaca mulatta} (Ensembl gene tree
+\href{http://useast.ensembl.org/Multi/GeneTree/Image?gt=ENSGT00580000081348}{ENSGT00580000081348}).
+All genes with expression greater than 50 \ac{FPKM} are listed in
+Supplementary \cref{tab:all_ateles_fusciceps_placenta}.
+
+
+\subsection{Rodentia Placenta Transcriptomes}
+
+\begin{table}
+  \footnotesize
+<<rodentia.genes,echo=FALSE,results="asis">>=
+output.mentioned.genes.table(subset.table=quote(grepl("musculus|galili|carmeli",Species)),
+                             human.symbol=TRUE
+                             )
+@ 
+\caption{Notable genes ordered by species and \ac{FPKM}. Gene
+  symbol is the gene symbol or Ensembl gene id. Human Name is the HUGO
+  name corresponding to the human symbol. A complete table of 
+  genes with \ac{FPKM} $\ge 50$ is located in the supplemental material }
+\label{tab:notable_non_primate_genes}
+\end{table}
+
+We examined the expression of three rodents, \mouse, \carmeli, and
+\galili{}. We did not detect any significant changes on the Rodentia
+lineage in comparison to all other analyzed species (Supplemental
+\cref{tab:rodentia_lineage_specific}), likely because of a lack power
+to overcome the multiple testing correction. Additional species and/or
+samples in each of these lineages will be necessary to detect lineage
+specific shifts.
+
+\subsubsection{\mouse Placenta Transcriptome}
+
+% \begin{table}[h]
+%   \footnotesize
+% <<top.50.mouse.expressed.genes,echo=FALSE,results="asis">>=
+% output.top.genes.table(top.genes.table(species.name="mus musculus"))
+% @ 
+% \caption{\tableexplanation{\mouse}{tab:all_mus_musculus_placenta}}
+% \label{tab:top50_mouse_placenta}
+% \end{table}
+
+The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
+in the term placenta of \mouse are shown in
+Supplemental \cref{tab:all_mus_musculus_placenta} with a list of all genes with
+$\text{FPKM} \ge 50$ in Supplemental
+\cref{tab:all_mus_musculus_placenta}. The top expressed genes include
+\Sexpr{gene.expression("mus_musculus","Mir6236",complete=TRUE)}, whose
+target \textit{in silico} is the orphan G-coupled receptor
+\textit{Mrgprg}
+\cite{Agarwal.ea2015:PredictingeffectivemicroRNAtarget},
+\Sexpr{gene.expression("mus_musculus","H19",complete=TRUE)} and
+\Sexpr{gene.expression("mus_musculus","Gm27786",complete=TRUE)}, both
+of which are maternally imprinted (the later of which is a homolog of
+human \textit{H19\_2}),
+\Sexpr{gene.expression("mus_musculus","Igf2",complete=TRUE)}, numerous
+cathepsins and a rodentia specific expansion of prolactin related
+genes. There are also two miRNA which overlap with the of the 7S
+signal recognition particle
+(\Sexpr{gene.expression("mus_musculus","AC157822.1",complete=TRUE)}
+and
+\Sexpr{gene.expression("mus_musculus","AC099934.1",complete=TRUE)})
+and numerous pseudogenes
+(\Sexpr{gene.expression("mus_musculus","Gm11966",complete=TRUE)}
+\Sexpr{gene.expression("mus_musculus","Gm10736",complete=TRUE)}
+\Sexpr{gene.expression("mus_musculus","Gm10180",complete=TRUE)}
+\Sexpr{gene.expression("mus_musculus","Gm29216",complete=TRUE)}) which
+appear to be highly expressed, however, the short read length (34--44)
+in many samples is likely preventing unambiguous assignment of all
+reads to the more lengthy complete transcript, so these shorter
+transcripts should be treated with suspicion, and we will ignore them
+in further discussion. The prolactin-related genes
+(\Sexpr{gene.expression("mus_musculus","Prl3b1",complete=TRUE)},
+\Sexpr{gene.expression("mus_musculus","Prl2b1",complete=TRUE)},
+\Sexpr{gene.expression("mus_musculus","Prl8a9",complete=TRUE)}, and
+\Sexpr{gene.expression("mus_musculus","Prl8a6",complete=TRUE)}) are
+very highly expressed in \mouse in, with %
+\Sexpr{combined.fpkm[species=="mus musculus" &
+  grepl("Prl(\\d.\\d)?",gene_short_name), sum(mean_fpkm >= 1)]}
+prolactin related genes having $\text{FPKM} \ge 1$
+(\cref{fig:prolactin_evolution_tree}, Supplemental
+\cref{fig:prolactin_receptor_evolution_tree}). The cathespins have
+also expanded in rodents, with six showing high expression
+(\Sexpr{gene.expression("mus_musculus","Ctsj",complete=TRUE)},
+\Sexpr{gene.expression("mus_musculus","Cts6",complete=TRUE)},
+\Sexpr{gene.expression("mus_musculus","Ctsr",complete=TRUE)},
+\Sexpr{gene.expression("mus_musculus","Ctsq",complete=TRUE)},
+\Sexpr{gene.expression("mus_musculus","Cts3",complete=TRUE)}, and
+\Sexpr{gene.expression("mus_musculus","Ctsm",complete=TRUE)},
+Supplemental \cref{tab:all_mus_musculus_placenta,fig:pag2_prss16_ctsl_psg_evolution_tree}).
+Finally, \textit{Peg10}, an imprinted gene required for proper
+formation of the placenta in mice is also highly expressed
+(\Sexpr{gene.expression("mus_musculus","Peg10")}), as previously
+reported \cite{Ono.ea2006:DeletionofPeg10imprinted}.
+
+% \paragraph{\mouse Lineage Specific Genes}
+
+\begin{table}
+  \footnotesize
+<<mouse.lineage.specific,echo=FALSE,results="asis">>=
+mou.all.lin.spec <-
+    placenta.lineage.specific.table("mou.all",
+                                    lineage.table=human.mouse.lineage.specific.analysis,
+                                    members=40,
+                                    orderbyfc=TRUE,
+                                    fdr.cutoff=0.001
+                                    )
+setkey(mou.all.lin.spec,"Human Symbol")
+@ 
+\caption{\lineagetableexplanationtypeiii{\mouse}{all other analyzed species}}
+\label{tab:mouse_lineage_specific}
+\end{table}
+
+Using a mixed-effects linear model to account for repeated testing of
+\human and \mouse, we identified multiple genes which are
+differentially expressed in the \mouse lineage in comparison to all
+other lineages (\cref{tab:mouse_lineage_specific}). \mouse
+\textit{Gkn2} (FDR=\Sexpr{mou.all.lin.spec["GKN2",`FDR`]},
+FC=\Sexpr{mou.all.lin.spec["GKN2",`Fold Change`]}) has been shown to
+have a pattern of expression distinct from the \human pattern, and has
+been suggested to be important for placental development
+\cite{Fahlbusch.ea2015:Trophoblastexpressiondynamicsof}. Notable
+mouse-specific increases in expression include include genes like
+\textit{Slc38a4} (FDR=\Sexpr{mou.all.lin.spec["SLC38A4",`FDR`]},
+FC=\Sexpr{mou.all.lin.spec["SLC38A4",`Fold Change`]}) and \textit{Afp}
+(FDR=\Sexpr{mou.all.lin.spec["AFP",`FDR`]},
+FC=\Sexpr{mou.all.lin.spec["AFP",`Fold Change`]}) which are implicated
+in fetal growth restriction
+\cite{Sharma.ea2016:Tpbpa-Cre-mediateddeletionofTFAP2C} and placenta
+abnormalities in humans
+\cite{Waller.ea1996:associationbetweenmaternalserum}, and
+\textit{Cnx2} (FDR=\Sexpr{mou.all.lin.spec["CNX2",`FDR`]},
+FC=\Sexpr{mou.all.lin.spec["CNX2",`Fold Change`]}) which is critical
+for the exchange of metabolites in the placenta labyrinth
+\cite{Gabriel.ea1998:Transplacentaluptakeofglucose}.
+
+\subsubsection{\galili Placenta Transcriptome}
+
+% \begin{table}[h]
+%   \footnotesize
+% <<top.50.n.galili.expressed.genes,echo=FALSE,results="asis">>=
+% output.top.genes.table(top.genes.table(species.name="spalax galili"))
+% @ 
+% \caption{\tableexplanation{\galili}{tab:all_spalax_galili_placenta}}
+% \label{tab:top50_n_galili_placenta}
+% \end{table}
+
+The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
+in the term placenta of \galili are shown in
+Supplemental \cref{tab:all_n_galili_placenta} with a list of all highly expressed
+genes in Supplemental \cref{tab:all_spalax_galili_placenta}.
+Components of annexin complexes are highly expressed
+(\Sexpr{gene.expression("spalax_galili","S100a6",complete=TRUE)},
+\Sexpr{gene.expression("spalax_galili","S100a11",complete=TRUE)},
+\Sexpr{gene.expression("spalax_galili","S100a10",complete=TRUE)},
+and
+\Sexpr{gene.expression("spalax_galili","Anxa2",complete=TRUE)}),
+as are members of the thymosin family
+(\Sexpr{gene.expression("spalax_galili","Tmsb4x",complete=TRUE)}
+and
+\Sexpr{gene.expression("spalax_galili","Tmsb10",complete=TRUE)}),
+various cytoskeleton related proteins
+(\Sexpr{gene.expression("spalax_galili","Actc1",complete=TRUE)},
+\Sexpr{gene.expression("spalax_galili","Actg2",complete=TRUE)},
+\Sexpr{gene.expression("spalax_galili","Acta2",complete=TRUE)},
+\Sexpr{gene.expression("spalax_galili","Myl9",complete=TRUE)},
+\Sexpr{gene.expression("spalax_galili","Vim",complete=TRUE)}), and
+transmembrane protein of currently unknown function, 
+\Sexpr{gene.expression("spalax_galili","Gm10134",complete=TRUE)}.
+
+
+\subsubsection{\carmeli Placenta Transcriptome}
+
+% \begin{table}[h]
+%   \footnotesize
+% <<top.50.s.carmeli.expressed.genes,echo=FALSE,results="asis">>=
+% output.top.genes.table(top.genes.table(species.name="spalax carmeli"))
+% @ 
+% \caption{\tableexplanation{\carmeli}{tab:all_spalax_carmeli_placenta}}
+% \label{tab:top50_s_carmeli_placenta}
+% \end{table}
+
+The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
+in the term placenta of \carmeli are shown in
+Supplemental \cref{tab:all_s_carmeli_placenta} with a list of all highly
+expressed genes in Supplemental
+\cref{tab:all_spalax_carmeli_placenta}. Numerous hemoglobin subunits
+ware highly expressed
+(\Sexpr{gene.expression("spalax_carmeli","Hbb-bh1",complete=TRUE)},
+\Sexpr{gene.expression("spalax_carmeli","Hba-a1",complete=TRUE)}, and
+\Sexpr{gene.expression("spalax_carmeli","Hbb-bs",complete=TRUE)}), as
+well as the relaxin
+\Sexpr{gene.expression("spalax_carmeli","Rln1",complete=TRUE)},
+multiple cathespins
+(\Sexpr{gene.expression("spalax_carmeli","Ctsm",complete=TRUE)},
+\Sexpr{gene.expression("spalax_carmeli","BC051665",complete=TRUE)},
+and \Sexpr{gene.expression("spalax_carmeli","Ctsl",complete=TRUE)},
+\cref{fig:pag2_prss16_ctsl_psg_evolution_tree}~B), and many prolactin-related genes
+(\Sexpr{gene.expression("spalax_carmeli","Prl4a1",complete=TRUE)},
+\Sexpr{gene.expression("spalax_carmeli","Prl6a1",complete=TRUE)},
+\Sexpr{gene.expression("spalax_carmeli","Prl3b1",complete=TRUE)}, and
+\Sexpr{gene.expression("spalax_carmeli","Prl7c1",complete=TRUE)},
+\cref{fig:prolactin_evolution_tree}) which shows a similar pattern of
+expansion seen in \mouse.
+
+\subsection{Laurasiatheria}
+
+We examined the expression of five laurasiatherians: \cow, \sheep,
+\pig, \horse, and \dog. We were unable to detect any significant
+differences after correcting for multiple testing between
+laurasiatherians and all other analyzed species
+(Supplemental \cref{tab:laurasiatheria_lineage_specific}) or between
+laurasiatherians and Euarchontoglires
+(Supplemental \cref{tab:laurasiatheria_euarchontoglires_lineage_specific}).
+
+\subsubsection{\dog Placenta Transcriptome}
+
+% \begin{table}
+%   \footnotesize
+% <<top.50.dog.expressed.genes,echo=FALSE,results="asis">>=
+% output.top.genes.table(top.genes.table(species.name="canis familiaris"))
+% @ 
+% \caption{\tableexplanation{\dog}{tab:all_canis_familiaris_placenta}}
+% \label{tab:top50_dog_placenta}
+% \end{table}
+
+The top 50 non-housekeeping expressed genes as measured by \ac{FPKM}
+in the term placenta of \dog are shown in
+Supplemental \cref{tab:all_canis_familiaris_placenta} with a list of all genes in Supplemental
+\cref{tab:all_canis_familiaris_placenta}. The gene with the highest
+expression %
+(\Sexpr{gene.expression("canis familiaris","TMSB10")}) is the thymosin 
+\textit{TMSB10} %
+(\Sexpr{gene.expression("canis familiaris","ENSCAFG00000002115")}) %
+is the hormone relaxin (\textit{RLN2}). Other highly expressed genes
+among the top 50 (Supplemental \cref{tab:all_canis_familiaris_placenta}) include genes
+involved in the cytoskeleton (\textit{TMSB10}, \textit{TMSB4X}),
+anticoagulation (\textit{TFPI2}, \textit{PLA2G7}), innate immunity
+(\textit{LCN2}, \textit{GM2A}), lipid metabolism (\textit{APOE}),
+inhibition of matrix metalloproteinases (\textit{TIMP2},
+\textit{TIMP3}), and growth factors (\textit{PGF}, \textit{EGFR},
+\textit{HTRA1}). The gene \textit{LGALS1}, which shows evidence of
+immunosupression during pregnancy
+\cite{Than.ea2008:Emergenceofhormonaland}, is highly expressed %
+(\Sexpr{gene.expression("canis familiaris","LGALS1")}). %
+In addition, an ortholog of \textit{SSLP1} (ENSCAFG00000010638) a gene
+expressed in the placentas of \cow (%
+\Sexpr{gene.expression("bos taurus","SSLP1",complete=TRUE)}, %
+Supplemental \cref{tab:all_bos_taurus_placenta}) and \sheep
+(\Sexpr{gene.expression("ovis aries","SOLD1",complete=TRUE)},
+Supplemental \cref{tab:all_sheep_placenta}) but is not present in primates
+\cite{Ushizawa.ea2009:Characterizationandexpressionanalysis}
+(\cref{fig:sslp1_evolution_tree}), is also expressed at high levels
+%
+(\Sexpr{gene.expression("canis familiaris","ENSCAFG00000010638")}). %
+There is no placental expression of the estrogen synthase gene
+(\textit{CYP19A1}) in \dog 
+(\Sexpr{gene.expression("canis familiaris","CYP19A1")}
+\cref{fig:estrogen_evolution_tree}), 
+and expression of \textit{HSD3B7} is also low
+(\Sexpr{gene.expression("canis familiaris","HSD3B7")}, 
+\cref{fig:progesterone_evolution_tree}).
+
+\subsubsection{\cow Placenta Transcriptome}
+
+% \begin{table}
+%   \footnotesize
+% <<top.50.cow.expressed.genes,echo=FALSE,results="asis">>=
+% output.top.genes.table(top.genes.table(species.name="bos taurus"))
+% @ 
+% \caption{\tableexplanation{\cow}{tab:all_bos_taurus_placenta}}
+% \label{tab:top50_cow_placenta}
+% \end{table}
+
+The top 50 expressed genes as measured by \ac{FPKM} in the term
+placenta of the \cow are shown in Supplemental \cref{tab:all_bos_taurus_placenta} with a
+list of all genes in Supplemental \cref{tab:all_bos_taurus_placenta}.
+The gene with the highest expression was \textit{TMSB10} %
+(\Sexpr{gene.expression("bos taurus","TMSB10")}), and
+\textit{TMSB4} was also highly expressed %
+(\Sexpr{gene.expression("bos taurus","TMSB4")}). As in
+\dog{}, members of annexin complexes were also highly expressed
+(\Sexpr{gene.expression("bos taurus","S100G",complete=TRUE)}, %
+\Sexpr{gene.expression("bos taurus","ANXA2",complete=TRUE)}, %
+\Sexpr{gene.expression("bos taurus","S100A2",complete=TRUE)}, and %
+\Sexpr{gene.expression("bos taurus","S100A11",complete=TRUE)}), as well as %
+at least one of a set of four miRNA with 100\% identity
+(\Sexpr{gene.expression("bos taurus","ENSBTAG00000047046",complete=TRUE)}, %
+\Sexpr{gene.expression("bos taurus","ENSBTAG00000047154",complete=TRUE)}, %
+\Sexpr{gene.expression("bos taurus","ENSBTAG00000045710",complete=TRUE)}, and %
+\Sexpr{gene.expression("bos taurus","ENSBTAG00000046351",complete=TRUE)}). 
+%
+As these are novel miRNA, there is a possibility that the assignment
+of the short reads to these four miRNA is due to miss-annotation of
+the \cow genome.
+% 
+Several members of the ruminant-specific pregnancy-associated
+glycoprotein family \cite{Green.ea2000:Pregnancy-associatedbovineandovine} 
+show especially high expression in \cow placenta
+(Supplemental \cref{tab:all_bos_taurus_placenta}, \cref{fig:pag2_prss16_ctsl_psg_evolution_tree}~D, and
+Supplemental \cref{tab:all_bos_taurus_placenta}) including
+%
+\Sexpr{gene.expression("bos taurus","PAG2",complete=TRUE)}, %
+\Sexpr{gene.expression("bos taurus","PAG10",complete=TRUE)}, %
+\Sexpr{gene.expression("bos taurus","ENSBTAG00000022759",complete=TRUE)}, %
+\Sexpr{gene.expression("bos taurus","ENSBTAG00000013214",complete=TRUE)}, %
+\Sexpr{gene.expression("bos taurus","ENSBTAG00000019226",complete=TRUE)}, %
+\Sexpr{gene.expression("bos taurus","ENSBTAG00000024611",complete=TRUE)}, %
+\Sexpr{gene.expression("bos taurus","PAG12",complete=TRUE)}. %
+%
+28 members of this family have $\text{FPKM} \ge 1$, and this family of
+genes has greatly expanded in ruminants (\cow and \sheep{}) although
+the expression levels of this family are higher in \cow than in \sheep
+(\cref{fig:pag2_prss16_ctsl_psg_evolution_tree}~D). Other genes with high expression
+include genes involved with regulation of growth (\textit{IGF2},
+\textit{PHLDA2}), imprinted genes (\textit{DLK1}, \textit{PHLDA2}),
+and \textit{CSH1}, a gene that is a member of a ruminant specific
+expansion of placental prolactins and not directly related to the gene
+of the same name in hominids \ref{fig:prolactin_evolution_tree}. Other
+ruminant-specific placental prolactins also show high expression in
+the cow placenta including %
+\Sexpr{gene.expression("bos taurus","PRP1",complete=TRUE)}, %
+\Sexpr{gene.expression("bos taurus","PRP5",complete=TRUE)}, %
+\Sexpr{gene.expression("bos taurus","PRP6",complete=TRUE)}, %
+\Sexpr{gene.expression("bos taurus","PRP8",complete=TRUE)}, and %
+\Sexpr{gene.expression("bos taurus","PRP7",complete=TRUE)}, %
+with a total of 14 with $\text{FPKM} \ge 1$.
+%
+\textit{SSLP1} (\textit{SOLD1} in \sheep{}), a gene expressed in the
+cotyledonary villi of the ruminiant placenta and involved in cell
+proliferation
+\cite{Ushizawa.ea2009:Characterizationandexpressionanalysis}, also
+shows evidence of high expression %
+(\Sexpr{gene.expression("bos taurus","SSLP1")}). %
+There is some placental expression of the estrogen synthase gene
+(\textit{CYP19A1}) in cows %
+(\Sexpr{gene.expression("bos taurus","CYP19A1")}), and
+comparatively greater expression of \textit{HSD3B} %
+(\Sexpr{gene.expression("bos taurus","HSD3B")}).
+
+\subsubsection{\pig Placenta Transcriptome}
+
+% \begin{table}[h]
+%   \footnotesize
+% <<top.50.pig.expressed.genes,echo=FALSE,results="asis">>=
+% output.top.genes.table(top.genes.table(species.name="sus scrofa"))
+% @ 
+% \caption{\tableexplanation{\pig}{tab:all_sus_scrofa_placenta}}
+% \label{tab:top50_pig_placenta}
+% \end{table}
+
+The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
+in the term placenta of \textit{Sus scrofa} are shown in
+Supplemental \cref{tab:all_pig_placenta} with a list of all highly expressed
+genes in Supplemental \cref{tab:all_sus_scrofa_placenta}. The top two
+expressed transcripts,
+\Sexpr{gene.expression("sus_scrofa","ENSSSCG00000025162",complete=TRUE)}
+and
+\Sexpr{gene.expression("sus_scrofa","ENSSSCG00000021356",complete=TRUE)},
+are miRNA which correspond to the \cow miRNA
+\href{http://www.mirbase.org/cgi-bin/mirna_entry.pl?acc=MI0013080}{bta-mir-2904-1}
+and
+\href{http://www.mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0013845}{bta-mir-2887-1},
+respectively, both of which are also expressed in \cow ovary
+\cite{Hossain.ea2009:Identificationandcharacterizationof}, although
+neither of which have an obvious target gene on the basis of
+\textit{in silico} analysis
+\cite{Agarwal.ea2015:PredictingeffectivemicroRNAtarget}. Other highly
+expressed genes include members of the insulin growth factor family
+(\Sexpr{gene.expression("sus_scrofa","IGF2",complete=TRUE)} and
+\Sexpr{gene.expression("sus_scrofa","IGFBP3",complete=TRUE)}), members
+of annexin complexes
+(\Sexpr{gene.expression("sus_scrofa","S100A1",complete=TRUE)},
+\Sexpr{gene.expression("sus_scrofa","ANXA2",complete=TRUE)},
+\Sexpr{gene.expression("sus_scrofa","S100A12",complete=TRUE)}, and
+\Sexpr{gene.expression("sus_scrofa","S100A10",complete=TRUE)}), the
+galectin \Sexpr{gene.expression("sus_scrofa","LGALS3",complete=TRUE)}
+and multiple cytoskeleton and extracellular matrix proteins
+(\Sexpr{gene.expression("sus_scrofa","KRT19",complete=TRUE)},
+\Sexpr{gene.expression("sus_scrofa","COL1A1",complete=TRUE)},
+\Sexpr{gene.expression("sus_scrofa","BETA-ACTIN",complete=TRUE)},
+\Sexpr{gene.expression("sus_scrofa","KRT9",complete=TRUE)},
+\Sexpr{gene.expression("sus_scrofa","CLDN4",complete=TRUE)}, and
+\Sexpr{gene.expression("sus_scrofa","KRT9",complete=TRUE)}).
+
+\subsubsection{\horse Placenta Transcriptome}
+
+% \begin{table}[h]
+%   \footnotesize
+% <<top.50.horse.expressed.genes,echo=FALSE,results="asis">>=
+% output.top.genes.table(top.genes.table(species.name="equus caballus"))
+% @ 
+% \caption{\tableexplanation{\horse}{tab:all_equus_caballus_placenta}}
+% \label{tab:top50_horse_placenta}
+% \end{table}
+
+The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
+in the term placenta of \horse are shown in
+Supplemental \cref{tab:all_equus_caballus_placenta} with a list of all highly expressed
+genes in Supplemental \cref{tab:all_equus_caballus_placenta}. The gene
+with the highest expression was the relaxin,
+\Sexpr{gene.expression("equus_caballus","RLN",complete=TRUE)},
+followed by two miRNA
+(\Sexpr{gene.expression("equus_caballus","ENSECAG00000025328",complete=TRUE)}
+and
+\Sexpr{gene.expression("equus_caballus","ENSECAG00000027056",complete=TRUE)})
+with no known \textit{in silico} targets
+\cite{Agarwal.ea2015:PredictingeffectivemicroRNAtarget}, the thymosin
+\Sexpr{gene.expression("equus_caballus","TMSB4",complete=TRUE)},
+members of the insulin growth factor family
+(\Sexpr{gene.expression("equus_caballus","IGF2",complete=TRUE)} and
+\Sexpr{gene.expression("equus_caballus","IGFBP3",complete=TRUE)}) and
+multiple members of annexin complexes
+(\Sexpr{gene.expression("equus_caballus","S100A6",complete=TRUE)},
+\Sexpr{gene.expression("equus_caballus","S100A1",complete=TRUE)}, and
+\Sexpr{gene.expression("equus_caballus","ANXA2",complete=TRUE)}),
+similar to the pattern of expression seen in \pig and \dog.
+
+\subsubsection{\sheep Placenta Transcriptome}
+
+% \begin{table}[h]
+%   \footnotesize
+% <<top.50.sheep.expressed.genes,echo=FALSE,results="asis">>=
+% top.sheep.genes <- top.genes.table(species.name="ovis aries",n=200)
+% top.sheep.genes <-
+%     top.sheep.genes[!grepl("\\{(7SK|.+_([SM]RP|nuc)|SNOR[AD]\\d+|U\\d+|HIST.*)\\}",
+%                            `Gene symbol`) &
+%                     !grepl("\\((7SK|.+_([SM]RP|nuc)|SNOR[AD]\\d+|U\\d+|HIST.*)\\)",
+%                            `Human Symbol`)
+%                    ,][1:50,]
+% output.top.genes.table(top.sheep.genes)
+% @ 
+% \caption{\tableexplanation{\sheep}{tab:all_ovis_aries_placenta}}
+% \label{tab:top50_sheep_placenta}
+% \end{table}
+
+The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
+in the term placenta of \sheep are shown in
+Supplemental \cref{tab:all_sheep_placenta} with a list of all highly expressed
+genes in Supplemental \cref{tab:all_ovis_aries_placenta}. The complete
+list of highly expressed genes includes many snRNAs and rRNAs likely
+due to the RNA extraction and library preparation procedure utilized
+for this sample. Ignoring these, notable highly expressed genes
+include members of annexin complexes
+(\Sexpr{gene.expression("ovis_aries","S100G",complete=TRUE)},
+\Sexpr{gene.expression("ovis_aries","ANXA2",complete=TRUE)}),
+hemoglobin subunits
+(\Sexpr{gene.expression("ovis_aries","ENSOARG00000010944",complete=TRUE)}),
+an ortholog of \textit{SSLP1},
+\Sexpr{gene.expression("ovis_aries","SOLD1",complete=TRUE)}, two
+cathespins (\Sexpr{gene.expression("ovis_aries","CTSL",complete=TRUE)}
+and \Sexpr{gene.expression("ovis_aries","CTSB",complete=TRUE)}), and
+placentally expressed transcript 1
+\Sexpr{gene.expression("ovis_aries","PLET1",complete=TRUE)} which may
+play a role in cellular migration
+\cite{Raymond.ea2010:Expressionoforphanprotein}.
+
+
+\subsection{Atlantogenata (Afrotheria + Xenartha)}
+\subsubsection{\elephant Placenta Transcriptome}
+
+% \begin{table}
+% \footnotesize
+% <<top.50.elephant.expressed.genes,echo=FALSE,results="asis">>=
+% output.top.genes.table(top.genes.table(species.name="loxodonta africana"))
+% @ 
+% \caption{\tableexplanation{\elephant}{tab:top50_elephant_placenta}}
+% \label{tab:top50_elephant_placenta}
+% \end{table}
+
+
+The top 50 expressed genes as measured by \ac{FPKM} in the term
+placenta of \elephant are shown in Supplemental \cref{tab:all_loxodonta_africana_placenta}
+with a list of all genes in
+\cref{tab:all_loxodonta_africana_placenta}. The gene with the highest
+expression was the natriuretic peptide precursor B
+(\Sexpr{gene.expression("loxodonta_africana","NPPB",complete=TRUE)}).
+Two thymosins,
+\Sexpr{gene.expression("loxodonta_africana","TMSB10",complete=TRUE)}
+and
+\Sexpr{gene.expression("loxodonta_africana","TMSB4Y",complete=TRUE)}
+were also also was highly expressed. The miRNA mir-675
+(\Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000027406",complete=TRUE)}).
+which is imbedded in the first exon of the maternally imprinted long
+non-coding RNA gene \textit{H19}
+\cite{Keniry.ea2012:H19lincRNAisdevelopmental}, a gene which is
+currently un-annotated in \elephant{}. %
+% \DLA{Probably consider fixing the unannotation of H19; it seems pretty
+%   obvious to me, though it would require fixing the GTF file for
+%   elephant with the right
+%   \href{http://useast.ensembl.org/Loxodonta_africana/Transcript/Summary?db=core;pt=GENSCAN00000034833;r=scaffold_145:855987-899506}{genscan
+%     prediction} for this region} %
+Five uncharacterized genes are expressed to a high degree in the
+\elephant placenta (Supplemental \cref{tab:all_loxodonta_africana_placenta}), three of
+which
+(\Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000028493",complete=TRUE)},
+\Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000032011",complete=TRUE)},
+\Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000031933",complete=TRUE)})
+are members of an \elephant{}-specific expansion of 11 genes closely
+related to the thymus-specific serine protease gene \textit{PRSS16}
+(\cref{fig:pag2_prss16_ctsl_psg_evolution_tree}~C). The other 8
+\textit{PRSS16}-like genes are also expressed to a lesser degree
+(\Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000026505",complete=TRUE)}).
+Two other novel genes with high expression are related to the gene
+\textit{SSLP1}
+(\Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000032659",complete=TRUE)}
+and
+\Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000029551",complete=TRUE)},
+\cref{fig:sslp1_evolution_tree}), which is also expressed in \cow and
+\dog placentas (Supplemental \cref{tab:all_canis_familiaris_placenta,tab:all_bos_taurus_placenta}).
+Placental expression of the hormones relaxin (\textit{RLN}, %
+\Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000017411")})
+and prolactin (\textit{PRL}) are exceptionally high in the elephant
+when compared to other mammals
+(\cref{fig:rln2_evolution_tree,fig:prolactin_evolution_tree}). There
+is little to no placental expression of the estrogen synthase gene,
+\textit{CYP19A1}
+(\Sexpr{gene.expression("loxodonta_africana","CYP19A1")}) and the
+enzyme that produces progesterone, \textit{HSD3B1}
+(\Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000027896")}). Other genes
+with high expression in the elephant placenta include genes involved
+in oxidative stress
+(\Sexpr{gene.expression("loxodonta_africana","TXN",complete=TRUE)}),
+growth
+(\Sexpr{gene.expression("loxodonta_africana","IGF2",complete=TRUE)})
+and
+\Sexpr{gene.expression("loxodonta_africana","PAEP",complete=TRUE)}, a
+gene predominantly expressed in the endometrium of the uterus in humans
+\cite{Rutanen.ea1987:Progesterone-associatedproteinsPP12and}.
+
+\subsubsection{\armadillo Placenta Transcriptome}
+
+% \begin{table}
+% \footnotesize
+% <<top.50.armadillo.expressed.genes,echo=FALSE,results="asis">>=
+% output.top.genes.table(top.genes.table(species.name="dasypus novemcinctus"))
+% @ 
+% \caption{\tableexplanation{\armadillo}{tab:all_dasypus_novemcinctus_placenta}}
+% \label{tab:top50_armadillo_placenta}
+% \end{table}
+
+The top 50 expressed genes in the term placenta of \armadillo are
+shown in Supplemental \cref{tab:all_dasypus_novemcinctus_placenta} with a list of all genes
+with $\text{FPKM}\ge 50$ in Supplemental
+\cref{tab:all_dasypus_novemcinctus_placenta}. The gene with the
+highest expression is
+\Sexpr{gene.expression("dasypus_novemcinctus","ENSDNOG00000045029",complete=TRUE)}
+which is most similar to the \mouse \textit{Pga5} is expanded in
+\opossum into three members which are expressed in placenta (the other
+two being
+\Sexpr{gene.expression("dasypus_novemcinctus","ENSDNOG00000033885",complete=TRUE)}
+and
+\Sexpr{gene.expression("dasypus_novemcinctus","ENSDNOG00000040431",complete=TRUE)}),
+though the expansion is less than that seen \cow and \sheep
+(\cref{fig:pag2_prss16_ctsl_psg_evolution_tree}~D). There is also high expression of
+hemoglobin subunit beta,
+\Sexpr{gene.expression("dasypus_novemcinctus","HBB",complete=TRUE)},
+an un-annotated gene with high similarity to \human and \cow
+\textit{OVOS2}
+\Sexpr{gene.expression("dasypus_novemcinctus","ENSDNOG00000033320",complete=TRUE)}
+(Supplemental \cref{fig:ovos2_evolution_tree}), the growth factors
+\Sexpr{gene.expression("dasypus_novemcinctus","IGF2",complete=TRUE)}
+and
+\Sexpr{gene.expression("dasypus_novemcinctus","IGFBP4",complete=TRUE)},
+and the thymosin
+\Sexpr{gene.expression("dasypus_novemcinctus","TMSB4X",complete=TRUE)}.
+As has been seen previously, multiple components of the annexin
+complex are also highly expressed, including
+\Sexpr{gene.expression("dasypus_novemcinctus","ENSDNOG00000045634",complete=TRUE)}
+(\textit{ANXA8L1}),
+\Sexpr{gene.expression("dasypus_novemcinctus","ENSDNOG00000017399",complete=TRUE)}
+(\textit{S100B}),
+\Sexpr{gene.expression("dasypus_novemcinctus","ENSDNOG00000048504",complete=TRUE)}
+(\textit{S100A10}), and
+\Sexpr{gene.expression("dasypus_novemcinctus","ENSDNOG00000004237",complete=TRUE)}
+(\textit{ANXA2}).
+
+
+
+
+\subsection{Metatherians}
+
+\subsubsection{\opossum Placenta Transcriptome}
+
+% \begin{table}
+%   \footnotesize
+% <<top.50.opossum.expressed.genes,echo=FALSE,results="asis">>=
+% output.top.genes.table(top.genes.table(species.name="monodelphis domestica"))
+% @ 
+% \caption{\tableexplanation{\opossum}{tab:all_monodelphis_domestica_placenta}}
+% \label{tab:top50_opossum_placenta}
+% \end{table}
+
+The top 50 expressed genes as measured by \ac{FPKM} in the term
+placenta of the \opossum are shown in
+Supplemental \cref{tab:all_opossum_placenta} with a list of all genes in
+Supplemental \cref{tab:all_monodelphis_domestica_placenta}. The gene with the
+second highest expression is superoxide dismutase 3, extracellular
+(\Sexpr{gene.expression("monodelphis_domestica","SOD3",complete=TRUE)}),
+which functions as an antioxidant. The gene with the second highest
+expression is the beta hemoglobin subunit epsilon
+(\Sexpr{gene.expression("monodelphis_domestica","ENSMODG00000011325",complete=TRUE)}),
+which is expressed at the embryonic stage of development in
+marsupials, as in other mammals
+\cite{Holland.ea1997:Characterizationofembryonicglobin}. \textit{HBE}
+subunits link up with protein products of two hemoglobin, zeta
+(\textit{HBZ}) genes, which are also expressed to a high degree in the
+opossum placenta
+(\Sexpr{gene.expression("monodelphis_domestica","ENSMODG00000016635",complete=TRUE)}
+and
+\Sexpr{gene.expression("monodelphis_domestica","ENSMODG00000016631",complete=TRUE)}).
+In addition, there is high expression of the gene hemoglobin, omega
+(\textit{HBO},
+\Sexpr{gene.expression("monodelphis_domestica","ENSMODG00000016637",complete=TRUE)}),
+% this is LOC_1000016060 which I figured out by tblastn'ing AAK11486.1
+% against Monodelphis domestica
+a hemoglobin found only in marsupials and monotremes
+\cite{Opazo.ea2008:Genomicevidenceforindependent} (Supplemental
+\cref{fig:hbe1_evolution_tree}). The hemoglobin gene \textit{HBA} is
+also expressed in the placenta
+(\Sexpr{gene.expression("monodelphis_domestica","ENSMODG00000016633",complete=TRUE)}).
+Two cystatin genes
+(\Sexpr{gene.expression("monodelphis_domestica","ENSMODG00000018295",complete=TRUE)}
+and
+\Sexpr{gene.expression("monodelphis_domestica","ENSMODG00000018296",complete=TRUE)})
+are expressed to a high degree, along with one \textit{CTSL} related
+gene
+(\Sexpr{gene.expression("monodelphis_domestica","ENSMODG00000002844",complete=TRUE)},
+\cref{fig:pag2_prss16_ctsl_psg_evolution_tree}~B), which are known to interact with
+cystatins \cite{Turk.ea2001:Lysosomalcysteineproteasesfacts}. The
+uncharacterized gene \textit{LOC10001195}
+(\Sexpr{gene.expression("monodelphis_domestica","ENSMODG00000006547",complete=TRUE)})
+also shows high expression in \opossum placenta. The gene
+\textit{WFDC2}, a member of the whey acidic protein (WAP) family is
+also expressed to a high degree in \opossum placenta
+(\Sexpr{gene.expression("monodelphis_domestica","WFDC2",complete=TRUE)}).
+Other genes with high expression include members of the annexin
+complex
+(\Sexpr{gene.expression("monodelphis_domestica","S100A6",complete=TRUE)},
+\Sexpr{gene.expression("monodelphis_domestica","ANXA2",complete=TRUE)}).
+In addition, there was little production of CYP19A1 and HSD3B1
+(\Sexpr{gene.expression("monodelphis_domestica","CYP19A1",complete=TRUE)}
+and
+\Sexpr{gene.expression("monodelphis_domestica","ENSMODG00000005385",complete=TRUE)},
+respectively).
+
+
+
+\subsection{Core Placenta Transcriptome}
+
+\begin{figure}
+<<core.placenta.transcriptome,fig.width=8,fig.height=12,out.height="0.8\\textheight",echo=FALSE>>=
+cptl <-
+    core.placenta.transcriptome.long[!grepl("(min|median|max|all)_expression|all_but_",
+                                            Species),]
+cptl <- cptl[,Species:=factor(gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",capfirst(Species)),
+                              levels=gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",
+                                          capfirst(names(species.names))))]
+print(ggplot(cptl,
+             aes(y=human_name,x=Species))
+      + geom_raster(aes(fill=log10(FPKM)))
+      + scale_x_discrete(expand=c(0,0))
+      + scale_y_discrete(expand=c(0,0))
+      + scale_fill_gradient(low = grad.def[["low"]],
+                            high = grad.def[["high"]],
+                            space = grad.def[["space"]],
+                            na.value = grad.def[["na.value"]],
+                            limits=c(0,4),
+                            guide=guide_colorbar(title=expression(log[10](FPKM)))
+                            )
+      + ylab("Human Ortholog Name")
+      + xlab("Species")
+      + theme_grey()
+      + theme(legend.position="top",
+              axis.ticks = element_blank(),
+              axis.text.y = element_text(face="italic"),
+              axis.text.x = element_text(angle = 90, hjust = 1, vjust=0,face="italic"))
+      )
+@ 
+\caption{Core Placenta Transcriptome.
+  \Sexpr{core.placenta.transcriptome.long[,length(unique(human_name))]}
+  1:1 \human ortholog genes expressed (\ac{FPKM}$ \ge 10$) in the
+  placenta of all \Sexpr{star.logs[,length(unique(species))]} species
+  studied with housekeeping genes
+  \cite{Eisenberg.ea2013:Humanhousekeepinggenesrevisited} removed
+  ordered (from top to bottom) by median expression. Supplemental
+  \cref{fig:core_placenta_transcriptome_shape} shows the shape of the
+  distribution of the number of genes in the core placenta
+  transcriptome if different FPKM and species restriction criteria are
+  utilized.}
+\label{fig:core_placenta_transcriptome}
+\end{figure}
+
+
+The
+\Sexpr{core.placenta.transcriptome.long[,length(unique(human_name))]}
+genes comprising the core placenta transcriptome are shown in
+\cref{fig:core_placenta_transcriptome} ordered by their median
+transcription level in \ac{FPKM}. We considered a gene to be core to
+the placenta transcriptome if a 1:1 ortholog of that gene was
+expressed with $\text{FPKM} \ge 10$ in all species studied and was
+not a human housekeeping gene according to
+\citet{Eisenberg.ea2013:Humanhousekeepinggenesrevisited}.
+Supplemental \cref{fig:core_placenta_transcriptome_shape} shows the number of genes
+which would be included in the core placenta set if the \ac{FPKM}
+cutoff was set differently.
+%
+Multiple components of annexin complexes are included in the core
+transcriptome, including \textit{ANXA2}, \textit{ANXA1},
+\textit{S100A11}, \textit{S100A10}. ANXA1 is involved in the
+resolution of the inflammation response through inhibition of
+phospholipase A2 activity and signaling through the formyl peptide
+receptor family, and has previously been hypothesized to be important
+for the maintenance of the anti-inflammatory state during pregnancy
+\cite{Hutchinson.ea2011:Molecularregulatorsofresolution}. ANXA2 is
+known to interact with S100A10, S100A6, S100A11, and S100A4
+\cite{Liu.ea2015:AnnexinA2complexeswith}, and there is evidence for
+its interaction with S100P as well; it is involved in cell-cell
+interaction as well as vesicle trafficking and von Willibrand Factor
+secretion. The expression regulation of another core gene,
+\textit{TIMP3}, has been implicated in pre-eclampsia
+\cite{Ma.ea2014:Down-regulationofTIMP3leads,Xiang.ea2013:PromoterhypomethylationofTIMP3}.
+Supplemental \cref{tab:core_placenta_go_terms} lists the significant
+enrichment of \ac{GO} terms in the core placenta transcriptome;
+notable terms include those involved in cytoskeletal structure,
+protein transport, membrane protein structure, and inflammation
+resolution. Increasing the permissiveness of the core placenta
+transcriptome by only requiring 10 of 14 species to express 1:1
+orthologs with FPKM $>10$ and results in the same terms also being
+significantly enriched, along with additional terms (Supplemental
+\cref{tab:core_placenta_go_terms}).
+
+In contrast to the shape of the number of genes included in the core
+placenta transcriptome, the set of \human housekeeping genes expressed
+all placentas is flatter (Supplemental
+\cref{fig:core_housekeeping_transcriptome_shape}), and includes more
+of the total fraction of genes. However, there is still a large
+difference between the set of housekeeping genes which are expressed
+in \human and those which are expressed in all placentas.
+
+% SPINT2 -- Serine Peptidase inhibitor
+
+% SLC3A2 -- this is probably actually a housekeeping gene; it's
+% involved in amino acid transport
+
+% SQSTM1 -- NFκB signaling (immune supression?)
+
+% KRTCAP2  N-glycosylation (probably housekeeping)
+
+% NRDG1 -- interacts with HSP90
+
+% SDC4 -- proteoglycan (syndecan) cell adhesion
+
+% LAMC1 -- laminin
+
+% LUM -- proteoglycan
+
+% VDAC1 -- mitochondrial gene?
+
+% F11R -- tight junctions
+
+% SERPINH1? with TIMP3 
+% http://www.proteinatlas.org/ENSG00000149257-SERPINH1/tissue/placenta
+
+
+\subsubsection{\ac{GSE} Analyses of Individual Transcriptomes}
+
+In order to identify major functional categories of genes expressed in
+the individual transcriptomes, we examined \ac{GSE} in 1:1 human
+orthologs which had \ac{FPKM} values in the top 1\% of expressed genes
+(Supplemental %
+\cref{tab:go_terms_enriched_top_one_dasypus_novemcinctus,tab:go_terms_enriched_top_one_equus_caballus,tab:go_terms_enriched_top_one_homo_sapiens,tab:go_terms_enriched_top_one_loxodonta_africana,tab:go_terms_enriched_top_one_monodelphis_domestica,tab:go_terms_enriched_top_one_mus_musculus,tab:go_terms_enriched_top_one_ovis_aries,tab:go_terms_enriched_top_one_pan_paniscus,tab:go_terms_enriched_top_one_sus_scrofa,tab:go_terms_enriched_top_one_ateles_fusciceps,tab:go_terms_enriched_top_one_spalax_galili,tab:go_terms_enriched_top_one_spalax_carmeli,tab:go_terms_enriched_top_one_bos_taurus,tab:go_terms_enriched_top_one_canis_familiaris}) using topGO \cite{topGO:2.20.0}. %
+%
+Significant enrichment in genes ($\text{FDR}\le0.05$) in the top 1\%
+of \ac{FPKM} values in at least 12 of the
+\Sexpr{length(species.names)} species included clusters such as
+membrane organization , locomotion, tissue development, extracellular
+matrix organization, regulation of peptidase activity, and various
+cell death related pathways among others
+(Supplemental \cref{tab:go_terms_all_species}). If we instead examine the top 100
+genes by \ac{FPKM} in each of the \Sexpr{length(species.names)}
+species (Supplemental %
+\cref{tab:go_terms_enriched_dasypus_novemcinctus,tab:go_terms_enriched_equus_caballus,tab:go_terms_enriched_homo_sapiens,tab:go_terms_enriched_loxodonta_africana,tab:go_terms_enriched_monodelphis_domestica,tab:go_terms_enriched_mus_musculus,tab:go_terms_enriched_ovis_aries,tab:go_terms_enriched_pan_paniscus,tab:go_terms_enriched_sus_scrofa,tab:go_terms_enriched_ateles_fusciceps,tab:go_terms_enriched_spalax_galili,tab:go_terms_enriched_spalax_carmeli,tab:go_terms_enriched_bos_taurus,tab:go_terms_enriched_canis_familiaris})
+notable enrichments include extracellular matrix, female pregnancy,
+integrin and collagen-related processes, and various cell death
+related processes.
+
+
+\clearpage
+
+\section{Discussion}
+
+\subsection{Evolution of Placental Hormones}
+
+Reproductive hormones are central to the regulation of pregnancy and
+their source, timing, and quantity can vary widely from species to
+species \cite{Carter2012:Evolutionofplacentalfunction}. Expression and synthesis of hormones is
+perhaps the most well-documented physiological process in the placenta
+in many species. Here we quantified the extreme disparity in genes
+with hormone products or enzymatic products that directly produce
+hormones in multiple mammalian species (\cref{fig:hormone_genes}).
+
+\begin{figure}[htb]
+<<hormone.genes.plot,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
+
+gene.expression.nozero <- function(genes) {
+    temp <-
+        data.matrix.dt(dcast(combined.fpkm[human_name %in% genes,],
+                             human_name~species,
+                             value.var="FPKM",
+                             fun.aggregate=function(x){x[1]}))
+    temp <-
+        temp[apply(temp,1,function(x){sum(x,na.rm=TRUE)})>5,]
+    return(temp)
+}
+
+### hormone genes
+hormone.genes <- c("CGA","CGB","CGB1","CGB2","CGB5","CGB8","CSH1","CSH2","CSHL1","CYP19A1",
+                   "GH2","GHRH","HSD3B1","HSD3B2","HSD17B2","HSD17B1","NPPB","NPPC","PRL","RLN1")
+hormone.expression.nozero <-
+    gene.expression.nozero(hormone.genes)
+
+hor.exp.long <- melt(log10(hormone.expression.nozero+1)[rev(1:nrow(hormone.expression.nozero)),])
+colnames(hor.exp.long)[1:3] <- c("gene","species","fpkm")
+hor.exp.long <- hor.exp.long[hor.exp.long$gene!="IGF2",]
+
+### galectin genes
+galectin.genes <- unique(grep("^LGALS",combined.fpkm[,human_name],value=TRUE))
+
+galectin.expression.nozero <-
+    gene.expression.nozero(galectin.genes)
+
+gal.exp.long <- melt(log10(galectin.expression.nozero+1)[rev(1:nrow(galectin.expression.nozero)),])
+colnames(gal.exp.long)[1:3] <- c("gene","species","fpkm")
+
+### IGF related genes
+
+igfrelated.genes <- unique(grep("^IGF",combined.fpkm[,human_name],value=TRUE))
+
+igfrelated.expression.nozero <-
+    gene.expression.nozero(igfrelated.genes)
+
+igf.exp.long <- melt(log10(igfrelated.expression.nozero+1)[rev(1:nrow(igfrelated.expression.nozero)),])
+colnames(igf.exp.long)[1:3] <- c("gene","species","fpkm")
+
+### Pre-eclampsia genes ADAM12 CRH KISS1 PAPPA
+
+pe.expression.nozero <-
+    gene.expression.nozero(c("ADAM12","CRH","KISS1","PAPPA"))
+
+pe.exp.long <- melt(log10(pe.expression.nozero+1)[rev(1:nrow(pe.expression.nozero)),])
+colnames(pe.exp.long)[1:3] <- c("gene","species","fpkm")
+
+
+igf.exp.long$type <- "IGF Related"
+gal.exp.long$type <- "Galectin"
+hor.exp.long$type <- "Hormone"
+pe.exp.long$type <- "PE"
+
+
+combined.long <-
+    rbind(igf.exp.long,
+          gal.exp.long,
+          hor.exp.long,
+          pe.exp.long
+          )
+combined.long$species <-
+    factor(gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",capfirst(combined.long$species)),
+           levels=gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",capfirst(names(species.names))))
+
+common.plot.options <- 
+    list(geom_tile(aes(fill = fpkm), colour = "white"),
+         scale_fill_gradient(low = grad.def[["low"]],
+                             high = grad.def[["high"]],
+                             space = grad.def[["space"]],
+                             na.value = grad.def[["na.value"]],
+                             guide=guide_colorbar(title=expression(log[10](FPKM)))),
+         scale_x_discrete("", expand = c(0, 0)),
+         scale_y_discrete("", expand = c(0, 0)),
+         theme_grey(base_size = 9),
+         theme(legend.position = "top",
+               axis.ticks = element_blank(),
+               panel.background = element_blank(),
+               axis.text.y = element_text(face="italic"),
+               axis.text.x = element_text(angle = 90, hjust = 1, vjust=0,face="italic")),
+         facet_grid(type~.,scale="free_y",space="free_y")
+         )
+print(ggplot(combined.long, aes(y=gene, x=species))
+      + common.plot.options
+      )
+@ 
+\caption{Expression in $\text{log}_{10}(\text{FPKM})$ of 1:1 \human
+  orthologs of Hormone Genes, Galectins, genes implicated in
+  pre-eclampsia (PE), and \textit{IGF}-related genes. Empty locations
+  indicate no detectable expression and/or no 1:1 \human ortholog in
+  that species.}
+\label{fig:hormone_genes}
+\end{figure}
+
+\subsubsection{Estrogen and Progesterone}
+
+In both ruminants and primates, the placenta is capable of producing
+estrogen and progesterone
+\cite{Strauss.ea1996:Placentalsteroidhormonesynthesis}. High relative
+expression of \textit{CYP19A1} (Supplemental
+\cref{fig:estrogen_evolution_tree}), the enzyme that synthesizes
+estrogen from androstenedione is seen in \human, \bonobo, \cow, and
+\horse, though not in \sheep, \smonkey. %
+%
+\textit{HSD3B1}, one of two enzymes that synthesizes progesterone from
+pregnalone
+(\cite{Simard.ea2005:Molecularbiologyof3beta-hydroxysteroid},
+Supplemental \cref{fig:progesterone_evolution_tree}) is also highly
+expressed in \human, \bonobo, \cow, \horse, and \dog, but is not
+highly expressed in \smonkey, \sheep, \pig, \elephant, \armadillo, or
+\opossum. This is consistent with the previously observed local
+progesterone withdrawal in \sheep, and the leuteo-placental shift of
+progesterone expression in boreoeutheria in contrast to afrotherians
+which do not show such a shift
+\cite{Swaggart.ea2015:Genomicsofpretermbirth}. The diversity of
+\textit{CYP19A1} and \textit{HSD3B1} expression levels in in primates
+and ungulates seen here points to the need for more complete sampling
+of placentas at different timepoints and in different clades.
+
+\subsubsection{Prolactin}
+
+The elephant is strikingly the only mammal analyzed that shows high
+expression of the primarily pituitary hormone prolactin (\textit{PRL})
+in the term placenta, although we see high expression of genes which
+resulted from duplications of \textit{PRL} in the \mouse, \carmeli,
+and \cow (Supplemental \cref{fig:prolactin_evolution_tree}). The
+results in \mouse are relatively consistent with the temporal
+expression results of
+\citet{Simmons.ea2008:Spatialandtemporalexpression}. For example, we
+see very high expression of \textit{Prl3b1} and \textit{Prl8a9} in the
+term placentas of \mouse, but low expression of \textit{Prl7a1} and
+\textit{Prl8a2} which are expressed at earlier embryonic stages. %
+All afrotherians yet analyzed contain only one prolactin gene, and
+prolactin has undergone adaptive evolution on the \elephant lineage
+\cite{Wallis2009:ProlactininAfrotheriacharacterization}.
+\citet{Yamamoto.ea2011:PlacentationinAfricanelephant} noted the
+presence of a prolactin in the trophoblast of the elephant placenta
+using immunohistological staining and human derived antibodies. A
+previous analysis of \elephant placenta also detected the expression
+of prolactin \cite{Hou.ea2012:Elephanttranscriptomeprovidesinsights}.
+Here we confirm that the sole prolactin in \elephant is not only
+expressed but highly expressed in the placenta, and likely functions
+both in the maintenance of the corpus luteum and as a placental
+lactogen \cite{Yamamoto.ea2011:PlacentationinAfricanelephant}.
+\textit{PRL} is not expressed in \opossum, even though there is
+evidence that it is expressed in the placenta of another marsupial,
+\textit{Macropus eugenii} (tammar wallaby)
+\cite{Menzies.ea2011:Placentalexpressionofpituitary}. This suggests
+that placental prolactin expression in marsupials may be as diverse as
+in eutherian mammals. One possible explanation of the diversity of
+expression is the presence of endogenous retroviruses such as MER39 in
+primates, MER77 in rodents, and L1-2\_LA in \elephant
+\cite{Emera.ea2012:Convergentevolutionofendometrial} although this
+does not explain the diversity of expression of different isoforms of
+\textit{PRL} in \mouse or their tissue specificity in primates. An
+alternative, that \textit{HOXA11} expression is responsible for
+\textit{PRL} expression
+\cite{Lynch.ea2008:Adaptivechangesintranscription} seems not to be the
+case in placenta, as the rodent with the highest \textit{HOXA11}
+expression, \galili
+(\Sexpr{gene.expression("spalax_galili","Hoxa11",complete=TRUE)}) is
+the rodent with the lowest expression of \textit{PRL}
+(\cref{fig:prolactin_evolution_tree}), and \elephant also does not
+express \textit{HOXA11} highly either
+(\Sexpr{gene.expression("loxodonta_africana","HOXA11",complete=TRUE)},
+Supplemental \cref{fig:hoxa11_evolution_tree}).
+
+\subsubsection{Growth hormone family}
+
+The growth hormone family of genes has expanded in anthropoid
+primates, resulting in approximately 5 genes in \human (\textit{GH1},
+\textit{GH2}, \textit{CSH1}, \textit{CSH2}, \textit{CSHL1}) and at
+least three in \bonobo (two \textit{GH2} and \textit{GH1}; owing to
+the similarity between the two \textit{GH1} in \textit{P. troglodytes}
+we cannot reliably distinguish transcripts between the two). All show
+substantial expression in the \human placenta
+(\cref{fig:csh1_evolution_tree}). The expression of the \ac{GH} family
+in placenta appears to be primate specific, and likely existed at the
+time of the last common ancestor between all extant anthropoids
+\cite{Papper.ea2009:Ancientoriginofplacental,Soares2004:prolactinandgrowthhormone}.
+There is some evidence that increased expression of these genes may be
+correlated with overall birth weight of offspring in \human
+\cite{Männik.ea2010:Differentialexpressionprofileof}, and it is
+possible that the extreme expression levels of these genes may be due
+to high birth weight. \human placental \ac{GH} genes are involved in
+increasing blood flow, replacing maternal pituitary expression of
+\ac{GH}, as well as trophoblast invasion
+\cite{Alsat.ea1998:Physiologicalroleofhuman,Lacroix.ea2005:Stimulationofhumantrophoblast,Schiessl.ea2007:Roleofplacentalgrowth},
+and it is likely that they have the same function in \bonobo.
+
+\begin{figure}[htb]
+<<chorionic.somatomammotropin.alpha.evolution.tree,echo=FALSE,fig.width=4,fig.height=4,warning=FALSE,message=FALSE>>=
+
+pushViewport(viewport(layout=grid.layout(nrow=1,ncol=2,widths=c(2,3))))
+
+print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="CGA" &
+                                                    species=="homo sapiens"),
+                                genes.to.tree=genes.to.tree,
+                                combined.fpkm=combined.fpkm,
+                                trees=trees
+                                )+
+      geom_tiplab(size=2,color="black",fontface="italic")+xlim(0,0.4)+
+      theme(legend.position="none"),
+      vp=viewport(layout.pos.col=1,layout.pos.row=1,clip="off"))
+print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="CGB1" &
+                                                    species=="homo sapiens"),
+                                genes.to.tree=genes.to.tree,
+                                subtree=c("ENSMODG00000013768","ENSG00000104818"),
+                                combined.fpkm=combined.fpkm,
+                                trees=trees
+                                )+
+      geom_tiplab(size=2,color="black",fontface="italic")+xlim(0,0.5),
+      vp=viewport(layout.pos.col=2,layout.pos.row=1,clip="off"))
+popViewport(1)
+grid.text(c("A","B"),
+          x=unit(c(0,2/5),"npc"),y=unit(c(1,1),"npc"),
+          just=c("left","top"),
+          gp=gpar(fontsize="24")
+          )
+@ 
+\caption{\genetreeexplanation{(A) \textit{CGA} (B) \textit{CGB}}}
+\label{fig:cga_cgb_evolution_tree}
+\end{figure}
+
+The human gene \textit{CGA} codes for the alpha subunit of multiple
+hormones including pituitary hormones (luteinizing hormone,
+follicle-stimulating hormone, thyroid-stimulating hormone), as well as
+numerous chorionic gonadotropins with variable beta subunits
+\cite{Maston.ea2002:Chorionicgonadotropinhasrecent}. The function of
+the chorionic gonadotropins is to prevent the regression of the corpus
+luteum \cite{Hanson.ea1971:EffectsofHCGand}. Among the six placentas
+we analyzed here, \textit{CGA} is only expressed in the placentas of
+\human and \bonobo (\cref{fig:hormone_genes,fig:cga_cgb_evolution_tree}),
+which corresponds with the emergence of the chorionic gonadotropins in
+anthropoid primates
+\cite{Maston.ea2002:Chorionicgonadotropinhasrecent}. However, oddly,
+\textit{CGA} is expressed at much higher levels in both species than
+the beta subunits with which its product dimerizes (\cref{fig:hormone_genes,fig:cga_cgb_evolution_tree}).
+\textit{CGA} is one of several genes noted by
+\citet{Uddin.ea2008:Distinctgenomicsignaturesof} to have undergone
+adaptive evolution of the \human{}-\textit{P. troglodytes} stem lineage.
+
+\subsubsection{Relaxin}
+
+Relaxin (\textit{RLN}) is a hormone that has multiple effects during
+pregnancy including increasing maternal blood flow, widening the pubic
+bone and relaxing uterine musculature in preparation for labor. In
+\dog, \elephant, \mouse, \carmeli, and \horse there is high expression
+of relaxin in the term placenta, with little evidence in other species
+examined here (Supplemental \cref{fig:rln2_evolution_tree}). \textit{RLN} is known
+to be produced in the placenta of the pregnant \dog and is used in the
+diagnosis of \dog pregnancy
+\cite{Steinetz.ea1989:Serumrelaxinandprogesterone,Tsutsui.ea1991:Determinationofsourceof},
+the luteal ovary and placenta of \pig
+\cite{Hisaw.ea1948:Relaxininovaryof}, and the placenta of \horse
+\cite{Klonisch.ea1997:Placentallocalizationofrelaxin}. However, the
+source of relaxin produced by pregnant \elephant remains unclear
+\cite{Meyer.ea2004:Speciesandfetalgender}. The high rise in \textit{RLN} in
+\elephant has been suggested to be a major signal for the initiation
+of labor \cite{Niemuller.ea1998:Plasmaconcentrationsofimmunoreactive}.
+Here we show that the placenta of elephants show high expression of
+\textit{RLN} and is likely a major source of \textit{RLN} at term. In
+contrast to the results of
+\cite{Evans.ea1993:mouserelaxingenenucleotide}, we also see expression
+of \textit{RLN} in the placenta of \mouse and \carmeli.
+
+\subsubsection{\textit{NPPB} and \textit{NPPC}}
+
+Two genes, \textit{NPPB} and \textit{NPPC}, code for peptide hormones
+that are important in the inducement of vasodilation, and may be
+important in increasing maternal blood flow to the fetus
+\cite{Cameron.ea1996:sitesofgeneexpression}. There is some indication
+that these proteins are present in the decidua of mice
+\cite{Cameron.ea1996:sitesofgeneexpression}, but we find very little
+expression in the fetal portion of the mouse placenta
+(\cref{fig:hormone_genes}, Supplemental
+\cref{fig:nppc_evolution_tree,fig:nppb_evolution_tree}). While we do
+find high expression of at least one of these genes in \dog, \cow, and
+\elephant, the expression pattern does not follow the placental
+organization (endotheliochorial for \dog and \elephant,
+synepitheliochorial for \cow and \sheep), so it is unlikely that
+expression of these genes are essential for specific placental
+organizations.
+
+\subsection{The Evolution of Placental Expression of Galectins}
+
+Galectins are recognized as major regulators of pregnancy in both
+fetal and maternal tissues
+\cite{Than.ea2012:Galectinsguardiansofeutherian}. Indeed, the
+evolution of new lineage-specific galectins has occurred in both
+primates and ruminants, with the genes \textit{LGALS13},
+\textit{LGALS14}, and \textit{LGALS16} recognized as being
+placenta-specific in \human and regulating immune responses by
+inducing apoptosis of maternal T-cells
+\cite{Than.ea2009:primatesubfamilyofgalectins} (Supplemental
+\cref{fig:galectins_lgals13_evolution_tree}). Indeed, \textit{LGALS14}
+has the highest expression of any galectin in the \human and \smonkey
+placenta (\cref{fig:hormone_genes}, Supplemental
+\cref{fig:galectins_lgals13_evolution_tree}), and other primate
+galectins such as \textit{LGALS13} and \textit{LGALS16} are also
+expressed in \human and \smonkey placenta. However, in the closely
+related \bonobo, \textit{LGALS14} is not found, and \textit{LGALS1} is
+the most abundant galectin. \textit{LGALS1} shows generally high
+expression in all placentas analyzed. \textit{LGALS1} is also involved
+in mediating maternal-fetal immune tolerance, and is expressed in both
+maternal and fetal tissue in primates
+\cite{Than.ea2008:Emergenceofhormonaland}. \textit{LGALS1} placental
+expression was thought to be confined to eutherian mammals, as there
+is evidence of adaptive evolution at this node, as well as the
+appearance of estrogen response elements in eutherian cis-regulatory
+regions \cite{Than.ea2008:Emergenceofhormonaland}. It was unclear as
+to whether galectins such as \textit{LGALS1} were important in the
+regulation of pregnancy in marsupials, as well as eutherians. Here we
+show substantial expression of galectins in the opossum, especially
+\textit{LGALS1} (Supplemental \cref{fig:galectins_evolution_tree}). In
+addition, \textit{LGALS2} is also expressed. The presence of galectins
+at the maternal-fetal interface in \opossum implies that it was also
+present in the ancestral placenta of therian mammals. Indeed, adaptive
+evolution of \textit{LGALS1} on the eutherian stem is likely due to
+the increased invasive nature of eutehrian placentation rather than
+the origination of maternal-fetal tolerance. Although the function of
+\textit{LGALS1} in the marsupial placenta needs to be confirmed, it is
+likely that the mediation of maternal-fetal immune tolerance by
+galectins is an ancient feature of mammalian viviparity.
+
+\subsection{The Opossum Placenta and the Evolution of Viviparity}
+
+The placenta of \opossum is distinctly different from that of the term
+placenta of eutherian mammals in that it is derived from both the
+chorion and yolk sac. Other differences between the placentas of
+marsupials and eutherians include lack of invasive extravillous
+trophoblasts in marsupials, the retention of a permeable shell coat
+for 2/3 of marsupial gestation, and the greater degree of imprinting
+in placenta-expressed genes in eutherians
+\cite{Renfree2010:ReviewMarsupialsplacentalmammals,Renfree.ea2013:originandevolutionof}.
+In addition, the placenta of \opossum is also distinct from other
+marsupials, in that it is considered one of the least specialized, and
+thought be closer to the original marsupial condition
+\cite{Renfree2010:ReviewMarsupialsplacentalmammals}. In \opossum, the
+duration of direct connection between maternal and fetal tissues is as
+short as two days in a gestational period of 13-15 days
+\cite{Harder.ea1993:Gestationandplacentationin}. During this period,
+the placenta is directly engaged in the exchange of urea with maternal
+tissues, owing to the lack of a vesicular allantois
+\cite{Freyer.ea2007:Placentalfunctionintwo}. This differs drastically
+with the situation in another well-studied marsupial, the tammar
+wallaby \cite{Freyer.ea2007:Placentalfunctionintwo}. Therefore, we
+must interpret differences between the opossum and eutherian placentas
+with caution, as highly expressed genes and functional annotation
+clusters may represent didelphid or \opossum specific adaptations.
+
+The \opossum placenta shows expression of genes that either do not
+exist in eutherians or are not expressed in the term eutherian placenta
+(Supplemental \cref{tab:all_opossum_placenta}). The existence of embryonic forms
+of hemoglobin in fetal tissues at term, as evidenced by the expression
+of \textit{HBE} and \textit{HBZ} is a feature of marsupials that is
+generally due to their very short gestation periods. Embryonic
+hemoglobins in marsupials have a lower affinity for oxygen and allow
+for a lower rate of oxygen uptake from maternal tissues
+\cite{Holland.ea1997:Characterizationofembryonicglobin}. One novel
+uncharacterized gene that shows high expression (\textit{LOC10001195}) is not
+found in eutherians; Ensembl gene trees reveal that homologs of this
+gene exist in other amniotes such as birds and turtles, but are not
+present in eutherian mammals. The homolog of this gene in chicken is
+found to expressed in reproductive tract
+\cite{Froman.ea2006:expressedsequencetaganalysis}, but its function is
+unknown. \textit{WFDC2} is a member of the whey acidic protein (WAP)
+family and involved in innate immunity. It is expressed in the mammary
+gland of the tammar wallaby during pregnancy and early lactation
+\cite{Sharp.ea2007:Molecularevolutionofmonotreme}, and present in
+relative abundance in \opossum placenta.
+
+\subsection{Novel Gene Expansions in the Elephant Placenta}
+
+We found evidence of high expression in two novel expansions of genes
+in the \elephant genome. One family includes 11 genes that are related
+to the \textit{PRSS16} gene, a thymus-specific serine protease that
+may be involved regulating the presentation of self-peptides in CD4+
+T-lymphocytes \cite{Fornari.ea2012:TranscriptionprofilingofPrss16}.
+All 11 of these genes are expressed in the elephant placenta, three of
+which have very abundant mRNAs
+(Supplemental \cref{tab:all_loxodonta_africana_placenta} and \cref{fig:pag2_prss16_ctsl_psg_evolution_tree}C). It is
+possible that this elephant-specific gene family may be involved in
+immunity in the elephant placenta and the mediation of maternal-fetal
+immune tolerance; however, future work will need to test these
+hypotheses. Three other genes abundantly expressed in the elephant
+placenta are homologues of \textit{SSLP1}, a gene with predominant
+expression in the seminal vesicle in mouse
+\cite{Li.ea2006:SSLP-1secretedLy-6protein}. Homologues of
+\textit{SSLP1} are also expressed in \cow, \dog, \horse, and \sheep.
+\textit{SSLP1} also contains an SINE repeat and may be
+involved in the development of villi via cell proliferation
+\cite{Ushizawa.ea2009:Characterizationandexpressionanalysis}. This
+gene is not found in primates. Expansion of these genes with high
+expression in \elephant may indicate an elaboration of this system.
+
+% Bovine has their own alu-like sequence: PMID 7835712
+
+\subsection{Core placenta transcriptome}
+
+The transcriptomes from multiple different species enabled us to
+identify the set of expressed genes which are common to all placentas.
+Components of the annexin complexes, including
+\textit{ANXA2}, \textit{ANXA1}, \textit{S100A11}, and \textit{S100A10}
+are expressed in all placentas examined, and argue for the evolution
+importance of annexins in placenta function, where they likely
+establish maternal-fetal
+tolerance\cite{Liu.ea2015:AnnexinA2complexeswith,Hutchinson.ea2011:Molecularregulatorsofresolution,Aarli.ea1997:Suppressiveeffectonlymphoproliferation}.
+We suggest that further research into molecular role of these annexin
+complexes may illuminate how immune tolerance is maintained during
+placentation. The core placenta transcriptome is also enriched in
+genes involved in maintaining the structure of the placenta and
+transporting proteins, as would be expected given the function of the
+placenta.
+
+
+\subsection{\human Specific Expression Shifts and the Evolution of Pre-eclampsia}
+
+The \human placenta is distinctive from many other primates in that it
+possesses a deeply invasive trophoblast that penetrates the inner
+myometrium of the uterus
+\cite{Carter.ea2011:Evolutionofinvasiveplacentation}. It is
+hypothesized that this feature is related to the increased demand for
+resources by the developing fetus to feed the expanded size of the
+human brain
+\cite{Carter.ea2011:Evolutionofinvasiveplacentation,Robillard.ea2002:Evolutionaryadaptationstopre-eclampsiaeclampsia}.
+\human have the largest brain in terms of relative size and this
+differs markedly from closely related apes
+\cite{Boddy.ea2012:Comparativeanalysisofencephalization}. Deep
+penetration of the myometrium occurs in chimpanzees and gorillas, but
+this penetration may be accelerated in humans
+\cite{Carter.ea2011:Evolutionofinvasiveplacentation}.
+
+The near exclusivity of deep trophoblast invasion in humans has also
+led many to speculate on the origin of various disorders, which are
+almost exclusively symptomatic of human pregnancy. For example,
+pre-eclampsia is a human disease that occurs in 4\% of pregnancies in
+the United States
+\cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current}. Pre-eclampsia
+can be attributed to the lack of adequate invasion of maternal tissue,
+and is noted by the onset of hypertension and proteinuria (or in the
+absence of proteinuria, thrombocytopenia, impaired liver function,
+renal insufficiency, pulmonary edema, or cerebral or visual
+disturbances) %
+\cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current,ACOG2013:hypertensionpregnancy}. Some cases of
+pre-eclampsia can develop into eclampsia, a more severe condition
+resulting in seizures during pregnancy and death. Lack of invasion in
+pre-eclampsia may be attributed to the inefficiency of growth
+regulators as well as the inability to sufficiently suppress the
+maternal immune response. Although there are speculative cases of
+eclampsia in great apes
+\cite{Baird1981:Eclampsiainlowlandgorilla,Stout.ea1969:Glomerularcapillaryendothelialswelling,Thornton.ea1992:Convulsionsinpregnancyin},
+it is exceedingly rare in these species
+\cite{Carter.ea2011:Evolutionofinvasiveplacentation}. 
+
+The identification of multiple genes (\textit{CRH}, \textit{ADAM12},
+\textit{KISS1}, \textit{PAPPA}, \textit{IL1RL1}, and \textit{PLAC1};
+\cref{tab:human_lineage_specific}) which are associated with
+pre-eclampsia which have increased expression on the \human lineage
+may explain the larger proportion of pre-eclampsia observed in humans.
+However, there are still genes which are associated with pre-eclampsia
+which are also more highly expressed in the \mouse lineage such as
+\textit{Afp} and \textit{Gjb2}. Furthermore, the onset of
+pre-eclampsia is well before term; all of our placentas are term
+placentas and provide limited information about the transcriptome
+during the onset of pre-eclampsia.
+
+\subsection{Conclusion}
+    
+We analyzed the sequenced transcriptome of
+\Sexpr{star.logs[,length(unique(file))]} placentas from
+\Sexpr{star.logs[,length(unique(species))]} species spanning the
+phylogenetic tree of mammals. This wealth of data revealed both
+lineage-specific expansions and differential expression of gene
+families as well as a set of core, non-housekeeping genes which are
+critical for the proper organization and functioning of the placenta.
+
+There is diversity in the placental expression of hormones, including
+estrogen, progesterone, prolactin, relaxin, the growth hormone family, and
+natriuretic peptides among the species and lineages analyzed.
+We also identified genes differentially expressed on the \human
+lineage which are implicated in pre-eclampsia, including
+\textit{ADAM12}, \textit{CRH}, and \textit{KISS1}.
+
+The core placenta transcriptome was also identified, which contains
+genes which are involved in maternal-fetal tolerance, such as the
+annexins, and genes responsible for cell-cell and cell-matrix
+interactions, such as \textit{LGALS1}. These genes were almost
+certainly present in the placenta of the common mammalian ancestor. We
+hypothesize that modifications to their expression or function will
+compromise the development and organization of the placenta.
+
+This study has identified many tantalizing molecular pathways which
+illuminate the vast diversity of placental morphology and may explain
+some placental malfunctions in \human{}. However, the strength of our
+hypotheses are limited by our limited data; more placentas from
+multiple members of diverse clades and different timepoints are still
+needed to come to a more complete understanding of the genomic and
+molecular basis for placenta morphology and function. We look forward
+to collecting and analyzing such a dataset.
+
+
+
+%\begin{backmatter}
+  \section*{Competing interests}
+  The authors declare that they have no competing interests.
+  
+  \section*{Author's contributions}
+  Don Armstrong analyzed all of the data and wrote the paper. 
+
+  Michael McGowan wrote the paper and performed initial analyses.
+
+  Amy Weckle performed all of the RNA extractions and managed the
+  samples.
+
+  Jason Caravas performed initial analyses.
+  
+  Dalen Agnew provided samples.
+  
+  Kurt Benirschke provided samples.
+  
+  Sue Savage-Rumbaugh provided samples.
+
+  Eviatar Nevo provided samples.
+
+  Chong J. Kim provided samples.
+
+  Günter P. Wagner provided samples and wrote the paper.
+
+  Roberto Romero provided samples and conceived the study.
+
+  Derek E. Wildman conceived the study, wrote the paper, and performed
+  analyses.
+
+  \section*{Acknowledgements}
+  The authors would like to specially acknowledge those groups whose
+  publicly available data contributed to the completeness of this
+  work.
+
+  \section*{Funding}
+  Partial support for this research came from the \textit{Eunice
+    Kennedy Shriver} National Institute of Child Health and Human
+  Development (NICHD), National Institutes of Health, U.S. Department
+  of Health and Human Services (N01-HD-3342), and the National Science
+  Foundation BCS-0827546.
+
+%  \printaddresses
+
+%\end{backmatter}
+
+\printbibliography
+
+<<save_mentioned_genes,echo=FALSE,results="hide">>=
+saved_mentioned_genes <- mentioned.genes
+@ 
+
+\end{document}

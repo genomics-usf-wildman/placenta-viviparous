@@ -2234,7 +2234,7 @@ print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="CGA" &
                                 combined.fpkm=combined.fpkm,
                                 trees=trees
                                 )+
-      geom_tiplab(size=2,color="black",fontface="italic")+xlim(0,0.8)+
+      geom_tiplab(size=2,color="black",fontface="italic")+xlim(0,0.4)+
       theme(legend.position="none"),
       vp=viewport(layout.pos.col=1,layout.pos.row=1,clip="off"))
 print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="CGB1" &
@@ -2244,7 +2244,7 @@ print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="CGB1" &
                                 combined.fpkm=combined.fpkm,
                                 trees=trees
                                 )+
-      geom_tiplab(size=2,color="black",fontface="italic")+xlim(0,1),
+      geom_tiplab(size=2,color="black",fontface="italic")+xlim(0,0.5),
       vp=viewport(layout.pos.col=2,layout.pos.row=1,clip="off"))
 popViewport(1)
 grid.text(c("A","B"),

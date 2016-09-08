@@ -612,25 +612,8 @@ to %
 with an average of \Sexpr{star.logs.wide[input.read.length < 40, mean(`% good reads`)]}\%
 of reads mapping to the
 respective reference genome (\cref{tab:ref_genome_aligned_species}).
-The top 50 expressed genes in each genome analyzed are shown in
-\cref{tab:top50_human_placenta,tab:top50_bonobo_placenta,tab:top50_spider_monkey_placenta,tab:top50_dog_placenta,tab:top50_cow_placenta,tab:top50_elephant_placenta,tab:top50_opossum_placenta,tab:top50_mouse_placenta,tab:top50_n_galili_placenta,tab:top50_s_carmeli_placenta,tab:top50_pig_placenta,tab:top50_horse_placenta,tab:top50_sheep_placenta}
-and all genes in Supplemental \cref{tab:all_ateles_fusciceps_placenta,tab:all_homo_sapiens_placenta,tab:all_pan_paniscus_placenta,tab:all_mus_musculus_placenta,tab:all_spalax_galili_placenta,tab:all_spalax_carmeli_placenta,tab:all_bos_taurus_placenta,tab:all_ovis_aries_placenta,tab:all_sus_scrofa_placenta,tab:all_equus_caballus_placenta,tab:all_canis_familiaris_placenta,tab:all_loxodonta_africana_placenta,tab:all_dasypus_novemcinctus_placenta,tab:all_monodelphis_domestica_placenta}.
-
-% The percentage of bases that mapped to Ensembl annotated mRNA ranged
-% from ~35\% in elephant to ~85\% in human, with percentages of bases
-% mapping to annotated protein-coding segments of genes ranging from
-% ~34\% (elephant) to ~54\% (human), untranslated regions (UTRs) ranging
-% from ~0.6\% (elephant) to ~31\% (human), and known introns ranging
-% from ~5.5\% (dog) to 11\% (bonobo). Median percent genomic coverage
-% ranged from ~43\% in elephant to 80\% in bonobo. The number of
-% annotated transcripts to which reads mapped in each respective genomes
-% ranged from 4119 (bonobo) to 6506 (human) for transcripts with \ac{FPKM}>10
-% and 11689 (dog) to 30733 (human) for transcripts with \ac{FPKM}>1. The
-% greater degree of mapping to annotated protein-coding sequences in
-% humans corresponds to the greater number of Ensembl annotated
-% sequences in the human genome compared to the other five reference
-% genomes (Flicek, 2012).
-
+The expression of all genes with \ac{FPKM} $\ge 50$ is shown in Supplemental
+\cref{tab:all_ateles_fusciceps_placenta,tab:all_homo_sapiens_placenta,tab:all_pan_paniscus_placenta,tab:all_mus_musculus_placenta,tab:all_spalax_galili_placenta,tab:all_spalax_carmeli_placenta,tab:all_bos_taurus_placenta,tab:all_ovis_aries_placenta,tab:all_sus_scrofa_placenta,tab:all_equus_caballus_placenta,tab:all_canis_familiaris_placenta,tab:all_loxodonta_africana_placenta,tab:all_dasypus_novemcinctus_placenta,tab:all_monodelphis_domestica_placenta}.
 
 <<top.genes.function,echo=FALSE,results="hide">>=
 top.genes.table <- function(species.name,n=50) {
@@ -695,11 +678,14 @@ top.genes.table <- function(species.name,n=50) {
 
 <<gene.expression,results="hide",echo=FALSE>>=
 mentioned.genes <- load_cache(label="save_mentioned_genes",object="saved_mentioned_genes",list())
-gene.expression <- function(species.name,gene,complete=FALSE,units=TRUE) {
+gene.expression <- function(species.name,gene,complete=FALSE,units=TRUE,mention.only=FALSE) {
     species.name <- gsub("_"," ",species.name)
     mentioned.genes[[paste0(species.name,"_",gene)]] <<-
         list("species.name"=species.name,
              "gene"=gene)
+    if (mention.only) {
+        return("")
+    }
     fpkm <- combined.fpkm[species==species.name &
                               (gene_short_name==gene | 
                                gene_id==gene),
@@ -715,16 +701,16 @@ gene.expression <- function(species.name,gene,complete=FALSE,units=TRUE) {
     }
     if (complete) {
         if (any(grepl("^ENS.+G\\d+$",gene))) {
-            fpkm <- paste0("\\text{",gene,"} = ",
+            fpkm <- paste0(gsub("(ENS)(.+)(G)0*(\\d+)","\\1\\\\linebreak[0]\\2\\\\linebreak[0]\\3...\\4",gene)," = ",
                            fpkm)
         } else {
-            fpkm <- paste0("\\text{\\textit{",gene,"}} = ",
+            fpkm <- paste0("\\textit{",gene,"} = ",
                            fpkm)
         }
     }
-    if (units || complete) {
-        fpkm <- paste0("$",fpkm,"$")
-    }
+    ## if (units || complete) {
+    ##     fpkm <- paste0("$",fpkm,"$")
+    ## }
     return(fpkm)
 }
     
@@ -984,11 +970,7 @@ cgb.sum.expression <-
                function(x){gene.expression(species.name="homo sapiens",gene=x,units=FALSE)}))
 @ 
 
-The top 50 expressed genes as measured by \ac{FPKM} in the term
-placenta of \human are shown in
-\cref{tab:top50_human_placenta} with all genes with \ac{FPKM} $\ge 50$
-in Supplemental \cref{tab:all_homo_sapiens_placenta}. The gene with by far
-the highest \ac{FPKM} value
+The gene with by far the highest \ac{FPKM} value
 %
 (\Sexpr{gene.expression(species.name="homo sapiens",gene="CSH1")}) %
 %
@@ -998,7 +980,7 @@ hormone gene family within catarrhines (Supplemental \cref{fig:galectins_evoluti
 hormone gene family, \ac{GH2} (%
 \Sexpr{gene.expression(species.name="homo sapiens",gene="GH2")}), %
 is also expressed to a high degree in the \human placenta
-(\cref{tab:top50_human_placenta}).
+(Supplemental \cref{tab:all_homo_sapiens_placenta}).
 % 
 Eleven \acp{PSG} are highly-expressed
 (\ac{FPKM}$\ge 100$) in the term placenta of \human, with \textit{PSG1} showing the
@@ -1028,7 +1010,7 @@ show exceptionally high expression in the human placenta, as well as %
 \textit{CGA} (FPKM=\Sexpr{gene.expression(species.name="homo sapiens",gene="CGA")}, %
 %
 which generates the alpha subnit of multiple human chorionic
-gonadotropin hormones (\cref{tab:top50_human_placenta}). The genes
+gonadotropin hormones (Supplemental \cref{tab:all_homo_sapiens_placenta}). The genes
 producing the beta subunits of the chorionic gonadotropins
 (\textit{CGB}, \textit{CGB1}, \textit{CGB2}, \textit{CGB5},
 \textit{CGB7}, \textit{CGB8}) have reasonable expression
@@ -1044,7 +1026,7 @@ and \textit{HBG2}), the maternally imprinted long noncoding RNA gene
 cell proliferation (\textit{ADAM12}, \textit{KISS1}, \textit{IGF2},
 \textit{GPC3}, \textit{CSF3R}), anticoagulation (\textit{TFPI2}), and
 glucose transport (\textit{SLC2A1}) among others
-(\cref{tab:top50_human_placenta}, Supplemental
+(Supplemental \cref{tab:all_homo_sapiens_placenta}, Supplemental
 \cref{tab:all_homo_sapiens_placenta}).
 
 % \paragraph{Pre-eclampsia \human Lineage Specific Genes}
@@ -1111,7 +1093,7 @@ print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="CTSL" & sp
                                 combined.fpkm=combined.fpkm,
                                 subtree=c("ENSMODG00000002844","ENSMUSG00000055679"),
                                 trees=trees)+
-      geom_tiplab(size=2,color="black",fontface="italic")+xlim(0,1)+
+      geom_tiplab(size=2,color="black",fontface="italic")+xlim(0,0.8)+
       theme(legend.position="none"),
       vp=viewport(layout.pos.col=2,layout.pos.row=1,clip="off"))
 print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="PRSS16" &
@@ -1121,8 +1103,7 @@ print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="PRSS16" &
                                           "ENSLAFG00000032211"),
                                 combined.fpkm=combined.fpkm,
                                 trees=trees)+
-      geom_tiplab(size=2,color="black",fontface="italic")+xlim(0,1.2)+
-      theme(legend.position="none"),
+      geom_tiplab(size=2,color="black",fontface="italic")+xlim(0,1.2),
       vp=viewport(layout.pos.col=1,layout.pos.row=2,clip="off"))
 print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="PAG2" &
                                                     species=="bos taurus"),
@@ -1132,7 +1113,8 @@ print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="PAG2" &
                                           "ENSBTAG00000046085"),
                                 trees=trees) +
       geom_tiplab(size=2,color="black",fontface="italic") +
-      xlim(0,0.8),
+      xlim(0,0.8)+
+      theme(legend.position="none"),
       vp=viewport(layout.pos.col=2,layout.pos.row=2,clip="off"))
 popViewport(1)
 
@@ -1161,11 +1143,11 @@ grid.text(c("A","B","C","D"),
 % \end{table}
 
 The top 50 expressed genes as measured by \ac{FPKM} in the term
-placenta of \bonobo are shown in \cref{tab:top50_bonobo_placenta}
+placenta of \bonobo are shown in Supplemental \cref{tab:all_pan_paniscus_placenta}
 with a list of all genes in Supplemental
 \cref{tab:all_pan_paniscus_placenta}. Expression in the \bonobo
 placenta differs somewhat from that of \human, as evidenced by the
-makeup of the top 50 genes (\cref{tab:top50_bonobo_placenta}). The highest expression
+makeup of the top 50 genes (Supplemental \cref{tab:all_pan_paniscus_placenta}). The highest expression
  in \bonobo is %
 \Sexpr{gene.expression("pan paniscus","PRG2",complete=TRUE)}, %
 %
@@ -1193,12 +1175,12 @@ respectively) show lower expression in \bonobo as compared to \human %
 \cref{fig:estrogen_evolution_tree}; %
 \Sexpr{gene.expression("pan paniscus","HSD3B1",complete=TRUE)},
 \cref{fig:progesterone_evolution_tree} and
-\cref{tab:top50_human_placenta}) although the expression of
+Supplemental \cref{tab:all_homo_sapiens_placenta}) although the expression of
 \textit{HSD3B1} is fairly similar to that of \smonkey %
 (\Sexpr{gene.expression("ateles fusciceps","HSD3B1",complete=TRUE)}. %
 In addition, \textit{CGA} is expressed in the bonobo placenta %
 (\Sexpr{gene.expression("pan paniscus","CGA")}), but at much
-lower levels than \human as well (\cref{tab:top50_human_placenta}).
+lower levels than \human as well (Supplemental \cref{tab:all_homo_sapiens_placenta}).
 %
 Two Ensembl-annotated beta subunits of the chorionic gonadotropin
 genes are expressed in \bonobo, one related to \textit{CGB} and
@@ -1228,7 +1210,7 @@ For the term placenta of \smonkey, assembled contigs from RNA-seq were
 aligned using against \human and the best alignment was chosen as the
 annotation for each assembled contig. In the term placenta of
 \smonkey, the top 50 non-housekeeping genes
-(\cref{tab:top50_spider_monkey_placenta}) include a possible regulator
+(Supplemental \cref{tab:all_spider_monkey_placenta}) include a possible regulator
 of androgen receptor signaling
 \cite{Sampson.ea2012:PAGE4positivityisassociated}, \textit{PAGE4} %
 (\Sexpr{gene.expression("ateles_fusciceps","PAGE4")}), %
@@ -1237,7 +1219,7 @@ the pregnancy specific glycoprotein \textit{PSG8}
 only one member of the chorionic somatotropins, \textit{GH1} %
 (\Sexpr{gene.expression("ateles_fusciceps","GH1")}), %
 a few HLA genes (\textit{HLA-A}, \textit{HLA-F},
-\cref{tab:top50_spider_monkey_placenta}), and multiple components of
+Supplemental \cref{tab:all_spider_monkey_placenta}), and multiple components of
 annexin complexes
 (\Sexpr{gene.expression("ateles_fusciceps","ANXA2",complete=TRUE)}, %
 \Sexpr{gene.expression("ateles_fusciceps","S100P",complete=TRUE)}, %
@@ -1290,7 +1272,7 @@ specific shifts.
 
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
 in the term placenta of \mouse are shown in
-\cref{tab:top50_mouse_placenta} with a list of all genes with
+Supplemental \cref{tab:all_mus_musculus_placenta} with a list of all genes with
 $\text{FPKM} \ge 50$ in Supplemental
 \cref{tab:all_mus_musculus_placenta}. The top expressed genes include
 \Sexpr{gene.expression("mus_musculus","Mir6236",complete=TRUE)}, whose
@@ -1335,7 +1317,7 @@ also expanded in rodents, with six showing high expression
 \Sexpr{gene.expression("mus_musculus","Ctsq",complete=TRUE)},
 \Sexpr{gene.expression("mus_musculus","Cts3",complete=TRUE)}, and
 \Sexpr{gene.expression("mus_musculus","Ctsm",complete=TRUE)},
-\cref{tab:top50_mouse_placenta,fig:pag2_prss16_ctsl_psg_evolution_tree}).
+Supplemental \cref{tab:all_mus_musculus_placenta,fig:pag2_prss16_ctsl_psg_evolution_tree}).
 Finally, \textit{Peg10}, an imprinted gene required for proper
 formation of the placenta in mice is also highly expressed
 (\Sexpr{gene.expression("mus_musculus","Peg10")}), as previously
@@ -1395,7 +1377,7 @@ for the exchange of metabolites in the placenta labyrinth
 
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
 in the term placenta of \galili are shown in
-\cref{tab:top50_n_galili_placenta} with a list of all highly expressed
+Supplemental \cref{tab:all_n_galili_placenta} with a list of all highly expressed
 genes in Supplemental \cref{tab:all_spalax_galili_placenta}.
 Components of annexin complexes are highly expressed
 (\Sexpr{gene.expression("spalax_galili","S100a6",complete=TRUE)},
@@ -1430,7 +1412,7 @@ transmembrane protein of currently unknown function,
 
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
 in the term placenta of \carmeli are shown in
-\cref{tab:top50_s_carmeli_placenta} with a list of all highly
+Supplemental \cref{tab:all_s_carmeli_placenta} with a list of all highly
 expressed genes in Supplemental
 \cref{tab:all_spalax_carmeli_placenta}. Numerous hemoglobin subunits
 ware highly expressed
@@ -1474,14 +1456,14 @@ laurasiatherians and Euarchontoglires
 
 The top 50 non-housekeeping expressed genes as measured by \ac{FPKM}
 in the term placenta of \dog are shown in
-\cref{tab:top50_dog_placenta} with a list of all genes in Supplemental
+Supplemental \cref{tab:all_canis_familiaris_placenta} with a list of all genes in Supplemental
 \cref{tab:all_canis_familiaris_placenta}. The gene with the highest
 expression %
 (\Sexpr{gene.expression("canis familiaris","TMSB10")}) is the thymosin 
 \textit{TMSB10} %
 (\Sexpr{gene.expression("canis familiaris","ENSCAFG00000002115")}) %
 is the hormone relaxin (\textit{RLN2}). Other highly expressed genes
-among the top 50 (\cref{tab:top50_dog_placenta}) include genes
+among the top 50 (Supplemental \cref{tab:all_canis_familiaris_placenta}) include genes
 involved in the cytoskeleton (\textit{TMSB10}, \textit{TMSB4X}),
 anticoagulation (\textit{TFPI2}, \textit{PLA2G7}), innate immunity
 (\textit{LCN2}, \textit{GM2A}), lipid metabolism (\textit{APOE}),
@@ -1494,9 +1476,9 @@ immunosupression during pregnancy
 In addition, an ortholog of \textit{SSLP1} (ENSCAFG00000010638) a gene
 expressed in the placentas of \cow (%
 \Sexpr{gene.expression("bos taurus","SSLP1",complete=TRUE)}, %
-\cref{tab:top50_cow_placenta}) and \sheep
+Supplemental \cref{tab:all_bos_taurus_placenta}) and \sheep
 (\Sexpr{gene.expression("ovis aries","SOLD1",complete=TRUE)},
-\cref{tab:top50_sheep_placenta}) but is not present in primates
+Supplemental \cref{tab:all_sheep_placenta}) but is not present in primates
 \cite{Ushizawa.ea2009:Characterizationandexpressionanalysis}
 (\cref{fig:sslp1_evolution_tree}), is also expressed at high levels
 %
@@ -1521,7 +1503,7 @@ and expression of \textit{HSD3B7} is also low
 % \end{table}
 
 The top 50 expressed genes as measured by \ac{FPKM} in the term
-placenta of the \cow are shown in \cref{tab:top50_cow_placenta} with a
+placenta of the \cow are shown in Supplemental \cref{tab:all_bos_taurus_placenta} with a
 list of all genes in Supplemental \cref{tab:all_bos_taurus_placenta}.
 The gene with the highest expression was \textit{TMSB10} %
 (\Sexpr{gene.expression("bos taurus","TMSB10")}), and
@@ -1545,7 +1527,7 @@ the \cow genome.
 Several members of the ruminant-specific pregnancy-associated
 glycoprotein family \cite{Green.ea2000:Pregnancy-associatedbovineandovine} 
 show especially high expression in \cow placenta
-(\cref{tab:top50_cow_placenta}, \cref{fig:pag2_prss16_ctsl_psg_evolution_tree}~D, and
+(Supplemental \cref{tab:all_bos_taurus_placenta}, \cref{fig:pag2_prss16_ctsl_psg_evolution_tree}~D, and
 Supplemental \cref{tab:all_bos_taurus_placenta}) including
 %
 \Sexpr{gene.expression("bos taurus","PAG2",complete=TRUE)}, %
@@ -1599,7 +1581,7 @@ comparatively greater expression of \textit{HSD3B} %
 
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
 in the term placenta of \textit{Sus scrofa} are shown in
-\cref{tab:top50_pig_placenta} with a list of all highly expressed
+Supplemental \cref{tab:all_pig_placenta} with a list of all highly expressed
 genes in Supplemental \cref{tab:all_sus_scrofa_placenta}. The top two
 expressed transcripts,
 \Sexpr{gene.expression("sus_scrofa","ENSSSCG00000025162",complete=TRUE)}
@@ -1644,7 +1626,7 @@ and multiple cytoskeleton and extracellular matrix proteins
 
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
 in the term placenta of \horse are shown in
-\cref{tab:top50_horse_placenta} with a list of all highly expressed
+Supplemental \cref{tab:all_equus_caballus_placenta} with a list of all highly expressed
 genes in Supplemental \cref{tab:all_equus_caballus_placenta}. The gene
 with the highest expression was the relaxin,
 \Sexpr{gene.expression("equus_caballus","RLN",complete=TRUE)},
@@ -1684,7 +1666,7 @@ similar to the pattern of expression seen in \pig and \dog.
 
 The 50 non-housekeeping genes with highest expression (by \ac{FPKM})
 in the term placenta of \sheep are shown in
-\cref{tab:top50_sheep_placenta} with a list of all highly expressed
+Supplemental \cref{tab:all_sheep_placenta} with a list of all highly expressed
 genes in Supplemental \cref{tab:all_ovis_aries_placenta}. The complete
 list of highly expressed genes includes many snRNAs and rRNAs likely
 due to the RNA extraction and library preparation procedure utilized
@@ -1718,7 +1700,7 @@ play a role in cellular migration
 
 
 The top 50 expressed genes as measured by \ac{FPKM} in the term
-placenta of \elephant are shown in \cref{tab:top50_elephant_placenta}
+placenta of \elephant are shown in Supplemental \cref{tab:all_loxodonta_africana_placenta}
 with a list of all genes in
 \cref{tab:all_loxodonta_africana_placenta}. The gene with the highest
 expression was the natriuretic peptide precursor B
@@ -1739,7 +1721,7 @@ currently un-annotated in \elephant{}. %
 %   \href{http://useast.ensembl.org/Loxodonta_africana/Transcript/Summary?db=core;pt=GENSCAN00000034833;r=scaffold_145:855987-899506}{genscan
 %     prediction} for this region} %
 Five uncharacterized genes are expressed to a high degree in the
-\elephant placenta (\cref{tab:top50_elephant_placenta}), three of
+\elephant placenta (Supplemental \cref{tab:all_loxodonta_africana_placenta}), three of
 which
 (\Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000028493",complete=TRUE)},
 \Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000032011",complete=TRUE)},
@@ -1755,7 +1737,7 @@ Two other novel genes with high expression are related to the gene
 and
 \Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000029551",complete=TRUE)},
 \cref{fig:sslp1_evolution_tree}), which is also expressed in \cow and
-\dog placentas (\cref{tab:top50_dog_placenta,tab:top50_cow_placenta}).
+\dog placentas (Supplemental \cref{tab:all_canis_familiaris_placenta,tab:all_bos_taurus_placenta}).
 Placental expression of the hormones relaxin (\textit{RLN}, %
 \Sexpr{gene.expression("loxodonta_africana","ENSLAFG00000017411")})
 and prolactin (\textit{PRL}) are exceptionally high in the elephant
@@ -1788,7 +1770,7 @@ gene predominantly expressed in the endometrium of the uterus in humans
 % \end{table}
 
 The top 50 expressed genes in the term placenta of \armadillo are
-shown in \cref{tab:top50_armadillo_placenta} with a list of all genes
+shown in Supplemental \cref{tab:all_dasypus_novemcinctus_placenta} with a list of all genes
 with $\text{FPKM}\ge 50$ in Supplemental
 \cref{tab:all_dasypus_novemcinctus_placenta}. The gene with the
 highest expression is
@@ -1841,7 +1823,7 @@ complex are also highly expressed, including
 
 The top 50 expressed genes as measured by \ac{FPKM} in the term
 placenta of the \opossum are shown in
-\cref{tab:top50_opossum_placenta} with a list of all genes in
+Supplemental \cref{tab:all_opossum_placenta} with a list of all genes in
 Supplemental \cref{tab:all_monodelphis_domestica_placenta}. The gene with the
 second highest expression is superoxide dismutase 3, extracellular
 (\Sexpr{gene.expression("monodelphis_domestica","SOD3",complete=TRUE)}),
@@ -2404,7 +2386,7 @@ clusters may represent didelphid or \opossum specific adaptations.
 
 The \opossum placenta shows expression of genes that either do not
 exist in eutherians or are not expressed in the term eutherian placenta
-(\cref{tab:top50_opossum_placenta}). The existence of embryonic forms
+(Supplemental \cref{tab:all_opossum_placenta}). The existence of embryonic forms
 of hemoglobin in fetal tissues at term, as evidenced by the expression
 of \textit{HBE} and \textit{HBZ} is a feature of marsupials that is
 generally due to their very short gestation periods. Embryonic
@@ -2432,7 +2414,7 @@ may be involved regulating the presentation of self-peptides in CD4+
 T-lymphocytes \cite{Fornari.ea2012:TranscriptionprofilingofPrss16}.
 All 11 of these genes are expressed in the elephant placenta, three of
 which have very abundant mRNAs
-(\cref{tab:top50_elephant_placenta} and \cref{fig:pag2_prss16_ctsl_psg_evolution_tree}C). It is
+(Supplemental \cref{tab:all_loxodonta_africana_placenta} and \cref{fig:pag2_prss16_ctsl_psg_evolution_tree}C). It is
 possible that this elephant-specific gene family may be involved in
 immunity in the elephant placenta and the mediation of maternal-fetal
 immune tolerance; however, future work will need to test these

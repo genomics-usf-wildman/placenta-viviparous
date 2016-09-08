@@ -3,13 +3,13 @@ monodelphis domestica	discoidal	folded	epitheliochorial
 ateles fusciceps	discoidal	trabecular	hemochorial
 homo sapiens	discoidal	villous	hemochorial
 pan paniscus	discoidal	villous	hemochorial
-bos taurus	cotyledonary	villous	epitheliochroial
+bos taurus	cotyledonary	villous	epitheliochorial
 canis familiaris	zonary	lamellar	endotheliochorial
 dasypus novemcinctus	discoidal	villous	hemochorial
 equus caballus	diffuse	villous	epitheliochorial
 loxodonta africana	zonary	villous	endotheliochorial
-mus musculus	discoidal	labyrinthine	hemohorial
-spalax galili	discoidal	labyrinthine	hemohorial
-spalax carmeli	discoidal	labyrinthine	hemohorial
+mus musculus	discoidal	labyrinthine	hemochorial
+spalax galili	discoidal	labyrinthine	hemochorial
+spalax carmeli	discoidal	labyrinthine	hemochorial
 ovis aries	cotyledonary	villous	epitheliochorial
 sus scrofa	diffuse	villous	epitheliochorial

@@ -4,7 +4,7 @@
 R ?= R
 ROPTS=-q --no-save --no-restore-data
 
-all: references.bib manuscript.pdf supplemental_material.pdf
+all: references.bib manuscript.pdf supplemental_material.pdf extended_discussion.pdf
 
 bmcart.cls:
 	wget -O temp.zip "http://media.biomedcentral.com/content/production/bmc_article-tex.zip"
@@ -37,6 +37,8 @@ references.bib:
 	fi;
 
 manuscript.pdf: manuscript.tex common_latex.tex acronyms.tex supplemental_material.aux
+
+extended_discussion.pdf: extended_discussion.tex common_latex.tex acronyms.tex supplemental_material.aux
 
 supplemental_material.pdf: manuscript.tex common_latex.tex acronyms.tex
 

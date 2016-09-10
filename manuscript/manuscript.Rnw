@@ -178,12 +178,14 @@ grad.def <- list(low = "gray90", high = "blue", space = "Lab", na.value = NA)
   \textbf{Introduction} The placenta is arguably the most
   anatomically variable organ in mammals.
 
-  \textbf{Methods}
+  \textbf{Method} Using RNA-seq, we measured the expression profiles
+  of \Sexpr{star.logs[,length(unique(file))]} term placentas of
+  \Sexpr{star.logs[,length(unique(species))]} species of mammals.
   
-  \textbf{Results} We measured the expression profiles of
-  \Sexpr{star.logs[,length(unique(file))]} term placentas of
-  \Sexpr{star.logs[,length(unique(species))]} species of mammals 
-  also identified genes which are expressed in all placentas,
+  \textbf{Results} We identified a set of
+  \Sexpr{core.placenta.transcriptome.long[,length(unique(human_name))]}
+  core genes which are expressed (FPKM $\ge 10$) in all placentas.
+
   including genes with immune-modulating properties (\textit{ANXA2},
   \textit{ANXA1}, \textit{S100A11}, and \textit{S100A10}) and
   cell-cell interactions (\textit{LAMC1}, \textit{LUM}, and

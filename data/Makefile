@@ -124,6 +124,22 @@ placenta_go_results_permissive_bp: go_analysis.R placenta_core_transcriptome
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,2,$^) placenta.transcriptome.list.permissive BP $@
 
 
+placenta_classification_p: placenta_classification_specific.R	\
+	combined_fpkm housekeeping_genes_superset					\
+	placental_classification.txt
+	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
+
+PLACENTA_CLASSIFICATIONS=shape barrier interdigitation
+MF_GO_PLAC_CLASS=$(foreach class, $(PLACENTA_CLASSIFICATIONS),	\
+placenta_classification_go_mf_$(class))
+$(MF_GO_PLAC_CLASS): placenta_classification_go_mf_%: go_analysis.R	placenta_classification_p
+	$(R) $(ROPTS) -f $< --args $(wordlist 2,2,$^) 'placenta.classification.significance[["$*"]]' MF $@
+
+BP_GO_PLAC_CLASS=$(foreach class, $(PLACENTA_CLASSIFICATIONS),	\
+placenta_classification_go_bp_$(class))
+$(BP_GO_PLAC_CLASS): placenta_classification_go_bp_%: go_analysis.R	placenta_classification_p
+	$(R) $(ROPTS) -f $< --args $(wordlist 2,2,$^) 'placenta.classification.significance[["$*"]]' BP $@
+
 ortholog_expression_matrix.txt: ortholog_expression_matrix.R combined_fpkm housekeeping_genes_superset
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
 

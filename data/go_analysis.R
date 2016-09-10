@@ -9,8 +9,7 @@ args <- commandArgs(trailingOnly=TRUE)
 
 load(args[1])
 
-data <- eval(parse(text=args[2]))
-
+data <- as.factor(eval(parse(text=args[2])))
 godata <- new("topGOdata",
               ontology=args[3],
               allGenes=data,

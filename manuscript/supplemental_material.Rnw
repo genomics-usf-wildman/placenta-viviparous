@@ -173,9 +173,19 @@ load("../go_annotation/go_tissue_analysis")
 
 \subsection{Placental Classification}
 
+<<placental_classification,echo=FALSE,results="hide",cache.extra=file.info(dir("../data","placenta.*classification.*",full.names=TRUE))[,"mtime"]>>=
+placenta_classification <- fread("../data/placental_classification.txt")
+load("../data/placenta_classification_p")
+for (mf.bp in c("mf","bp")) {
+    for (class in c("interdigitation","barrier","shape")) {
+        load(paste0("../data/placenta_classification_go_",mf.bp,"_",class))
+    }
+}
+
+@ 
+
 \begin{table}[hb]
-<<placental_classification,echo=FALSE,results="asis">>=
-placental.classification <- fread("../data/placental_classification.txt")
+<<placental_classification_table,echo=FALSE,results="asis">>=
 print(xtable(placental.classification,
              display=c("s","s","s","s","s"),
              align=c("c","c","c","c","c")),
@@ -457,6 +467,57 @@ for (this.species in names(species.names)) {
     cat("\\clearpage\n")
 }
 @ 
+
+\section{Placenta Classification Analyses}
+
+<<placenta_class_table,echo=FALSE,results="hide">>=
+placenta_class_table <- function(class="shape") {
+    subtable <- placenta.classification.p[,c("rn",class,paste0(class,".fdr")),with=FALSE]
+    setnames(subtable,c("Gene","p","FDR"))
+    subtable <- head(subtable[FDR <= 0.05,][order(p),],n=50)
+    print(xtable(subtable,
+                 align=c("c","c","r","r"),
+                 display=c("s","s","g","g")
+                 ),
+          booktabs=TRUE,
+          floating=FALSE,
+          include.rownames=FALSE,
+          math.style.exponents=TRUE,
+          size="\\tiny")
+}
+
+@ 
+
+
+\subsection{Attachment Shape}
+
+
+\begin{table}
+<<attachment_shape_significant,echo=FALSE,results="asis">>=
+placenta_class_table("shape")
+@ 
+\caption{Top 50 genes which are associated with the shape of placenta attachment}
+\label{tab:shape_genes}
+\end{table}
+
+\subsection{Maternal-Fetal Intimacy}
+
+<<intimacy_significant,echo=FALSE,results="asis">>=
+placenta_class_table("barrier")
+@ 
+\caption{Top 50 genes which are associated with the degree of placenta intimacy}
+\label{tab:barrier_genes}
+\end{table}
+
+
+\subsection{Maternal-Fetal Interdigitation}
+
+<<interdigitation_significant,echo=FALSE,results="asis">>=
+placenta_class_table("interdigitation")
+@ 
+\caption{Top 50 genes which are associated with the degree of maternal-fetal interdigitation}
+\label{tab:interdigitation_genes}
+\end{table}
 
 \section{Gene Ontology Analyses}
 

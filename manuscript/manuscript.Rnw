@@ -132,6 +132,17 @@ grad.def <- list(low = "gray90", high = "blue", space = "Lab", na.value = NA)
 
 @ 
 
+<<placental_classification,echo=FALSE,results="hide",cache.extra=file.info(dir("../data","placenta.*classification.*",full.names=TRUE))[,"mtime"]>>=
+placenta_classification <- fread("../data/placental_classification.txt")
+load("../data/placenta_classification_p")
+for (mf.bp in c("mf","bp")) {
+    for (class in c("interdigitation","barrier","shape")) {
+        load(paste0("../data/placenta_classification_go_",mf.bp,"_",class))
+    }
+}
+
+@ 
+
 % Acronyms
 \input{acronyms}
 

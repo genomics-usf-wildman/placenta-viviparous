@@ -220,6 +220,15 @@ mammal \sep  gene expression \sep evolution \sep RNA-seq \sep placenta
 
 \section{Introduction}
 
+The placenta is arguably one of the most variable organs in different
+species of mammals in terms of the shape of attachment
+(\Sexpr{english.join(placenta_classification[,levels(as.factor(shape))])}),
+degree of intimacy between fetal tissues and maternal tissues
+(\Sexpr{english.join(placenta_classification[,levels(as.factor(intimacy))])}),
+and degree of interdigitation of maternal and fetal tissues
+(\Sexpr{english.join(placenta_classification[,levels(as.factor(interdigitation))])})
+while its primary functions (transfer of nutrients and oxygen to the
+fetus, removal of wastes and carbon dioxide) are strongly conserved.
 
 \begin{table}
   \small

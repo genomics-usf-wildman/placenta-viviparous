@@ -123,10 +123,12 @@ placenta_go_results_permissive_mf: go_analysis.R placenta_core_transcriptome
 placenta_go_results_permissive_bp: go_analysis.R placenta_core_transcriptome
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,2,$^) placenta.transcriptome.list.permissive BP $@
 
+placenta_classification: placenta_classification.R placental_classification.txt
+	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
 
 placenta_classification_p: placenta_classification_specific.R	\
 	combined_fpkm housekeeping_genes_superset					\
-	placental_classification.txt
+	placenta_classification
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
 
 PLACENTA_CLASSIFICATIONS=shape barrier interdigitation

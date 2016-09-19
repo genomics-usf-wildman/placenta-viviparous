@@ -233,7 +233,66 @@ differ drastically in the number and size of their offspring, as well
 as the length of gestation; these traits are often with specific
 aspects of placental morphology
 \cite{Capellini.ea2011:Placentationandmaternalinvestment}
-(Supplemental \cref{tab:gestational_periods}).
+(Supplemental \cref{tab:gestational_periods}). Although the morphology
+of the mammalian placenta has been well characterized in a number of
+species \cite{Mossman.1987:vertebratefetalmembranes}, the diversity of
+the molecular environment is only beginning to be understood from a
+genetic perspective \cite{Carter2012:Evolutionofplacentalfunction}.
+
+These observations lead to two related questions: 1) what are the
+genes which are responsible for the \emph{core functionality of the
+  placenta} and 2) which genes are associated with \emph{changes in
+  placenta morphology}?
+
+Previous studies of some species (i.e., \textit{Homo sapiens},
+\textit{Mus musculus}, \textit{Bos taurus}) have provided some
+preliminary answers to these questions. They revealed a stunning
+divergence in the genetics of the placenta, especially in later stages
+of pregnancy
+\cite{Carter2012:Evolutionofplacentalfunction,Hou.ea2012:Elephanttranscriptomeprovidesinsights,Knox.ea2008:Genomicevolutionofplacenta,Su.ea2002:Large-scaleanalysisofhuman}.
+For example, each lineage has evolved expansive placenta-specific gene
+families with expression patterns that can vary in space and time
+\cite{Green.ea2000:Pregnancy-associatedbovineandovine,Simmons.ea2008:Spatialandtemporalexpression}.
+These include independent expansions of the prolactins in \mouse,
+\textit{Spalax carmeli}, \textit{Spalax galili}, and \cow, \acp{PSG}
+in \human and \mouse, \acp{PAG} in \cow, genes related to the
+thymus-specific serine protease \textit{PRSS16} in \textit{Loxodona
+  africana} (in this work), and the expansion of the growth hormone
+and chorionic gonadotropin beta genes in anthropoid primates
+\cite{Haig2008:Placentalgrowthhormone-relatedproteins,Rawn.ea2008:evolutionregulationandfunction}.
+Expression patterns of specific genes also can vary widely between
+species. For example, the expression of orthologous genes in the
+placenta have been found to vary substantially between \human and
+\mouse \cite{Su.ea2002:Large-scaleanalysisofhuman}, and the
+recruitment of \textit{SIGLEC6} to placental expression in \human
+differs from both \textit{Pan troglodytes} and \mouse
+\cite{Linden.ea2007:Human-specificexpressionofSiglec-6}.
+
+In order to address our two questions in a more systematic way, we
+sequenced and quantified the mRNA environment of mammalian placentas
+at term, including that of the \human, \textit{Pan paniscus} (the
+sister species to \textit{P. troglodytes}), \textit{Ateles fusciceps},
+\mouse, \galili, \carmeli, \textit{Canis familiaris}, \cow, \elephant,
+\textit{Dasypus novemcinctus}, and \textit{Monodelphis domesticus}.
+These species represent four major branches of eutherian mammals
+(Euarchontoglires, Laurasiatheria, Afrotheria, and Xenartha) as well
+as marsupials. These placentas also represent a wide array of
+placental morphologies as well as traits such as number and size of
+offspring and length of gestation (\cref{tab:gestational_periods}). We
+use this data, along with existing RNA-Seq data from \mouse
+\cite{Wang.ea2011:surveyfornovelimprinted}, \human
+\cite{Hughes.ea2015:Evaluatingintra-andinter-individual},
+\textit{Equus caballus}
+\cite{Coleman.ea2010:Structuralannotationofequine}, \textit{Ovis
+  aries} \cite{Archibald.ea2010:sheepgenomereferencesequence}, and
+\textit{Sus scrofa} \cite{Ahanda.ea2012:Predictionofaltered3-} to: 1)
+identify the non-housekeeping genes which are expressed in the
+placentas of all species analyzed and therefore represent the
+\emph{core functionality of the placenta}; 2) identify the genes whose
+expression level changes significantly in each of the morphology
+types.
+
+
 
 \section{Methods}
 

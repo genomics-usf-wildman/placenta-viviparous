@@ -230,36 +230,7 @@ and degree of interdigitation of maternal and fetal tissues
 while its primary functions (transfer of nutrients and oxygen to the
 fetus, removal of wastes and carbon dioxide) are strongly conserved.
 
-\begin{table}
-  \small
-  \begin{tabular}{>{\raggedright }p{0.7in}
-                  >{\raggedright }p{0.7in}
-                  c c 
-                  p{0.65in}}
-    \toprule
-    {\centering Species  }                     & {\centering Common Name }& 
-       \multicolumn{1}{p{0.43in}}{\raggedright \centering Gestation (days)} & 
-       \multicolumn{1}{p{0.3in}}{\raggedright \centering Litter Size}  & Source \\
-    \midrule
-    \textit{Ateles fusciceps}     & Spider monkey & 224 & 1 & \citet{Ernest2003:lifehistorycharacteristicsofplacental}\\
-    \textit{Bos taurus}           & Cow & 278 & 1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
-    \textit{Canis familiaris}     & Dog & 61 & 4 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
-    \textit{Dasypus novemcinctus} & Nine-banded Armadillo & 150 & 4 & \citet{Smith1984:amazingarmadillo} \\
-    \textit{Equus caballus}       & Horse & 336 & 1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation}\\
-    \textit{Loxodonta africana}   & African savanna elephant & 644 & 1 & \citet{Ernest2003:lifehistorycharacteristicsofplacental}\\
-    \textit{Homo sapiens}         & Human & 270 & 1.1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
-    \textit{Monodelphis domestica}& Gray short-tailed opossum & 15 & 7.1 & \citet{Harder.ea1993:Gestationandplacentationin} \\
-    \textit{Mus musculus}         & Mouse & 20 & 6.1 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
-    \textit{Spalax galili}   & Blind mole rat from Upper Galilee & 28-42 & 4 & \citet{Nevo1997:mosiacevolutionofsubterranianmammals} \\
-    \textit{Ovis aries}           & Domestic sheep & 151 & 1.35 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
-    \textit{Pan paniscus}         & Bonobo & 223 & 1 & \citet{Ernest2003:lifehistorycharacteristicsofplacental} \\
-    \textit{Spalax carmeli}       & Blind mole rat from northern Israel & 28-42 & 4 & \citet{Nevo1997:mosiacevolutionofsubterranianmammals}\\
-    \textit{Sus scrofa}           & Domestic pig (Duroc) & 114 & 5.8 & \citet{Kiltie1982:intraspecificvariationmammaliangestation} \\
-    \bottomrule
-  \end{tabular}
-  \caption{Gestational periods in days and average liter sizes for studied species.}
-  \label{tab:gestational_periods}
-\end{table}
+Even though the placenta's primary function is conserved among
 
 \section{Methods}
 

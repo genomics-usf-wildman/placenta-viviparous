@@ -908,26 +908,41 @@ cptl <-
 cptl <- cptl[,Species:=factor(gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",capfirst(Species)),
                               levels=gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",
                                           capfirst(names(species.names))))]
-print(ggplot(cptl,
-             aes(y=human_name,x=Species))
-      + geom_raster(aes(fill=log10(FPKM)))
-      + scale_x_discrete(expand=c(0,0))
-      + scale_y_discrete(expand=c(0,0))
-      + scale_fill_gradient(low = grad.def[["low"]],
-                            high = grad.def[["high"]],
-                            space = grad.def[["space"]],
-                            na.value = grad.def[["na.value"]],
-                            limits=c(0,4),
-                            guide=guide_colorbar(title=expression(log[10](FPKM)))
-                            )
-      + ylab("Human Ortholog Name")
-      + xlab("Species")
-      + theme_grey()
-      + theme(legend.position="top",
-              axis.ticks = element_blank(),
-              axis.text.y = element_text(face="italic"),
-              axis.text.x = element_text(angle = 90, hjust = 1, vjust=0,face="italic"))
-      )
+
+print(ggplot(cptl,aes(x=human_name,y=FPKM))+
+      geom_boxplot(outlier.shape=NA)+
+      scale_y_log10()+
+      geom_point(aes(color=Species,shape=Species))+
+      scale_shape_manual(guide=guide_legend(nrow=2,
+                                            keywidth=unit(3,"mm"),
+                                            keyheight=unit(3,"mm"),
+                                            label.theme=element_text(face="italic",
+                                                                     angle=0,
+                                                                     size=9)),
+                         values=0:18)+
+      coord_flip()+
+      theme(legend.position="bottom"))
+
+# print(ggplot(cptl,
+#              aes(y=human_name,x=Species))
+#       + geom_raster(aes(fill=log10(FPKM)))
+#       + scale_x_discrete(expand=c(0,0))
+#       + scale_y_discrete(expand=c(0,0))
+#       + scale_fill_gradient(low = grad.def[["low"]],
+#                             high = grad.def[["high"]],
+#                             space = grad.def[["space"]],
+#                             na.value = grad.def[["na.value"]],
+#                             limits=c(0,4),
+#                             guide=guide_colorbar(title=expression(log[10](FPKM)))
+#                             )
+#       + ylab("Human Ortholog Name")
+#       + xlab("Species")
+#       + theme_grey()
+#       + theme(legend.position="top",
+#               axis.ticks = element_blank(),
+#               axis.text.y = element_text(face="italic"),
+#               axis.text.x = element_text(angle = 90, hjust = 1, vjust=0,face="italic")) 
+#      )
 @ 
 \caption{Core Placenta Transcriptome.
   \Sexpr{core.placenta.transcriptome.long[,length(unique(human_name))]}

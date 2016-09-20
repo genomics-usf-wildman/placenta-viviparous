@@ -1,6 +1,7 @@
 library("data.table")
 library("reshape2")
 library("org.Hs.eg.db")
+library("parallel")
 
 args <- c("combined_fpkm","housekeeping_genes_superset",
           "placental_classification.txt","placenta_classification_specific")
@@ -10,6 +11,17 @@ args <- commandArgs(trailingOnly=TRUE)
 load(args[1])
 load(args[2])
 load(args[3])
+
+num.cores <- 6
+
+name.to.ensembl <-
+    combined.fpkm[species=="homo sapiens",
+                  ][!duplicated(gene_short_name),
+                    ][,list(gene_short_name,gene_id)]
+name.to.ensembl[,egid:=mget(gene_short_name,org.Hs.egSYMBOL2EG,ifnotfound=NA)]
+
+setkey(name.to.ensembl,
+       "gene_short_name")
 
 combined.fpkm.wide <- 
     data.table(dcast(combined.fpkm,
@@ -38,31 +50,55 @@ setkey(placenta_classification,"species")
 placenta_classification <-
     placenta.class.specific[placenta_classification]      
 
+
 calculate.aov <- function(gene,factor="barrier") {
-    summary(aov(glm(as.formula(paste0("mean_fpkm~",factor,"+0")),
-                    data=placenta_classification[human_name==gene,]))
-            )[[1]][factor,"Pr(>F)"]
+    temp.glm <- glm(as.formula(paste0("mean_fpkm~",factor,"+0")),
+                    data=placenta_classification[human_name==gene,])
+    temp.glm.coef <- summary(temp.glm)$coefficients
+    temp.aov.summary <-
+        summary(aov(temp.glm))[[1]]
+    rbindlist(list(data.table("gene"=gene,
+                              "egid"=name.to.ensembl[gene,egid],
+                              "gene_id"=name.to.ensembl[gene,gene_id],
+                              "factor"=factor,
+                              "type"="aov",
+                              "level"=factor,
+                              "coefficient"=temp.aov.summary[factor,"Mean Sq"],
+                              "statistic"=temp.aov.summary[factor,"F value"],
+                              "p"=temp.aov.summary[factor,"Pr(>F)"]),
+                   data.table("gene"=gene,
+                              "egid"=name.to.ensembl[gene,egid],
+                              "gene_id"=name.to.ensembl[gene,gene_id],
+                              "factor"=factor,
+                              "type"="glm",
+                              "level"=gsub(factor,"",names(temp.glm.coef[,"t value"])),
+                              "coefficient"=temp.glm.coef[,"Estimate"],
+                              "statistic"=temp.glm.coef[,"t value"],
+                              "p"=temp.glm.coef[,"Pr(>|t|)"])))
 }
 
 placenta.classification.p <-
-    data.table(data.frame(shape=sapply(placenta_classification[,unique(human_name)],
-                                       calculate.aov,factor="shape"),
-                          barrier=sapply(placenta_classification[,unique(human_name)],
-                                         calculate.aov,factor="barrier"),
-                          interdigitation=sapply(placenta_classification[,unique(human_name)],
-                                                 calculate.aov,factor="interdigitation")),
-               keep.rownames=TRUE
-               )
+    rbindlist(lapply(c("shape","barrier","interdigitation"),
+                     function(x){
+                         rbindlist(mclapply(placenta_classification[,unique(human_name)],
+                                            calculate.aov,factor=x,mc.cores=num.cores))}))
 
-placenta.classification.p[,shape.fdr:=p.adjust(shape,method="BH")]
-placenta.classification.p[,barrier.fdr:=p.adjust(barrier,method="BH")]
-placenta.classification.p[,interdigitation.fdr:=p.adjust(interdigitation,method="BH")]
-placenta.classification.p[!duplicated(rn),]
-placenta.classification.p[,egid:=mget(rn,org.Hs.egSYMBOL2EG,ifnotfound=NA)]
+## throw out analyses with infinite statistic
+placenta.classification.p <-
+    placenta.classification.p[is.finite(statistic),]
+    
+
+
+## adjust for fdr by type and class
+placenta.classification.p[,fdr:=p.adjust(p,method="BH"),by=list(factor,type)]
+placenta.classification.p[,fdr.overall:=p.adjust(p,method="BH")]
+
 placenta.classification.significance <- list()
 for (class in c("shape","barrier","interdigitation")) {
     placenta.classification.significance[[class]] <-
-        ifelse(placenta.classification.p[!is.na(egid),paste0(class,".fdr"),with=FALSE] <= 0.05,
+        ifelse(placenta.classification.p[!is.na(egid),
+                                         paste0(class,".fdr"),
+                                         with=FALSE] <= 0.05,
                1,0)
     names(placenta.classification.significance[[class]]) <-
         placenta.classification.p[!is.na(egid),egid]

@@ -269,9 +269,9 @@ differs from both \textit{Pan troglodytes} and \mouse
 \cite{Linden.ea2007:Human-specificexpressionofSiglec-6}.
 
 In order to address our two questions in a more systematic way, we
-sequenced and quantified the mRNA environment of mammalian placentas
-at term, including that of the \human, \textit{Pan paniscus} (the
-sister species to \textit{P. troglodytes}), \textit{Ateles fusciceps},
+sequenced and quantified the total RNA of mammalian placentas at term,
+including that of the \human, \textit{Pan paniscus} (the sister
+species to \textit{P. troglodytes}), \textit{Ateles fusciceps},
 \mouse, \galili, \carmeli, \textit{Canis familiaris}, \cow, \elephant,
 \textit{Dasypus novemcinctus}, and \textit{Monodelphis domesticus}.
 These species represent four major branches of eutherian mammals
@@ -449,6 +449,8 @@ $\le 0.05$. For \human and \mouse lineage specific calculations, a
 type-III anova was calculated using
 lme4~\cite{Bates.ea2015:FittingLinearMixed-EffectsModels} with each
 species having separate random effects.
+
+
 
 \subsection{Sequences, FPKMs, and Code}
 
@@ -968,9 +970,12 @@ the placenta transcriptome if a 1:1 ortholog of that gene was
 expressed with $\text{FPKM} \ge 10$ in all species studied and was
 not a human housekeeping gene according to
 \citet{Eisenberg.ea2013:Humanhousekeepinggenesrevisited}.
-Supplemental \cref{fig:core_placenta_transcriptome_shape} shows the number of genes
+\cref{fig:core_placenta_transcriptome_shape} shows the number of genes
 which would be included in the core placenta set if the \ac{FPKM}
-cutoff was set differently.
+cutoff was set differently; for example, choosing an \ac{FPKM} cutoff of 1 yields %
+\Sexpr{cpt.distribution.shape[`Expression (FPKM)`>1 & 
+`Minimum Expression in` == '14 of 14 species',max(num_genes)]} %
+genes in the core transcriptome.
 %
 Multiple components of annexin complexes are included in the core
 transcriptome, including \textit{ANXA2}, \textit{ANXA1},
@@ -1029,29 +1034,13 @@ in \human and those which are expressed in all placentas.
 % SERPINH1? with TIMP3 
 % http://www.proteinatlas.org/ENSG00000149257-SERPINH1/tissue/placenta
 
+\subsection{Placenta Morphology and Genetics}
 
-\subsection{\ac{GSE} Analyses of Individual Transcriptomes}
+\subsubsection{Placenta Attachment Shape}
 
-In order to identify major functional categories of genes expressed in
-the individual transcriptomes, we examined \ac{GSE} in 1:1 human
-orthologs which had \ac{FPKM} values in the top 1\% of expressed genes
-(Supplemental %
-\cref{tab:go_terms_enriched_top_one_dasypus_novemcinctus,tab:go_terms_enriched_top_one_equus_caballus,tab:go_terms_enriched_top_one_homo_sapiens,tab:go_terms_enriched_top_one_loxodonta_africana,tab:go_terms_enriched_top_one_monodelphis_domestica,tab:go_terms_enriched_top_one_mus_musculus,tab:go_terms_enriched_top_one_ovis_aries,tab:go_terms_enriched_top_one_pan_paniscus,tab:go_terms_enriched_top_one_sus_scrofa,tab:go_terms_enriched_top_one_ateles_fusciceps,tab:go_terms_enriched_top_one_spalax_galili,tab:go_terms_enriched_top_one_spalax_carmeli,tab:go_terms_enriched_top_one_bos_taurus,tab:go_terms_enriched_top_one_canis_familiaris}) using topGO \cite{topGO:2.20.0}. %
-%
-Significant enrichment in genes ($\text{FDR}\le0.05$) in the top 1\%
-of \ac{FPKM} values in at least 12 of the
-\Sexpr{length(species.names)} species included clusters such as
-membrane organization , locomotion, tissue development, extracellular
-matrix organization, regulation of peptidase activity, and various
-cell death related pathways among others
-(Supplemental \cref{tab:go_terms_all_species}). If we instead examine the top 100
-genes by \ac{FPKM} in each of the \Sexpr{length(species.names)}
-species (Supplemental %
-\cref{tab:go_terms_enriched_dasypus_novemcinctus,tab:go_terms_enriched_equus_caballus,tab:go_terms_enriched_homo_sapiens,tab:go_terms_enriched_loxodonta_africana,tab:go_terms_enriched_monodelphis_domestica,tab:go_terms_enriched_mus_musculus,tab:go_terms_enriched_ovis_aries,tab:go_terms_enriched_pan_paniscus,tab:go_terms_enriched_sus_scrofa,tab:go_terms_enriched_ateles_fusciceps,tab:go_terms_enriched_spalax_galili,tab:go_terms_enriched_spalax_carmeli,tab:go_terms_enriched_bos_taurus,tab:go_terms_enriched_canis_familiaris})
-notable enrichments include extracellular matrix, female pregnancy,
-integrin and collagen-related processes, and various cell death
-related processes.
+\subsubsection{Degree of Intimacy}
 
+\subsubsection{Interdigitation}
 
 \clearpage
 

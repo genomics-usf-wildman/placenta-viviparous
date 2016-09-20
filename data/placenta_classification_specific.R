@@ -9,7 +9,7 @@ args <- commandArgs(trailingOnly=TRUE)
 
 load(args[1])
 load(args[2])
-placenta_classification <- fread(args[3])
+load(args[3])
 
 combined.fpkm.wide <- 
     data.table(dcast(combined.fpkm,

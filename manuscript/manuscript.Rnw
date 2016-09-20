@@ -382,7 +382,7 @@ species is generally perceived to be $\approx 1$ million years
 
 
 \begin{figure}
-<<species.tree,fig.width=8,fig.height=6,out.width="\\columnwidth",echo=FALSE>>=
+<<species.tree,fig.width=8,fig.height=6,out.width="\\columnwidth",echo=FALSE,message=FALSE,warning=FALSE>>=
 species.tree <- 
     read.tree(text="(Monodelphis_domestica,((Dasypus_novemcinctus,Loxodonta_africana)Atlantogenata,((Canis_familiaris,(Equus_caballus,(Sus_scrofa,(Ovis_aries,Bos_taurus))))Laurasiatheria,(((Spalax_carmeli,Spalax_galili),Mus_Musculus)Rodentia,((Pan_paniscus,Homo_sapiens),Ateles_fuciceps)Primates)Euarchontoglires)Boreoeutheria)Eutheria);")
 pp <- ggtree(species.tree)+

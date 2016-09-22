@@ -123,6 +123,26 @@ placenta_go_results_permissive_mf: go_analysis.R placenta_core_transcriptome
 placenta_go_results_permissive_bp: go_analysis.R placenta_core_transcriptome
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,2,$^) placenta.transcriptome.list.permissive BP $@
 
+
+placenta_netpath_results: gsea_analysis.R placenta_core_transcriptome \
+	Human_NetPath_September_01_2016_Entrezgene.gmt
+	$(R) $(ROPTS) -f $< --args $(wordlist 2,2,$^) placenta.transcriptome.list $(wordlist 3,3,$^) $@
+
+kegg.gmt: msigdb.v5.1.entrez.gmt
+	grep '^KEGG_' $< > $@
+
+reactome.gmt: msigdb.v5.1.entrez.gmt
+	grep '^REACTOME_' $< > $@
+
+biocarta.gmt: msigdb.v5.1.entrez.gmt
+	grep '^BIOCARTA_' $< > $@
+
+GSEA_SETS=kegg reactome biocarta
+GSEA_SET_ANALYSES=$(foreach gmt,$(GSEA_SETS),placenta_gsea_$(gmt))
+$(GSEA_SET_ANALYSES): placenta_gsea_%: %.gmt gsea_analysis.R placenta_core_transcriptome 
+	$(R) $(ROPTS) -f $(wordlist 2,2,$^) --args $(wordlist 3,3,$^) placenta.transcriptome.list $< $@
+
+
 placenta_classification: placenta_classification.R placental_classification.txt
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
 

@@ -8,13 +8,13 @@ placenta_classification <- fread(args[1])
 
 placenta_classification[,species:=factor(species)]
 placenta_classification[,shape:=factor(shape)]
-placenta_classification[,interdigitiation:=
+placenta_classification[,interdigitation:=
                              factor(interdigitation,
                                     levels=c("villous",
                                              "folded",
                                              "trabecular",
                                              "lamellar",
-                                             "labrynthine"
+                                             "labyrinthine"
                                              ),
                                     ordered=TRUE
                                     )]

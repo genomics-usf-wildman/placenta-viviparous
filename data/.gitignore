@@ -21,3 +21,4 @@ ensembl_orthologs_long
 gene_annotation
 housekeeping_genes_superset
 human_mouse_lineage_specific
+placenta_gsea_*

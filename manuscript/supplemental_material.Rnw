@@ -200,6 +200,8 @@ print(xtable(placental.classification,
 \label{tab:placental_classification}
 \end{table}
 
+\clearpage
+
 \begin{table}
   \small
   \begin{tabular}{>{\raggedright }p{0.7in}
@@ -553,7 +555,82 @@ placenta_class_table("interdigitation")
 \label{tab:interdigitation_genes}
 \end{table}
 
-\section{Gene Ontology Analyses}
+\section{GSEA}
+
+\subsection{Pathway Analysis}
+\begin{table}
+<<pathway_analysis,echo=FALSE,results="asis">>=
+pathway <- list()
+for (database in c("kegg","reactome","biocarta","netpath")) {
+    load(paste0("../data/placenta_gsea_",database))
+    eval(parse(text=paste0("gsea.table <- placenta_gsea_",database)))
+    gsea.table[,Database:=gsub("^(.)","\\U\\1",database,perl=TRUE)]
+    pathway[[database]] <-
+        gsea.table
+}
+pathway.analysis <-
+    rbindlist(pathway)[fdr < 0.1,]
+rm(pathway)
+pathway.analysis[,Pathway:=gsub("^(KEGG|BIOCARTA|REACTOME) ","",
+                                gsub("_+"," ",
+                                     Pathway))]
+pathway.analysis[,Pathway:=gsub(".+\\%","",Pathway)]
+
+setnames(pathway.analysis,"p_values","p")
+setorder(pathway.analysis,"p")
+print(xtable(pathway.analysis,
+             display=c("s","s","f","f","s"),
+             align=c("c","p{2in}","r","r","c")),
+      math.style.exponents=TRUE,
+      include.rownames=FALSE,
+      booktabs=TRUE,
+      floating=FALSE)      
+@ 
+\caption[Core Placenta Pathway Enrichment]{Pathways with significant and suggestive enrichment
+  ($\text{FDR}\le 0.1$) in the core placenta transcriptome using the
+  biocarta, reactome, and kegg pathway databases}
+\label{tab:core_placenta_pathway_analysis}
+\end{table}
+
+
+\begin{table}
+<<pathway_analysis_class,echo=FALSE,results="asis">>=
+pathway <- list()
+for (class in c("shape","interdigitation","barrier")) {
+    for (database in c("kegg","reactome","biocarta","netpath")) {
+        load(paste0("../data/placenta_gsea_",class,"_",database))
+        eval(parse(text=paste0("gsea.table <- placenta_gsea_",class,"_",database)))
+        gsea.table[,Database:=gsub("^(.)","\\U\\1",database,perl=TRUE)]
+        gsea.table[,Class:=gsub("^(.)","\\U\\1",class,perl=TRUE)]
+        pathway[[paste0(class,"_",database)]] <-
+            gsea.table
+    }
+}
+placenta_class_gsea <-
+    rbindlist(pathway)[fdr < 0.1,]
+placenta_class_gsea[,Pathway:=gsub("^(KEGG|BIOCARTA|REACTOME) ","",
+                                   gsub("_+"," ",
+                                        Pathway))]
+placenta_class_gsea[,Pathway:=gsub(".+\\%","",Pathway)]
+setnames(placenta_class_gsea,"p_values","p")
+setorder(placenta_class_gsea,"p")
+print(xtable(placenta_class_gsea,
+             display=c("s","s","f","f","s"),
+             align=c("c","p{2in}","r","r","c")),
+      math.style.exponents=TRUE,
+      include.rownames=FALSE,
+      booktabs=TRUE,
+      floating=FALSE)      
+@ 
+\caption[Placenta Classification Pathway Enrichment]{Pathways with
+  significant and suggestive enrichment ($\text{FDR}\le 0.1$) in genes
+  associated with placenta morphology using the biocarta, reactome,
+  and kegg pathway databases.}
+\label{tab:core_placenta_pathway_analysis}
+\end{table}
+
+
+\subsection{GO Ontology}
 
 <<go.analysis.all.tissue,echo=FALSE,results="asis">>=
 go.analysis.wide <- 

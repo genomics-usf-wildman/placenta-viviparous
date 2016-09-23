@@ -6,6 +6,8 @@ R=R
 ROPTS=-q --no-save --no-restore-data
 PERL?=perl
 
+space :=
+space +=
 
 FPKM_FILES=Supplemental_Table_2_Homo_NEW_UPDATED.txt $(patsubst %.xlsx,%.txt,$(filter-out $(wildcard *Homo*), $(wildcard *_fpkm.xlsx)))
 
@@ -137,7 +139,7 @@ reactome.gmt: msigdb.v5.1.entrez.gmt
 biocarta.gmt: msigdb.v5.1.entrez.gmt
 	grep '^BIOCARTA_' $< > $@
 
-GSEA_SETS=kegg reactome biocarta
+GSEA_SETS=kegg reactome biocarta netpath
 GSEA_SET_ANALYSES=$(foreach gmt,$(GSEA_SETS),placenta_gsea_$(gmt))
 $(GSEA_SET_ANALYSES): placenta_gsea_%: %.gmt gsea_analysis.R placenta_core_transcriptome 
 	$(R) $(ROPTS) -f $(wordlist 2,2,$^) --args $(wordlist 3,3,$^) placenta.transcriptome.list $< $@
@@ -156,6 +158,19 @@ MF_GO_PLAC_CLASS=$(foreach class, $(PLACENTA_CLASSIFICATIONS),	\
 placenta_classification_go_mf_$(class))
 $(MF_GO_PLAC_CLASS): placenta_classification_go_mf_%: go_analysis.R	placenta_classification_p
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,2,$^) 'placenta.classification.significance[["$*"]]' MF $@
+
+.SECONDEXPANSION:
+
+PATHWAY_PLAC_CLASS=$(foreach class, $(PLACENTA_CLASSIFICATIONS),	\
+$(foreach gmt,$(GSEA_SETS),placenta_gsea_$(class)_$(gmt)))
+pathway_analyses: $(PATHWAY_PLAC_CLASS) $(GSEA_SET_ANALYSES)
+$(PATHWAY_PLAC_CLASS): placenta_gsea_%: gsea_analysis.R \
+	$$(lastword $$(subst _,$$(space),$$*)).gmt \
+	placenta_classification_p
+	$(R) $(ROPTS) -f $< --args  $(wordlist 3,3,$^) \
+		'placenta.classification.significance[["$(firstword $(subst _,$(space),$*))"]]' \
+		$(lastword $(subst _,$(space),$*)).gmt $@
+
 
 BP_GO_PLAC_CLASS=$(foreach class, $(PLACENTA_CLASSIFICATIONS),	\
 placenta_classification_go_bp_$(class))

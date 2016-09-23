@@ -96,12 +96,11 @@ placenta.classification.p[,fdr.overall:=p.adjust(p,method="BH")]
 placenta.classification.significance <- list()
 for (class in c("shape","barrier","interdigitation")) {
     placenta.classification.significance[[class]] <-
-        ifelse(placenta.classification.p[!is.na(egid),
-                                         paste0(class,".fdr"),
-                                         with=FALSE] <= 0.05,
+        ifelse(placenta.classification.p[!is.na(egid) & type=="aov" & factor==class,
+                                         fdr] <= 0.05,
                1,0)
     names(placenta.classification.significance[[class]]) <-
-        placenta.classification.p[!is.na(egid),egid]
+        placenta.classification.p[!is.na(egid) & type=="aov" & factor==class,egid]
 }
 
 save(placenta.classification.p,

@@ -506,9 +506,121 @@ for (this.species in names(species.names)) {
 
 \section{Placenta Classification Analyses}
 
+<<placenta_pathway_egid,echo=FALSE,results="hide">>=
+load("../data/placenta_core_transcriptome_complete")
+plac_path_egid <- function(column) {
+    expr <- placenta.core.transcriptome.complete[!is.na(egid),eval(column)]
+    names(expr) <- placenta.core.transcriptome.complete[!is.na(egid),egid]
+    expr
+}
+
+plac_path_genes <- function(genes,column) {
+    result <- as.numeric(NULL)
+    result[!is.na(genes)] <-
+        placenta.core.transcriptome.complete[na.omit(genes),eval(column)]
+    names(result) <- names(genes)
+    result
+}
+
+@ 
+
+<<plot_pathway,echo=FALSE,result="hide">>=
+library("KEGGgraph")
+library("plotrix")
+makeAttr <- function(graph, default, valNodeList) {
+  tmp <- nodes(graph)
+  x <- rep(default, length(tmp)); names(x) <- tmp
+  
+  if(!missing(valNodeList)) {
+    stopifnot(is.list(valNodeList))
+    allnodes <- unlist(valNodeList)
+    stopifnot(all(allnodes %in% tmp))
+    for(i in seq(valNodeList)) {
+      x[valNodeList[[i]]] <- names(valNodeList)[i]
+    }
+  }
+  return(x)
+}
+graph_attrs <- function(graph,nodecolorcolumn,cutpoint=1) {
+    outs <- sapply(edges(graph), length) > 0
+    ins <- sapply(inEdges(graph), length) > 0
+    ios <- outs | ins
+    ## translate the KEGG IDs into Gene Symbol
+    ioGeneID <- translateKEGGID2GeneID(names(ios))
+    nodesNames <- sapply(mget(ioGeneID, org.Hs.egSYMBOL, ifnotfound=NA), "[[",1)
+    names(nodesNames) <- names(ios)
+    nodevalue <- plac_path_genes(nodesNames,nodecolorcolumn)
+    nodevalue.max <- max(pretty(nodevalue))
+    nodevalue.na <- is.na(nodevalue)
+    nodevalue[is.na(nodevalue)] <- 0
+    nodecolors <- apply(colorRamp(c("gray","blue"))(nodevalue/nodevalue.max),
+                        1,
+                        function(x){rgb(x[1],x[2],x[3],maxColorValue=255)})
+    nodecolors[nodevalue.na] <- "#FFFFFF"
+    names(nodecolors) <- names(nodevalue)
+    subgraph <- graph #subGraph(names(nodecolors)[nodevalue >= 0.1],
+                       #  graph)
+    for (node in names(nodevalue)[nodevalue < cutpoint]) {
+         subgraph <- removeNode(node,subgraph)
+    }
+    nAttrs <- list();
+    # nAttrs$fillcolor <- makeAttr(graph, "lightgrey", list(orange=names(ios)[ios]))
+    nAttrs$label <- nodesNames[nodes(subgraph)]
+    nAttrs$fillcolor <- nodecolors[nodes(subgraph)]
+    nAttrs$fontsize <- makeAttr(subgraph,14)
+    nAttrs$width <- makeAttr(subgraph,2)
+    nAttrs$shape <- makeAttr(subgraph,"box")
+    list(nAttrs=nAttrs,
+         graph=subgraph,
+         max=nodevalue.max
+         )
+}
+
+plot_pathway <- function(pathway="hsa04012",pathcolor=quote(median_expression),cutpoint=1) {
+
+    the.graph <- KEGGgraph::parseKGML2Graph(KEGGgraph::getKGMLurl(pathway))
+    
+
+    graph.attrs <- graph_attrs(the.graph,nodecolorcolumn=pathcolor,cutpoint=cutpoint)
+    plot(graph.attrs$graph,"dot",
+         nodeAttrs=graph.attrs$nAttrs,
+         attrs=list(graph=list(rankdir="LR")))
+    color.legend(100,100,200,200,c("0",as.character(graph.attrs$max)),
+                 apply(colorRamp(c("gray","blue"))(seq(0,1,length.out=10)),
+                       1,
+                       function(x){rgb(x[1],x[2],x[3],maxColorValue=255)}))
+}
+
+@ 
+
+\begin{figure}
+<<egf_pathway,echo=FALSE,message=FALSE,fig.width=6,fig.height=6,fig.out.width="\\textwidth">>=
+plot_pathway("hsa04012")
+@
+\caption{EGF KEGG pathway}
+\label{fig:egf_kegg_pathway}
+\end{figure}
+
+<<actin_pathway,echo=FALSE,results="hide",message=FALSE>>=
+library("pathview")
+pathview(gene.data=plac_path_egid(quote(as.numeric(median_expression))),
+         pathway.id="hsa04810",
+         both.dirs=list(gene=FALSE,cpd=FALSE),
+         limit=list(gene=200,cpd=29),
+         high=list(gene="blue"),
+         net.signature=FALSE)
+@ 
+
+\begin{figure}
+  \includegraphics{hsa04810.pathview.png}
+  \caption{KEGG Actin Cytoskeleton Pathway}
+  \label{fig:kegg_actin}
+\end{figure}
+
+
 <<placenta_class_table,echo=FALSE,results="hide">>=
 placenta_class_table <- function(class="shape") {
-    subtable <- placenta.classification.p[,c("rn",class,paste0(class,".fdr")),with=FALSE]
+    subtable <- placenta.classification.p[factor==class & type == "aov",list(gene,p,fdr)]
     setnames(subtable,c("Gene","p","FDR"))
     subtable <- head(subtable[FDR <= 0.05,][order(p),],n=50)
     print(xtable(subtable,

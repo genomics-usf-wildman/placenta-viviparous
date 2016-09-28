@@ -15,6 +15,7 @@ homology_table
 hugo_nomenclature
 placenta_core_transcriptome
 placenta_go_results_??
+placenta_go_results_permissive_??
 placenta_lineage_specific
 combined_fpkm_per_sample
 ensembl_orthologs_long
@@ -22,3 +23,9 @@ gene_annotation
 housekeeping_genes_superset
 human_mouse_lineage_specific
 placenta_gsea_*
+*.gmt
+hsa0*
+placenta_classification_p
+placenta_classification
+placenta_classification_go_??_*
+placenta_netpath_results

@@ -631,7 +631,7 @@ placenta_class_table <- function(class="shape") {
           floating=FALSE,
           include.rownames=FALSE,
           math.style.exponents=TRUE,
-          size="\\tiny")
+          size="\\scriptsize")
 }
 
 @ 
@@ -640,16 +640,18 @@ placenta_class_table <- function(class="shape") {
 \subsection{Attachment Shape}
 
 
-\begin{table}
+\begin{table}[h]
 <<attachment_shape_significant,echo=FALSE,results="asis">>=
 placenta_class_table("shape")
 @ 
 \caption{Top 50 genes which are associated with the shape of placenta attachment}
 \label{tab:shape_genes}
 \end{table}
+\clearpage
 
 \subsection{Maternal-Fetal Intimacy}
 
+\begin{table}[h]
 <<intimacy_significant,echo=FALSE,results="asis">>=
 placenta_class_table("barrier")
 @ 
@@ -657,9 +659,11 @@ placenta_class_table("barrier")
 \label{tab:barrier_genes}
 \end{table}
 
+\clearpage
 
 \subsection{Maternal-Fetal Interdigitation}
 
+\begin{table}[h]
 <<interdigitation_significant,echo=FALSE,results="asis">>=
 placenta_class_table("interdigitation")
 @ 
@@ -667,11 +671,13 @@ placenta_class_table("interdigitation")
 \label{tab:interdigitation_genes}
 \end{table}
 
+\clearpage
+
 \section{GSEA}
 
 \subsection{Pathway Analysis}
 \begin{table}
-<<pathway_analysis,echo=FALSE,results="asis">>=
+<<pathway_analysis,echo=FALSE,results="asis",cache.extra=file.info(dir("../data","placenta_gsea.*",full.names=TRUE))[,"mtime"]>>=
 pathway <- list()
 for (database in c("kegg","reactome","biocarta","netpath")) {
     load(paste0("../data/placenta_gsea_",database))
@@ -691,8 +697,8 @@ pathway.analysis[,Pathway:=gsub(".+\\%","",Pathway)]
 setnames(pathway.analysis,"p_values","p")
 setorder(pathway.analysis,"p")
 print(xtable(pathway.analysis,
-             display=c("s","s","f","f","s"),
-             align=c("c","p{2in}","r","r","c")),
+             display=c("s","s","g","g","s"),
+             align=c("c","p{3.5in}","r","r","c")),
       math.style.exponents=TRUE,
       include.rownames=FALSE,
       booktabs=TRUE,
@@ -706,7 +712,7 @@ print(xtable(pathway.analysis,
 
 
 \begin{table}
-<<pathway_analysis_class,echo=FALSE,results="asis">>=
+<<pathway_analysis_class,echo=FALSE,results="asis",cache.extra=file.info(dir("../data","placenta_gsea.*",full.names=TRUE))[,"mtime"]>>=
 pathway <- list()
 for (class in c("shape","interdigitation","barrier")) {
     for (database in c("kegg","reactome","biocarta","netpath")) {
@@ -727,8 +733,8 @@ placenta_class_gsea[,Pathway:=gsub(".+\\%","",Pathway)]
 setnames(placenta_class_gsea,"p_values","p")
 setorder(placenta_class_gsea,"p")
 print(xtable(placenta_class_gsea,
-             display=c("s","s","f","f","s"),
-             align=c("c","p{2in}","r","r","c")),
+             display=c("s","s","g","g","s","s"),
+             align=c("c","p{3in}","r","r","c","c")),
       math.style.exponents=TRUE,
       include.rownames=FALSE,
       booktabs=TRUE,
@@ -741,6 +747,8 @@ print(xtable(placenta_class_gsea,
 \label{tab:core_placenta_pathway_analysis}
 \end{table}
 
+
+\clearpage
 
 \subsection{GO Ontology}
 

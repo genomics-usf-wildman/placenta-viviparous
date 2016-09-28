@@ -8,7 +8,7 @@
 \setmathsf{FreeSans}
 \setmathtt{FreeSerif}
 %\usepackage[letterpaper,left=1in,right=1in,top=1in,bottom=1in,headheight=14pt]{geometry}
-\usepackage[letterpaper]{geometry}
+%\usepackage[letterpaper]{geometry}
 %\usepackage{url}
 \usepackage{graphicx}
 %\usepackage{rotating}
@@ -961,6 +961,59 @@ print(ggplot(cptl,aes(x=human_name,y=FPKM))+
 \end{figure}
 
 
+<<core.placenta.transcriptome.distribution,results="hide",echo=FALSE,message=FALSE>>=
+num.species <- star.logs.wide[,length(unique(species))]
+calculate.distribution.shape <- 
+    function(min.vector) {
+        min.vector <- sort(min.vector,decreasing=TRUE)
+        temp <- data.table(FPKM=min.vector,num_genes=1:length(min.vector))
+        temp <- temp[order(-num_genes)][!duplicated(FPKM)]
+        return(temp)
+    }
+
+cptg.nh <- core.placenta.transcriptome.genes.shape[!(human_name %in% housekeeping.genes.superset[,gene_short_name])]
+
+cpt.distribution.shape <- 
+    lapply(c("all_expression",
+             "all_but_one_expression",
+             "all_but_two_expression",
+             "all_but_three_expression",
+             "all_but_four_expression"),
+           function(x){
+               calculate.distribution.shape(cptg.nh[,x,with=FALSE][[1]])[,`Minimum Expression in`:=x]
+           })
+fix.expression.names <- function(x){
+    x <- gsub("^all_expression$",
+              paste0(num.species," of ",num.species," species"),
+              x
+              )
+    nc.levels <- paste0(num.species," of ",num.species," species")
+    ## number coutner
+    nc <- c("one"=1,"two"=2,"three"=3,"four"=4)
+    for (a in names(nc)) {
+        x <- gsub(paste0("^all_but_",a,"_expression$"),
+              paste0(num.species-nc[a]," of ",num.species," species"),
+              x
+              )
+        nc.levels <-
+            c(nc.levels,
+              paste0(num.species-nc[a]," of ",num.species," species"))
+    }
+    return(factor(x,levels=nc.levels))
+}
+
+cpt.distribution.shape <- 
+    rbindlist(cpt.distribution.shape)
+
+cpt.distribution.shape <- 
+    cpt.distribution.shape[,`Minimum Expression in`:=
+                                fix.expression.names(`Minimum Expression in`)]
+
+setnames(cpt.distribution.shape,
+         "FPKM",
+         "Expression (FPKM)")
+@ 
+
 The
 \Sexpr{core.placenta.transcriptome.long[,length(unique(human_name))]}
 genes comprising the core placenta transcriptome are shown in
@@ -970,7 +1023,7 @@ the placenta transcriptome if a 1:1 ortholog of that gene was
 expressed with $\text{FPKM} \ge 10$ in all species studied and was
 not a human housekeeping gene according to
 \citet{Eisenberg.ea2013:Humanhousekeepinggenesrevisited}.
-\cref{fig:core_placenta_transcriptome_shape} shows the number of genes
+Supplemental \cref{fig:core_placenta_transcriptome_shape} shows the number of genes
 which would be included in the core placenta set if the \ac{FPKM}
 cutoff was set differently; for example, choosing an \ac{FPKM} cutoff of 1 yields %
 \Sexpr{cpt.distribution.shape[`Expression (FPKM)`>1 & 

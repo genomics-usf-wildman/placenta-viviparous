@@ -334,7 +334,7 @@ quality was assessed using A260/A280 and A260/A230 absorbance values.
 
 All RNA-Seq mRNA isolation, library construction, and Illumina
 sequencing was performed by the Applied Genomics Technology Center
-(AGTC) at Wayne State University School of Medicine using 2.5-5 µg of
+(AGTC) at Wayne State University School of Me\-di\-cine using 2.5-5 µg of
 total RNA and the standard Illumina protocol. Paired-end sequencing
 was performed using the Illumina Genome Analyzer II with an insert
 size of 230 base pairs (bp). Read lengths for species are shown in
@@ -1033,8 +1033,18 @@ which would be included in the core placenta set if the \ac{FPKM}
 cutoff was set differently; for example, choosing an \ac{FPKM} cutoff of 1 yields %
 \Sexpr{cpt.distribution.shape[`Expression (FPKM)`>1 & 
 `Minimum Expression in` == '14 of 14 species',max(num_genes)]} %
-genes in the core transcriptome.
-%
+genes in the core transcriptome. %
+In contrast to the shape of the number of genes included in the core
+placenta transcriptome, the set of \human housekeeping genes expressed
+all placentas is flatter (Supplemental
+\cref{fig:core_housekeeping_transcriptome_shape}), and includes more
+of the total fraction of genes. However, there is still a large
+difference between the set of housekeeping genes which are expressed
+in \human and those which are expressed in all placentas.
+
+
+\subsubsection{Annexin Complexes}
+
 Multiple components of annexin complexes are included in the core
 transcriptome, including \textit{ANXA2}, \textit{ANXA1},
 \textit{S100A11}, \textit{S100A10}. ANXA1 is involved in the
@@ -1060,13 +1070,10 @@ orthologs with FPKM $>10$ and results in the same terms also being
 significantly enriched, along with additional terms (Supplemental
 \cref{tab:core_placenta_go_terms}).
 
-In contrast to the shape of the number of genes included in the core
-placenta transcriptome, the set of \human housekeeping genes expressed
-all placentas is flatter (Supplemental
-\cref{fig:core_housekeeping_transcriptome_shape}), and includes more
-of the total fraction of genes. However, there is still a large
-difference between the set of housekeeping genes which are expressed
-in \human and those which are expressed in all placentas.
+\subsubsection{Invasion: EGF and Auxin Y in the Core Placenta}
+
+
+
 
 % SPINT2 -- Serine Peptidase inhibitor
 
@@ -1106,6 +1113,7 @@ in \human and those which are expressed in all placentas.
 
 \subsection{Core placenta transcriptome}
 
+\subsubsection{Annexin Complexes}
 The transcriptomes from multiple different species enabled us to
 identify the set of expressed genes which are common to all placentas.
 Components of the annexin complexes, including
@@ -1120,6 +1128,9 @@ placentation. The core placenta transcriptome is also enriched in
 genes involved in maintaining the structure of the placenta and
 transporting proteins, as would be expected given the function of the
 placenta.
+
+\subsubsection{Invasion: EGF and Auxin Y in the Core Placenta}
+
 
 
 \subsection{\human Specific Expression Shifts and the Evolution of Pre-eclampsia}

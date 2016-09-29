@@ -23,7 +23,7 @@
 \usepackage{amsmath}
 \usepackage[backend=biber,natbib=true,hyperref=true,citestyle=numeric-comp,style=nature,autocite=inline]{biblatex}
 \addbibresource{references.bib}
-\usepackage[hyperfigures,bookmarks,colorlinks,linkcolor=black,urlcolor=black,citecolor=blue]{hyperref}
+\usepackage[hyperfigures,bookmarks,colorlinks,linkcolor=black,urlcolor=black,citecolor=blue,breaklinks=true]{hyperref}
 % Floats at end for journals
 % \usepackage[nolists,figuresfirst,nomarkers,heads]{endfloat}
 % \renewcommand{\efloatseparator}{\mbox{}}
@@ -44,8 +44,13 @@
 \zxrsetup{toltxlabel}
 \zexternaldocument*{supplemental_material}
 \usepackage[capitalize]{cleveref}
-
+\def\UrlBreaks{\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]%
+\do\)\do\,\do\?\do\&\do\'\do+\do\=\do\#%
+\do\/%
+}%
 \input{common_latex}
+\tolerance=5000
+\emergencystretch=0.1pt
 
 \begin{document}
 % \raggedright
@@ -351,6 +356,7 @@ same methodology as RNAs sequenced specifically for this study.
 
 \subsection{Transcriptome Assembly, Alignment, and Quantification}
 
+\begin{sloppypar}
 The quality of reads was evaluated using FASTQC v0.11.2
 (\url{http://www.bioinformatics.babraham.ac.uk/projects/fastqc/}).
 Transcriptomes without a suitable reference genome (\smonkey, \galili,
@@ -378,7 +384,7 @@ a reference for \bonobo. The separation between the two recognized Pan
 species is generally perceived to be $\approx 1$ million years
 \cite{Prüfer.ea2012:bonobogenomecomparedwith}. %
 %
-
+\end{sloppypar}
 
 \begin{figure}
 <<species.tree,fig.width=8,fig.height=6,out.width="\\columnwidth",echo=FALSE,message=FALSE,warning=FALSE>>=

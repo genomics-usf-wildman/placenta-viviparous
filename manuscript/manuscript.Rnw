@@ -456,6 +456,8 @@ lme4~\cite{Bates.ea2015:FittingLinearMixed-EffectsModels} with each
 species having separate random effects.
 
 
+\subsection{Gene Set and Pathway Enrichment Analysis}
+
 
 \subsection{Sequences, FPKMs, and Code}
 

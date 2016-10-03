@@ -139,6 +139,11 @@ placenta_netpath_results: gsea_analysis.R placenta_core_transcriptome \
 	Human_NetPath_September_01_2016_Entrezgene.gmt
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,2,$^) placenta.transcriptome.list $(wordlist 3,3,$^) $@
 
+msigdb.v5.1.entrez.gmt:
+	curl -c cookiefile -s "http://software.broadinstitute.org/gsea/j_spring_security_check" -d "j_username=foo@example.com" -d "j_password=password"
+	curl -b cookiefile "http://software.broadinstitute.org/gsea/msigdb/download_file.jsp?filePath=/resources/msigdb/5.1/msigdb.v5.1.entrez.gmt" -o $@
+	rm -f cookefile
+
 kegg.gmt: msigdb.v5.1.entrez.gmt
 	grep '^KEGG_' $< > $@
 

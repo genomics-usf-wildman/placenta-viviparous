@@ -1090,8 +1090,25 @@ significantly enriched, along with additional terms (Supplemental
 
 \subsubsection{Invasion: EGF and Auxin Y in the Core Placenta}
 
-
-
+The core placenta transcriptome is significantly enriched in genes
+which are involved in multiple biological pathways, including multiple
+pathways related to translation (ribosome, translation, signal
+recognition particle targeting to the rough endoplasamic reticulum,
+etc.) (Supplemental \cref{tab:core_placenta_pathway_analysis}). Beyond
+translation, the next most abundant set of significantly enriched
+molecular pathways are related to the migration of the trophoblast
+into the endometrium, including the EGFR1 pathway and the Actin Y
+pathway. Two other pathways, the mPR/Progesterone pathway and Rho cell
+motility pathways, feed into the Actin Y pathway as well. Supplemental
+\cref{fig:egf_kegg_pathway} shows the EGF pathway in humans with the
+median expression in FPKM of genes in the pathway shown. Notably, many
+of the genes on the GRB2->MYC pathway are strongly expressed; their
+activation leads to an increase in migration and invasion in response
+to EGF binding to EGFR1. The Actin cytoskeleton pathway is depicted in
+Supplemental \cref{fig:kegg_actin}, which shows that \textit{FN1} and
+\textit{ITG} are highly expressed, which activate Rac, and potentially
+lead to the formation of focal adhesions and lamellipodia formation
+through their inhibition of GSN and HSPC300.
 
 % SPINT2 -- Serine Peptidase inhibitor
 

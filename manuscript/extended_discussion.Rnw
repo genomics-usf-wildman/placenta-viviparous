@@ -1,5 +1,5 @@
-%\documentclass[english,12pt]{article}
-\documentclass[5p]{elsarticle_dla}
+\documentclass[english,12pt]{article}
+%\documentclass[5p]{elsarticle_dla}
 \usepackage{fontspec}
 \setmainfont{FreeSerif}
 \setsansfont{FreeSans}
@@ -97,6 +97,7 @@
 <<load.libraries,echo=FALSE,results="hide",warning=FALSE,message=FALSE,error=FALSE,cache=FALSE>>=
 opts_chunk$set(dev="cairo_pdf",out.width="\\columnwidth",out.height="0.7\\textheight",out.extra="keepaspectratio")
 opts_chunk$set(cache=TRUE, autodep=TRUE,cache.path="extended_discussion_cache/")
+opts_chunk$set(fig.path="extended_discussion_figure/")
 options(device = function(file, width = 8, height = 7, ...) {
   cairo_pdf(tempfile(), width = width, height = height, ...)
 })
@@ -179,79 +180,6 @@ grad.def <- list(low = "gray90", high = "blue", space = "Lab", na.value = NA)
 \input{acronyms}
 
 \title{The evolution of the transcriptome of mammalian placentas}%
-%
-\author[affigb]{Don L. Armstrong\fnref{n1}}
-\ead{don@donarmstrong.com}
-\author[afflon]{Michael R. McGowen\fnref{n1}}
-\ead{1mmcgowen1@gmail.com}
-\author[affigb]{Amy Weckle}
-\ead{aweckle@illinois.edu}
-\author[affwayne]{Jason Caravas}
-\ead{jacaravas@gmail.com}
-\author[affmich]{Dalen Agnew}
-\ead{agnewd@dcpah.msu.edu}
-\author[affuscd]{Kurt Benirschke}
-\ead{kbenirschke@ucsd.edu}
-\author[affapetrust]{Sue Savage-Rumbaugh}
-\ead{suerumbaugh@gmail.com}
-\author[affhaifa]{Eviatar Nevo}
-\ead{nevo@research.haifa.ac.il}
-\author[affnih,affwaynepath]{Chong J Kim}
-\ead{cjkim@med.wayne.edu}
-\author[affyale]{Günter P. Wagner}
-\ead{gunter.wagner@yale.edu}
-\author[affnih]{Roberto Romero}
-\ead{prbchiefstaff@med.wayne.edu}
-\author[affigb,affapetrust,affmip]{Derek E. Wildman\corref{cor1}}
-\ead{wildmand@illinois.edu}
-\cortext[cor1]{Corresponding author}
-\address[affigb]{Institute for Genomic Biology, University of Illinois at Urbana-Champaign, Urbana, IL, USA}
-\address[afflon]{School of Biological and Chemical Sciences, Queen Mary, University of London, London, UK}
-\address[affwayne]{Center for Molecular Medicine and Genetics, Wayne State University School of Medicine, Detroit, MI, USA}
-\address[affmich]{Diagnostic Center for Population and Animal Health, College of Veterinary Medicine, Michigan State University, East Lansing, MI, USA}
-\address[affuscd]{Department of Pathology, University of California San Diego, La Jolla, CA, USA}
-\address[affapetrust]{Great Ape Trust/Bonobo Hope Sanctuary, Des Moines, IA, USA}
-\address[affnih]{Perinatology Research Branch, Eunice Kennedy Shriver National Institute of Child Health and Human Development (NICHD), National Institutes of Health (NIH), Detroit, MI, USA}
-\address[affwaynepath]{Department of Pathology, Wayne State University School of Medicine, Detroit, MI, USA}
-\address[affyale]{Department of Ecology and Evolutionary Biology and Yale Systems Biology Institute, Yale University, New Haven, CT, USA}
-\address[affmip]{Department of Molecular and Integrative Physiology, University of Illinois at Urbana-Champaign, Urbana, IL, USA}
-\address[affhaifa]{The Institute of Evolution, University of Haifa, Haifa, Israel}
-
-\begin{abstract}
-  \textbf{Background} The placenta is arguably the most
-  anatomically variable organ in mammals. 
-
-  \textbf{Results} We measured the expression profiles of
-  \Sexpr{star.logs[,length(unique(file))]} term placentas of
-  \Sexpr{star.logs[,length(unique(species))]} species of mammals. We
-  found lineage-specific differential expression of prolactin,
-  relaxin, and galectins as well as increased expression of the
-  pre-eclampsia associated genes \textit{ADAM12}, \textit{CRH}, and
-  \textit{PAPPA} in humans. We also identified genes which are
-  expressed in all placentas, including genes with immune-modulating
-  properties (\textit{ANXA2}, \textit{ANXA1}, \textit{S100A11}, and
-  \textit{S100A10}) and cell-cell interactions (\textit{LAMC1},
-  \textit{LUM}, and \textit{LGALS1}).
-
-  \textbf{Conclusions} A diverse array of genes are differentially
-  expressed and are likely to play a role in the anatomical
-  variability of the placenta in the placentas of mammalian lineages.
-  Furthermore, multiple genes which are associated with pre-eclampsia
-  (\textit{CRH}, \textit{ADAM12}, \textit{KISS1}, \textit{PAPPA},
-  \textit{IL1RL1}, and \textit{PLAC1}) show increased expression on
-  the human lineage. Still, using the strictest filtering strategy
-  we find a core set of only
-  \Sexpr{core.placenta.transcriptome.long[,length(unique(human_name))]}
-  genes is essential for the proper functioning of the placenta in all
-  species analyzed.
-
-\end{abstract}
-
-\begin{keyword}
-mammal \sep  gene expression \sep evolution \sep RNA-seq \sep placenta
-\end{keyword}
-
-\maketitle
 
 \section{Background}
 

@@ -11,11 +11,7 @@ space +=
 
 FPKM_FILES=Supplemental_Table_2_Homo_NEW_UPDATED.txt $(patsubst %.xlsx,%.txt,$(filter-out $(wildcard *Homo*), $(wildcard *_fpkm.xlsx)))
 
-
-all: combined_fpkm gene_trees housekeeping_genes_superset placenta_core_transcriptome \
-	placenta_go_results_bp placenta_go_results_mf hugo_nomenclature gene_annotation \
-	mammal_lifehistories.txt placenta_lineage_specific combined_fpkm_per_sample \
-	homology_table
+.DEFAULT_GOAL=all
 
 mammal_lifehistories.txt:
 	wget -O $@ "http://www.esapubs.org/archive/ecol/E084/093/Mammal_lifehistories_v2.txt"
@@ -199,3 +195,11 @@ ortholog_expression_nexus.nex: ortholog_expression_nexus.R combined_fpkm houseke
 
 ortholog_expression_nexus_continuous.nex: ortholog_expression_nexus_continuous.R combined_fpkm housekeeping_genes_superset
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
+
+all: combined_fpkm gene_trees housekeeping_genes_superset				\
+	placenta_core_transcriptome placenta_go_results_bp					\
+	placenta_go_results_mf hugo_nomenclature gene_annotation			\
+	mammal_lifehistories.txt placenta_lineage_specific					\
+	combined_fpkm_per_sample homology_table placenta_classification_p	\
+	$(GSEA_SET_ANALYSES) $(PATHWAY_PLAC_CLASS) $(BP_GO_PLAC_CLASS)		\
+	$(MF_GO_PLAC_CLASS)

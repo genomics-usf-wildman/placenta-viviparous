@@ -4,7 +4,7 @@ library("org.Hs.eg.db")
 library("parallel")
 
 args <- c("combined_fpkm","housekeeping_genes_superset",
-          "placental_classification.txt","placenta_classification_specific")
+          "placenta_classification","placenta_classification_specific")
 
 args <- commandArgs(trailingOnly=TRUE)
 
@@ -51,7 +51,7 @@ placenta_classification <-
     placenta.class.specific[placenta_classification]      
 
 
-calculate.aov <- function(gene,factor="barrier") {
+calculate.aov <- function(gene,factor="intimacy") {
     temp.glm <- glm(as.formula(paste0("mean_fpkm~",factor,"+0")),
                     data=placenta_classification[human_name==gene,])
     temp.glm.coef <- summary(temp.glm)$coefficients
@@ -78,10 +78,11 @@ calculate.aov <- function(gene,factor="barrier") {
 }
 
 placenta.classification.p <-
-    rbindlist(lapply(c("shape","barrier","interdigitation"),
+    rbindlist(lapply(c("shape","intimacy","interdigitation"),
                      function(x){
                          rbindlist(mclapply(placenta_classification[,unique(human_name)],
-                                            calculate.aov,factor=x,mc.cores=num.cores))}))
+                                            calculate.aov,factor=x,mc.cores=num.cores))})
+              )
 
 ## throw out analyses with infinite statistic
 placenta.classification.p <-
@@ -94,7 +95,7 @@ placenta.classification.p[,fdr:=p.adjust(p,method="BH"),by=list(factor,type)]
 placenta.classification.p[,fdr.overall:=p.adjust(p,method="BH")]
 
 placenta.classification.significance <- list()
-for (class in c("shape","barrier","interdigitation")) {
+for (class in c("shape","intimacy","interdigitation")) {
     placenta.classification.significance[[class]] <-
         ifelse(placenta.classification.p[!is.na(egid) & type=="aov" & factor==class,
                                          fdr] <= 0.05,

@@ -167,7 +167,7 @@ placenta_classification_p: placenta_classification_specific.R	\
 	placenta_classification
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
 
-PLACENTA_CLASSIFICATIONS=shape barrier interdigitation
+PLACENTA_CLASSIFICATIONS=shape intimacy interdigitation
 MF_GO_PLAC_CLASS=$(foreach class, $(PLACENTA_CLASSIFICATIONS),	\
 placenta_classification_go_mf_$(class))
 $(MF_GO_PLAC_CLASS): placenta_classification_go_mf_%: go_analysis.R	placenta_classification_p

@@ -1,4 +1,4 @@
-species	shape	interdigitation	barrier
+species	shape	interdigitation	intimacy
 monodelphis domestica	discoidal	folded	epitheliochorial
 ateles fusciceps	discoidal	trabecular	hemochorial
 homo sapiens	discoidal	villous	hemochorial

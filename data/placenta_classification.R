@@ -19,8 +19,8 @@ placenta_classification[,interdigitation:=
                                     ordered=TRUE
                                     )]
 
-placenta_classification[,barrier:=
-                             factor(barrier,
+placenta_classification[,intimacy:=
+                             factor(intimacy,
                                     levels=c("epitheliochorial",
                                              "endotheliochorial",
                                              "hemochorial"

@@ -77,12 +77,38 @@ calculate.aov <- function(gene,factor="intimacy") {
                               "p"=temp.glm.coef[,"Pr(>|t|)"])))
 }
 
+calculate.polr <- function(gene,factor="intimacy") {
+    temp.coef <-
+        coef(summary(polr(as.formula(paste0(factor,"~mean_fpkm")),
+                          placenta_classification[human_name==gene],
+                          Hess=TRUE)))
+    data.table("gene"=gene,
+               "egid"=name.to.ensembl[gene,egid],
+               "gene_id"=name.to.ensembl[gene,gene_id],
+               "factor"=factor,
+               "type"="polr",
+               "level"=factor,
+               "coefficient"=temp.coef["mean_fpkm","Value"],
+               "statistic"=temp.glm.coef["mean_fpkm","t value"],
+               ## approximate p using the Z distribution
+               "p"=pnorm(temp.glm.coef["mean_fpkm","t value"],
+                         lower.tail=FALSE)*2)
+}
+    
+
 placenta.classification.p <-
     rbindlist(lapply(c("shape","intimacy","interdigitation"),
                      function(x){
                          rbindlist(mclapply(placenta_classification[,unique(human_name)],
                                             calculate.aov,factor=x,mc.cores=num.cores))})
               )
+placenta.classification.p <-
+    rbindlist(c(list(orig=placenta.classification.p),
+                lapply(c("intimacy","interdigitation"),
+                       function(x){
+                           rbindlist(mclapply(placenta_classification[,unique(human_name)],
+                                              calculate.aov,factor=x,mc.cores=num.cores))})
+                ))
 
 ## throw out analyses with infinite statistic
 placenta.classification.p <-

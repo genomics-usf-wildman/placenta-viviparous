@@ -455,9 +455,25 @@ type-III anova was calculated using
 lme4~\cite{Bates.ea2015:FittingLinearMixed-EffectsModels} with each
 species having separate random effects.
 
+Significant shifts in expression levels which correlate with placenta
+morphology (shape, interdigitation, and intimacy) were identified
+using ANOVA on generalized linear models with the $\log$ \ac{FPKM} as
+the response variable and the morphology as the predictor variable.
+Placenta morphology with a defined order (interdigitation, intimacy)
+were additionally analyzed using proportional odds logistic regression
+using the MASS package in R~\cite{Venables2002:MASS}.
+
 
 \subsection{Gene Set and Pathway Enrichment Analysis}
 
+Gene sets and pathways in were obtained from MSigdb v5.1 hallmark gene
+set \cite{Liberzon.ea2011:MolecularsignaturesdatabaseMSigDB} and Gene
+Ontology which represent a superset of available pathway databases,
+including Reactome, Kegg, Netpath, and GO. We calculated the
+over-representation of gene lists in these gene sets using Fisher's
+exact test and corrected for multiple testing by estimating the
+\ac{FDR} using the Benjamini and Hochberg procedure
+\cite{Benjamini1995:bh_procedure}.
 
 \subsection{Sequences, FPKMs, and Code}
 

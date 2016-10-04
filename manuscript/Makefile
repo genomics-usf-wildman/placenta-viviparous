@@ -42,9 +42,20 @@ extended_discussion.pdf: extended_discussion.tex common_latex.tex acronyms.tex s
 
 supplemental_material.pdf: manuscript.tex common_latex.tex acronyms.tex
 
-manuscript.tex: manuscript.Rnw ../data/combined_fpkm ../data/placenta_core_transcriptome ../data/placenta_go_results_mf ../data/placenta_go_results_bp
+GO_GSEA_RESULTS= $(wildcard ../data/placenta_go_results_??)			\
+$(wildcard ../data/placenta_go_results_permissive_??) $(wildcard	\
+../data/placenta_gsea_*) $(wildcard									\
+../data/placenta_classification_go_??)
 
-supplemental_material.tex: supplemental_material.Rnw ../data/combined_fpkm ../data/placenta_core_transcriptome ../data/placenta_go_results_mf ../data/placenta_go_results_bp
+manuscript.tex: manuscript.Rnw ../data/combined_fpkm	\
+../data/placenta_core_transcriptome						\
+../data/human_mouse_lineage_specific					\
+../data/placenta_lineage_specific $(GO_GSEA_RESULTS)
+
+supplemental_material.tex: supplemental_material.Rnw	\
+../data/combined_fpkm ../data/placenta_lineage_specific	\
+../data/human_mouse_lineage_specific					\
+../data/placenta_core_transcriptome $(GO_GSEA_RESULTS)
 
 version_it: manuscript.pdf supplemental_material.pdf
 	for a in $^; do \

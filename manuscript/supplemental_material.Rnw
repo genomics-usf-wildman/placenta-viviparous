@@ -405,7 +405,8 @@ popViewport(2)
 
 
 \begin{figure}
-<<reads.vs.read.length,fig.width=8,fig.height=8,echo=FALSE>>=
+<<reads.vs.read.length,fig.width=8,fig.height=6,echo=FALSE>>=
+grid::pushViewport(grid::viewport(layout=grid::grid.layout(ncol=2,nrow=1,widths=c(1,1.4))))
 print(ggplot(star.logs.wide,
              aes(x=as.numeric(input.read.length),
                  y=as.numeric(input.reads),
@@ -419,11 +420,33 @@ print(ggplot(star.logs.wide,
                              )
       + geom_point(size=5)
       + xlab("Trimmed Read Length")
-      + ylab("Read number")
+      + ylab("Number of input reads")
       + scale_y_log10()
-      + theme(legend.text=element_text(face="italic")
-              )
+      + theme(legend.position="none"
+              ),
+      vp=grid::viewport(layout.pos.row=1,layout.pos.col=1)
       )
+print(ggplot(star.logs.wide,
+             aes(x=as.numeric(input.read.length),
+                 y=as.numeric(`% of reads unmapped: too short`)#,
+                 # color=capfirst(species),
+                 # shape=capfirst(species)
+                 ))
+      + scale_shape_manual(values=1:nlevels(as.factor(star.logs.wide[,species])),
+                           guide=guide_legend(title="Species")
+                           )
+      + scale_color_discrete(guide=guide_legend(title="Species")
+                             )
+      + geom_point(aes(color=capfirst(species),shape=capfirst(species)),size=5)
+      + stat_smooth(method="lm")
+      + xlab("Trimmed Read Length")
+      + ylab("Unmapped Too Short %")
+      + theme(legend.text=element_text(face="italic"),
+              legend.position="right"
+              ),
+            vp=grid::viewport(layout.pos.row=1,layout.pos.col=2)
+      )
+grid::popViewport()
 @ 
 \caption{RNA Read number as a function of trimmed read length}
 \label{fig:transcriptome_reads_vs_read_length}

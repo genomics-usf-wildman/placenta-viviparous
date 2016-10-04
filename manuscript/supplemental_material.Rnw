@@ -768,7 +768,7 @@ print(xtable(placenta_class_gsea,
   significant and suggestive enrichment ($\text{FDR}\le 0.1$) in genes
   associated with placenta morphology using the biocarta, reactome,
   and kegg pathway databases.}
-\label{tab:core_placenta_pathway_analysis}
+\label{tab:placenta_pathway_class_analysis}
 \end{table}
 
 

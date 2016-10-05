@@ -824,7 +824,7 @@ output.mentioned.genes.table <- function(subset.table=quote(TRUE),
 
 \subsection{Pre-eclampsia \human Lineage Specific Genes}
 
-\begin{table}
+\begin{table}[tbh]
   \footnotesize
 <<human.lineage.specific,echo=FALSE,results="asis">>=
 hum.all.lin.spec <-
@@ -869,63 +869,9 @@ but are negatively correlated with pre-eclampsia
 \cite{Spencer.ea2008:ADAM12sinmaternalserum}.
 
 
-\begin{figure*}[htb]
-<<psg.ctsl.evolution.tree,echo=FALSE,out.width="\\textwidth",fig.width=8,fig.height=8>>=
-pushViewport(viewport(layout=grid.layout(nrow=2,ncol=2),clip="off"))
-print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="PSG1" & species=="homo sapiens"),
-                                genes.to.tree=genes.to.tree,
-                                combined.fpkm=combined.fpkm,
-                                subtree=c("ENSG00000221826","ENSG00000124469"),
-                                trees=trees
-                                )+
-      geom_tiplab(size=2,color="black",fontface="italic")+xlim(0,0.2)+
-      theme(legend.position="none"),
-      vp=viewport(layout.pos.col=1,layout.pos.row=1,clip="off"))
-print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="CTSL" & species=="homo sapiens"),
-                                genes.to.tree=genes.to.tree,
-                                combined.fpkm=combined.fpkm,
-                                subtree=c("ENSMODG00000002844","ENSMUSG00000055679"),
-                                trees=trees)+
-      geom_tiplab(size=2,color="black",fontface="italic")+xlim(0,0.8)+
-      theme(legend.position="none"),
-      vp=viewport(layout.pos.col=2,layout.pos.row=1,clip="off"))
-print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="PRSS16" &
-                                                    species=="homo sapiens"),
-                                genes.to.tree=genes.to.tree,
-                                subtree=c(   "ENSG00000112812",
-                                          "ENSLAFG00000032211"),
-                                combined.fpkm=combined.fpkm,
-                                trees=trees)+
-      geom_tiplab(size=2,color="black",fontface="italic")+xlim(0,1.2),
-      vp=viewport(layout.pos.col=1,layout.pos.row=2,clip="off"))
-print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="PAG2" &
-                                                    species=="bos taurus"),
-                                genes.to.tree=genes.to.tree,
-                                combined.fpkm=combined.fpkm,
-                                subtree=c("ENSSSCG00000013097",
-                                          "ENSBTAG00000046085"),
-                                trees=trees) +
-      geom_tiplab(size=2,color="black",fontface="italic") +
-      xlim(0,0.8)+
-      theme(legend.position="none"),
-      vp=viewport(layout.pos.col=2,layout.pos.row=2,clip="off"))
-popViewport(1)
-
-grid.text(c("A","B","C","D"),
-          x=unit(c(0,0.5,0,0.5),"npc"),y=unit(c(1,1,0.5,0.5),"npc"),
-          just=c("left","top"),
-          gp=gpar(fontsize="24")
-          )
-@ 
-\caption{\genetreeexplanation{(A) \textit{PSG1}, (B) \textit{CTSL}, (C) \textit{PRSS16}, and (D) \textit{PAG2}}}
-\label{fig:pag2_prss16_ctsl_psg_evolution_tree}
-\end{figure*}
-
-
-
 \subsection{Core Placenta Transcriptome}
 
-\begin{figure}
+\begin{figure}[tbh]
 <<core.placenta.transcriptome,fig.width=8,fig.height=12,out.height="0.8\\textheight",echo=FALSE>>=
 cptl <-
     core.placenta.transcriptome.long[!grepl("(min|median|max|all)_expression|all_but_",

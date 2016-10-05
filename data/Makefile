@@ -208,6 +208,6 @@ ALL_TARGETS=combined_fpkm gene_trees housekeeping_genes_superset				\
 
 -include main_host.mk
 get_data:
-	echo $(ALL_TARGETS)|rsync -vP --files-from=/dev/stdin $(MAIN_HOST):$(shell pwd) .
+	echo $(ALL_TARGETS)|sed 's/ /\n/g'|rsync -vP --files-from=/dev/stdin $(MAIN_HOST):$(shell pwd) .
 
 all: $(ALL_TARGETS)

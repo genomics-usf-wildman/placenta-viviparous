@@ -196,10 +196,18 @@ ortholog_expression_nexus.nex: ortholog_expression_nexus.R combined_fpkm houseke
 ortholog_expression_nexus_continuous.nex: ortholog_expression_nexus_continuous.R combined_fpkm housekeeping_genes_superset
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
 
-all: combined_fpkm gene_trees housekeeping_genes_superset				\
+ALL_TARGETS=combined_fpkm gene_trees housekeeping_genes_superset				\
 	placenta_core_transcriptome placenta_go_results_bp					\
 	placenta_go_results_mf hugo_nomenclature gene_annotation			\
 	mammal_lifehistories.txt placenta_lineage_specific					\
 	combined_fpkm_per_sample homology_table placenta_classification_p	\
 	$(GSEA_SET_ANALYSES) $(PATHWAY_PLAC_CLASS) $(BP_GO_PLAC_CLASS)		\
 	$(MF_GO_PLAC_CLASS)
+
+.PHONY: get_data
+
+-include main_host.mk
+get_data:
+	echo $(ALL_TARGETS)|rsync -vP --files-from=/dev/stdin $(MAIN_HOST):$(shell pwd) .
+
+all: $(ALL_TARGETS)

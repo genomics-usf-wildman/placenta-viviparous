@@ -142,7 +142,7 @@ grad.def <- list(low = "gray90", high = "blue", space = "Lab", na.value = NA)
 placenta_classification <- fread("../data/placental_classification.txt")
 load("../data/placenta_classification_p")
 for (mf.bp in c("mf","bp")) {
-    for (class in c("interdigitation","barrier","shape")) {
+    for (class in c("interdigitation","intimacy","shape")) {
         load(paste0("../data/placenta_classification_go_",mf.bp,"_",class))
     }
 }

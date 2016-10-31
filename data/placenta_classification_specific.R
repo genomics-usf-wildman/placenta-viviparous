@@ -2,6 +2,7 @@ library("data.table")
 library("reshape2")
 library("org.Hs.eg.db")
 library("parallel")
+library("MASS")
 
 args <- c("combined_fpkm","housekeeping_genes_superset",
           "placenta_classification","placenta_classification_specific")
@@ -78,10 +79,14 @@ calculate.aov <- function(gene,factor="intimacy") {
 }
 
 calculate.polr <- function(gene,factor="intimacy") {
-    temp.coef <-
-        coef(summary(polr(as.formula(paste0(factor,"~mean_fpkm")),
-                          placenta_classification[human_name==gene],
-                          Hess=TRUE)))
+    temp.coef <- data.frame("Value"=NA,"t value"=NA,check.names=FALSE)
+    rownames(temp.coef) <- "mean_fpkm"
+    try({
+        temp.coef <-
+            coef(summary(polr(as.formula(paste0(factor,"~mean_fpkm")),
+                              placenta_classification[human_name==gene],
+                              Hess=TRUE)))},
+        silent=TRUE)
     data.table("gene"=gene,
                "egid"=name.to.ensembl[gene,egid],
                "gene_id"=name.to.ensembl[gene,gene_id],
@@ -89,9 +94,9 @@ calculate.polr <- function(gene,factor="intimacy") {
                "type"="polr",
                "level"=factor,
                "coefficient"=temp.coef["mean_fpkm","Value"],
-               "statistic"=temp.glm.coef["mean_fpkm","t value"],
+               "statistic"=temp.coef["mean_fpkm","t value"],
                ## approximate p using the Z distribution
-               "p"=pnorm(temp.glm.coef["mean_fpkm","t value"],
+               "p"=pnorm(as.numeric(temp.coef["mean_fpkm","t value"]),
                          lower.tail=FALSE)*2)
 }
     
@@ -107,7 +112,7 @@ placenta.classification.p <-
                 lapply(c("intimacy","interdigitation"),
                        function(x){
                            rbindlist(mclapply(placenta_classification[,unique(human_name)],
-                                              calculate.aov,factor=x,mc.cores=num.cores))})
+                                              calculate.polr,factor=x,mc.cores=num.cores))})
                 ))
 
 ## throw out analyses with infinite statistic

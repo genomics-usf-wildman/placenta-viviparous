@@ -14,6 +14,7 @@
 \usepackage{booktabs}
 \usepackage{float}
 \usepackage{multirow}
+\usepackage{multicol}
 \usepackage{setspace}
 \usepackage{wrapfig}
 % \usepackage{txfonts}
@@ -44,15 +45,17 @@
 \usepackage{zref-xr,zref-user}
 \usepackage{cleveref}
 \usepackage{xspace}
-\newenvironment{narrow}[2]{%
-  \begin{list}{}{%
-      \setlength{\topsep}{0pt}%
-      \setlength{\leftmargin}{#1}%
-      \setlength{\rightmargin}{#2}%
-      \setlength{\listparindent}{\parindent}%
-      \setlength{\itemindent}{\parindent}%
-      \setlength{\parsep}{\parskip}}%
-  \item[]}{\end{list}}
+% \usepackage[below]{placeins}
+% \makeatletter
+% \AtBeginDocument{%
+%   \expandafter\renewcommand\expandafter\subsection\expandafter
+%     {\expandafter\@fb@secFB\subsection}%
+%   \newcommand\@fb@secFB{\FloatBarrier
+%     \gdef\@fb@afterHHook{\@fb@topbarrier \gdef\@fb@afterHHook{}}}%
+%   \g@addto@macro\@afterheading{\@fb@afterHHook}%
+%   \gdef\@fb@afterHHook{}%
+% }
+% \makeatother
 \def\newblock{\hskip}
 \newenvironment{paperquote}{%
   \begin{quote}%
@@ -179,7 +182,7 @@ load("../go_annotation/go_tissue_analysis")
 load("../data/placenta_classification")
 load("../data/placenta_classification_p")
 for (mf.bp in c("mf","bp")) {
-    for (class in c("interdigitation","barrier","shape")) {
+    for (class in c("interdigitation","intimacy","shape")) {
         load(paste0("../data/placenta_classification_go_",mf.bp,"_",class))
     }
 }
@@ -643,13 +646,22 @@ pathview(gene.data=plac_path_egid(quote(as.numeric(median_expression))),
 
 
 <<placenta_class_table,echo=FALSE,results="hide">>=
-placenta_class_table <- function(class="shape") {
-    subtable <- placenta.classification.p[factor==class & type == "aov",list(gene,p,fdr)]
+placenta_class_table <- function(class="shape",analysis.type="aov") {
+    subtable <- placenta.classification.p[factor==class & type == analysis.type,
+                                          list(gene,p,fdr)]
     setnames(subtable,c("Gene","p","FDR"))
-    subtable <- head(subtable[FDR <= 0.05,][order(p),],n=50)
+    subtable <- head(subtable[order(p),],n=50)
+    top.type <- function(gene.name) {
+        placenta.classification.p[gene==gene.name & factor==class
+                                  & type =="glm",][order(-abs(coefficient))][1,level]
+    }
+    subtable[,`level_type`:=sapply(Gene,top.type)]
+    setnames(subtable,"level_type",
+             paste0("Most Significant ",
+                    gsub("^(.)","\\U\\1",class,perl=TRUE)))
     print(xtable(subtable,
-                 align=c("c","c","r","r"),
-                 display=c("s","s","g","g")
+                 align=c("c","c","r","r","c"),
+                 display=c("s","s","g","g","s")
                  ),
           booktabs=TRUE,
           floating=FALSE,
@@ -660,30 +672,36 @@ placenta_class_table <- function(class="shape") {
 
 @ 
 
+\clearpage
 
 \subsection{Attachment Shape}
 
 
-\begin{table}[h]
+\begin{table}
 <<attachment_shape_significant,echo=FALSE,results="asis">>=
 placenta_class_table("shape")
 @ 
 \caption{Top 50 genes which are associated with the shape of placenta attachment}
 \label{tab:shape_genes}
 \end{table}
-\clearpage
 
 \subsection{Maternal-Fetal Intimacy}
 
 \begin{table}[h]
 <<intimacy_significant,echo=FALSE,results="asis">>=
-placenta_class_table("barrier")
+placenta_class_table("intimacy")
 @ 
 \caption{Top 50 genes which are associated with the degree of placenta intimacy}
-\label{tab:barrier_genes}
+\label{tab:intimacy_genes}
 \end{table}
 
-\clearpage
+\begin{table}[h]
+<<intimacy_significant_polr,echo=FALSE,results="asis">>=
+placenta_class_table("intimacy",analysis.type="polr")
+@ 
+\caption{Top 50 genes which are associated with the degree of placenta intimacy; ordered analysis}
+\label{tab:intimacy_genes_polr}
+\end{table}
 
 \subsection{Maternal-Fetal Interdigitation}
 
@@ -695,7 +713,17 @@ placenta_class_table("interdigitation")
 \label{tab:interdigitation_genes}
 \end{table}
 
+
+\begin{table}[h]
+<<interdigitation_significant_polr,echo=FALSE,results="asis">>=
+placenta_class_table("interdigitation",analysis.type="polr")
+@ 
+\caption{Top 50 genes which are associated with the degree of maternal-fetal interdigitation; ordered analysis}
+\label{tab:interdigitation_genes_polr}
+\end{table}
+
 \clearpage
+
 
 \section{GSEA}
 
@@ -736,9 +764,10 @@ print(xtable(pathway.analysis,
 
 
 \begin{table}
+  \small
 <<pathway_analysis_class,echo=FALSE,results="asis",cache.extra=file.info(dir("../data","placenta_gsea.*",full.names=TRUE))[,"mtime"]>>=
 pathway <- list()
-for (class in c("shape","interdigitation","barrier")) {
+for (class in c("shape","interdigitation","intimacy")) {
     for (database in c("kegg","reactome","biocarta","netpath")) {
         load(paste0("../data/placenta_gsea_",class,"_",database))
         eval(parse(text=paste0("gsea.table <- placenta_gsea_",class,"_",database)))
@@ -749,7 +778,7 @@ for (class in c("shape","interdigitation","barrier")) {
     }
 }
 placenta_class_gsea <-
-    rbindlist(pathway)[fdr < 0.1,]
+    rbindlist(pathway)[fdr < 0.2,]
 placenta_class_gsea[,Pathway:=gsub("^(KEGG|BIOCARTA|REACTOME) ","",
                                    gsub("_+"," ",
                                         Pathway))]
@@ -765,7 +794,7 @@ print(xtable(placenta_class_gsea,
       floating=FALSE)      
 @ 
 \caption[Placenta Classification Pathway Enrichment]{Pathways with
-  significant and suggestive enrichment ($\text{FDR}\le 0.1$) in genes
+  significant and suggestive enrichment ($\text{FDR}\le 0.2$) in genes
   associated with placenta morphology using the biocarta, reactome,
   and kegg pathway databases.}
 \label{tab:placenta_pathway_class_analysis}

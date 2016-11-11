@@ -872,7 +872,7 @@ but are negatively correlated with pre-eclampsia
 \subsection{Core Placenta Transcriptome}
 
 \begin{figure}[tbh]
-<<core.placenta.transcriptome,fig.width=8,fig.height=12,out.height="0.8\\textheight",echo=FALSE>>=
+<<core.placenta.transcriptome,fig.width=5,fig.height=8,out.height="0.8\\textheight",echo=FALSE>>=
 cptl <-
     core.placenta.transcriptome.long[!grepl("(min|median|max|all)_expression|all_but_",
                                             Species),]
@@ -882,38 +882,28 @@ cptl <- cptl[,Species:=factor(gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",capfirst(S
 
 print(ggplot(cptl,aes(x=human_name,y=FPKM))+
       geom_boxplot(outlier.shape=NA)+
-      scale_y_log10()+
+      scale_y_log10(labels=trans_format("log10", math_format(10^.x)))+
       geom_point(aes(color=Species,shape=Species))+
-      scale_shape_manual(guide=guide_legend(nrow=2,
+      scale_shape_manual("Species",
+                         guide=guide_legend(#nrow=1,
                                             keywidth=unit(3,"mm"),
                                             keyheight=unit(3,"mm"),
                                             label.theme=element_text(face="italic",
                                                                      angle=0,
-                                                                     size=9)),
+                                                                     size=9),
+                                            title.position="top"
+                                            ),
                          values=0:18)+
+      # scale_color_discrete(NULL)+
       coord_flip()+
-      theme(legend.position="bottom"))
-
-# print(ggplot(cptl,
-#              aes(y=human_name,x=Species))
-#       + geom_raster(aes(fill=log10(FPKM)))
-#       + scale_x_discrete(expand=c(0,0))
-#       + scale_y_discrete(expand=c(0,0))
-#       + scale_fill_gradient(low = grad.def[["low"]],
-#                             high = grad.def[["high"]],
-#                             space = grad.def[["space"]],
-#                             na.value = grad.def[["na.value"]],
-#                             limits=c(0,4),
-#                             guide=guide_colorbar(title=expression(log[10](FPKM)))
-#                             )
-#       + ylab("Human Ortholog Name")
-#       + xlab("Species")
-#       + theme_grey()
-#       + theme(legend.position="top",
-#               axis.ticks = element_blank(),
-#               axis.text.y = element_text(face="italic"),
-#               axis.text.x = element_text(angle = 90, hjust = 1, vjust=0,face="italic")) 
-#      )
+      xlab("Human Ortholog Name")+
+      ylab("FPKM")+
+      theme(legend.position=c(0.7,0.15),
+            axis.text.y=element_text(face="italic"),
+            legend.margin=unit(0,"mm"),
+            legend.justification="left",
+            plot.margin=unit(c(0,0,0,0),"mm")
+            ))
 @ 
 \caption{Core Placenta Transcriptome.
   \Sexpr{core.placenta.transcriptome.long[,length(unique(human_name))]}

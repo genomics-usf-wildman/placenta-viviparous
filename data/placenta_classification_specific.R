@@ -134,11 +134,20 @@ placenta.classification.p[,fdr.overall:=p.adjust(p,method="BH")]
 placenta.classification.significance <- list()
 for (class in c("shape","intimacy","interdigitation")) {
     placenta.classification.significance[[class]] <-
-        ifelse(placenta.classification.p[!is.na(egid) & type=="aov" & factor==class,
-                                         fdr] <= 0.05,
-               1,0)
+        factor(ifelse(placenta.classification.p[!is.na(egid) & type=="aov" & factor==class,
+                                                fdr] <= 0.05,
+                      1,0),levels=c("0","1"))
     names(placenta.classification.significance[[class]]) <-
         placenta.classification.p[!is.na(egid) & type=="aov" & factor==class,egid]
+}
+
+for (class in c("intimacy","interdigitation")) {
+    placenta.classification.significance[[paste0(class,".polr")]] <-
+        factor(ifelse(placenta.classification.p[!is.na(egid) & type=="polr" & factor==class,
+                                                fdr] <= 0.05,
+                      1,0),levels=c("0","1"))
+    names(placenta.classification.significance[[paste0(class,".polr")]]) <-
+        placenta.classification.p[!is.na(egid) & type=="polr" & factor==class,egid]
 }
 
 save(placenta.classification.p,

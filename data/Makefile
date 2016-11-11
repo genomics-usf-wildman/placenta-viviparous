@@ -164,8 +164,9 @@ placenta_classification_p: placenta_classification_specific.R	\
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
 
 PLACENTA_CLASSIFICATIONS=shape intimacy interdigitation
-MF_GO_PLAC_CLASS=$(foreach class, $(PLACENTA_CLASSIFICATIONS),	\
-placenta_classification_go_mf_$(class))
+MF_GO_PLAC_CLASS=$(foreach class, $(PLACENTA_CLASSIFICATIONS),		\
+placenta_classification_go_mf_$(class)) $(foreach class,intimacy	\
+interdigitation,placenta_classification_go_mf_$(class).polr)
 $(MF_GO_PLAC_CLASS): placenta_classification_go_mf_%: go_analysis.R	placenta_classification_p
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,2,$^) 'placenta.classification.significance[["$*"]]' MF $@
 
@@ -182,8 +183,9 @@ $(PATHWAY_PLAC_CLASS): placenta_gsea_%: gsea_analysis.R \
 		$(lastword $(subst _,$(space),$*)).gmt $@
 
 
-BP_GO_PLAC_CLASS=$(foreach class, $(PLACENTA_CLASSIFICATIONS),	\
-placenta_classification_go_bp_$(class))
+BP_GO_PLAC_CLASS=$(foreach class, $(PLACENTA_CLASSIFICATIONS),		\
+placenta_classification_go_bp_$(class)) $(foreach class,intimacy	\
+interdigitation,placenta_classification_go_bp_$(class).polr)
 $(BP_GO_PLAC_CLASS): placenta_classification_go_bp_%: go_analysis.R	placenta_classification_p
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,2,$^) 'placenta.classification.significance[["$*"]]' BP $@
 
@@ -196,7 +198,7 @@ ortholog_expression_nexus.nex: ortholog_expression_nexus.R combined_fpkm houseke
 ortholog_expression_nexus_continuous.nex: ortholog_expression_nexus_continuous.R combined_fpkm housekeeping_genes_superset
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
 
-ALL_TARGETS=combined_fpkm gene_trees housekeeping_genes_superset				\
+ALL_TARGETS:=combined_fpkm gene_trees housekeeping_genes_superset				\
 	placenta_core_transcriptome placenta_go_results_bp					\
 	placenta_go_results_mf hugo_nomenclature gene_annotation			\
 	mammal_lifehistories.txt placenta_lineage_specific					\

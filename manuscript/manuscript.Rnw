@@ -1038,7 +1038,7 @@ pathway. Two other pathways, the mPR/Progesterone pathway and Rho cell
 motility pathways, feed into the Actin Y pathway as well. Supplemental
 \cref{fig:egf_kegg_pathway} shows the EGF pathway in humans with the
 median expression in FPKM of genes in the pathway shown. Notably, many
-of the genes on the GRB2->MYC pathway are strongly expressed; their
+of the genes on the GRB2→MYC pathway are strongly expressed; their
 activation leads to an increase in migration and invasion in response
 to EGF binding to EGFR1. The Actin cytoskeleton pathway is depicted in
 Supplemental \cref{fig:kegg_actin}, which shows that \textit{FN1} and
@@ -1072,9 +1072,26 @@ through their inhibition of GSN and HSPC300.
 
 \subsection{Placenta Morphology and Genetics}
 
+We correlated different aspects of placenta morphology, including
+shape, intimacy, and interdigitation with the mRNA transcription
+profiles of all 1:1 human orthologs with \ac{FPKM} greater than 10 in
+one species, and \ac{FPKM} greater than 1 at least two species. 
+
 \subsubsection{Placenta Attachment Shape}
 
+Supplemental \cref{tab:shape_genes} shows the top 50 genes which are
+associated with the shape of placenta attachment, as well as the shape
+in which the difference is most significant.
+
+\textit{EREG} -- ligand of EGFR, known to be expressed in some
+placentas but apparently not present in the term placentas of \human.
+
+\textit{UNC} -- totally unknown
+
+
 \subsubsection{Degree of Intimacy}
+
+Genes in multiple immune system-related pathways are altered in increasing degrees of intimacy
 
 \subsubsection{Interdigitation}
 

@@ -51,8 +51,14 @@ setkey(placenta_classification,"species")
 placenta_classification <-
     placenta.class.specific[placenta_classification]      
 
+set.seed(30621)
+### replace 0s with very small non-zero to avoid trouble with
+### underestimating the variance
+placenta_classification[mean_fpkm==0,
+                        mean_fpkm:=rnorm(sum(mean_fpkm==0,na.rm=TRUE))/100]
 
 calculate.aov <- function(gene,factor="intimacy") {
+    temp.data <- placenta_classification[human_name==gene,]
     temp.glm <- glm(as.formula(paste0("mean_fpkm~",factor,"+0")),
                     data=placenta_classification[human_name==gene,])
     temp.glm.coef <- summary(temp.glm)$coefficients

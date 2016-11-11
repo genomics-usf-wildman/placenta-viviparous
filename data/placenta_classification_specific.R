@@ -102,7 +102,7 @@ calculate.polr <- function(gene,factor="intimacy") {
                "coefficient"=temp.coef["mean_fpkm","Value"],
                "statistic"=temp.coef["mean_fpkm","t value"],
                ## approximate p using the Z distribution
-               "p"=pnorm(as.numeric(temp.coef["mean_fpkm","t value"]),
+               "p"=pnorm(abs(as.numeric(temp.coef["mean_fpkm","t value"])),
                          lower.tail=FALSE)*2)
 }
     

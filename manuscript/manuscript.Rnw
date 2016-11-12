@@ -1090,11 +1090,20 @@ Tlr9 immune response in mice\DLA{cite TLR7/TLR9 paper}, and
 line HTR8/SVneo \textit{in vitro} \DLA{Cite this paper after reading
   the comments on it (PMID: 26865089)}.
 
-\subsubsection{Degree of Intimacy}
+\subsubsection{Degree of Intimacy and Interdigitation}
 
-Genes in multiple immune system-related pathways are altered in increasing degrees of intimacy
-
-\subsubsection{Interdigitation}
+For the degree of intimacy and interdigitation, we saw multiple genes
+which were associated with different levels of interdigitiation and
+intimacy (Supplemental
+\cref{tab:intimacy_genes,tab:interdigitation_genes}) using an
+unordered factor approach, but when we used an ordered factor
+analysis, none of these genes were retained (Supplemental
+\cref{tab:intimacy_genes_polr,tab:interdigitation_genes_polr}). We
+suspect this is due to the small number of intermediate
+interdigitation and intimacy placentas that are available. Future
+analyses of additional placentas with intermediate interdigitation and
+intimacy should better illuminate the pathways which are responsible
+for these placental morphologies.
 
 \clearpage
 

@@ -1081,13 +1081,14 @@ one species, and \ac{FPKM} greater than 1 at least two species.
 
 Supplemental \cref{tab:shape_genes} shows the top 50 genes which are
 associated with the shape of placenta attachment, as well as the shape
-in which the difference is most significant.
-
-\textit{EREG} -- ligand of EGFR, known to be expressed in some
-placentas but apparently not present in the term placentas of \human.
-
-\textit{UNC} -- totally unknown
-
+in which the difference is most significant. The most significant
+genes which were associated with diffuse placenta attachment include
+\textit{EREG}, a ligand of EGFR, \textit{UNC93A}, a homolog of
+\textit{UNC93B1} which is involved in the balancing between Tlr7 and
+Tlr9 immune response in mice\DLA{cite TLR7/TLR9 paper}, and
+\textit{WNT5A}, which inhibits the invasion of the trophoblast cell
+line HTR8/SVneo \textit{in vitro} \DLA{Cite this paper after reading
+  the comments on it (PMID: 26865089)}.
 
 \subsubsection{Degree of Intimacy}
 

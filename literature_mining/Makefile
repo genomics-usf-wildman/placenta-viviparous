@@ -3,6 +3,14 @@
 R=R
 ROPTS=-q --no-save --no-restore-data
 
+placenta_class_genes.txt: placenta_class_specific.R ../data/placenta_classification_p
+	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
+
+placenta_class_terms.txt: placenta_class_terms.R		\
+	../data/placenta_classification placenta_terms.txt
+	$(R) $(ROPTS) -f $< --args $(wordlist 2,2,$^) $@
+	cat $(wordlist 3,3,$^) >> $@
+
 human_lineage_genes.txt: human_lineage_genes.R ../data/human_mouse_lineage_specific
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
 
@@ -11,6 +19,12 @@ mouse_lineage_genes.txt: mouse_lineage_genes.R ../data/human_mouse_lineage_speci
 
 placenta_core_genes.txt: ../data/placenta_core_transcriptome.txt
 	awk '{print $$2}' $<|sort|uniq|sed 's/"//g'|grep -v Species > $@
+
+class_vs_terms.txt: pubmed_grid placenta_class_genes.txt placenta_class_terms.txt
+	touch class_vs_terms_pmids.txt
+	./$< --terms $(wordlist 2,2,$^) --terms $(wordlist 3,3,$^) \
+		--pmid-input class_vs_terms_pmids.txt \
+		--pmid-output class_vs_terms_pmids.txt > $@
 
 core_vs_terms.txt: pubmed_grid placenta_core_genes.txt placenta_terms.txt
 	touch core_vs_terms_pmids.txt

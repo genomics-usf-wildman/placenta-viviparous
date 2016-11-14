@@ -1215,12 +1215,6 @@ hypothesized that this feature is related to the increased demand for
 resources by the developing fetus to feed the expanded size of the
 human brain
 \cite{Carter.ea2011:Evolutionofinvasiveplacentation,Robillard.ea2002:Evolutionaryadaptationstopre-eclampsiaeclampsia}.
-\human have the largest brain in terms of relative size and this
-differs markedly from closely related apes
-\cite{Boddy.ea2012:Comparativeanalysisofencephalization}. Deep
-penetration of the myometrium occurs in chimpanzees and gorillas, but
-this penetration may be accelerated in humans
-\cite{Carter.ea2011:Evolutionofinvasiveplacentation}.
 
 The near exclusivity of deep trophoblast invasion in humans has also
 led many to speculate on the origin of various disorders, which are

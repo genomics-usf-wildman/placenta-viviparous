@@ -160,6 +160,8 @@ for (mf.bp in c("mf","bp")) {
 \ead{1mmcgowen1@gmail.com}
 \author[affigb]{Amy Weckle}
 \ead{aweckle@illinois.edu}
+\author[affigb]{Priyadarshini Pantham}
+\ead{pantham@illinois.edu}
 \author[affwayne]{Jason Caravas}
 \ead{jacaravas@gmail.com}
 \author[affmich]{Dalen Agnew}
@@ -1229,6 +1231,9 @@ to collecting and analyzing such a dataset.
 
   Amy Weckle performed all of the RNA extractions and managed the
   samples.
+
+  Priyadarshini Pantham wrote the paper and performed gene enrichment
+  analyses.
 
   Jason Caravas performed initial analyses.
   

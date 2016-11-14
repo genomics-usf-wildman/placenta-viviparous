@@ -899,7 +899,8 @@ print(ggplot(cptl,aes(x=human_name,y=FPKM))+
       # scale_color_discrete(NULL)+
       coord_flip()+
       xlab("Human Ortholog Name")+
-      ylab("FPKM")+
+      ylab("Gene Expression (FPKM)")+
+      theme_bw() +
       theme(legend.position=c(0.7,0.15),
             axis.text.y=element_text(face="italic"),
             legend.margin=unit(0,"mm"),

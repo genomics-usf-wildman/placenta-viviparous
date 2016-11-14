@@ -203,12 +203,12 @@ for (mf.bp in c("mf","bp")) {
   
   \textbf{Results} We identified a set of
   \Sexpr{core.placenta.transcriptome.long[,length(unique(human_name))]}
-  core genes which are expressed (FPKM $\ge 10$) in all placentas.
+  core genes which are expressed (FPKM $\ge 10$) in all placentas,
 
   including genes with immune-modulating properties (\textit{ANXA2},
-  \textit{ANXA1}, \textit{S100A11}, and \textit{S100A10}) and
-  cell-cell interactions (\textit{LAMC1}, \textit{LUM}, and
-  \textit{LGALS1}).
+  \textit{ANXA1}, \textit{S100A11}, and \textit{S100A10}), cell-cell
+  interactions (\textit{LAMC1}, \textit{LUM}, and \textit{LGALS1}),
+  and trophoblast fusion (\textit{ANXA5} and \textit{ANXA1}).
 
   \textbf{Discussion}
 
@@ -1160,7 +1160,8 @@ in which the difference is most significant. The most significant
 genes which were associated with diffuse placenta attachment include
 \textit{EREG}, a ligand of EGFR, \textit{UNC93A}, a homolog of
 \textit{UNC93B1} which is involved in the balancing between Tlr7 and
-Tlr9 immune response in mice\DLA{cite TLR7/TLR9 paper}, and
+Tlr9 immune response in
+mice~\cite{Brinkmann.ea2007:interactionbetweenERmembrane}, and
 \textit{WNT5A}, which inhibits the invasion of the trophoblast cell
 line HTR8/SVneo \textit{in vitro} \DLA{Cite this paper after reading
   the comments on it (PMID: 26865089)}.
@@ -1227,16 +1228,16 @@ and is noted by the onset of hypertension and proteinuria (or in the
 absence of proteinuria, thrombocytopenia, impaired liver function,
 renal insufficiency, pulmonary edema, or cerebral or visual
 disturbances) %
-\cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current,ACOG2013:hypertensionpregnancy}. Some cases of
+\cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current}. Some cases of
 pre-eclampsia can develop into eclampsia, a more severe condition
 resulting in seizures during pregnancy and death. Lack of invasion in
 pre-eclampsia may be attributed to the inefficiency of growth
 regulators as well as the inability to sufficiently suppress the
-maternal immune response. Although there are speculative cases of
-eclampsia in great apes
+maternal immune response. %
+Although there are speculative cases of eclampsia in great apes
 \cite{Baird1981:Eclampsiainlowlandgorilla,Stout.ea1969:Glomerularcapillaryendothelialswelling,Thornton.ea1992:Convulsionsinpregnancyin},
 it is exceedingly rare in these species
-\cite{Carter.ea2011:Evolutionofinvasiveplacentation}. 
+\cite{Carter.ea2011:Evolutionofinvasiveplacentation}.
 
 The identification of multiple genes (\textit{CRH}, \textit{ADAM12},
 \textit{KISS1}, \textit{PAPPA}, \textit{IL1RL1}, and \textit{PLAC1};

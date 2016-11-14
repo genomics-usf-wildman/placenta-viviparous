@@ -36,11 +36,17 @@ references.bib:
 		touch $@; \
 	fi;
 
-manuscript.pdf: manuscript.tex common_latex.tex acronyms.tex supplemental_material.aux
+TEX_DEPS=common_latex.tex acronyms.tex
 
-extended_discussion.pdf: extended_discussion.tex common_latex.tex acronyms.tex supplemental_material.aux
+manuscript.pdf: manuscript.tex $(TEX_DEPS) supplemental_material.aux
 
-supplemental_material.pdf: manuscript.tex common_latex.tex acronyms.tex
+extended_discussion.pdf: extended_discussion.tex $(TEX_DEPS)	\
+supplemental_material.aux
+
+supplemental_material.pdf: manuscript.tex $(TEX_DEPS)
+
+extended_supplemental_material.pdf:				\
+extended_supplemental_material.tex $(TEX_DEPS)
 
 GO_GSEA_RESULTS= $(wildcard ../data/placenta_go_results_??)			\
 $(wildcard ../data/placenta_go_results_permissive_??) $(wildcard	\
@@ -53,6 +59,11 @@ manuscript.tex: manuscript.Rnw ../data/combined_fpkm	\
 ../data/placenta_lineage_specific $(GO_GSEA_RESULTS)
 
 supplemental_material.tex: supplemental_material.Rnw	\
+../data/combined_fpkm ../data/placenta_lineage_specific	\
+../data/human_mouse_lineage_specific					\
+../data/placenta_core_transcriptome $(GO_GSEA_RESULTS)
+
+extended_supplemental_material.tex: extended_supplemental_material.Rnw	\
 ../data/combined_fpkm ../data/placenta_lineage_specific	\
 ../data/human_mouse_lineage_specific					\
 ../data/placenta_core_transcriptome $(GO_GSEA_RESULTS)

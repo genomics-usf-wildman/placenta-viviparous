@@ -1096,7 +1096,10 @@ orthologs with FPKM $>10$ and results in the same terms also being
 significantly enriched, along with additional terms (Supplemental
 \cref{tab:core_placenta_go_terms}).
 
-\subsubsection{Invasion: EGF and Auxin Y in the Core Placenta}
+Another annexin which is highly expressed in the core placenta is
+\textit{ANXA5}, a gene which was originally identified as
+
+\subsubsection{Invasion: EGF and Actin Y in the Core Placenta}
 
 The core placenta transcriptome is significantly enriched in genes
 which are involved in multiple biological pathways, including multiple
@@ -1177,11 +1180,10 @@ analyses of additional placentas with intermediate interdigitation and
 intimacy should better illuminate the pathways which are responsible
 for these placental morphologies.
 
-\clearpage
-
 \section{Discussion}
 
 \subsection{Core placenta transcriptome}
+
 
 \subsubsection{Annexin Complexes}
 The transcriptomes from multiple different species enabled us to
@@ -1199,7 +1201,7 @@ genes involved in maintaining the structure of the placenta and
 transporting proteins, as would be expected given the function of the
 placenta.
 
-\subsubsection{Invasion: EGF and Auxin Y in the Core Placenta}
+\subsubsection{Invasion: EGF and Actin Y in the Core Placenta}
 
 
 

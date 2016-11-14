@@ -922,7 +922,8 @@ print(ggplot(cptl,aes(x=human_name,y=FPKM))+
 \end{figure}
 
 
-<<core.placenta.transcriptome.distribution,results="hide",echo=FALSE,message=FALSE>>=
+\begin{figure}
+<<core.placenta.transcriptome.distribution,fig.width=5,fig.height=5,out.height="0.8\\textheight",echo=FALSE,message=FALSE>>=
 num.species <- star.logs.wide[,length(unique(species))]
 calculate.distribution.shape <- 
     function(min.vector) {
@@ -941,24 +942,24 @@ cpt.distribution.shape <-
              "all_but_three_expression",
              "all_but_four_expression"),
            function(x){
-               calculate.distribution.shape(cptg.nh[,x,with=FALSE][[1]])[,`Minimum Expression in`:=x]
+               calculate.distribution.shape(cptg.nh[,x,with=FALSE][[1]])[,`Min. Exp. in`:=x]
            })
 fix.expression.names <- function(x){
     x <- gsub("^all_expression$",
-              paste0(num.species," of ",num.species," species"),
+              paste0(num.species," of ",num.species),
               x
               )
-    nc.levels <- paste0(num.species," of ",num.species," species")
+    nc.levels <- paste0(num.species," of ",num.species)
     ## number coutner
     nc <- c("one"=1,"two"=2,"three"=3,"four"=4)
     for (a in names(nc)) {
         x <- gsub(paste0("^all_but_",a,"_expression$"),
-              paste0(num.species-nc[a]," of ",num.species," species"),
+              paste0(num.species-nc[a]," of ",num.species),
               x
               )
         nc.levels <-
             c(nc.levels,
-              paste0(num.species-nc[a]," of ",num.species," species"))
+              paste0(num.species-nc[a]," of ",num.species))
     }
     return(factor(x,levels=nc.levels))
 }
@@ -967,13 +968,81 @@ cpt.distribution.shape <-
     rbindlist(cpt.distribution.shape)
 
 cpt.distribution.shape <- 
-    cpt.distribution.shape[,`Minimum Expression in`:=
-                                fix.expression.names(`Minimum Expression in`)]
+    cpt.distribution.shape[,`Min. Exp. in`:=
+                                fix.expression.names(`Min. Exp. in`)]
 
 setnames(cpt.distribution.shape,
          "FPKM",
          "Expression (FPKM)")
+
+print(ggplot(cpt.distribution.shape[`Expression (FPKM)` > 0.1,],
+             aes(x=`Expression (FPKM)`,color=`Min. Exp. in`,y=num_genes))
+      + geom_line(lwd=1)
+      + xlab("Minimum Expression cutoff (FPKM)")
+      + ylab("Number of Genes Meeting FPKM Cutoff in N species")
+      + scale_y_log10(breaks = trans_breaks("log10", function(x) 10^x),
+                      labels = trans_format("log10", math_format(10^.x)))
+      + scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
+                      labels = trans_format("log10", math_format(10^.x)))
+      + geom_vline(xintercept=10,linetype="dotted")
+      + geom_segment(mapping=aes(y=V1,
+                         yend=V1,
+                         xend=10,
+                         x=300,
+                         color=`Min. Exp. in`),
+                     data=cpt.distribution.shape[`Expression (FPKM)` > 10,
+                                              max(num_genes),`Min. Exp. in`],
+                     arrow=arrow(length=unit(0.5,"cm")),
+                     show.legend=FALSE
+                     )
+      + geom_text(mapping=aes(x=300,
+                      y=V1,
+                      label=paste0(V1," genes"),override=TRUE),
+                  data=cpt.distribution.shape[`Expression (FPKM)` > 10,
+                      max(num_genes),`Min. Exp. in`],
+                  show.legend=FALSE,
+                  hjust=0
+                  )
+      + guides(color=guide_legend(title=paste0("Min. Expression in\nn of ",num.species," Species",
+                                  keywidth=unit(3,"mm"),
+                                  keyheight=unit(3,"mm")
+                                  ))
+      + theme_bw()
+      + theme(legend.position=c(1,1),
+              legend.margin=unit(0,"mm"),
+              legend.justification=c(1,1),
+              plot.margin=unit(c(0,0,0,0),"mm")
+              )
+      )
 @ 
+\caption{Distribution shape of placenta core genes. The vertical axis
+  shows the number of 1:1 orthologous genes included in the core
+  placenta transcriptome if %
+  \Sexpr{cpt.distribution.shape[,levels(`Min. Exp. in`)[1]]}
+  %
+  (or %
+  \Sexpr{cpt.distribution.shape[,levels(`Min. Exp. in`)[2]]},
+  % 
+  etc.) have a minimum expression in FPKM equal to the horizontal axis.
+  For example, if the cutoff is set to 10 (vertical black line), 
+  % 
+  \Sexpr{cpt.distribution.shape[`Expression (FPKM)` > 10 
+    & `Min. Exp. in` == '14 of 14',max(num_genes)]}
+  %
+  genes would be included if the FPKM of a set of 1:1 orthologs of all 14 species must be at
+  least 10, %
+  \Sexpr{cpt.distribution.shape[`Expression (FPKM)` > 10 
+    & `Min. Exp. in` == '13 of 14',max(num_genes)]}
+  %
+  1:1 orthologs would be included if 13 of 14 species have an
+   with an FPKM of at least 10, and 
+  \Sexpr{cpt.distribution.shape[`Expression (FPKM)` > 10 
+    & `Min. Exp. in` == '10 of 14',max(num_genes)]}
+  genes would be included if 10 of 14 species
+  must have an FPKM of at least 10.}
+\label{fig:core_placenta_transcriptome_shape}
+\end{figure}
+
 
 The
 \Sexpr{core.placenta.transcriptome.long[,length(unique(human_name))]}
@@ -984,11 +1053,11 @@ the placenta transcriptome if a 1:1 ortholog of that gene was
 expressed with $\text{FPKM} \ge 10$ in all species studied and was
 not a human housekeeping gene according to
 \citet{Eisenberg.ea2013:Humanhousekeepinggenesrevisited}.
-Supplemental \cref{fig:core_placenta_transcriptome_shape} shows the number of genes
+\Cref{fig:core_placenta_transcriptome_shape} shows the number of genes
 which would be included in the core placenta set if the \ac{FPKM}
 cutoff was set differently; for example, choosing an \ac{FPKM} cutoff of 1 yields %
 \Sexpr{cpt.distribution.shape[`Expression (FPKM)`>1 & 
-`Minimum Expression in` == '14 of 14 species',max(num_genes)]} %
+`Min. Exp. in` == '14 of 14',max(num_genes)]} %
 genes in the core transcriptome. %
 In contrast to the shape of the number of genes included in the core
 placenta transcriptome, the set of \human housekeeping genes expressed

@@ -18,7 +18,7 @@
 \usepackage{setspace}
 \usepackage{wrapfig}
 % \usepackage{txfonts}
-\usepackage{acronym}
+\usepackage{acro}
 \usepackage{array}
 \usepackage{dcolumn}
 \usepackage{adjustbox}

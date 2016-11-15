@@ -134,6 +134,9 @@ combined.fpkm <-
     gtf.types[combined.fpkm]
 setkey(combined.fpkm,"tracking_id")
 
+combined.fpkm[species=="homo sapiens", human_alignment_symbol:=human_name]
+combined.fpkm[species=="ateles fusciceps", human_alignment_symbol:=human_name]
+
 if (!all(grepl("_per_sample",output.file))) {
     combined.fpkm <-
         combined.fpkm[!duplicated(tracking_id)]

@@ -1096,8 +1096,17 @@ orthologs with FPKM $>10$ and results in the same terms also being
 significantly enriched, along with additional terms (Supplemental
 \cref{tab:core_placenta_go_terms}).
 
-Another annexin which is highly expressed in the core placenta is
-\textit{ANXA5}, a gene which was originally identified as
+
+Another annexin which is highly expressed in all term placentas is
+\textit{ANXA5}, which was originally identified as a an anti-coagulant
+protein, but is also involved in syncitium formation, membrane repair,
+and reduction of spontaneous
+abortion~\cite{Ueki.ea2012:Lossofmaternalannexin}. Other notable
+syncytiotrophoblast fusion proteins, Syncytin-1 (\textit{ERVW-1}) and -2
+(\textit{ERVFRD-1}) were not present in the core placenta, as they (or
+their homologs) are not highly expressed in \dog, \bonobo, or \sheep,
+nor was \textit{MFSD2A}, the Syncytin-2 receptor (\ac{FPKM} $\ge 10$
+only in \human, \mouse, and \dog).
 
 \subsubsection{Invasion: EGF and Actin Y in the Core Placenta}
 
@@ -1202,9 +1211,36 @@ genes involved in maintaining the structure of the placenta and
 transporting proteins, as would be expected given the function of the
 placenta.
 
+\subsubsection{Formation of the syncytiotrophoblast}
+
+While Syncitin-1 and -2 are implicated in the formation of the
+syncytiotrophoblast in
+\human~\cite{Rawn.ea2008:evolutionregulationandfunction} and homologs
+of \textit{ERVFRD-1} and \textit{ERVW-1} are widely expressed in most
+of the placentas analyzed here, they are not expressed in \bonobo,
+\sheep, and \dog, even though these mammals form
+syncytiotrophoblasts~\cite{Mess.ea2006:Evolutionarytransformationsoffetal}.
+Because the formation of syncytiotrophoblast is the stem state of
+Eutheria, Afrotheria, Euarchontoglires, and
+Laurasiatheria~\cite{Mess.ea2006:Evolutionarytransformationsoffetal},
+the gene(s) responsible for cytotrophoblast fusion to form
+syncytiotrophoblast is likely to be highly expressed in the core
+placenta. \textit{ANXA5} is known to be expressed at multiple stages
+of placentation, and is capable of repairing membrane defects and
+promoting the fusion of cells~\DLA{Cite more papers here which define
+  this.} in the presence of Ca$^{2+}$. While there are likely other
+genes which are responsible for the positioning of cytotrophoblast
+cells in close proximity to start the fusion process, \textit{ANXA5}
+is likely to be essential for the completion of fusion.
+
+\DLA{Possibility of membrane repair due to maternal immune response as
+  well during this process, as well as repair of membrane due to high
+  secretion and adsoroption of nutrients/waste in the placenta.}
+
+% Cows have BERV-K1 and -K2, but it's not annotated in the ENSEMBL
+% build of the cow genome that we have
+
 \subsubsection{Invasion: EGF and Actin Y in the Core Placenta}
-
-
 
 \subsection{\human Specific Expression Shifts and the Evolution of Pre-eclampsia}
 

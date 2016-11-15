@@ -16,11 +16,13 @@ homology.table <-
 ### ditch rows which are all zero
 
 gene.sum <-
-    apply(homology.table,1,function(x){sum(as.numeric(x[2:9]),na.rm=TRUE)})
+    apply(homology.table,1,function(x){sum(as.numeric(x[-1]),na.rm=TRUE)})
 homology.table <- homology.table[gene.sum>0 & !is.na(homology.table$human_name),]
-rownames(homology.table) <-
+rownames.homology.table <-
     homology.table[,1]
 homology.table <- data.matrix(homology.table[,-1])
+rownames(homology.table) <-
+    rownames.homology.table
 
 save(homology.table,
      file=args[length(args)])

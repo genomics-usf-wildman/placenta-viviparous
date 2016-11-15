@@ -152,7 +152,8 @@ for (mf.bp in c("mf","bp")) {
 % Acronyms
 \input{acronyms}
 
-\title{The evolution of the transcriptome of mammalian placentas}%
+\title{The core transcriptome of mammalian placentas and the
+  divergence of expression with placental shape}%
 %
 \author[affigb]{Don L. Armstrong\fnref{n1}}
 \ead{don@donarmstrong.com}

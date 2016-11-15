@@ -1004,12 +1004,14 @@ print(ggplot(cpt.distribution.shape[`Expression (FPKM)` > 0.1,],
                   show.legend=FALSE,
                   hjust=0
                   )
-      + guides(color=guide_legend(title=paste0("Min. Expression in\nn of ",num.species," Species",
+      + guides(color=guide_legend(title=paste0("Min. Expression in\nn of ",num.species," Species"),
                                   keywidth=unit(3,"mm"),
-                                  keyheight=unit(3,"mm")
+                                  keyheight=unit(3,"mm"),
+                                  title.hjust=0.5,
+                                  label.position="right"
                                   ))
       + theme_bw()
-      + theme(legend.position=c(1,1),
+      + theme(legend.position=c(0.98,0.98),
               legend.margin=unit(0,"mm"),
               legend.justification=c(1,1),
               plot.margin=unit(c(0,0,0,0),"mm")
@@ -1057,7 +1059,7 @@ not a human housekeeping gene according to
 \Cref{fig:core_placenta_transcriptome_shape} shows the number of genes
 which would be included in the core placenta set if the \ac{FPKM}
 cutoff was set differently; for example, choosing an \ac{FPKM} cutoff of 1 yields %
-\Sexpr{cpt.distribution.shape[`Expression (FPKM)`>1 & 
+\Sexpr{cpt.distribution.shape[`Expression (FPKM)`>=1 & 
 `Min. Exp. in` == '14 of 14',max(num_genes)]} %
 genes in the core transcriptome. %
 In contrast to the shape of the number of genes included in the core
@@ -1195,7 +1197,7 @@ for these placental morphologies.
 \subsection{Core placenta transcriptome}
 
 
-\subsubsection{Annexin Complexes}
+\subsubsection{Immune Regulation}
 The transcriptomes from multiple different species enabled us to
 identify the set of expressed genes which are common to all placentas.
 Components of the annexin complexes, including

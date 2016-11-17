@@ -377,7 +377,8 @@ All transcriptomes were then aligned to the appropriate reference (or
 assembled) genome using STAR v2.4.2a
 \cite{Dobin.ea2013:STARultrafastuniversalRNA-seq} and expression
 values in \ac{FPKM}
-\cite{Trapnell.ea2010:Transcriptassemblyandquantification} were
+% \cite{Trapnell.ea2010:Transcriptassemblyandquantification}
+were
 quantified using Cufflinks v2.2.1
 \cite{Trapnell.ea2009:TopHatdiscoveringsplicejunctions} (Supplemental
 \cref{tab:all_ateles_fusciceps_placenta,tab:all_homo_sapiens_placenta,tab:all_pan_paniscus_placenta,tab:all_mus_musculus_placenta,tab:all_spalax_galili_placenta,tab:all_spalax_carmeli_placenta,tab:all_bos_taurus_placenta,tab:all_ovis_aries_placenta,tab:all_sus_scrofa_placenta,tab:all_equus_caballus_placenta,tab:all_canis_familiaris_placenta,tab:all_loxodonta_africana_placenta,tab:all_dasypus_novemcinctus_placenta,tab:all_monodelphis_domestica_placenta}).
@@ -437,10 +438,8 @@ print(pp %>%
 
 All 1:1 orthologs present among \opossum, \textit{Pan troglodytes},
 \cow, \dog, \elephant, \mouse, and \human were determined using
-Ensembl v.80 gene trees via Biomart
-\cite{Kasprzyk2011:BioMartdrivingparadigmchange} using the biomaRt R
-package
-\cite{Durinck.ea2009:Mappingidentifiersforintegration,Durinck.ea2005:BioMartandBioconductorpowerful}.
+Ensembl v.80 gene trees via Biomart using the biomaRt R package
+\cite{Durinck.ea2009:Mappingidentifiersforintegration}. %
 A total of \Sexpr{combined.fpkm[species!="homo sapiens" & mean_fpkm >=
   1,length(unique(human_name))]} 1:1 orthologous genes were expressed
 in at least one species. Of these, \Sexpr{combined.fpkm[species!="homo
@@ -1155,7 +1154,7 @@ cytoskeleton pathway is depicted in Supplemental
 \cref{fig:kegg_actin}, which shows that \textit{FN1} and \textit{ITG}
 are highly expressed, which activate Rac, and potentially lead to the
 formation of focal adhesions and lamellipodia formation through their
-inhibition of GSN and HSPC300. Other compoenents of cell-cell
+inhibition of GSN and HSPC300. Other components of cell-cell
 adhesion, including \textit{F11R} which forms tight junctions in
 epithelia, proteglycans \textit{SDC4} and \textit{LUM}, and the
 laminin \textit{LAMC1}.
@@ -1287,10 +1286,7 @@ establish maternal-fetal
 tolerance\cite{Liu.ea2015:AnnexinA2complexeswith,Hutchinson.ea2011:Molecularregulatorsofresolution,Aarli.ea1997:Suppressiveeffectonlymphoproliferation}.
 We suggest that further research into molecular role of these annexin
 complexes may illuminate how immune tolerance is maintained during
-placentation. The core placenta transcriptome is also enriched in
-genes involved in maintaining the structure of the placenta and
-transporting proteins, as would be expected given the function of the
-placenta.
+placentation.
 
 \subsubsection{Formation of the syncytiotrophoblast}
 
@@ -1325,12 +1321,16 @@ repair during the massive flux of nutrients and waste in the placenta.
 
 \subsubsection{Invasion: EGF and CD9 in the Core Placenta}
 
-The high level of expression of components of the EGFR signaling
-pathway in the core placenta transcriptome (including \textit{GRB2}, \textit{EGFR}, \textit{MAPK3}, \textit{MAP2K2}, \textit{SHC1}, \textit{AKT3}, \textit{AKT2}, \textit{ERBB3}
-
-% Role of CD9 in invasion; commonality between placentas
+The high expression of components of the EGFR signaling pathway in the
+core placenta transcriptome (including \textit{GRB2}, \textit{RALB})
+as well as annexins which are involved in the location of EGF receptor
+localization (\textit{ANXA1} and \textit{ANXA2}) in the core placenta
+is consistent with previous findingsshowing that alterations to the
+EGF signaling system change invasion of trophoblast cells into the
+spiral arteries~\cite{Armant.ea2015:Reducedexpressionofepidermal}.
 
 % TAGLN2 -- likely to be produced by the placenta as well; possibly
+% due to the smooth muscle transition?
 
 \subsection{Conclusion}
     

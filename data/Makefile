@@ -161,8 +161,14 @@ $(GSEA_SET_ANALYSES): placenta_gsea_%: %.gmt gsea_analysis.R placenta_core_trans
 	$(R) $(ROPTS) -f $(wordlist 2,2,$^) --args $(wordlist 3,3,$^) placenta.transcriptome.list $< $@
 
 
-placenta_classification: placenta_classification.R placental_classification.txt
+placenta_classification: placenta_classification.R			\
+	placental_classification.txt placenta_character_states
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
+
+placenta_character_states: mess_carter_character_states.R \
+	mess_carter_character_states.txt
+	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
+
 
 placenta_classification_p: placenta_classification_specific.R	\
 	combined_fpkm housekeeping_genes_superset					\

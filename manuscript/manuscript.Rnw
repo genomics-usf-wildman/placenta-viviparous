@@ -1005,6 +1005,28 @@ print(ggplot(cpt.distribution.shape[`Expression (FPKM)` > 0.1,],
                   show.legend=FALSE,
                   hjust=0
                   )
+      + geom_segment(mapping=aes(yend=V1,
+                         y=100,
+                         xend=1,
+                         x=1,
+                         color=`Min. Exp. in`),
+                     data=cpt.distribution.shape[`Expression (FPKM)` > 1 &
+                                                 `Min. Exp. in` == '14 of 14',
+                                                 max(num_genes),`Min. Exp. in`],
+                     arrow=arrow(length=unit(0.5,"cm")),
+                     show.legend=FALSE
+                     )
+      + geom_text(mapping=aes(x=1,
+                      y=100,
+                      label=paste0(V1," genes"),
+                      override=TRUE),
+                  angle=90,
+                  data=cpt.distribution.shape[`Expression (FPKM)` > 1 &
+                                              `Min. Exp. in` == '14 of 14',
+                                              max(num_genes),`Min. Exp. in`],
+                  show.legend=FALSE,
+                  hjust=1
+                  )
       + guides(color=guide_legend(title=paste0("Min. Expression in\nn of ",num.species," Species"),
                                   keywidth=unit(3,"mm"),
                                   keyheight=unit(3,"mm"),

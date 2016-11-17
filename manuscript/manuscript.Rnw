@@ -1143,17 +1143,22 @@ etc.) (Supplemental \cref{tab:core_placenta_pathway_analysis}). Beyond
 translation, the next most abundant set of significantly enriched
 molecular pathways are related to the migration of the trophoblast
 into the endometrium, including the EGFR1 pathway and the Actin Y
-pathway. Two other pathways, the mPR/Progesterone pathway and Rho cell
-motility pathways, feed into the Actin Y pathway as well. Supplemental
-\cref{fig:egf_kegg_pathway} shows the EGF pathway in humans with the
-median expression in FPKM of genes in the pathway shown. Notably, many
-of the genes on the GRB2→MYC pathway are strongly expressed; their
-activation leads to an increase in migration and invasion in response
-to EGF binding to EGFR1. The Actin cytoskeleton pathway is depicted in
-Supplemental \cref{fig:kegg_actin}, which shows that \textit{FN1} and
-\textit{ITG} are highly expressed, which activate Rac, and potentially
-lead to the formation of focal adhesions and lamellipodia formation
-through their inhibition of GSN and HSPC300.
+pathway. Two other significant pathways, the mPR/Progesterone pathway
+and Rho cell motility pathways, feed into the Actin Y pathway as well.
+Supplemental \cref{fig:egf_kegg_pathway} shows the EGF pathway in
+humans with the median expression in FPKM of genes in the pathway
+shown. Notably, many of the genes on the GRB2→MYC pathway are strongly
+expressed; their activation leads to an increase in migration and
+invasion in response to EGF binding to
+EGFR1~\cite{Gupta.ea2016:CellSignalingPathwaysInvolved}. The Actin
+cytoskeleton pathway is depicted in Supplemental
+\cref{fig:kegg_actin}, which shows that \textit{FN1} and \textit{ITG}
+are highly expressed, which activate Rac, and potentially lead to the
+formation of focal adhesions and lamellipodia formation through their
+inhibition of GSN and HSPC300. Other compoenents of cell-cell
+adhesion, including \textit{F11R} which forms tight junctions in
+epithelia, proteglycans \textit{SDC4} and \textit{LUM}, and the
+laminin \textit{LAMC1}.
 
 % SPINT2 -- Serine Peptidase inhibitor
 
@@ -1196,9 +1201,9 @@ genes which were associated with diffuse placenta attachment include
 \textit{UNC93B1} which is involved in the balancing between Tlr7 and
 Tlr9 immune response in
 mice~\cite{Brinkmann.ea2007:interactionbetweenERmembrane}, and
-\textit{WNT5A}, which inhibits the invasion of the trophoblast cell
-line HTR8/SVneo \textit{in vitro} \DLA{Cite this paper after reading
-  the comments on it (PMID: 26865089)}.
+\textit{WNT5A}, which is a member of the Wnt ligand family whose
+singaling pathway has been implicated in motility in human trophoblast
+cells~\cite{Gupta.ea2016:CellSignalingPathwaysInvolved}.
 
 \subsubsection{Degree of Intimacy and Interdigitation}
 
@@ -1219,8 +1224,12 @@ for these placental morphologies.
 
 \subsection{Core placenta transcriptome}
 
+The core placenta transcriptome is enriched in multiple genes which
+are critical for the function of the placenta, including vesicular
+transport, immune regulation, cell fusion and membrane repair, and
+invasion.
 
-\subsubsection{Immune Regulation}
+\subsubsection{Immune Regulation and Annexins}
 The transcriptomes from multiple different species enabled us to
 identify the set of expressed genes which are common to all placentas.
 Components of the annexin complexes, including
@@ -1252,20 +1261,27 @@ the gene(s) responsible for cytotrophoblast fusion to form
 syncytiotrophoblast is likely to be highly expressed in the core
 placenta. \textit{ANXA5} is known to be expressed at multiple stages
 of placentation, and is capable of repairing membrane defects and
-promoting the fusion of cells~\DLA{Cite more papers here which define
-  this.} in the presence of Ca$^{2+}$. While there are likely other
-genes which are responsible for the positioning of cytotrophoblast
-cells in close proximity to start the fusion process, \textit{ANXA5}
-is likely to be essential for the completion of fusion.
+promoting the fusion of
+cells~\cite{Carmeille.ea2015:Annexin-A5promotesmembraneresealing} in
+the presence of Ca$^{2+}$. While there are likely other genes which
+are responsible for the positioning of cytotrophoblast cells in close
+proximity to start the fusion process, \textit{ANXA5} is likely to be
+essential for the completion of fusion and the maintenance of membrane
+repair during the massive flux of nutrients and waste in the placenta.
 
-\DLA{Possibility of membrane repair due to maternal immune response as
-  well during this process, as well as repair of membrane due to high
-  secretion and adsoroption of nutrients/waste in the placenta.}
+% \DLA{Possibility of membrane repair due to maternal immune response as
+%   well during this process, as well as repair of membrane due to high
+%   secretion and adsoroption of nutrients/waste in the placenta.}
 
 % Cows have BERV-K1 and -K2, but it's not annotated in the ENSEMBL
 % build of the cow genome that we have
 
-\subsubsection{Invasion: EGF and Actin Y in the Core Placenta}
+\subsubsection{Invasion: EGF and CD9 in the Core Placenta}
+
+The high level of expression of components of the EGFR signaling
+pathway in the core placenta transcriptome (including \textit{GRB2}, \textit{EGFR}, \textit{MAPK3}, \textit{MAP2K2}, \textit{SHC1}, \textit{AKT3}, \textit{AKT2}, \textit{ERBB3}
+
+% Role of CD9 in invasion; commonality between placentas
 
 \subsection{\human Specific Expression Shifts and the Evolution of Pre-eclampsia}
 

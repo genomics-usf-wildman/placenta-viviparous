@@ -9,8 +9,6 @@ PERL?=perl
 space :=
 space +=
 
-FPKM_FILES=Supplemental_Table_2_Homo_NEW_UPDATED.txt $(patsubst %.xlsx,%.txt,$(filter-out $(wildcard *Homo*), $(wildcard *_fpkm.xlsx)))
-
 .DEFAULT_GOAL=all
 
 mammal_lifehistories.txt:
@@ -136,7 +134,6 @@ placenta_go_results_permissive_mf: go_analysis.R placenta_core_transcriptome
 placenta_go_results_permissive_bp: go_analysis.R placenta_core_transcriptome
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,2,$^) placenta.transcriptome.list.permissive BP $@
 
-
 placenta_netpath_results: gsea_analysis.R placenta_core_transcriptome \
 	Human_NetPath_September_01_2016_Entrezgene.gmt
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,2,$^) placenta.transcriptome.list $(wordlist 3,3,$^) $@
@@ -210,13 +207,14 @@ ortholog_expression_nexus.nex: ortholog_expression_nexus.R combined_fpkm houseke
 ortholog_expression_nexus_continuous.nex: ortholog_expression_nexus_continuous.R combined_fpkm housekeeping_genes_superset
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
 
-ALL_TARGETS:=combined_fpkm gene_trees housekeeping_genes_superset				\
-	placenta_core_transcriptome placenta_go_results_bp					\
-	placenta_go_results_mf hugo_nomenclature gene_annotation			\
-	mammal_lifehistories.txt placenta_lineage_specific					\
-	combined_fpkm_per_sample homology_table placenta_classification_p	\
-	$(GSEA_SET_ANALYSES) $(PATHWAY_PLAC_CLASS) $(BP_GO_PLAC_CLASS)		\
-	$(MF_GO_PLAC_CLASS)
+ALL_TARGETS:=combined_fpkm gene_trees housekeeping_genes_superset		\
+	placenta_core_transcriptome placenta_core_transcriptome_alignment	\
+	placenta_go_results_bp placenta_go_results_mf hugo_nomenclature		\
+	gene_annotation mammal_lifehistories.txt							\
+	placenta_lineage_specific combined_fpkm_per_sample homology_table	\
+	placenta_classification_p $(GSEA_SET_ANALYSES)						\
+	$(PATHWAY_PLAC_CLASS) $(BP_GO_PLAC_CLASS) $(MF_GO_PLAC_CLASS) \
+	gene_trees human_mouse_lineage_specific
 
 .PHONY: get_data
 

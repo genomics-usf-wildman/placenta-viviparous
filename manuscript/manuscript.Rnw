@@ -878,7 +878,7 @@ but are negatively correlated with pre-eclampsia
 <<core.placenta.transcriptome,fig.width=5,fig.height=8,out.height="0.8\\textheight",echo=FALSE>>=
 cptl <-
     core.placenta.transcriptome.long[!grepl("(min|median|max|all)_expression|all_but_",
-                                            Species),]
+                                            Species) & housekeeping==FALSE,]
 cptl <- cptl[,Species:=factor(gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",capfirst(Species)),
                               levels=gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",
                                           capfirst(names(species.names))))]

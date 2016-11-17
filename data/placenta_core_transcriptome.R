@@ -54,12 +54,15 @@ setkey(combined.fpkm.wide,"human_name")
 core.placenta.transcriptome.long <- 
     data.table(melt(combined.fpkm.wide[all_expression >= 10,
                                        ][order(-median_expression)
-                                         ][!(human_name %in% 
-                                                 housekeeping.genes.superset[,gene_short_name])],
+                                         ],
                     id.vars="human_name",
                     variable.name="Species",
                     value.name="FPKM"
                     ))
+core.placenta.transcriptome.long[,housekeeping:=FALSE]
+core.placenta.transcriptome.long[human_name %in% 
+                                 housekeeping.genes.superset[,gene_short_name],
+                                 housekeeping:=TRUE]
 core.placenta.transcriptome.long[,human_name:=
                                      reorder(human_name,
                                              combined.fpkm.wide[core.placenta.transcriptome.long[,human_name],median_expression])]

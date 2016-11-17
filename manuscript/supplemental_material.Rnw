@@ -1280,14 +1280,15 @@ print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="LGALS13"
 
 <<load.placenta.lineage.specific,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../data/",c("placenta_lineage_specific")))>>=
 load("../data/placenta_lineage_specific")
+load("../data/human_mouse_lineage_specific")
 source("/home/don/projects/xtable/pkg/R/print.xtable.R")
 
-placenta.lineage.specific.table <- function(analysis,output=TRUE) {
+placenta.lineage.specific.table <- function(analysis,output=TRUE,lineage.table=placenta.lineage.specific.analysis,members=40,orderbyfc=FALSE,fdr.cutoff=1,caption=NULL,label=NULL) {
     temp.table <- 
-        head(placenta.lineage.specific.analysis[analysis.name==analysis &
-                                                p.value <= 0.05][order(p.value),
-                                                                 list(human_name,p.value,fdr,fc),],
-             n=5)
+        lineage.table[analysis.name==analysis &
+                      p.value <= 0.05 &
+                      fdr <= fdr.cutoff][order(p.value),
+                                       list(human_name,p.value,fdr,fc),]
     temp.table <- data.table(temp.table)
     setkey(temp.table,"human_name")
     temp.table <- 
@@ -1298,17 +1299,33 @@ placenta.lineage.specific.table <- function(analysis,output=TRUE) {
               )
     setkey(temp.table,"Human Symbol")
     if (output) {
-        display.table <- temp.table[order(`p (t-test)`),]
+        display.table <- temp.table[`FDR`<=fdr.cutoff,][order(`p (t-test)`),]
+        if (orderbyfc) {
+            display.table <- temp.table[order(-abs(`Fold Change`)),]
+        }
+        if (!is.na(members)) {
+            members <- min(c(members,nrow(display.table)))
+            display.table <- display.table[1:members,]
+        }
+
         display.table <-
             display.table[,`Human Symbol`:=paste0("\\textit{",xtable.sanitize.text(`Human Symbol`),
                                                   "}")]
+        display.table[,`Human Name`:=NULL]
+        # setnames(display.table,"Human Symbol","\\multicolumn{1}{p{0.5in}}{Human Symbol}")6
+        setnames(display.table,"Fold Change","$\\text{log}_2$ FC")
         print(xtable(display.table,
-                     display=c("s","s","s","e","g","f"),
+                     display=c("s","s","e","g","f"),
+                     caption=caption,
+                     label=label,
+                     align=c("c","p{0.7in}","r","r","r")
                      ),
               booktabs=TRUE,
               floating=FALSE,
+              tabular.environment=ifelse(is.na(members),"longtable","tabular"),
               math.style.exponents=TRUE,
               sanitize.text.function=genes.table.sanitize,
+              size="\\small",
               include.rownames=FALSE)
         
     }
@@ -1339,13 +1356,28 @@ output.top.genes.table <- function(data,output=TRUE) {
 
 @ 
 
+
+
+
+<<human.lineage.specific,echo=FALSE,results="asis">>=
+hum.all.lin.spec <-
+    placenta.lineage.specific.table("hum.all",
+                                    lineage.table=human.mouse.lineage.specific.analysis,
+                                    members=NA,
+                                    caption="\\lineagetableexplanationtypeiii{\\human}{all other species}",
+                                    label="tab:huamn_linage_specific_all"
+                                    )
+setkey(hum.all.lin.spec,"Human Symbol")
+@ 
+
+
 \begin{table}[hb]
   \footnotesize
 <<rodentia.lineage.specific,echo=FALSE,results="asis">>=
 rod.all.lin.spec <- placenta.lineage.specific.table("rod.all")
 setkey(rod.all.lin.spec,"Human Symbol")
 @ 
-\caption{\lineagetableexplanation{the rodentia order}{all other species}}
+\caption{\lineagetableexplanationtypeiii{the rodentia order}{all other species}}
 \label{tab:rodentia_lineage_specific}
 \end{table}
 
@@ -1506,6 +1538,15 @@ print(ggplot(cptlh,aes(x=human_name,y=FPKM))+
 <<housekeeping.placenta.distribution,fig.width=8,fig.height=8,out.height="0.8\\textheight",echo=FALSE,message=FALSE>>=
 ## housekeeping set as apposed to non-housekeeping set
 cptg.h <- core.placenta.transcriptome.genes.shape[(human_name %in% housekeeping.genes.superset[,gene_short_name])]
+num.species <- star.logs.wide[,length(unique(species))]
+
+calculate.distribution.shape <- 
+    function(min.vector) {
+        min.vector <- sort(min.vector,decreasing=TRUE)
+        temp <- data.table(FPKM=min.vector,num_genes=1:length(min.vector))
+        temp <- temp[order(-num_genes)][!duplicated(FPKM)]
+        return(temp)
+    }
 
 cpt.h.distribution.shape <- 
     lapply(c("all_expression",

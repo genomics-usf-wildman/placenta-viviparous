@@ -1328,6 +1328,12 @@ localization (\textit{ANXA1} and \textit{ANXA2}) in the core placenta
 is consistent with previous findingsshowing that alterations to the
 EGF signaling system change invasion of trophoblast cells into the
 spiral arteries~\cite{Armant.ea2015:Reducedexpressionofepidermal}.
+Another component of the core placenta transcriptome, \textit{CD9},
+has been shown to suppress \human extravillous trophoblast
+invasion~\cite{Matsumoto.ea2016:CD9suppresseshumanextravillous}, and
+we hypothesize that it is responsible for maintaining the balance
+between invasion and attachment in the other placentas examined here
+as well.
 
 % TAGLN2 -- likely to be produced by the placenta as well; possibly
 % due to the smooth muscle transition?

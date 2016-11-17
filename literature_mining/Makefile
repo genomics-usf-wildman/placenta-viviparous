@@ -32,6 +32,12 @@ core_vs_terms.txt: pubmed_grid placenta_core_genes.txt placenta_terms.txt
 		--pmid-input core_vs_terms_pmids.txt \
 		--pmid-output core_vs_terms_pmids.txt > $@
 
+core_vs_core.txt: pubmed_grid placenta_core_genes.txt
+	touch core_vs_core_pmids.txt
+	./$< --terms $(wordlist 2,2,$^) --terms $(wordlist 2,2,$^) \
+		--pmid-input core_vs_core_pmids.txt \
+		--pmid-output core_vs_core_pmids.txt > $@
+
 human_lineage_vs_terms.txt: pubmed_grid human_lineage_genes.txt placenta_terms.txt
 	touch human_lineage_vs_terms_pmids.txt
 	./$< --terms $(wordlist 2,2,$^) --terms $(wordlist 3,3,$^) \

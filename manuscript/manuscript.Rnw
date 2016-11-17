@@ -1222,6 +1222,53 @@ for these placental morphologies.
 
 \section{Discussion}
 
+
+\subsection{\human Specific Expression Shifts and the Evolution of Pre-eclampsia}
+
+The \human placenta is distinctive from many other primates in that it
+possesses a deeply invasive trophoblast that penetrates the inner
+myometrium of the uterus
+\cite{Carter.ea2011:Evolutionofinvasiveplacentation}. It is
+hypothesized that this feature is related to the increased demand for
+resources by the developing fetus to feed the expanded size of the
+human brain
+\cite{Carter.ea2011:Evolutionofinvasiveplacentation,Robillard.ea2002:Evolutionaryadaptationstopre-eclampsiaeclampsia}.
+
+The near exclusivity of deep trophoblast invasion in humans has also
+led many to speculate on the origin of various disorders, which are
+almost exclusively symptomatic of human pregnancy. For example,
+pre-eclampsia is a human disease that occurs in 4\% of pregnancies in
+the United States
+\cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current}. Pre-eclampsia
+can be attributed to the lack of adequate invasion of maternal tissue,
+and is noted by the onset of hypertension and proteinuria (or in the
+absence of proteinuria, thrombocytopenia, impaired liver function,
+renal insufficiency, pulmonary edema, or cerebral or visual
+disturbances) %
+\cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current}. Some cases of
+pre-eclampsia can develop into eclampsia, a more severe condition
+resulting in seizures during pregnancy and death. Lack of invasion in
+pre-eclampsia may be attributed to the inefficiency of growth
+regulators as well as the inability to sufficiently suppress the
+maternal immune response. %
+Although there are speculative cases of eclampsia in great apes
+\cite{Baird1981:Eclampsiainlowlandgorilla,Stout.ea1969:Glomerularcapillaryendothelialswelling,Thornton.ea1992:Convulsionsinpregnancyin},
+it is exceedingly rare in these species
+\cite{Carter.ea2011:Evolutionofinvasiveplacentation}.
+
+The identification of multiple genes (\textit{CRH}, \textit{ADAM12},
+\textit{KISS1}, \textit{PAPPA}, \textit{IL1RL1}, and \textit{PLAC1};
+\cref{tab:human_lineage_specific}) which are associated with
+pre-eclampsia which have increased expression on the \human lineage
+may explain the larger proportion of pre-eclampsia observed in humans.
+However, there are still genes which are associated with pre-eclampsia
+which are also more highly expressed in the \mouse lineage such as
+\textit{Afp} and \textit{Gjb2}. Furthermore, the onset of
+pre-eclampsia is well before term; all of our placentas are term
+placentas and provide limited information about the transcriptome
+during the onset of pre-eclampsia.
+
+
 \subsection{Core placenta transcriptome}
 
 The core placenta transcriptome is enriched in multiple genes which
@@ -1283,50 +1330,7 @@ pathway in the core placenta transcriptome (including \textit{GRB2}, \textit{EGF
 
 % Role of CD9 in invasion; commonality between placentas
 
-\subsection{\human Specific Expression Shifts and the Evolution of Pre-eclampsia}
-
-The \human placenta is distinctive from many other primates in that it
-possesses a deeply invasive trophoblast that penetrates the inner
-myometrium of the uterus
-\cite{Carter.ea2011:Evolutionofinvasiveplacentation}. It is
-hypothesized that this feature is related to the increased demand for
-resources by the developing fetus to feed the expanded size of the
-human brain
-\cite{Carter.ea2011:Evolutionofinvasiveplacentation,Robillard.ea2002:Evolutionaryadaptationstopre-eclampsiaeclampsia}.
-
-The near exclusivity of deep trophoblast invasion in humans has also
-led many to speculate on the origin of various disorders, which are
-almost exclusively symptomatic of human pregnancy. For example,
-pre-eclampsia is a human disease that occurs in 4\% of pregnancies in
-the United States
-\cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current}. Pre-eclampsia
-can be attributed to the lack of adequate invasion of maternal tissue,
-and is noted by the onset of hypertension and proteinuria (or in the
-absence of proteinuria, thrombocytopenia, impaired liver function,
-renal insufficiency, pulmonary edema, or cerebral or visual
-disturbances) %
-\cite{Chaiworapongsa.ea2014:Pre-eclampsiapart1current}. Some cases of
-pre-eclampsia can develop into eclampsia, a more severe condition
-resulting in seizures during pregnancy and death. Lack of invasion in
-pre-eclampsia may be attributed to the inefficiency of growth
-regulators as well as the inability to sufficiently suppress the
-maternal immune response. %
-Although there are speculative cases of eclampsia in great apes
-\cite{Baird1981:Eclampsiainlowlandgorilla,Stout.ea1969:Glomerularcapillaryendothelialswelling,Thornton.ea1992:Convulsionsinpregnancyin},
-it is exceedingly rare in these species
-\cite{Carter.ea2011:Evolutionofinvasiveplacentation}.
-
-The identification of multiple genes (\textit{CRH}, \textit{ADAM12},
-\textit{KISS1}, \textit{PAPPA}, \textit{IL1RL1}, and \textit{PLAC1};
-\cref{tab:human_lineage_specific}) which are associated with
-pre-eclampsia which have increased expression on the \human lineage
-may explain the larger proportion of pre-eclampsia observed in humans.
-However, there are still genes which are associated with pre-eclampsia
-which are also more highly expressed in the \mouse lineage such as
-\textit{Afp} and \textit{Gjb2}. Furthermore, the onset of
-pre-eclampsia is well before term; all of our placentas are term
-placentas and provide limited information about the transcriptome
-during the onset of pre-eclampsia.
+% TAGLN2 -- likely to be produced by the placenta as well; possibly
 
 \subsection{Conclusion}
     

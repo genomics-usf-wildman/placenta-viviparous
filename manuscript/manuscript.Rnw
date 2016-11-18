@@ -234,7 +234,7 @@ mammals, it varies widely in terms of the shape of attachment, degree
 of intimacy between fetal tissues and maternal tissues and degree of
 interdigitation of maternal and fetal tissues in different species of
 mammals
-\cite{Mossman.1987:vertebratefetalmembranes,Moffett.ea2006:Immunologyofplacentationin}
+\cite{Mossman.1987:vertebratefetalmembranes} %,Moffett.ea2006:Immunologyofplacentationin}
 (Supplemental \cref{tab:placental_classification}). Mammals also
 differ drastically in the number and size of their offspring, as well
 as the length of gestation; these traits are often with specific
@@ -256,10 +256,10 @@ Previous studies of some species (i.e., \textit{Homo sapiens},
 preliminary answers to these questions. They revealed a stunning
 divergence in the genetics of the placenta, especially in later stages
 of pregnancy
-\cite{Carter2012:Evolutionofplacentalfunction,Hou.ea2012:Elephanttranscriptomeprovidesinsights,Knox.ea2008:Genomicevolutionofplacenta,Su.ea2002:Large-scaleanalysisofhuman}.
+\cite{Carter2012:Evolutionofplacentalfunction,Knox.ea2008:Genomicevolutionofplacenta,Su.ea2002:Large-scaleanalysisofhuman}.
 For example, each lineage has evolved expansive placenta-specific gene
 families with expression patterns that can vary in space and time
-\cite{Green.ea2000:Pregnancy-associatedbovineandovine,Simmons.ea2008:Spatialandtemporalexpression}.
+\cite{Green.ea2000:Pregnancy-associatedbovineandovine}.
 These include independent expansions of the prolactins in \mouse,
 \textit{Spalax carmeli}, \textit{Spalax galili}, and \cow, \acp{PSG}
 in \human and \mouse, \acp{PAG} in \cow, genes related to the
@@ -1267,10 +1267,10 @@ resulting in seizures during pregnancy and death. Lack of invasion in
 pre-eclampsia may be attributed to the inefficiency of growth
 regulators as well as the inability to sufficiently suppress the
 maternal immune response. %
-Although there are speculative cases of eclampsia in great apes
-\cite{Baird1981:Eclampsiainlowlandgorilla,Stout.ea1969:Glomerularcapillaryendothelialswelling,Thornton.ea1992:Convulsionsinpregnancyin},
+Although there are speculative cases of eclampsia in great apes, 
+%\cite{Baird1981:Eclampsiainlowlandgorilla,Stout.ea1969:Glomerularcapillaryendothelialswelling,Thornton.ea1992:Convulsionsinpregnancyin},
 it is exceedingly rare in these species
-\cite{Carter.ea2011:Evolutionofinvasiveplacentation}.
+\citeC{arter.ea2011:Evolutionofinvasiveplacentation}.
 
 The identification of multiple genes (\textit{CRH}, \textit{ADAM12},
 \textit{KISS1}, \textit{PAPPA}, \textit{IL1RL1}, and \textit{PLAC1};

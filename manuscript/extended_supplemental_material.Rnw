@@ -110,8 +110,8 @@
 
 <<load.libraries,echo=FALSE,results="hide",warning=FALSE,message=FALSE,error=FALSE,cache=FALSE>>=
 opts_chunk$set(dev="cairo_pdf",out.width="\\textwidth",out.height="0.6\\textheight",out.extra="keepaspectratio")
-opts_chunk$set(cache=TRUE, autodep=TRUE,cache.path="supplemental_cache/")
-opts_chunk$set(fig.path="supplemental_figure/")
+opts_chunk$set(cache=TRUE, autodep=TRUE,cache.path="extended_supplemental_cache/")
+opts_chunk$set(fig.path="extended_supplemental_figure/")
 options(device = function(file, width = 8, height = 7, ...) {
   cairo_pdf(tempfile(), width = width, height = height, ...)
 })

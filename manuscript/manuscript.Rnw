@@ -18,7 +18,7 @@
 %\usepackage{float}
 \usepackage{multirow}
 %\usepackage{setspace}
-\usepackage{acro}
+\usepackage[macros=false]{acro}
 \usepackage{array}
 \usepackage{longtable}
 \usepackage{amsmath}
@@ -1266,7 +1266,7 @@ maternal immune response. %
 Although there are speculative cases of eclampsia in great apes, 
 %\cite{Baird1981:Eclampsiainlowlandgorilla,Stout.ea1969:Glomerularcapillaryendothelialswelling,Thornton.ea1992:Convulsionsinpregnancyin},
 it is exceedingly rare in these species
-\citeC{arter.ea2011:Evolutionofinvasiveplacentation}.
+\cite{Carter.ea2011:Evolutionofinvasiveplacentation}.
 
 The identification of multiple genes (\textit{CRH}, \textit{ADAM12},
 \textit{KISS1}, \textit{PAPPA}, \textit{IL1RL1}, and \textit{PLAC1};

@@ -533,55 +533,6 @@ for (this.species in names(species.names)) {
 
 \section{Per-Species GSEA}
 
-\subsection{GO Ontology}
-
-<<go.analysis.all.tissue,echo=FALSE,results="asis">>=
-go.analysis.wide <- 
-    data.table(dcast(data=go.results,
-                     formula=GO.ID+type+Term+Ontology~species,
-                     value.var="FDR"))
-go.analysis.wide <- 
-    go.analysis.wide[,`n(FDR ≤ 0.05)`:=apply(go.analysis.wide[,-(1:4),with=FALSE],1,
-                                         function(x){sum(as.numeric(as.character(x)) <= 0.05)})]
-go.analysis.wide <- 
-    go.analysis.wide[,`max(FDR ≤ 0.05)`:=apply(go.analysis.wide[,-(1:4),with=FALSE],1,
-                                           function(x){if (!any(is.finite(x) & x<=0.05)) {
-                                                           return(NA)
-                                                       } else {
-                                                           max(x[is.finite(x) & x<=0.05],na.rm=TRUE)
-                                                       }})]
-go.analysis.wide.table <- 
-    go.analysis.wide[!is.na(`n(FDR ≤ 0.05)`) & `n(FDR ≤ 0.05)` >= 12 &
-                         grepl("Top 1% No Housekeeping",type),
-                     list(GO.ID,Term,Ontology,`n(FDR ≤ 0.05)`,`max(FDR ≤ 0.05)`)]
-go.analysis.wide.table <- 
-    go.analysis.wide.table[order(Ontology,-`n(FDR ≤ 0.05)`,`max(FDR ≤ 0.05)`)]
-setnames(go.analysis.wide.table,"GO.ID","GO ID")
-
-print(xtable(go.analysis.wide.table,
-             display=c("d","s","s","s","d","e"),
-             align=  c("c","c","c","c","c","c"),
-             caption=c("GO terms with significant enrichment ($\\text{FDR}\\le0.05$)
-  in 12 or more of the species analyzed from genes in the top 1\\% of
-  expression. $n(\\text{FDR}\\le0.05)$ is the number of species with
-  significant enrichment ($\\text{FDR}\\le 0.05$) in the GO term
-  listed. $max(\\text{FDR}\\le0.05)$ is the maximum FDR value in all
-  species with an FDR of less than $0.05$.","GO terms in 12 or more species"),
-  label="tab:go_terms_all_species"
-  ),
-  math.style.exponents=TRUE,
-  include.rownames=FALSE,
-  booktabs=TRUE,
-  floating=FALSE,
-  tabular.environment="longtable",
-  caption.placement="top",
-  size="\\footnotesize"
-  )
-
-@ 
-
-\clearpage
-
 \subsection{Top 1\% Transcripts Enrichment}
 
 <<go.analysis.top.5p.all.species,echo=FALSE,results="asis">>=
@@ -643,7 +594,52 @@ for (this.species in names(species.names)) {
 
 \clearpage
 
+\subsection{Common Species Terms}
 
+<<go.analysis.all.tissue,echo=FALSE,results="asis">>=
+go.analysis.wide <- 
+    data.table(dcast(data=go.results,
+                     formula=GO.ID+type+Term+Ontology~species,
+                     value.var="FDR"))
+go.analysis.wide <- 
+    go.analysis.wide[,`n(FDR ≤ 0.05)`:=apply(go.analysis.wide[,-(1:4),with=FALSE],1,
+                                         function(x){sum(as.numeric(as.character(x)) <= 0.05)})]
+go.analysis.wide <- 
+    go.analysis.wide[,`max(FDR ≤ 0.05)`:=apply(go.analysis.wide[,-(1:4),with=FALSE],1,
+                                           function(x){if (!any(is.finite(x) & x<=0.05)) {
+                                                           return(NA)
+                                                       } else {
+                                                           max(x[is.finite(x) & x<=0.05],na.rm=TRUE)
+                                                       }})]
+go.analysis.wide.table <- 
+    go.analysis.wide[!is.na(`n(FDR ≤ 0.05)`) & `n(FDR ≤ 0.05)` >= 12 &
+                         grepl("Top 1% No Housekeeping",type),
+                     list(GO.ID,Term,Ontology,`n(FDR ≤ 0.05)`,`max(FDR ≤ 0.05)`)]
+go.analysis.wide.table <- 
+    go.analysis.wide.table[order(Ontology,-`n(FDR ≤ 0.05)`,`max(FDR ≤ 0.05)`)]
+setnames(go.analysis.wide.table,"GO.ID","GO ID")
+
+print(xtable(go.analysis.wide.table,
+             display=c("d","s","s","s","d","e"),
+             align=  c("c","c","c","c","c","c"),
+             caption=c("GO terms with significant enrichment ($\\text{FDR}\\le0.05$)
+  in 12 or more of the species analyzed from genes in the top 1\\% of
+  expression. $n(\\text{FDR}\\le0.05)$ is the number of species with
+  significant enrichment ($\\text{FDR}\\le 0.05$) in the GO term
+  listed. $max(\\text{FDR}\\le0.05)$ is the maximum FDR value in all
+  species with an FDR of less than $0.05$.","GO terms in 12 or more species"),
+  label="tab:go_terms_all_species"
+  ),
+  math.style.exponents=TRUE,
+  include.rownames=FALSE,
+  booktabs=TRUE,
+  floating=FALSE,
+  tabular.environment="longtable",
+  caption.placement="top",
+  size="\\footnotesize"
+  )
+
+@ 
 
 \section{Placenta Classification Analyses}
 

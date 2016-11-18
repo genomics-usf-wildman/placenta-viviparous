@@ -1375,37 +1375,6 @@ setkey(hum.all.lin.spec,"Human Symbol")
 @ 
 
 
-\begin{table}[hb]
-  \footnotesize
-<<rodentia.lineage.specific,echo=FALSE,results="asis">>=
-rod.all.lin.spec <- placenta.lineage.specific.table("rod.all")
-setkey(rod.all.lin.spec,"Human Symbol")
-@ 
-\caption{\lineagetableexplanationtypeiii{the rodentia order}{all other species}}
-\label{tab:rodentia_lineage_specific}
-\end{table}
-
-\begin{table}[hb]
-  \footnotesize
-<<lau.lineage.specific,echo=FALSE,results="asis">>=
-lau.all.lin.spec <- placenta.lineage.specific.table("lau.all")
-setkey(lau.all.lin.spec,"Human Symbol")
-@ 
-\caption{\lineagetableexplanation{the laurasiatheria
-    superorder}{all other species}}
-\label{tab:laurasiatheria_lineage_specific}
-\end{table}
-
-\begin{table}[hb]
-  \footnotesize
-<<eua.lau.lineage.specific,echo=FALSE,results="asis">>=
-eua.lau.lin.spec <- placenta.lineage.specific.table("eua.lau")
-setkey(eua.lau.lin.spec,"Human Symbol")
-@ 
-\caption{\lineagetableexplanation{ the euarchontoglires superorder}{ the laurasiatherian superorder}}
-\label{tab:laurasiatheria_euarchontoglires_lineage_specific}
-\end{table}
-
 \clearpage
 
 \section{Core Placenta Transcriptome}

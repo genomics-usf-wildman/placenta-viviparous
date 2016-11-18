@@ -1055,6 +1055,41 @@ print(ggplot(cpt.h.distribution.shape[`Expression (FPKM)` > 0.1,],
 \label{fig:core_housekeeping_transcriptome_shape}
 \end{figure}
 
+\begin{table}
+<<pathway_analysis,echo=FALSE,results="asis",cache.extra=file.info(dir("../data","placenta_gsea.*",full.names=TRUE))[,"mtime"]>>=
+pathway <- list()
+for (database in c("kegg","reactome","biocarta","netpath")) {
+    load(paste0("../data/placenta_gsea_",database))
+    eval(parse(text=paste0("gsea.table <- placenta_gsea_",database)))
+    gsea.table[,Database:=gsub("^(.)","\\U\\1",database,perl=TRUE)]
+    pathway[[database]] <-
+        gsea.table
+}
+pathway.analysis <-
+    rbindlist(pathway)[fdr < 0.1,]
+rm(pathway)
+pathway.analysis[,Pathway:=gsub("^(KEGG|BIOCARTA|REACTOME) ","",
+                                gsub("_+"," ",
+                                     Pathway))]
+pathway.analysis[,Pathway:=gsub(".+\\%","",Pathway)]
+
+setnames(pathway.analysis,"p_values","p")
+setorder(pathway.analysis,"p")
+print(xtable(pathway.analysis,
+             display=c("s","s","g","g","s"),
+             align=c("c","p{3.5in}","r","r","c")),
+      math.style.exponents=TRUE,
+      include.rownames=FALSE,
+      booktabs=TRUE,
+      floating=FALSE)      
+@ 
+\caption[Core Placenta Pathway Enrichment]{Pathways with significant and suggestive enrichment
+  ($\text{FDR}\le 0.1$) in the core placenta transcriptome using the
+  biocarta, reactome, and kegg pathway databases}
+\label{tab:core_placenta_pathway_analysis}
+\end{table}
+
+
 \clearpage
 
 \section{Placenta Classification Analyses}
@@ -1252,41 +1287,6 @@ placenta_class_table("interdigitation",analysis.type="polr")
 
 
 \section{GSEA}
-
-\subsection{Pathway Analysis}
-\begin{table}
-<<pathway_analysis,echo=FALSE,results="asis",cache.extra=file.info(dir("../data","placenta_gsea.*",full.names=TRUE))[,"mtime"]>>=
-pathway <- list()
-for (database in c("kegg","reactome","biocarta","netpath")) {
-    load(paste0("../data/placenta_gsea_",database))
-    eval(parse(text=paste0("gsea.table <- placenta_gsea_",database)))
-    gsea.table[,Database:=gsub("^(.)","\\U\\1",database,perl=TRUE)]
-    pathway[[database]] <-
-        gsea.table
-}
-pathway.analysis <-
-    rbindlist(pathway)[fdr < 0.1,]
-rm(pathway)
-pathway.analysis[,Pathway:=gsub("^(KEGG|BIOCARTA|REACTOME) ","",
-                                gsub("_+"," ",
-                                     Pathway))]
-pathway.analysis[,Pathway:=gsub(".+\\%","",Pathway)]
-
-setnames(pathway.analysis,"p_values","p")
-setorder(pathway.analysis,"p")
-print(xtable(pathway.analysis,
-             display=c("s","s","g","g","s"),
-             align=c("c","p{3.5in}","r","r","c")),
-      math.style.exponents=TRUE,
-      include.rownames=FALSE,
-      booktabs=TRUE,
-      floating=FALSE)      
-@ 
-\caption[Core Placenta Pathway Enrichment]{Pathways with significant and suggestive enrichment
-  ($\text{FDR}\le 0.1$) in the core placenta transcriptome using the
-  biocarta, reactome, and kegg pathway databases}
-\label{tab:core_placenta_pathway_analysis}
-\end{table}
 
 
 \begin{table}

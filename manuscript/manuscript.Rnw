@@ -1,5 +1,6 @@
 %\documentclass[english,12pt]{article}
-\documentclass[5p]{elsarticle_dla}
+%\documentclass[5p]{elsarticle_dla}
+\documentclass{elsarticle_dla}
 \usepackage{fontspec}
 \setmainfont{FreeSerif}
 \setsansfont{FreeSans}

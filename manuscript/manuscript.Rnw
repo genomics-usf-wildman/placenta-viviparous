@@ -200,24 +200,30 @@ for (mf.bp in c("mf","bp")) {
 
   \textbf{Method} Using RNA-seq, we measured the expression profiles
   of \Sexpr{star.logs[,length(unique(file))]} term placentas of
-  \Sexpr{star.logs[,length(unique(species))]} species of mammals.
+  \Sexpr{star.logs[,length(unique(species))]} species of mammals, and
+  compared the evolution of expression across clades.
   
   \textbf{Results} We identified a set of
-  \Sexpr{core.placenta.transcriptome.long[,length(unique(human_name))]}
-  core genes which are expressed (FPKM $\ge 10$) in all placentas,
-
+  \Sexpr{core.placenta.transcriptome.long[housekeeping==FALSE,length(unique(human_name))]}
+  core genes which are expressed (FPKM $\ge 10$) in all placentas, %
+  %
   including genes with immune-modulating properties (\textit{ANXA2},
   \textit{ANXA1}, \textit{S100A11}, and \textit{S100A10}), cell-cell
   interactions (\textit{LAMC1}, \textit{LUM}, and \textit{LGALS1}),
-  and trophoblast fusion (\textit{ANXA5} and \textit{ANXA1}).
+  invasion (\textit{GRB2} and \textit{RALB5}) and trophoblast fusion
+  (\textit{ANXA5} and \textit{ANXA1}). %
+  We also identified multiple pre-eclampsia associated genes which are
+  differentially expressed in \textit{Homo sapiens} when compared to
+  the other %
+  \Sexpr{star.logs[,length(unique(species))-1]} species. %
 
-  \textbf{Discussion}
-
-  Still, using the strictest filtering strategy
-  we find a core set of only
-  \Sexpr{core.placenta.transcriptome.long[,length(unique(human_name))]}
+  \textbf{Discussion} %
+  Using the strictest filtering strategy we find a core set of only
+  \Sexpr{core.placenta.transcriptome.long[housekeeping==FALSE,length(unique(human_name))]}
   genes is essential for the proper functioning of the placenta in all
-  species analyzed.
+  species analyzed. We also found significantly higher expression of
+  the pre-eclampsia associated genes \textit{KISS1}, \textit{CRH},
+  \textit{PAPPA}, and \textit{ADAM12} on the \human lineage.
 
 \end{abstract}
 

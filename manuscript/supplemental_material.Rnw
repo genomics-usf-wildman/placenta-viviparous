@@ -641,6 +641,422 @@ print(xtable(go.analysis.wide.table,
 
 @ 
 
+\clearpage
+
+
+
+\section{Gene Evolution Trees}
+
+\subsection{Pre-eclampsia genes}
+
+\begin{figure}[hb]
+<<crh.evolution.tree,echo=FALSE,out.height="0.6\\textheight",fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
+
+print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="CRH" &
+                                                    species=="homo sapiens"),
+                                genes.to.tree=genes.to.tree,
+                                combined.fpkm=combined.fpkm,
+                                trees=trees
+                                )+
+      geom_tiplab(size=6,color="black",fontface="italic")+xlim(0,0.37))
+@ 
+\caption{\genetreeexplanation{\textit{CRH}}}
+\label{fig:crh_evolution_tree}
+\end{figure}
+
+\begin{figure}
+<<kiss1.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
+
+print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="KISS1"
+                                                    & species=="homo sapiens"),
+                                genes.to.tree=genes.to.tree,
+                                combined.fpkm=combined.fpkm,
+                                trees=trees
+                                )+
+      geom_tiplab(size=6,color="black",fontface="italic")+xlim(0,0.7))
+@ 
+\caption{\genetreeexplanation[0.1]{\textit{KISS1}}}
+\label{fig:kiss1_evolution_tree}
+\end{figure}
+
+\begin{figure}
+<<pappa.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
+
+print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="PAPPA"
+                                                    & species=="homo sapiens"),
+                                subtree=c("ENSSSCG00000005498","ENSG00000182752"),
+                                genes.to.tree=genes.to.tree,
+                                combined.fpkm=combined.fpkm,
+                                trees=trees
+                                )+
+      geom_tiplab(size=6,color="black",fontface="italic")+xlim(0,0.15))
+@ 
+\caption{\genetreeexplanation[0.1]{\textit{PAPPA}}}
+\label{fig:pappa_evolution_tree}
+\end{figure}
+
+\begin{figure}[hb]
+<<adam12.evolution.tree,echo=FALSE,out.height="0.6\\textheight",fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
+
+print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="ADAM12" &
+                                                    species=="homo sapiens"),
+                                genes.to.tree=genes.to.tree,
+                                subtree=c("ENSMODG00000010538","ENSSSCG00000010746"),
+                                combined.fpkm=combined.fpkm,
+                                trees=trees
+                                )+
+      geom_tiplab(size=6,color="black",fontface="italic")+xlim(0,0.25))
+@ 
+\caption{\genetreeexplanation{\textit{ADAM12}}}
+\label{fig:adam12_evolution_tree}
+\end{figure}
+
+\clearpage
+
+\section{Clade specific Expression}
+
+<<load.placenta.lineage.specific,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../data/",c("placenta_lineage_specific")))>>=
+load("../data/placenta_lineage_specific")
+load("../data/human_mouse_lineage_specific")
+source("/home/don/projects/xtable/pkg/R/print.xtable.R")
+
+placenta.lineage.specific.table <- function(analysis,output=TRUE,lineage.table=placenta.lineage.specific.analysis,members=40,orderbyfc=FALSE,fdr.cutoff=1,caption=NULL,label=NULL) {
+    temp.table <- 
+        lineage.table[analysis.name==analysis &
+                      p.value <= 0.05 &
+                      fdr <= fdr.cutoff][order(p.value),
+                                       list(human_name,p.value,fdr,fc),]
+    temp.table <- data.table(temp.table)
+    setkey(temp.table,"human_name")
+    temp.table <- 
+        hugo.nomenclature[temp.table][,list(`Approved Symbol`,
+                                            `Approved Name`,p.value,fdr,fc)]
+    setnames(temp.table,
+              c("Human Symbol","Human Name","p (t-test)","FDR","Fold Change")
+              )
+    setkey(temp.table,"Human Symbol")
+    if (output) {
+        display.table <- temp.table[`FDR`<=fdr.cutoff,][order(`p (t-test)`),]
+        if (orderbyfc) {
+            display.table <- temp.table[order(-abs(`Fold Change`)),]
+        }
+        if (!is.na(members)) {
+            members <- min(c(members,nrow(display.table)))
+            display.table <- display.table[1:members,]
+        }
+
+        display.table <-
+            display.table[,`Human Symbol`:=paste0("\\textit{",xtable.sanitize.text(`Human Symbol`),
+                                                  "}")]
+        display.table[,`Human Name`:=NULL]
+        # setnames(display.table,"Human Symbol","\\multicolumn{1}{p{0.5in}}{Human Symbol}")6
+        setnames(display.table,"Fold Change","$\\text{log}_2$ FC")
+        print(xtable(display.table,
+                     display=c("s","s","e","g","f"),
+                     caption=caption,
+                     label=label,
+                     align=c("c","p{0.7in}","r","r","r")
+                     ),
+              booktabs=TRUE,
+              floating=FALSE,
+              tabular.environment=ifelse(is.na(members),"longtable","tabular"),
+              math.style.exponents=TRUE,
+              sanitize.text.function=genes.table.sanitize,
+              size="\\small",
+              include.rownames=FALSE)
+        
+    }
+    return(invisible(temp.table[order(`p (t-test)`),]))
+}
+output.top.genes.table <- function(data,output=TRUE) {
+    if (output) {
+        table.display <- c("s","s","s","d")
+        table.align <- c("c","c","p{3in}","r")
+        if (any(colnames(data) %in% "SEM"))  {
+            table.display <- c(table.display,"d")
+            table.align <- c(table.align,"r")
+        }
+        if (any(colnames(data) %in% "Human Symbol"))  {
+            table.align <- c("c",table.align)
+            table.display <- c("s",table.display)
+        }
+        print(xtable(data,
+                     display=table.display,
+                     align=table.align
+                     ),
+              booktabs=TRUE,
+              floating=FALSE,
+              sanitize.text.function=genes.table.sanitize,
+              include.rownames=FALSE)
+    }
+}
+
+@ 
+
+
+
+
+<<human.lineage.specific,echo=FALSE,results="asis">>=
+hum.all.lin.spec <-
+    placenta.lineage.specific.table("hum.all",
+                                    lineage.table=human.mouse.lineage.specific.analysis,
+                                    members=NA,
+                                    caption="\\lineagetableexplanationtypeiii{\\human}{all other species}",
+                                    label="tab:human_linage_specific_all"
+                                    )
+setkey(hum.all.lin.spec,"Human Symbol")
+@ 
+
+
+\clearpage
+
+\section{Core Placenta Transcriptome}
+
+\begin{table}
+\footnotesize
+<<go.analysis,warning=FALSE,message=FALSE,echo=FALSE,results="asis",cache.extra=tools::md5sum(paste0("../data/placenta_go_results_",c("bp","mf","permissive_bp","permissive_mf")))>>=
+load("../data/placenta_go_results_mf")
+load("../data/placenta_go_results_bp")
+load("../data/placenta_go_results_permissive_mf")
+load("../data/placenta_go_results_permissive_bp")
+
+placenta.go.results <- rbindlist(list(head(n=20,placenta_go_results_mf[classic.fdr < 0.05,]),
+                             head(n=20,placenta_go_results_bp[classic.fdr < 0.05,])))
+placenta.go.results <- placenta.go.results[,Annotated:=NULL]
+setnames(placenta.go.results,"Significant","Core")
+setnames(placenta.go.results,"classic","p value")
+setnames(placenta.go.results,"classic.fdr","FDR")
+setnames(placenta.go.results,"GO.ID","GO ID")
+setnames(placenta.go.results,"Term","GO Term")
+
+placenta.go.results.permissive <-
+    rbindlist(list(placenta_go_results_permissive_mf,
+                   placenta_go_results_permissive_bp))
+setnames(placenta.go.results.permissive,"Significant","Core")
+setnames(placenta.go.results.permissive,"classic","p value")
+setnames(placenta.go.results.permissive,"classic.fdr","Permissive FDR")
+setnames(placenta.go.results.permissive,"GO.ID","GO ID")
+setnames(placenta.go.results.permissive,"Term","GO Term")
+setkey(placenta.go.results,"GO ID")
+setkey(placenta.go.results.permissive,"GO ID")
+
+combined.placenta.go.results <-
+    placenta.go.results.permissive[,list(`GO ID`,`Permissive FDR`)
+                                   ][placenta.go.results][order(Ontology,FDR),]
+combined.placenta.go.results <-
+    combined.placenta.go.results[,`p value`:=as.numeric(`p value`)]
+setcolorder(combined.placenta.go.results,
+            c("Ontology",
+              "GO ID",
+              "GO Term",
+              "Core",
+              "Expected",
+              "p value",
+              "FDR",
+              "Permissive FDR"))
+combined.placenta.go.results <-
+    combined.placenta.go.results[,`p value`:=NULL]
+setnames(combined.placenta.go.results,"Ontology","Ont.")
+setnames(combined.placenta.go.results,"Expected","Exp.")
+print(xtable(combined.placenta.go.results,
+             digits=2,
+             display=c("d","s","s","s","d","f","e","e")),
+      include.rownames=FALSE,
+      booktabs=TRUE,
+      math.style.exponents=TRUE,
+      floating=FALSE
+      )
+@ 
+\caption{GO terms most significantly enriched
+  (\Sexpr{placenta.go.results[,sum(Ontology=="MF")]} MF,
+  \Sexpr{placenta.go.results[,sum(Ontology=="BP")]} BP) in
+  the core placenta transcriptome ($\text{FPKM}>10$ in 14
+  of 14 species) as compared to all genes with 1:1 human orthologs in
+  all species. “Ont.” is the GO Ontology, where MF is molecular function 
+  and BP is biological process; “Core” is the number of genes in the core
+  transcriptome for each GO term; “Exp.” is the number of genes
+  expected in the core transcriptome for each term; 
+  “FDR” is the false discovery rate as estimated by the
+  Benjamini and Hochberg procedure \cite{Benjamini1995:bh_procedure} based on
+  p values calculated by the Fisher Exact Test; 
+  “Permissive FDR” is the FDR resulting from the equivalent GO
+  analysis using the permissive core placenta transcriptome 
+  (1:1 orthologs with expression of at least 10 FPKM at least 10 of 14 species) 
+  showing that the enriched GO terms are relatively insensitive to the precise
+  set of species included.}
+\label{tab:core_placenta_go_terms}
+\end{table}
+
+
+\clearpage
+
+
+
+\begin{figure}[tbh]
+<<core.placenta.transcriptome.housekeeping,fig.width=5,fig.height=10,out.height="0.8\\textheight",echo=FALSE>>=
+cptlh <-
+    core.placenta.transcriptome.long[!grepl("(min|median|max|all)_expression|all_but_",
+                                            Species) & housekeeping==TRUE,]
+cptlh <- cptlh[,Species:=factor(gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",capfirst(Species)),
+                              levels=gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",
+                                          capfirst(names(species.names))))]
+
+print(ggplot(cptlh,aes(x=human_name,y=FPKM))+
+      geom_boxplot(outlier.shape=NA)+
+      scale_y_log10(labels=trans_format("log10", math_format(10^.x)))+
+      geom_point(aes(color=Species,shape=Species))+
+      scale_shape_manual("Species",
+                         guide=guide_legend(#nrow=1,
+                                            keywidth=unit(3,"mm"),
+                                            keyheight=unit(3,"mm"),
+                                            label.theme=element_text(face="italic",
+                                                                     angle=0,
+                                                                     size=9),
+                                            title.position="top"
+                                            ),
+                         values=0:18)+
+      # scale_color_discrete(NULL)+
+      coord_flip()+
+      xlab("Human Ortholog Name")+
+      ylab("Gene Expression (FPKM)")+
+      theme_bw() +
+      theme(legend.position=c(0.7,0.15),
+            axis.text.y=element_text(face="italic",size=5),
+            legend.margin=unit(0,"mm"),
+            legend.justification="left",
+            plot.margin=unit(c(0,0,0,0),"mm")
+            ))
+@ 
+\caption{Housekeeping genes excluded from the Core Placenta Transcriptome.
+  \Sexpr{cptlh[,length(unique(human_name))]}
+  1:1 \human ortholog genes expressed ($\mathrm{FPKM} \ge 10$) in the
+  placenta of all \Sexpr{star.logs[,length(unique(species))]} species
+  studied which are housekeeping genes~%
+  \cite{Eisenberg.ea2013:Humanhousekeepinggenesrevisited}
+  ordered (from top to bottom) by median expression.}
+\label{fig:core_placenta_transcriptome_housekeeping}
+\end{figure}
+
+\clearpage
+
+
+\begin{figure}
+<<housekeeping.placenta.distribution,fig.width=8,fig.height=8,out.height="0.8\\textheight",echo=FALSE,message=FALSE>>=
+## housekeeping set as apposed to non-housekeeping set
+cptg.h <- core.placenta.transcriptome.genes.shape[(human_name %in% housekeeping.genes.superset[,gene_short_name])]
+num.species <- star.logs.wide[,length(unique(species))]
+
+calculate.distribution.shape <- 
+    function(min.vector) {
+        min.vector <- sort(min.vector,decreasing=TRUE)
+        temp <- data.table(FPKM=min.vector,num_genes=1:length(min.vector))
+        temp <- temp[order(-num_genes)][!duplicated(FPKM)]
+        return(temp)
+    }
+
+cpt.h.distribution.shape <- 
+    lapply(c("all_expression",
+             "all_but_one_expression",
+             "all_but_two_expression",
+             "all_but_three_expression",
+             "all_but_four_expression"),
+           function(x){
+               calculate.distribution.shape(cptg.h[,x,with=FALSE][[1]])[,`Minimum Expression in`:=x]
+           })
+fix.expression.names <- function(x){
+    x <- gsub("^all_expression$",
+              paste0(num.species," of ",num.species," species"),
+              x
+              )
+    nc.levels <- paste0(num.species," of ",num.species," species")
+    ## number coutner
+    nc <- c("one"=1,"two"=2,"three"=3,"four"=4)
+    for (a in names(nc)) {
+        x <- gsub(paste0("^all_but_",a,"_expression$"),
+              paste0(num.species-nc[a]," of ",num.species," species"),
+              x
+              )
+        nc.levels <-
+            c(nc.levels,
+              paste0(num.species-nc[a]," of ",num.species," species"))
+    }
+    return(factor(x,levels=nc.levels))
+}
+
+cpt.h.distribution.shape <- 
+    rbindlist(cpt.h.distribution.shape)
+
+cpt.h.distribution.shape <- 
+    cpt.h.distribution.shape[,`Minimum Expression in`:=
+                                fix.expression.names(`Minimum Expression in`)]
+
+setnames(cpt.h.distribution.shape,
+         "FPKM",
+         "Expression (FPKM)")
+
+print(ggplot(cpt.h.distribution.shape[`Expression (FPKM)` > 0.1,],
+             aes(x=`Expression (FPKM)`,color=`Minimum Expression in`,y=num_genes))
+      + geom_line(lwd=1)
+      + xlab("Minimum Expression cutoff (FPKM)")
+      + ylab("Genes with N-th Minimum Expression")
+      + scale_y_log10(breaks = trans_breaks("log10", function(x) 10^x),
+                      labels = trans_format("log10", math_format(10^.x)))
+      + scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
+                      labels = trans_format("log10", math_format(10^.x)))
+      + geom_vline(xintercept=10)
+      + geom_segment(mapping=aes(y=V1,
+                         yend=V1,
+                         xend=10,
+                         x=250,
+                         color=`Minimum Expression in`),
+                     data=cpt.h.distribution.shape[`Expression (FPKM)` > 10,
+                                              max(num_genes),`Minimum Expression in`],
+                     arrow=arrow(length=unit(0.5,"cm"))
+                   )
+      + geom_text(mapping=aes(x=250,
+                      y=V1,
+                      label=paste0(V1," genes"),override=TRUE),
+                  data=cpt.h.distribution.shape[`Expression (FPKM)` > 10,
+                      max(num_genes),`Minimum Expression in`],
+                  show.legend=FALSE,
+                  hjust=0
+                  )
+      + guides(color=guide_legend(title="Minimum\nExpression in"))
+      )
+@ 
+\caption{Distribution shape of housekeeping genes in placentas out of
+  \Sexpr{pts[,sum(expressed.housekeeping)]} \human housekeeping 
+  genes which are expressed in any placenta. The vertical axis
+  shows the number of 1:1 orthologous \human housekeeping genes
+  expressed in 
+  placenta transcriptomes if %
+  \Sexpr{cpt.h.distribution.shape[,levels(`Minimum Expression in`)[1]]}
+  %
+  (or %
+  \Sexpr{cpt.h.distribution.shape[,levels(`Minimum Expression in`)[2]]},
+  % 
+  etc.) have a minimum expression in FPKM equal to the horizontal axis.
+  For example, if the cutoff is set to 10 (vertical black line), 
+  % 
+  \Sexpr{cpt.h.distribution.shape[`Expression (FPKM)` > 10 
+    & `Minimum Expression in` == '14 of 14 species',max(num_genes)]}
+  %
+  genes would be included if the FPKM of a set of 1:1 orthologs of all 14 species must be at
+  least 10, %
+  \Sexpr{cpt.h.distribution.shape[`Expression (FPKM)` > 10 
+    & `Minimum Expression in` == "13 of 14 species",max(num_genes)]}
+  %
+  1:1 orthologs would be included if 13 of 14 species have an
+   with an FPKM of at least 10, and 
+  \Sexpr{cpt.h.distribution.shape[`Expression (FPKM)` > 10 
+    & `Minimum Expression in` == '10 of 14 species',max(num_genes)]}
+  genes would be included if 10 of 14 species
+  must have an FPKM of at least 10.}
+\label{fig:core_housekeeping_transcriptome_shape}
+\end{figure}
+
+\clearpage
+
 \section{Placenta Classification Analyses}
 
 <<placenta_pathway_egid,echo=FALSE,results="hide">>=
@@ -913,713 +1329,8 @@ print(xtable(placenta_class_gsea,
 
 \clearpage
 
-\section{Gene Evolution Trees}
 
-\subsection{Pre-eclampsia genes}
 
-\begin{figure}[hb]
-<<crh.evolution.tree,echo=FALSE,out.height="0.6\\textheight",fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
-
-print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="CRH" &
-                                                    species=="homo sapiens"),
-                                genes.to.tree=genes.to.tree,
-                                combined.fpkm=combined.fpkm,
-                                trees=trees
-                                )+
-      geom_tiplab(size=6,color="black",fontface="italic")+xlim(0,0.37))
-@ 
-\caption{\genetreeexplanation{\textit{CRH}}}
-\label{fig:crh_evolution_tree}
-\end{figure}
-
-
-\begin{figure}[hb]
-<<adam12.evolution.tree,echo=FALSE,out.height="0.6\\textheight",fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
-
-print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="ADAM12" &
-                                                    species=="homo sapiens"),
-                                genes.to.tree=genes.to.tree,
-                                subtree=c("ENSMODG00000010538","ENSSSCG00000010746"),
-                                combined.fpkm=combined.fpkm,
-                                trees=trees
-                                )+
-      geom_tiplab(size=6,color="black",fontface="italic")+xlim(0,0.25))
-@ 
-\caption{\genetreeexplanation{\textit{ADAM12}}}
-\label{fig:adam12_evolution_tree}
-\end{figure}
-
-\begin{figure}
-<<kiss1.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
-
-print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="KISS1"
-                                                    & species=="homo sapiens"),
-                                genes.to.tree=genes.to.tree,
-                                combined.fpkm=combined.fpkm,
-                                trees=trees
-                                )+
-      geom_tiplab(size=6,color="black",fontface="italic")+xlim(0,0.7))
-@ 
-\caption{\genetreeexplanation[0.1]{\textit{KISS1}}}
-\label{fig:kiss1_evolution_tree}
-\end{figure}
-
-\begin{figure}
-<<pappa.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
-
-print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="PAPPA"
-                                                    & species=="homo sapiens"),
-                                subtree=c("ENSSSCG00000005498","ENSG00000182752"),
-                                genes.to.tree=genes.to.tree,
-                                combined.fpkm=combined.fpkm,
-                                trees=trees
-                                )+
-      geom_tiplab(size=6,color="black",fontface="italic")+xlim(0,0.15))
-@ 
-\caption{\genetreeexplanation[0.1]{\textit{PAPPA}}}
-\label{fig:pappa_evolution_tree}
-\end{figure}
-
-\begin{figure}
-<<tgfb1.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
-
-print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="TGFB1"
-                                                    & species=="homo sapiens"),
-                                subtree=c("ENSMODG00000008630","ENSSSCG00000026296"),
-                                genes.to.tree=genes.to.tree,
-                                combined.fpkm=combined.fpkm,
-                                trees=trees
-                                )+
-      geom_tiplab(size=6,color="black",fontface="italic")+xlim(0,0.3))
-@ 
-\caption{\genetreeexplanation{\textit{TGFB1}}}
-\label{fig:tgfb1_evolution_tree}
-\end{figure}
-
-
-\begin{figure}
-<<gpc3.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
-
-print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="GPC3"
-                                                    & species=="homo sapiens"),
-                                subtree=c("ENSCAFG00000018864","ENSLAFG00000025706"),
-                                genes.to.tree=genes.to.tree,
-                                combined.fpkm=combined.fpkm,
-                                trees=trees
-                                )+
-      geom_tiplab(size=6,color="black",fontface="italic")+xlim(0,0.13))
-@ 
-\caption{\genetreeexplanation{\textit{GPC3}}}
-\label{fig:gpc3_evolution_tree}
-\end{figure}
-
-\clearpage
-
-\subsection{Primate Specific Evolution}
-
-\begin{figure}[hbf]
-<<fstl1.evolution.tree,echo=FALSE,out.height="0.6\\textheight",fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
-
-print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="FSTL1"
-                                                    & species=="homo sapiens"),
-                                genes.to.tree=genes.to.tree,
-                                combined.fpkm=combined.fpkm,
-                                trees=trees
-                                )+
-      geom_tiplab(size=5,color="black",fontface="italic")+xlim(0,3))
-@ 
-\caption{\genetreeexplanation{follistatin-like 1 \textit{FSTL1}}}
-\label{fig:fstl1_evolution_tree}
-\end{figure}
-
-\clearpage
-
-\subsection{Other Gene Trees}
-
-\begin{figure}[hbf]
-<<serpine.evolution.tree,echo=FALSE,out.height="0.6\\textheight",fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
-
-print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="SERPINE2"
-                                                    & species=="homo sapiens"),
-                                subtree=c("ENSBTAG00000008717",
-                                          "ENSMODG00000004913"),
-                                genes.to.tree=genes.to.tree,
-                                combined.fpkm=combined.fpkm,
-                                trees=trees
-                                )+
-      geom_tiplab(size=4,color="black",fontface="italic")+xlim(0,0.8))
-@ 
-\caption{\genetreeexplanation{\textit{SERPINE2}}}
-\label{fig:serpine_evolution_tree}
-\end{figure}
-
-\begin{figure}
-<<sslp1.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
-
-print(plot.ancestral.state.tree(gene_selector=quote(gene_id=="ENSCAFG00000010638" &
-                                                    species=="canis familiaris"),
-                                genes.to.tree=genes.to.tree,
-                                combined.fpkm=combined.fpkm,
-                                trees=trees
-                                )+
-      geom_tiplab(size=6,color="black",fontface="italic")+xlim(0,1.2))
-@ 
-\caption{\genetreeexplanation{\textit{SSLP1}}}
-\label{fig:sslp1_evolution_tree}
-\end{figure}
-
-\begin{figure}
-<<estrogen.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
-
-print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="CYP19A1"
-                                                    & species=="homo sapiens"),
-                                genes.to.tree=genes.to.tree,
-                                combined.fpkm=combined.fpkm,
-                                trees=trees
-                                )+
-      geom_tiplab(size=6,color="black",fontface="italic")+xlim(0,0.37))
-@ 
-\caption{\genetreeexplanation{estrogen synthesis genes}}
-\label{fig:estrogen_evolution_tree}
-\end{figure}
-
-\begin{figure}
-<<progesterone.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
-
-print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="HSD3B1"
-                                                    & species=="homo sapiens"),
-                                subtree=c("ENSMODG00000005385","ENSLAFG00000027896"),
-                                genes.to.tree=genes.to.tree,
-                                combined.fpkm=combined.fpkm,
-                                trees=trees
-                                )+
-      geom_tiplab(size=6,color="black",fontface="italic")+xlim(0,0.6))
-@ 
-\caption{\genetreeexplanation{progesterone synthesis genes}}
-\label{fig:progesterone_evolution_tree}
-\end{figure}
-
-\begin{figure}
-<<chorionic.somatomammotropin.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
-
-print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="CSH1"
-                                                    & species=="homo sapiens"),
-                                genes.to.tree=genes.to.tree,
-                                combined.fpkm=combined.fpkm,
-                                trees=trees
-                                )+
-      geom_tiplab(size=6,color="black",fontface="italic")+xlim(0,0.9))
-@ 
-\caption{\genetreeexplanation{chorionic somatomammotropin}}
-\label{fig:csh1_evolution_tree}
-\end{figure}
-
-\begin{figure}
-<<prolactin.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
-
-print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="PRL"
-                                                    & species=="homo sapiens"),
-                                genes.to.tree=genes.to.tree,
-                                combined.fpkm=combined.fpkm,
-                                trees=trees
-                                )+
-      geom_tiplab(size=3,color="black",fontface="italic")+xlim(0,1))
-@ 
-\caption{\genetreeexplanation{prolactin}}
-\label{fig:prolactin_evolution_tree}
-\end{figure}
-
-\begin{figure}
-<<rln2.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
-
-print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="RLN2"
-                                                    & species=="homo sapiens"),
-                                genes.to.tree=genes.to.tree,
-                                combined.fpkm=combined.fpkm,
-                                trees=trees
-                                )+
-      geom_tiplab(size=6,color="black",fontface="italic")+xlim(0,0.8))
-@ 
-\caption{\genetreeexplanation{\textit{RLN2}}}
-\label{fig:rln2_evolution_tree}
-\end{figure}
-
-\begin{figure}
-<<ovos2.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
-
-
-
-print(plot.ancestral.state.tree(gene_selector=quote(gene_id=="ENSDNOG00000033320"),
-                                subtree=c("ENSDNOG00000033320","ENSMODG00000017988"),
-                                genes.to.tree=genes.to.tree,
-                                combined.fpkm=combined.fpkm,
-                                trees=trees
-                                )+
-      geom_tiplab(size=5,color="black",fontface="italic")+xlim(0,1.3))
-@ 
-\caption{\genetreeexplanation{\cow \textit{OVOS2}}}
-\label{fig:ovos2_evolution_tree}
-\end{figure}
-
-\begin{figure}
-<<prolactin.receptor.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
-
-print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="PRLR"
-                                                    & species=="homo sapiens"),
-                                subtree=c("ENSG00000113494","ENSMODG00000020376"),
-                                genes.to.tree=genes.to.tree,
-                                combined.fpkm=combined.fpkm,
-                                trees=trees
-                                )+
-      geom_tiplab(size=6,color="black",fontface="italic")+xlim(0,0.3))
-@ 
-\caption{\genetreeexplanation{prolactin receptor, \textit{PRLR}}}
-\label{fig:prolactin_receptor_evolution_tree}
-\end{figure}
-
-
-\begin{figure}
-<<hoxa11.receptor.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
-
-print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="HOXA11"
-                                                    & species=="homo sapiens"),
-                                subtree=c("ENSBTAG00000014738","ENSECAG00000013229"),
-                                genes.to.tree=genes.to.tree,
-                                combined.fpkm=combined.fpkm,
-                                trees=trees
-                                )+
-      geom_tiplab(size=6,color="black",fontface="italic")+xlim(0,0.4))
-@ 
-\caption{\genetreeexplanation{\textit{HOXA11}}}
-\label{fig:hoxa11_evolution_tree}
-\end{figure}
-
- 
-\begin{figure}
-<<hbe1.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
-
-print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="HBE1"
-                                                    & species=="homo sapiens"),
-                                subtree=c("ENSBTAG00000037815",
-                                          "ENSMUSG00000078621"),
-                                genes.to.tree=genes.to.tree,
-                                combined.fpkm=combined.fpkm,
-                                trees=trees
-                                )+
-      geom_tiplab(size=4,color="black",fontface="italic")+xlim(0,0.6))
-@ 
-\caption{\genetreeexplanation{\textit{HBE1}}}
-\label{fig:hbe1_evolution_tree}
-\end{figure}
-
-\begin{figure}
-<<nppb.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
-
-print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="NPPB"
-                                                    & species=="homo sapiens"),
-                                genes.to.tree=genes.to.tree,
-                                combined.fpkm=combined.fpkm,
-                                trees=trees
-                                )+
-      geom_tiplab(size=6,color="black",fontface="italic")+xlim(0,0.4))
-@ 
-\caption{\genetreeexplanation{\textit{NPPB}}}
-\label{fig:nppb_evolution_tree}
-\end{figure}
-
-\begin{figure}
-<<nppc.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
-
-print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="NPPC"
-                                                    & species=="homo sapiens"),
-                                genes.to.tree=genes.to.tree,
-                                combined.fpkm=combined.fpkm,
-                                trees=trees
-                                )+
-      geom_tiplab(size=6,color="black",fontface="italic")+xlim(0,0.32))
-@ 
-\caption{\genetreeexplanation{\textit{NPPC}}}
-\label{fig:nppc_evolution_tree}
-\end{figure}
-
-
-\begin{figure}
-<<galectins.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
-
-print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="LGALS1"
-                                                    & species=="homo sapiens"),
-                                genes.to.tree=genes.to.tree,
-                                combined.fpkm=combined.fpkm,
-                                trees=trees
-                                )+
-      geom_tiplab(size=6,color="black",fontface="italic")+xlim(0,1))
-@ 
-\caption{\genetreeexplanation{\textit{LGALS1} and \textit{LGALS2}}}
-\label{fig:galectins_evolution_tree}
-\end{figure}
-
-
-\begin{figure}
-<<lgals13.galectins.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
-
-print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="LGALS13"
-                                                    & species=="homo sapiens"),
-                                genes.to.tree=genes.to.tree,
-                                combined.fpkm=combined.fpkm,
-                                trees=trees
-                                )+
-      geom_tiplab(size=6,color="black",fontface="italic")+xlim(0,1.5))
-@ 
-\caption{\genetreeexplanation{\textit{LGALS13}}}
-\label{fig:galectins_lgals13_evolution_tree}
-\end{figure}
-
-\clearpage
-
-\section{Clade specific Expression}
-
-<<load.placenta.lineage.specific,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../data/",c("placenta_lineage_specific")))>>=
-load("../data/placenta_lineage_specific")
-load("../data/human_mouse_lineage_specific")
-source("/home/don/projects/xtable/pkg/R/print.xtable.R")
-
-placenta.lineage.specific.table <- function(analysis,output=TRUE,lineage.table=placenta.lineage.specific.analysis,members=40,orderbyfc=FALSE,fdr.cutoff=1,caption=NULL,label=NULL) {
-    temp.table <- 
-        lineage.table[analysis.name==analysis &
-                      p.value <= 0.05 &
-                      fdr <= fdr.cutoff][order(p.value),
-                                       list(human_name,p.value,fdr,fc),]
-    temp.table <- data.table(temp.table)
-    setkey(temp.table,"human_name")
-    temp.table <- 
-        hugo.nomenclature[temp.table][,list(`Approved Symbol`,
-                                            `Approved Name`,p.value,fdr,fc)]
-    setnames(temp.table,
-              c("Human Symbol","Human Name","p (t-test)","FDR","Fold Change")
-              )
-    setkey(temp.table,"Human Symbol")
-    if (output) {
-        display.table <- temp.table[`FDR`<=fdr.cutoff,][order(`p (t-test)`),]
-        if (orderbyfc) {
-            display.table <- temp.table[order(-abs(`Fold Change`)),]
-        }
-        if (!is.na(members)) {
-            members <- min(c(members,nrow(display.table)))
-            display.table <- display.table[1:members,]
-        }
-
-        display.table <-
-            display.table[,`Human Symbol`:=paste0("\\textit{",xtable.sanitize.text(`Human Symbol`),
-                                                  "}")]
-        display.table[,`Human Name`:=NULL]
-        # setnames(display.table,"Human Symbol","\\multicolumn{1}{p{0.5in}}{Human Symbol}")6
-        setnames(display.table,"Fold Change","$\\text{log}_2$ FC")
-        print(xtable(display.table,
-                     display=c("s","s","e","g","f"),
-                     caption=caption,
-                     label=label,
-                     align=c("c","p{0.7in}","r","r","r")
-                     ),
-              booktabs=TRUE,
-              floating=FALSE,
-              tabular.environment=ifelse(is.na(members),"longtable","tabular"),
-              math.style.exponents=TRUE,
-              sanitize.text.function=genes.table.sanitize,
-              size="\\small",
-              include.rownames=FALSE)
-        
-    }
-    return(invisible(temp.table[order(`p (t-test)`),]))
-}
-output.top.genes.table <- function(data,output=TRUE) {
-    if (output) {
-        table.display <- c("s","s","s","d")
-        table.align <- c("c","c","p{3in}","r")
-        if (any(colnames(data) %in% "SEM"))  {
-            table.display <- c(table.display,"d")
-            table.align <- c(table.align,"r")
-        }
-        if (any(colnames(data) %in% "Human Symbol"))  {
-            table.align <- c("c",table.align)
-            table.display <- c("s",table.display)
-        }
-        print(xtable(data,
-                     display=table.display,
-                     align=table.align
-                     ),
-              booktabs=TRUE,
-              floating=FALSE,
-              sanitize.text.function=genes.table.sanitize,
-              include.rownames=FALSE)
-    }
-}
-
-@ 
-
-
-
-
-<<human.lineage.specific,echo=FALSE,results="asis">>=
-hum.all.lin.spec <-
-    placenta.lineage.specific.table("hum.all",
-                                    lineage.table=human.mouse.lineage.specific.analysis,
-                                    members=NA,
-                                    caption="\\lineagetableexplanationtypeiii{\\human}{all other species}",
-                                    label="tab:huamn_linage_specific_all"
-                                    )
-setkey(hum.all.lin.spec,"Human Symbol")
-@ 
-
-
-\clearpage
-
-\section{Core Placenta Transcriptome}
-
-\begin{table}
-\footnotesize
-<<go.analysis,warning=FALSE,message=FALSE,echo=FALSE,results="asis",cache.extra=tools::md5sum(paste0("../data/placenta_go_results_",c("bp","mf","permissive_bp","permissive_mf")))>>=
-load("../data/placenta_go_results_mf")
-load("../data/placenta_go_results_bp")
-load("../data/placenta_go_results_permissive_mf")
-load("../data/placenta_go_results_permissive_bp")
-
-placenta.go.results <- rbindlist(list(head(n=20,placenta_go_results_mf[classic.fdr < 0.05,]),
-                             head(n=20,placenta_go_results_bp[classic.fdr < 0.05,])))
-placenta.go.results <- placenta.go.results[,Annotated:=NULL]
-setnames(placenta.go.results,"Significant","Core")
-setnames(placenta.go.results,"classic","p value")
-setnames(placenta.go.results,"classic.fdr","FDR")
-setnames(placenta.go.results,"GO.ID","GO ID")
-setnames(placenta.go.results,"Term","GO Term")
-
-placenta.go.results.permissive <-
-    rbindlist(list(placenta_go_results_permissive_mf,
-                   placenta_go_results_permissive_bp))
-setnames(placenta.go.results.permissive,"Significant","Core")
-setnames(placenta.go.results.permissive,"classic","p value")
-setnames(placenta.go.results.permissive,"classic.fdr","Permissive FDR")
-setnames(placenta.go.results.permissive,"GO.ID","GO ID")
-setnames(placenta.go.results.permissive,"Term","GO Term")
-setkey(placenta.go.results,"GO ID")
-setkey(placenta.go.results.permissive,"GO ID")
-
-combined.placenta.go.results <-
-    placenta.go.results.permissive[,list(`GO ID`,`Permissive FDR`)
-                                   ][placenta.go.results][order(Ontology,FDR),]
-combined.placenta.go.results <-
-    combined.placenta.go.results[,`p value`:=as.numeric(`p value`)]
-setcolorder(combined.placenta.go.results,
-            c("Ontology",
-              "GO ID",
-              "GO Term",
-              "Core",
-              "Expected",
-              "p value",
-              "FDR",
-              "Permissive FDR"))
-combined.placenta.go.results <-
-    combined.placenta.go.results[,`p value`:=NULL]
-setnames(combined.placenta.go.results,"Ontology","Ont.")
-setnames(combined.placenta.go.results,"Expected","Exp.")
-print(xtable(combined.placenta.go.results,
-             digits=2,
-             display=c("d","s","s","s","d","f","e","e")),
-      include.rownames=FALSE,
-      booktabs=TRUE,
-      math.style.exponents=TRUE,
-      floating=FALSE
-      )
-@ 
-\caption{GO terms most significantly enriched
-  (\Sexpr{placenta.go.results[,sum(Ontology=="MF")]} MF,
-  \Sexpr{placenta.go.results[,sum(Ontology=="BP")]} BP) in
-  the core placenta transcriptome ($\text{FPKM}>10$ in 14
-  of 14 species) as compared to all genes with 1:1 human orthologs in
-  all species. “Ont.” is the GO Ontology, where MF is molecular function 
-  and BP is biological process; “Core” is the number of genes in the core
-  transcriptome for each GO term; “Exp.” is the number of genes
-  expected in the core transcriptome for each term; 
-  “FDR” is the false discovery rate as estimated by the
-  Benjamini and Hochberg procedure \cite{Benjamini1995:bh_procedure} based on
-  p values calculated by the Fisher Exact Test; 
-  “Permissive FDR” is the FDR resulting from the equivalent GO
-  analysis using the permissive core placenta transcriptome 
-  (1:1 orthologs with expression of at least 10 FPKM at least 10 of 14 species) 
-  showing that the enriched GO terms are relatively insensitive to the precise
-  set of species included.}
-\label{tab:core_placenta_go_terms}
-\end{table}
-
-
-\clearpage
-
-
-
-\begin{figure}[tbh]
-<<core.placenta.transcriptome.housekeeping,fig.width=5,fig.height=10,out.height="0.8\\textheight",echo=FALSE>>=
-cptlh <-
-    core.placenta.transcriptome.long[!grepl("(min|median|max|all)_expression|all_but_",
-                                            Species) & housekeeping==TRUE,]
-cptlh <- cptlh[,Species:=factor(gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",capfirst(Species)),
-                              levels=gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",
-                                          capfirst(names(species.names))))]
-
-print(ggplot(cptlh,aes(x=human_name,y=FPKM))+
-      geom_boxplot(outlier.shape=NA)+
-      scale_y_log10(labels=trans_format("log10", math_format(10^.x)))+
-      geom_point(aes(color=Species,shape=Species))+
-      scale_shape_manual("Species",
-                         guide=guide_legend(#nrow=1,
-                                            keywidth=unit(3,"mm"),
-                                            keyheight=unit(3,"mm"),
-                                            label.theme=element_text(face="italic",
-                                                                     angle=0,
-                                                                     size=9),
-                                            title.position="top"
-                                            ),
-                         values=0:18)+
-      # scale_color_discrete(NULL)+
-      coord_flip()+
-      xlab("Human Ortholog Name")+
-      ylab("Gene Expression (FPKM)")+
-      theme_bw() +
-      theme(legend.position=c(0.7,0.15),
-            axis.text.y=element_text(face="italic",size=5),
-            legend.margin=unit(0,"mm"),
-            legend.justification="left",
-            plot.margin=unit(c(0,0,0,0),"mm")
-            ))
-@ 
-\caption{Housekeeping genes excluded from the Core Placenta Transcriptome.
-  \Sexpr{cptlh[,length(unique(human_name))]}
-  1:1 \human ortholog genes expressed ($\mathrm{FPKM} \ge 10$) in the
-  placenta of all \Sexpr{star.logs[,length(unique(species))]} species
-  studied which are housekeeping genes~%
-  \cite{Eisenberg.ea2013:Humanhousekeepinggenesrevisited}
-  ordered (from top to bottom) by median expression.}
-\label{fig:core_placenta_transcriptome_housekeeping}
-\end{figure}
-
-\clearpage
-
-
-\begin{figure}
-<<housekeeping.placenta.distribution,fig.width=8,fig.height=8,out.height="0.8\\textheight",echo=FALSE,message=FALSE>>=
-## housekeeping set as apposed to non-housekeeping set
-cptg.h <- core.placenta.transcriptome.genes.shape[(human_name %in% housekeeping.genes.superset[,gene_short_name])]
-num.species <- star.logs.wide[,length(unique(species))]
-
-calculate.distribution.shape <- 
-    function(min.vector) {
-        min.vector <- sort(min.vector,decreasing=TRUE)
-        temp <- data.table(FPKM=min.vector,num_genes=1:length(min.vector))
-        temp <- temp[order(-num_genes)][!duplicated(FPKM)]
-        return(temp)
-    }
-
-cpt.h.distribution.shape <- 
-    lapply(c("all_expression",
-             "all_but_one_expression",
-             "all_but_two_expression",
-             "all_but_three_expression",
-             "all_but_four_expression"),
-           function(x){
-               calculate.distribution.shape(cptg.h[,x,with=FALSE][[1]])[,`Minimum Expression in`:=x]
-           })
-fix.expression.names <- function(x){
-    x <- gsub("^all_expression$",
-              paste0(num.species," of ",num.species," species"),
-              x
-              )
-    nc.levels <- paste0(num.species," of ",num.species," species")
-    ## number coutner
-    nc <- c("one"=1,"two"=2,"three"=3,"four"=4)
-    for (a in names(nc)) {
-        x <- gsub(paste0("^all_but_",a,"_expression$"),
-              paste0(num.species-nc[a]," of ",num.species," species"),
-              x
-              )
-        nc.levels <-
-            c(nc.levels,
-              paste0(num.species-nc[a]," of ",num.species," species"))
-    }
-    return(factor(x,levels=nc.levels))
-}
-
-cpt.h.distribution.shape <- 
-    rbindlist(cpt.h.distribution.shape)
-
-cpt.h.distribution.shape <- 
-    cpt.h.distribution.shape[,`Minimum Expression in`:=
-                                fix.expression.names(`Minimum Expression in`)]
-
-setnames(cpt.h.distribution.shape,
-         "FPKM",
-         "Expression (FPKM)")
-
-print(ggplot(cpt.h.distribution.shape[`Expression (FPKM)` > 0.1,],
-             aes(x=`Expression (FPKM)`,color=`Minimum Expression in`,y=num_genes))
-      + geom_line(lwd=1)
-      + xlab("Minimum Expression cutoff (FPKM)")
-      + ylab("Genes with N-th Minimum Expression")
-      + scale_y_log10(breaks = trans_breaks("log10", function(x) 10^x),
-                      labels = trans_format("log10", math_format(10^.x)))
-      + scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
-                      labels = trans_format("log10", math_format(10^.x)))
-      + geom_vline(xintercept=10)
-      + geom_segment(mapping=aes(y=V1,
-                         yend=V1,
-                         xend=10,
-                         x=250,
-                         color=`Minimum Expression in`),
-                     data=cpt.h.distribution.shape[`Expression (FPKM)` > 10,
-                                              max(num_genes),`Minimum Expression in`],
-                     arrow=arrow(length=unit(0.5,"cm"))
-                   )
-      + geom_text(mapping=aes(x=250,
-                      y=V1,
-                      label=paste0(V1," genes"),override=TRUE),
-                  data=cpt.h.distribution.shape[`Expression (FPKM)` > 10,
-                      max(num_genes),`Minimum Expression in`],
-                  show.legend=FALSE,
-                  hjust=0
-                  )
-      + guides(color=guide_legend(title="Minimum\nExpression in"))
-      )
-@ 
-\caption{Distribution shape of housekeeping genes in placentas out of
-  \Sexpr{pts[,sum(expressed.housekeeping)]} \human housekeeping 
-  genes which are expressed in any placenta. The vertical axis
-  shows the number of 1:1 orthologous \human housekeeping genes
-  expressed in 
-  placenta transcriptomes if %
-  \Sexpr{cpt.h.distribution.shape[,levels(`Minimum Expression in`)[1]]}
-  %
-  (or %
-  \Sexpr{cpt.h.distribution.shape[,levels(`Minimum Expression in`)[2]]},
-  % 
-  etc.) have a minimum expression in FPKM equal to the horizontal axis.
-  For example, if the cutoff is set to 10 (vertical black line), 
-  % 
-  \Sexpr{cpt.h.distribution.shape[`Expression (FPKM)` > 10 
-    & `Minimum Expression in` == '14 of 14 species',max(num_genes)]}
-  %
-  genes would be included if the FPKM of a set of 1:1 orthologs of all 14 species must be at
-  least 10, %
-  \Sexpr{cpt.h.distribution.shape[`Expression (FPKM)` > 10 
-    & `Minimum Expression in` == "13 of 14 species",max(num_genes)]}
-  %
-  1:1 orthologs would be included if 13 of 14 species have an
-   with an FPKM of at least 10, and 
-  \Sexpr{cpt.h.distribution.shape[`Expression (FPKM)` > 10 
-    & `Minimum Expression in` == '10 of 14 species',max(num_genes)]}
-  genes would be included if 10 of 14 species
-  must have an FPKM of at least 10.}
-\label{fig:core_housekeeping_transcriptome_shape}
-\end{figure}
-
-\clearpage
- 
 \printbibliography
 
 

@@ -830,34 +830,9 @@ output.mentioned.genes.table <- function(subset.table=quote(TRUE),
 % \subsubsection{Per-species Gene Set and Pathway Enrichment}
 
 We performed \ac{gsea} on both the top 1\% of transcripts
-(Supplemental \cref{tab:go_terms_enriched_top_one_ateles_fusciceps,
-  tab:go_terms_enriched_top_one_homo_sapiens,
-  tab:go_terms_enriched_top_one_pan_paniscus,
-  tab:go_terms_enriched_top_one_mus_musculus,
-  tab:go_terms_enriched_top_one_spalax_galili,
-  tab:go_terms_enriched_top_one_spalax_carmeli,
-  tab:go_terms_enriched_top_one_bos_taurus,
-  tab:go_terms_enriched_top_one_ovis_aries,
-  tab:go_terms_enriched_top_one_sus_scrofa,
-  tab:go_terms_enriched_top_one_equus_caballus,
-  tab:go_terms_enriched_top_one_canis_familiaris,
-  tab:go_terms_enriched_top_one_loxodonta_africana,
-  tab:go_terms_enriched_top_one_dasypus_novemcinctus,
-  tab:go_terms_enriched_top_one_monodelphis_domestica}) and the top
+(Supplemental \cref{tab:go_terms_enriched_top_one_ateles_fusciceps,tab:go_terms_enriched_top_one_homo_sapiens,tab:go_terms_enriched_top_one_pan_paniscus,tab:go_terms_enriched_top_one_mus_musculus,tab:go_terms_enriched_top_one_spalax_galili,tab:go_terms_enriched_top_one_spalax_carmeli,tab:go_terms_enriched_top_one_bos_taurus,tab:go_terms_enriched_top_one_ovis_aries,tab:go_terms_enriched_top_one_sus_scrofa,tab:go_terms_enriched_top_one_equus_caballus,tab:go_terms_enriched_top_one_canis_familiaris,tab:go_terms_enriched_top_one_loxodonta_africana,tab:go_terms_enriched_top_one_dasypus_novemcinctus,tab:go_terms_enriched_top_one_monodelphis_domestica}) and the top
 100 transcripts (Supplemental
-\cref{tab:go_terms_enriched_ateles_fusciceps,
-  tab:go_terms_enriched_homo_sapiens,
-  tab:go_terms_enriched_pan_paniscus,
-  tab:go_terms_enriched_mus_musculus,
-  tab:go_terms_enriched_spalax_galili,
-  tab:go_terms_enriched_spalax_carmeli,
-  tab:go_terms_enriched_bos_taurus, tab:go_terms_enriched_ovis_aries,
-  tab:go_terms_enriched_sus_scrofa,
-  tab:go_terms_enriched_equus_caballus,
-  tab:go_terms_enriched_canis_familiaris,
-  tab:go_terms_enriched_loxodonta_africana,
-  tab:go_terms_enriched_dasypus_novemcinctus,
-  tab:go_terms_enriched_monodelphis_domestica}); common processes
+\cref{tab:go_terms_enriched_ateles_fusciceps,tab:go_terms_enriched_homo_sapiens,tab:go_terms_enriched_pan_paniscus,tab:go_terms_enriched_mus_musculus,tab:go_terms_enriched_spalax_galili,tab:go_terms_enriched_spalax_carmeli,tab:go_terms_enriched_bos_taurus,tab:go_terms_enriched_ovis_aries,tab:go_terms_enriched_sus_scrofa,tab:go_terms_enriched_equus_caballus,tab:go_terms_enriched_canis_familiaris,tab:go_terms_enriched_loxodonta_africana,tab:go_terms_enriched_dasypus_novemcinctus,tab:go_terms_enriched_monodelphis_domestica}); common processes
 include protein transport and viral transcription/expression
 (Supplemental \cref{tab:go_terms_all_species}).
 
@@ -883,10 +858,10 @@ setkey(hum.all.lin.spec,"Human Symbol")
 Using a mixed-effects linear model to account for repeated testing of
 \human and \mouse, we identified multiple genes which are
 differentially expressed in the \human lineage in comparison to all
-other lineages (\cref{tab:human_lineage_specific}). These genes
-include multiple genes which are thought to be involved in
-pre-eclampsia. Notably, \textit{CRH}
-(FDR=\Sexpr{hum.all.lin.spec["CRH",`FDR`]},
+other lineages (\cref{tab:human_lineage_specific}, Supplemental
+\cref{tab:human_lineage_specific_all}). These genes include multiple
+genes which are thought to be involved in pre-eclampsia. Notably,
+\textit{CRH} (FDR=\Sexpr{hum.all.lin.spec["CRH",`FDR`]},
 FC=\Sexpr{hum.all.lin.spec["CRH",`Fold Change`]}, Supplemental
 \cref{fig:crh_evolution_tree}), has been shown to be more highly
 expressed in placentas from pre-eclamptic pregnancies
@@ -1112,14 +1087,17 @@ genes comprising the core placenta transcriptome are shown in
 \cref{fig:core_placenta_transcriptome} ordered by their median
 transcription level in \ac{FPKM}. We considered a gene to be core to
 the placenta transcriptome if a 1:1 ortholog of that gene was
-expressed with $\text{FPKM} \ge 10$ in all species studied and was
-not a human housekeeping gene according to
-\citet{Eisenberg.ea2013:Humanhousekeepinggenesrevisited}.
+expressed with $\text{FPKM} \ge 10$ in all species studied and was not
+a human housekeeping gene according to
+\citet{Eisenberg.ea2013:Humanhousekeepinggenesrevisited}. Genes which
+meet this criteria but are housekeeping genes are depicted in
+Supplemental \cref{fig:core_placenta_transcriptome_housekeeping}.
 \Cref{fig:core_placenta_transcriptome_shape} shows the number of genes
 which would be included in the core placenta set if the \ac{FPKM}
-cutoff was set differently; for example, choosing an \ac{FPKM} cutoff of 1 yields %
-\Sexpr{cpt.distribution.shape[`Expression (FPKM)`>=1 & 
-`Min. Exp. in` == '14 of 14',max(num_genes)]} %
+cutoff was set differently; for example, choosing an \ac{FPKM} cutoff
+of 1 yields %
+\Sexpr{cpt.distribution.shape[`Expression (FPKM)`>=1 & `Min. Exp. in`
+  == '14 of 14',max(num_genes)]} %
 genes in the core transcriptome. %
 In contrast to the shape of the number of genes included in the core
 placenta transcriptome, the set of \human housekeeping genes expressed

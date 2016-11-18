@@ -374,9 +374,10 @@ transcripts where the highest scoring match had a bitscore below 40
 were left unannotated.
 % 
 All transcriptomes were then aligned to the appropriate reference (or
-assembled) genome using STAR v2.4.2a
-\cite{Dobin.ea2013:STARultrafastuniversalRNA-seq} and expression
-values in \ac{FPKM}
+assembled) genome using STAR v2.4.2a~%
+\cite{Dobin.ea2013:STARultrafastuniversalRNA-seq} (Supplemental
+\cref{fig:transcriptome_statistics,fig:transcriptome_reads_vs_read_length})
+and expression values in \ac{FPKM}
 % \cite{Trapnell.ea2010:Transcriptassemblyandquantification}
 were
 quantified using Cufflinks v2.2.1
@@ -521,7 +522,7 @@ to %
 %
 with an average of \Sexpr{star.logs.wide[input.read.length > 120 & input.read.length < 160,mean(`% good reads`)]}\% %
 of reads mapping to the
-respective reference genome (\cref{tab:ref_genome_aligned_species}).
+respective reference genome (Supplemental \cref{tab:ref_genome_aligned_species}).
 %
 %
 For transcriptomes sequenced with 35 bp %
@@ -535,10 +536,14 @@ the number of trimmed reads ranged from %
 to %
 \Sexpr{star.logs.wide[input.read.length  < 40  ,max(as.numeric(input.reads))]}
 %
-with an average of \Sexpr{star.logs.wide[input.read.length < 40, mean(`% good reads`)]}\%
-of reads mapping to the
-respective reference genome (\cref{tab:ref_genome_aligned_species}).
-The expression of all genes with \ac{FPKM} $\ge 50$ is shown in Supplemental
+with an average of %
+\Sexpr{star.logs.wide[input.read.length < 40, mean(`% good reads`)]}\%
+%
+of reads mapping to the respective reference genome (Supplemental
+\cref{tab:ref_genome_aligned_species}). Read length was not a
+predictor of unmapped read percentage (Supplemental
+\cref{fig:transcriptome_reads_vs_read_length}). The expression of
+all genes with \ac{FPKM} $\ge 50$ is shown in Supplemental
 \cref{tab:all_ateles_fusciceps_placenta,tab:all_homo_sapiens_placenta,tab:all_pan_paniscus_placenta,tab:all_mus_musculus_placenta,tab:all_spalax_galili_placenta,tab:all_spalax_carmeli_placenta,tab:all_bos_taurus_placenta,tab:all_ovis_aries_placenta,tab:all_sus_scrofa_placenta,tab:all_equus_caballus_placenta,tab:all_canis_familiaris_placenta,tab:all_loxodonta_africana_placenta,tab:all_dasypus_novemcinctus_placenta,tab:all_monodelphis_domestica_placenta}.
 
 <<top.genes.function,echo=FALSE,results="hide">>=

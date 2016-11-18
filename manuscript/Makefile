@@ -4,7 +4,8 @@
 R ?= R
 ROPTS=-q --no-save --no-restore-data
 
-all: references.bib manuscript.pdf supplemental_material.pdf extended_discussion.pdf
+all: references.bib manuscript.pdf supplemental_material.pdf \
+	extended_discussion.pdf extended_supplemental_material.pdf
 
 bmcart.cls:
 	wget -O temp.zip "http://media.biomedcentral.com/content/production/bmc_article-tex.zip"
@@ -68,7 +69,8 @@ extended_supplemental_material.tex: extended_supplemental_material.Rnw	\
 ../data/human_mouse_lineage_specific					\
 ../data/placenta_core_transcriptome $(GO_GSEA_RESULTS)
 
-version_it: manuscript.pdf supplemental_material.pdf
+version_it: manuscript.pdf supplemental_material.pdf			\
+	extended_supplemental_material.pdf extended_discussion.pdf
 	for a in $^; do \
 		cp $$a placenta_viviparous_$${a%%.pdf}_$$(date +%Y%m%d)_$$(git rev-parse --short HEAD).pdf; \
 	done;

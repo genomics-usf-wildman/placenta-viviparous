@@ -1107,6 +1107,18 @@ of the total fraction of genes. However, there is still a large
 difference between the set of housekeeping genes which are expressed
 in \human and those which are expressed in all placentas.
 
+Supplemental \cref{tab:core_placenta_go_terms} lists the significant
+enrichment of \ac{GO} terms in the core placenta transcriptome;
+notable terms include those involved in cytoskeletal structure,
+protein transport, membrane protein structure, and inflammation
+resolution. Increasing the permissiveness of the core placenta
+transcriptome by only requiring 10 of 14 species to express 1:1
+orthologs with FPKM $>10$ and results in the same terms also being
+significantly enriched, along with additional terms (Supplemental
+\cref{tab:core_placenta_go_terms}). Supplemental
+\cref{tab:core_placenta_pathway_analysis} shows the pathways with
+significant and suggestive enrichment in the core placenta
+transcriptome.
 
 \subsubsection{Annexin Complexes}
 
@@ -1125,16 +1137,6 @@ interaction as well as vesicle trafficking and von Willibrand Factor
 secretion. The expression regulation of another core gene,
 \textit{TIMP3}, has been implicated in pre-eclampsia
 \cite{Ma.ea2014:Down-regulationofTIMP3leads,Xiang.ea2013:PromoterhypomethylationofTIMP3}.
-Supplemental \cref{tab:core_placenta_go_terms} lists the significant
-enrichment of \ac{GO} terms in the core placenta transcriptome;
-notable terms include those involved in cytoskeletal structure,
-protein transport, membrane protein structure, and inflammation
-resolution. Increasing the permissiveness of the core placenta
-transcriptome by only requiring 10 of 14 species to express 1:1
-orthologs with FPKM $>10$ and results in the same terms also being
-significantly enriched, along with additional terms (Supplemental
-\cref{tab:core_placenta_go_terms}).
-
 
 Another annexin which is highly expressed in all term placentas is
 \textit{ANXA5}, which was originally identified as a an anti-coagulant

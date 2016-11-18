@@ -277,14 +277,11 @@ and chorionic gonadotropin beta genes in anthropoid primates
 Expression patterns of specific genes also can vary widely between
 species. For example, the expression of orthologous genes in the
 placenta have been found to vary substantially between \human and
-\mouse \cite{Su.ea2002:Large-scaleanalysisofhuman}, and the
-recruitment of \textit{SIGLEC6} to placental expression in \human
-differs from both \textit{Pan troglodytes} and \mouse
-\cite{Linden.ea2007:Human-specificexpressionofSiglec-6}.
+\mouse \cite{Su.ea2002:Large-scaleanalysisofhuman}.
 
-In order to address our two questions in a more systematic way, we
+To address our questions, we 
 sequenced and quantified the total RNA of mammalian placentas at term,
-including that of the \human, \textit{Pan paniscus} (the sister
+including \human, \textit{Pan paniscus} (the sister
 species to \textit{P. troglodytes}), \textit{Ateles fusciceps},
 \mouse, \galili, \carmeli, \textit{Canis familiaris}, \cow, \elephant,
 \textit{Dasypus novemcinctus}, and \textit{Monodelphis domesticus}.
@@ -302,11 +299,9 @@ use this data, along with existing RNA-Seq data from \mouse
 \textit{Sus scrofa} \cite{Ahanda.ea2012:Predictionofaltered3-} to: 1)
 identify the non-housekeeping genes which are expressed in the
 placentas of all species analyzed and therefore represent the
-\emph{core functionality of the placenta}; 2) identify the genes whose
+\emph{core functionality of the placenta}; 2) identify genes whose
 expression level changes significantly in each of the morphology
 types.
-
-
 
 \section{Methods}
 
@@ -367,7 +362,7 @@ same methodology as RNAs sequenced specifically for this study.
 \subsection{Transcriptome Assembly, Alignment, and Quantification}
 
 \begin{sloppypar}
-The quality of reads was evaluated using FASTQC v0.11.2
+Reads quality was evaluated using FASTQC v0.11.2
 (\url{http://www.bioinformatics.babraham.ac.uk/projects/fastqc/}).
 Transcriptomes without a suitable reference genome (\smonkey, \galili,
 \carmeli; italic reference in Supplemental
@@ -375,12 +370,12 @@ Transcriptomes without a suitable reference genome (\smonkey, \galili,
 v2014-07-17 \cite{Haas.ea2013:Denovotranscriptsequence} and annotated
 using Diamond \cite{Buchfink.ea2015:Fastandsensitiveprotein} against
 either the \human or \mouse transcriptome (Supplemental
-\cref{tab:ref_genome_aligned_species}). For annotation using Diamond,
-the match with the highest bitscore was chosen as the annotation;
-transcripts where the highest scoring match had a bitscore below 40
-were left unannotated.
+\cref{tab:ref_genome_aligned_species}), and the
+the match with the highest bitscore was chosen as the annotation.
+Transcripts where the highest scoring match had a bitscore below 40
+were left un-annotated.
 % 
-All transcriptomes were then aligned to the appropriate reference (or
+All transcriptomes were aligned to the reference (or
 assembled) genome using STAR v2.4.2a~%
 \cite{Dobin.ea2013:STARultrafastuniversalRNA-seq} (Supplemental
 \cref{fig:transcriptome_statistics,fig:transcriptome_reads_vs_read_length})
@@ -391,11 +386,11 @@ quantified using Cufflinks v2.2.1
 \cite{Trapnell.ea2009:TopHatdiscoveringsplicejunctions} (Supplemental
 \cref{tab:all_ateles_fusciceps_placenta,tab:all_homo_sapiens_placenta,tab:all_pan_paniscus_placenta,tab:all_mus_musculus_placenta,tab:all_spalax_galili_placenta,tab:all_spalax_carmeli_placenta,tab:all_bos_taurus_placenta,tab:all_ovis_aries_placenta,tab:all_sus_scrofa_placenta,tab:all_equus_caballus_placenta,tab:all_canis_familiaris_placenta,tab:all_loxodonta_africana_placenta,tab:all_dasypus_novemcinctus_placenta,tab:all_monodelphis_domestica_placenta}).
 %
-The genome of the closely-related \textit{P. troglodytes} was used as
-a reference for \bonobo. The separation between the two recognized Pan
-species is generally perceived to be $\approx 1$ million years
-\cite{Prüfer.ea2012:bonobogenomecomparedwith}. %
-%
+The genome of the closely-related \textit{P. troglodytes} (separation
+$\approx 1$ million years
+\cite{Prüfer.ea2012:bonobogenomecomparedwith}) was used as a reference
+for \bonobo %
+.
 \end{sloppypar}
 
 \begin{figure}
@@ -444,16 +439,12 @@ print(pp %>%
 
 \subsection{Comparative Analysis of Gene Expression}
 
-All 1:1 orthologs present among \opossum, \textit{Pan troglodytes},
-\cow, \dog, \elephant, \mouse, and \human were determined using
+1:1 orthologs in were determined using
 Ensembl v.80 gene trees via Biomart using the biomaRt R package
 \cite{Durinck.ea2009:Mappingidentifiersforintegration}. %
 A total of \Sexpr{combined.fpkm[species!="homo sapiens" & mean_fpkm >=
   1,length(unique(human_name))]} 1:1 orthologous genes were expressed
-in at least one species. Of these, \Sexpr{combined.fpkm[species!="homo
-  sapiens" & mean_fpkm >= 100,length(unique(human_name))]} 1:1
-orthologous genes with \ac{FPKM} $\ge 100$ were retained for future
-analyses of gene expression evolution described below.
+in at least one species.
 
 Significant shifts in expression levels between groups of species were
 calculated using Student's t test on 1:1 orthologs using the mean of
@@ -473,16 +464,14 @@ Placenta morphology with a defined order (interdigitation, intimacy)
 were additionally analyzed using proportional odds logistic regression
 using the MASS package in R~\cite{Venables2002:MASS}.
 
-
 \subsection{Gene Set and Pathway Enrichment Analysis}
 
-Gene sets and pathways in were obtained from MSigdb v5.1 hallmark gene
-set \cite{Liberzon.ea2011:MolecularsignaturesdatabaseMSigDB} and Gene
-Ontology which represent a superset of available pathway databases,
-including Reactome, Kegg, Netpath, and GO. We calculated the
-over-representation of gene lists in these gene sets using Fisher's
-exact test and corrected for multiple testing by estimating the
-\ac{FDR} using the Benjamini and Hochberg procedure
+Gene sets and pathways in were obtained from MSigdb v5.1
+\cite{Liberzon.ea2011:MolecularsignaturesdatabaseMSigDB} and Gene
+Ontology to form a superset of available pathway databases. We
+calculated the over-representation of gene lists in these gene sets
+using Fisher's exact test and corrected for multiple testing by
+estimating the \ac{FDR} using the Benjamini and Hochberg procedure
 \cite{Benjamini1995:bh_procedure}.
 
 \subsection{Sequences, FPKMs, and Code}
@@ -493,9 +482,9 @@ is available at
 sequences used are deposited in SRA, and new sequences for this work
 can be obtained under the series
 \href{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE79121}{GSE79121}
-(Supplemental \cref{tab:srr_numbers}). The mean FPKM for gene in each
+(Supplemental \cref{tab:srr_numbers}). The mean \ac{FPKM} for gene in each
 species with ortholog annotations are located in the supplemental data
-file all\_species\_mean\_fpkm.txt.xz and the per-sample FPKM values are in
+file all\_species\_mean\_fpkm.txt.xz and the per-sample \ac{FPKM} values are in
 all\_species\_per\_sample\_fpkm.txt.xz.
 
 \section{Results}
@@ -1367,25 +1356,22 @@ as well.
 We analyzed the sequenced transcriptome of
 \Sexpr{star.logs[,length(unique(file))]} placentas from
 \Sexpr{star.logs[,length(unique(species))]} species spanning the
-phylogenetic tree of mammals. This wealth of data revealed both
-lineage-specific expansions and differential expression of gene
+phylogenetic tree of mammals. This revealed both
+lineage-specific differential expression of gene
 families as well as a set of core, non-housekeeping genes which are
 critical for the proper organization and functioning of the placenta.
 
-There is diversity in the placental expression of hormones, including
-estrogen, progesterone, prolactin, relaxin, the growth hormone family, and
-natriuretic peptides among the species and lineages analyzed.
+The core placenta transcriptome contains genes which are involved in
+maternal-fetal tolerance, such as the annexins, and genes responsible
+for cell-cell and cell-matrix interactions, such as \textit{LGALS1}.
+These genes were almost certainly present in the placenta of the
+common mammalian ancestor. We hypothesize that modifications to their
+expression or function will compromise the development and
+organization of the placenta.
+
 We also identified genes differentially expressed on the \human
 lineage which are implicated in pre-eclampsia, including
 \textit{ADAM12}, \textit{CRH}, and \textit{KISS1}.
-
-The core placenta transcriptome was also identified, which contains
-genes which are involved in maternal-fetal tolerance, such as the
-annexins, and genes responsible for cell-cell and cell-matrix
-interactions, such as \textit{LGALS1}. These genes were almost
-certainly present in the placenta of the common mammalian ancestor. We
-hypothesize that modifications to their expression or function will
-compromise the development and organization of the placenta.
 
 This study has identified many tantalizing molecular pathways which
 illuminate the vast diversity of placental morphology and may explain

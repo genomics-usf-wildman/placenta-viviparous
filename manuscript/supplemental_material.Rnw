@@ -802,7 +802,7 @@ hum.all.lin.spec <-
                                     lineage.table=human.mouse.lineage.specific.analysis,
                                     members=NA,
                                     caption="\\lineagetableexplanationtypeiii{\\human}{all other species}",
-                                    label="tab:human_linage_specific_all"
+                                    label="tab:human_lineage_specific_all"
                                     )
 setkey(hum.all.lin.spec,"Human Symbol")
 @ 

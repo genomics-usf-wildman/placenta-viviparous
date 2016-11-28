@@ -201,17 +201,18 @@ for (mf.bp in c("mf","bp")) {
 
   \textbf{Method} Using RNA-seq, we measured the expression profiles
   of \Sexpr{star.logs[,length(unique(file))]} term placentas of
-  \Sexpr{star.logs[,length(unique(species))]} species of mammals, and
-  compared the evolution of expression across clades.
+  \Sexpr{star.logs[,length(unique(species))]} species of mammals
+  representing all major eutherian superordinal clades and marsupials,
+  and compared the evolution of expression across clades.
   
   \textbf{Results} We identified a set of
   \Sexpr{core.placenta.transcriptome.long[housekeeping==FALSE,length(unique(human_name))]}
   core genes which are expressed (FPKM $\ge 10$) in all placentas, %
   %
   including genes with immune-modulating properties (\textit{ANXA2},
-  \textit{ANXA1}, \textit{S100A11}, and \textit{S100A10}), cell-cell
+  \textit{ANXA1}, \textit{S100A11}, \textit{S100A10}, and \textit{LGALS1}), cell-cell
   interactions (\textit{LAMC1}, \textit{LUM}, and \textit{LGALS1}),
-  invasion (\textit{GRB2} and \textit{RALB5}) and trophoblast fusion
+  invasion (\textit{GRB2} and \textit{RALB5}) and syncytialization
   (\textit{ANXA5} and \textit{ANXA1}). %
   We also identified multiple pre-eclampsia associated genes which are
   differentially expressed in \textit{Homo sapiens} when compared to

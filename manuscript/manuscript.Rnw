@@ -430,7 +430,7 @@ print(pp %>%
       ## spider monkey
       %>% phylopic("aceb287d-84cf-46f1-868c-4797c4ac54a8",color="#FF11FF",alpha=0.3,node=14,width=0.25)
       ## human
-      %>% phylopic("a9f4ebd5-53d7-4de9-9e66-85ff6c2d513e",color="#CCCC44",alpha=0.3,node=13,width=0.18)
+      %>% phylopic("acf1cbec-f6ef-4a82-8ab5-be2f963b93f5",color="#CCCC44",alpha=0.3,node=13,width=0.3)
       )
 @ 
 \caption{Species tree for organisms studied showing the relationship

@@ -456,7 +456,9 @@ and Hochberg procedure \cite{Benjamini1995:bh_procedure} was
 $\le 0.05$. For \human and \mouse lineage specific calculations, a
 type-III anova was calculated using
 lme4~\cite{Bates.ea2015:FittingLinearMixed-EffectsModels} with each
-species having separate random effects.
+species having separate random effects. Shifts in expression levels
+are reported with $\log_2$ Fold-Change (FC), rounded to the nearest
+integer.
 
 Significant shifts in expression levels which correlate with placenta
 morphology (shape, interdigitation, and intimacy) were identified

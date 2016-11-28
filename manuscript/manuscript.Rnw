@@ -1323,9 +1323,11 @@ We suggest that further research into molecular role of these annexin
 complexes may illuminate how immune tolerance is maintained during
 placentation.
 
+\DEW{Why?}
+
 \subsubsection{Formation of the syncytiotrophoblast}
 
-While Syncitin-1 and -2 are implicated in the formation of the
+While Syncytin-1 and -2 are implicated in the formation of the
 syncytiotrophoblast in
 \human~\cite{Rawn.ea2008:evolutionregulationandfunction} and homologs
 of \textit{ERVFRD-1} and \textit{ERVW-1} are widely expressed in most

@@ -1358,11 +1358,13 @@ repair during the massive flux of nutrients and waste in the placenta.
 
 \subsubsection{Invasion: EGF and CD9 in the Core Placenta}
 
+\DEW{Write out FDR for enrichment described}
+
 The high expression of components of the EGFR signaling pathway in the
 core placenta transcriptome (including \textit{GRB2}, \textit{RALB})
 as well as annexins which are involved in the location of EGF receptor
 localization (\textit{ANXA1} and \textit{ANXA2}) in the core placenta
-is consistent with previous findingsshowing that alterations to the
+is consistent with previous findings showing that alterations to the
 EGF signaling system change invasion of trophoblast cells into the
 spiral arteries~\cite{Armant.ea2015:Reducedexpressionofepidermal}.
 Another component of the core placenta transcriptome, \textit{CD9},

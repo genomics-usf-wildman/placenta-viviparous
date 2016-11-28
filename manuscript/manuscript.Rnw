@@ -319,7 +319,7 @@ on specimen ID, and collector is shown for each sample in Supplemental
 the placenta was collected at term upon expulsion from the mother
 following delivery. Placental tissue from \human was collected upon
 delivery via a cesarean section. Near-term placental tissue from \dog
-was collected upon the death of the mother from a car accident.
+was collected upon the death of the mother and fetus from a car accident.
 Placental tissue from \opossum was sampled at fetal stage 32, roughly
 one day prior to birth. Only the fetal portion of the placenta was
 sampled at the maternal-fetal interface (i.e. villous portion for

@@ -1098,7 +1098,7 @@ print(ggplot(cpt.distribution.shape[`Expression (FPKM)` > 0.1,],
 
 
 The
-\Sexpr{core.placenta.transcriptome.long[,length(unique(human_name))]}
+\Sexpr{core.placenta.transcriptome.long[housekeeping==FALSE,length(unique(human_name))]}
 genes comprising the core placenta transcriptome are shown in
 \cref{fig:core_placenta_transcriptome} ordered by their median
 transcription level in \ac{FPKM}. We considered a gene to be core to

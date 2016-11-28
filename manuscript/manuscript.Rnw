@@ -34,6 +34,7 @@
 \usepackage[nomargin,inline,draft]{fixme}
 \newcommand{\DLA}[1]{\textcolor{red}{\fxnote{DLA: #1}}}
 \newcommand{\DEW}[1]{\textcolor{purple}{\fxnote{DEW: #1}}}
+\newcommand{\PP}[1]{\textcolor{orange}{\fxnote{PP: #1}}}
 % \usepackage[x11names,svgnames]{xcolor}
 % \usepackage{texshade}
 % \usepackage{tikz}
@@ -1251,6 +1252,8 @@ analyses of additional placentas with intermediate interdigitation and
 intimacy should better illuminate the pathways which are responsible
 for these placental morphologies.
 
+\PP{Introduce the characteristics earlier in the introduction}
+
 \section{Discussion}
 
 
@@ -1344,6 +1347,8 @@ proximity to start the fusion process, \textit{ANXA5} is likely to be
 essential for the completion of fusion and the maintenance of membrane
 repair during the massive flux of nutrients and waste in the placenta.
 
+\PP{Add refs for fusion}
+
 % \DLA{Possibility of membrane repair due to maternal immune response as
 %   well during this process, as well as repair of membrane due to high
 %   secretion and adsoroption of nutrients/waste in the placenta.}
@@ -1366,6 +1371,8 @@ invasion~\cite{Matsumoto.ea2016:CD9suppresseshumanextravillous}, and
 we hypothesize that it is responsible for maintaining the balance
 between invasion and attachment in the other placentas examined here
 as well.
+
+\PP{EGF interacts with S100 from the core placenta as well}
 
 % TAGLN2 -- likely to be produced by the placenta as well; possibly
 % due to the smooth muscle transition?

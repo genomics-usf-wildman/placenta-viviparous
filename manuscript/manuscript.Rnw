@@ -495,7 +495,7 @@ all\_species\_per\_sample\_fpkm.txt.xz.
 
 Supplemental \cref{fig:transcriptome_statistics} shows the RNAseq read and
 alignment statistics for all species. For transcriptomes sequenced
-with 75 bp %
+with 76 bp %
 %
 (\Sexpr{species(star.logs.wide[input.read.length > 70 & input.read.length < 80,unique(species)])}),%
 %

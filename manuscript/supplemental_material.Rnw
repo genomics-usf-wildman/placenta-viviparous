@@ -191,11 +191,19 @@ for (mf.bp in c("mf","bp")) {
 
 \begin{table}[hb]
 <<placental_classification_table,echo=FALSE,results="asis">>=
-print(xtable(placenta_classification,
+plac.class <- copy(placenta_classification[,list(species,shape,interdigitation,intimacy)])
+plac.class[,`species`:=paste0("\\textit{",gsub("^(.)","\\U\\1",`species`,perl=TRUE),"}")]
+plac.class[,`interdigitation`:=gsub("^(.)","\\U\\1",`interdigitation`,perl=TRUE)]
+plac.class[,`shape`:=gsub("^(.)","\\U\\1",`shape`,perl=TRUE)]
+plac.class[,`intimacy`:=gsub("^(.)","\\U\\1",`intimacy`,perl=TRUE)]
+setnames(plac.class,colnames(plac.class),gsub("^(.)","\\U\\1",colnames(plac.class)))
+
+print(xtable(plac.class,
              display=c("s","s","s","s","s"),
              align=c("c","c","c","c","c")),
       include.rownames=FALSE,
       floating=FALSE,
+      sanitize.text.function=genes.table.sanitize,
       booktabs=TRUE
       )
 

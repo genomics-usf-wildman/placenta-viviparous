@@ -259,21 +259,19 @@ genes which are responsible for the \emph{core functionality of the
   placenta} and 2) which genes are associated with \emph{changes in
   placenta morphology}?
 
-Previous studies of some species (i.e., \textit{Homo sapiens},
-\textit{Mus musculus}, \textit{Bos taurus}) have provided some
-preliminary answers to these questions. They revealed a stunning
-divergence in the genetics of the placenta, especially in later stages
-of pregnancy
-\cite{Carter2012:Evolutionofplacentalfunction,Knox.ea2008:Genomicevolutionofplacenta,Su.ea2002:Large-scaleanalysisofhuman}.
-For example, each lineage has evolved expansive placenta-specific gene
+Previous studies of some species (i.e., \human, \mouse, \cow, and
+\elephant) have provided some preliminary answers to these questions.
+They revealed a stunning divergence in the genetics of the placenta,
+especially in later stages of pregnancy
+\cite{Carter2012:Evolutionofplacentalfunction,Knox.ea2008:Genomicevolutionofplacenta,Su.ea2002:Large-scaleanalysisofhuman,Hou.ea2012:Elephanttranscriptomeprovidesinsights}}.
+For example, each superorder has evolved expansive placenta-specific gene
 families with expression patterns that can vary in space and time
-\cite{Green.ea2000:Pregnancy-associatedbovineandovine}.
-These include independent expansions of the prolactins in \mouse,
-\textit{Spalax carmeli}, \textit{Spalax galili}, and \cow, \acp{PSG}
-in \human and \mouse, \acp{PAG} in \cow, genes related to the
-thymus-specific serine protease \textit{PRSS16} in \textit{Loxodona
-  africana} (in this work), and the expansion of the growth hormone
-and chorionic gonadotropin beta genes in anthropoid primates
+\cite{Green.ea2000:Pregnancy-associatedbovineandovine}. These include
+independent expansions of the prolactins in \mouse, \carmeli, \galili,
+and \cow, \acp{PSG} in \human and \mouse, \acp{PAG} in \cow, genes
+related to the thymus-specific serine protease \textit{PRSS16} in
+\elephant (in this work), and the expansion of the growth hormone and
+chorionic gonadotropin beta genes in anthropoid primates
 \cite{Haig2008:Placentalgrowthhormone-relatedproteins,Rawn.ea2008:evolutionregulationandfunction}.
 Expression patterns of specific genes also can vary widely between
 species. For example, the expression of orthologous genes in the
@@ -282,10 +280,10 @@ placenta have been found to vary substantially between \human and
 
 To address our questions, we 
 sequenced and quantified the total RNA of mammalian placentas at term,
-including \human, \textit{Pan paniscus} (the sister
-species to \textit{P. troglodytes}), \textit{Ateles fusciceps},
-\mouse, \galili, \carmeli, \textit{Canis familiaris}, \cow, \elephant,
-\textit{Dasypus novemcinctus}, and \textit{Monodelphis domesticus}.
+including \human, \bonobo (the sister
+species to \textit{Pan troglodytes}), \smonkey,
+\mouse, \galili, \carmeli, \dog, \cow, \elephant,
+\armadillo, and \opossum.
 These species represent four major branches of eutherian mammals
 (Euarchontoglires, Laurasiatheria, Afrotheria, and Xenartha) as well
 as marsupials. These placentas also represent a wide array of
@@ -294,10 +292,10 @@ offspring and length of gestation (\cref{tab:gestational_periods}). We
 use this data, along with existing RNA-Seq data from \mouse
 \cite{Wang.ea2011:surveyfornovelimprinted}, \human
 \cite{Hughes.ea2015:Evaluatingintra-andinter-individual},
-\textit{Equus caballus}
-\cite{Coleman.ea2010:Structuralannotationofequine}, \textit{Ovis
-  aries} \cite{Archibald.ea2010:sheepgenomereferencesequence}, and
-\textit{Sus scrofa} \cite{Ahanda.ea2012:Predictionofaltered3-} to: 1)
+\horse
+\cite{Coleman.ea2010:Structuralannotationofequine}, \sheep
+\cite{Archibald.ea2010:sheepgenomereferencesequence}, and
+\pig \cite{Ahanda.ea2012:Predictionofaltered3-} to: 1)
 identify the non-housekeeping genes which are expressed in the
 placentas of all species analyzed and therefore represent the
 \emph{core functionality of the placenta}; 2) identify genes whose
@@ -349,13 +347,13 @@ Supplemental \cref{tab:ref_genome_aligned_species}.
 \subsubsection{Additional Sequences}
 
 For more complete evolutionary comparisons additional sequences of
-placenta in \mouse
+placenta in \mouse [mouse]
 (n=\Sexpr{star.logs[grepl("musculus",species),length(unique(file))]})
 \cite{Wang.ea2011:surveyfornovelimprinted}, \human
 (n=\Sexpr{star.logs[grepl("sapiens",species),length(unique(file))]})
-\cite{Hughes.ea2015:Evaluatingintra-andinter-individual} \horse
-\cite{Coleman.ea2010:Structuralannotationofequine}, \sheep
-\cite{Archibald.ea2010:sheepgenomereferencesequence}, and \pig
+\cite{Hughes.ea2015:Evaluatingintra-andinter-individual} \horse [horse]
+\cite{Coleman.ea2010:Structuralannotationofequine}, \sheep [sheep] 
+\cite{Archibald.ea2010:sheepgenomereferencesequence}, and \pig [pig]
 \cite{Ahanda.ea2012:Predictionofaltered3-} were obtained from the
 \ac{SRA} (Supplemental \cref{tab:srr_numbers}) and analyzed using the
 same methodology as RNAs sequenced specifically for this study.
@@ -370,7 +368,7 @@ Transcriptomes without a suitable reference genome (\smonkey, \galili,
 \cref{tab:ref_genome_aligned_species}) were assembled using Trinity
 v2014-07-17 \cite{Haas.ea2013:Denovotranscriptsequence} and annotated
 using Diamond \cite{Buchfink.ea2015:Fastandsensitiveprotein} against
-either the \human or \mouse transcriptome (Supplemental
+either the \human (for \smonkey) or \mouse (for both Spalacines) transcriptome (Supplemental
 \cref{tab:ref_genome_aligned_species}), and the
 the match with the highest bitscore was chosen as the annotation.
 Transcripts where the highest scoring match had a bitscore below 40

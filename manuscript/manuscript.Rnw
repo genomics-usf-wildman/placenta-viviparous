@@ -245,8 +245,8 @@ mammals
 \cite{Mossman.1987:vertebratefetalmembranes} %,Moffett.ea2006:Immunologyofplacentationin}
 (Supplemental \cref{tab:placental_classification}). Mammals also
 differ drastically in the number and size of their offspring, as well
-as the length of gestation; these traits are often with specific
-aspects of placental morphology
+as the length of gestation; these traits are often associated with
+specific aspects of placental morphology
 \cite{Capellini.ea2011:Placentationandmaternalinvestment}
 (Supplemental \cref{tab:gestational_periods}). Although the morphology
 of the mammalian placenta has been well characterized in a number of

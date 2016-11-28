@@ -523,6 +523,22 @@ of reads mapping to the
 respective reference genome (Supplemental \cref{tab:ref_genome_aligned_species}).
 %
 %
+For transcriptomes sequenced with 100 bp %
+% The mismatch here is because we're reporting trimmed reads here, not
+% full length reads
+(\Sexpr{species(star.logs.wide[input.read.length > 80 & input.read.length < 120,unique(species)])}),
+%
+the number of trimmed reads ranged from %
+\Sexpr{star.logs.wide[input.read.length > 80 & input.read.length < 120,min(as.numeric(input.reads))]} 
+%
+to %
+\Sexpr{star.logs.wide[input.read.length  > 80 & input.read.length < 120,max(as.numeric(input.reads))]}
+%
+with an average of \Sexpr{star.logs.wide[input.read.length > 80 & input.read.length < 120,mean(`% good reads`)]}\% %
+of reads mapping to the
+respective reference genome (Supplemental \cref{tab:ref_genome_aligned_species}).
+%
+%
 For transcriptomes sequenced with 35 bp %
 % The mismatch here is because we're reporting trimmed reads here, not
 % full length reads

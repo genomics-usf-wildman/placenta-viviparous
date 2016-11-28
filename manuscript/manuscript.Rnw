@@ -1284,7 +1284,7 @@ pre-eclampsia can develop into eclampsia, a more severe condition
 resulting in seizures during pregnancy and death. Lack of invasion in
 pre-eclampsia may be attributed to the inefficiency of growth
 regulators as well as the inability to sufficiently suppress the
-maternal immune response. %
+maternal immune response~\cite{Hutchinson.ea2011:Molecularregulatorsofresolution}. %
 Although there are speculative cases of eclampsia in great apes, 
 %\cite{Baird1981:Eclampsiainlowlandgorilla,Stout.ea1969:Glomerularcapillaryendothelialswelling,Thornton.ea1992:Convulsionsinpregnancyin},
 it is exceedingly rare in these species

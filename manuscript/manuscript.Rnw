@@ -400,6 +400,7 @@ species.tree <-
     read.tree(text="(Monodelphis_domestica,((Dasypus_novemcinctus,Loxodonta_africana)Atlantogenata,((Canis_familiaris,(Equus_caballus,(Sus_scrofa,(Ovis_aries,Bos_taurus))))Laurasiatheria,(((Spalax_carmeli,Spalax_galili),Mus_Musculus)Rodentia,((Pan_paniscus,Homo_sapiens),Ateles_fuciceps)Primates)Euarchontoglires)Boreoeutheria)Eutheria);")
 pp <- ggtree(species.tree)+
     geom_text(aes(label=gsub("_"," ",label)),hjust=0,size=5,fontface="italic")+
+    geom_text(data=data.frame(x=1,y=1),label="Metatheria",hjust=0,vjust=0,size=5,fontface="italic")+
     scale_x_continuous(limits=c(0,10))
 print(pp %>%
       ## monodelphis

@@ -464,9 +464,10 @@ Significant shifts in expression levels which correlate with placenta
 morphology (shape, interdigitation, and intimacy) were identified
 using ANOVA on generalized linear models with the $\log$ \ac{FPKM} as
 the response variable and the morphology as the predictor variable.
-Placenta morphology with a defined order (interdigitation, intimacy)
-were additionally analyzed using proportional odds logistic regression
-using the MASS package in R~\cite{Venables2002:MASS}.
+Placenta morphology with a definable order (interdigitation and
+intimacy) were additionally analyzed using proportional odds logistic
+regression using the MASS package in R~\cite{Venables2002:MASS}.
+
 
 \subsection{Gene Set and Pathway Enrichment Analysis}
 

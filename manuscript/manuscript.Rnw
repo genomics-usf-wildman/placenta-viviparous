@@ -228,6 +228,9 @@ for (mf.bp in c("mf","bp")) {
   the pre-eclampsia associated genes \textit{KISS1}, \textit{CRH},
   \textit{PAPPA}, and \textit{ADAM12} on the \human lineage.
 
+  \DEW{The discussion and results seem redundant. Given the title
+    shouldn't something about shape be mentioned?}
+  
 \end{abstract}
 
 \begin{keyword}
@@ -870,6 +873,7 @@ setkey(hum.all.lin.spec,"Human Symbol")
 \label{tab:human_lineage_specific}
 \end{table}
 
+\DEW{Add gene names}
 
 Using a mixed-effects linear model to account for repeated testing of
 \human and \mouse, we identified multiple genes which are
@@ -1225,13 +1229,13 @@ one species, and \ac{FPKM} greater than 1 at least two species.
 
 \subsubsection{Placenta Attachment Shape}
 
-Supplemental \cref{tab:shape_genes} shows the top 50 genes which are
-associated with the shape of placenta attachment, as well as the shape
-in which the difference is most significant. The most significant
-genes which were associated with diffuse placenta attachment include
-\textit{EREG}, a ligand of EGFR, \textit{UNC93A}, a homolog of
-\textit{UNC93B1} which is involved in the balancing between Tlr7 and
-Tlr9 immune response in
+Supplemental \cref{tab:shape_genes} shows the 50 genes which are most
+significantly associated with the shape of placenta attachment, as
+well as the shape in which the difference is most significant. The
+most significant genes which were associated with diffuse placenta
+attachment include \textit{EREG}, a ligand of EGFR, \textit{UNC93A}, a
+homolog of \textit{UNC93B1} which is involved in the balancing between
+Tlr7 and Tlr9 immune response in
 mice~\cite{Brinkmann.ea2007:interactionbetweenERmembrane}, and
 \textit{WNT5A}, which is a member of the Wnt ligand family whose
 singaling pathway has been implicated in motility in human trophoblast
@@ -1460,6 +1464,8 @@ to collecting and analyzing such a dataset.
   of Health and Human Services (N01-HD-3342), and the National Science
   Foundation BCS-0827546.
 
+\DEW{Need to cite NWM grants, IGB, etc.}
+  
 %  \printaddresses
 
 %\end{backmatter}

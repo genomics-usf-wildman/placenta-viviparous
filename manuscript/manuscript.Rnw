@@ -843,9 +843,9 @@ output.mentioned.genes.table <- function(subset.table=quote(TRUE),
 
 % \subsubsection{Per-species Gene Set and Pathway Enrichment}
 
-We performed \ac{gsea} on both the top 1\% of transcripts
+We performed \ac{gsea} on both the top 1\% of transcripts by \ac{FPKM}
 (Supplemental \cref{tab:go_terms_enriched_top_one_ateles_fusciceps,tab:go_terms_enriched_top_one_homo_sapiens,tab:go_terms_enriched_top_one_pan_paniscus,tab:go_terms_enriched_top_one_mus_musculus,tab:go_terms_enriched_top_one_spalax_galili,tab:go_terms_enriched_top_one_spalax_carmeli,tab:go_terms_enriched_top_one_bos_taurus,tab:go_terms_enriched_top_one_ovis_aries,tab:go_terms_enriched_top_one_sus_scrofa,tab:go_terms_enriched_top_one_equus_caballus,tab:go_terms_enriched_top_one_canis_familiaris,tab:go_terms_enriched_top_one_loxodonta_africana,tab:go_terms_enriched_top_one_dasypus_novemcinctus,tab:go_terms_enriched_top_one_monodelphis_domestica}) and the top
-100 transcripts (Supplemental
+100 transcripts by \ac{FPKM} (Supplemental
 \cref{tab:go_terms_enriched_ateles_fusciceps,tab:go_terms_enriched_homo_sapiens,tab:go_terms_enriched_pan_paniscus,tab:go_terms_enriched_mus_musculus,tab:go_terms_enriched_spalax_galili,tab:go_terms_enriched_spalax_carmeli,tab:go_terms_enriched_bos_taurus,tab:go_terms_enriched_ovis_aries,tab:go_terms_enriched_sus_scrofa,tab:go_terms_enriched_equus_caballus,tab:go_terms_enriched_canis_familiaris,tab:go_terms_enriched_loxodonta_africana,tab:go_terms_enriched_dasypus_novemcinctus,tab:go_terms_enriched_monodelphis_domestica}); common processes
 include protein transport and viral transcription/expression
 (Supplemental \cref{tab:go_terms_all_species}).

@@ -555,7 +555,7 @@ with an average of %
 %
 of reads mapping to the respective reference genome (Supplemental
 \cref{tab:ref_genome_aligned_species}). Read length was not a
-predictor of unmapped read percentage (Supplemental
+significant predictor of unmapped read percentage (Supplemental
 \cref{fig:transcriptome_reads_vs_read_length}). The expression of
 all genes with \ac{FPKM} $\ge 50$ is shown in Supplemental
 \cref{tab:all_ateles_fusciceps_placenta,tab:all_homo_sapiens_placenta,tab:all_pan_paniscus_placenta,tab:all_mus_musculus_placenta,tab:all_spalax_galili_placenta,tab:all_spalax_carmeli_placenta,tab:all_bos_taurus_placenta,tab:all_ovis_aries_placenta,tab:all_sus_scrofa_placenta,tab:all_equus_caballus_placenta,tab:all_canis_familiaris_placenta,tab:all_loxodonta_africana_placenta,tab:all_dasypus_novemcinctus_placenta,tab:all_monodelphis_domestica_placenta}.

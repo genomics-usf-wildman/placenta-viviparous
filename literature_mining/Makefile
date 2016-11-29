@@ -18,7 +18,7 @@ mouse_lineage_genes.txt: mouse_lineage_genes.R ../data/human_mouse_lineage_speci
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
 
 placenta_core_genes.txt: ../data/placenta_core_transcriptome.txt
-	awk '{print $$2}' $<|sort|uniq|sed 's/"//g'|grep -v Species > $@
+	grep 'FALSE$$' $< |awk '{print $$2}'|sort|uniq|sed 's/"//g'|grep -v Species > $@
 
 class_vs_terms.txt: pubmed_grid placenta_class_genes.txt placenta_class_terms.txt
 	touch class_vs_terms_pmids.txt

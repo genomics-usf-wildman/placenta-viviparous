@@ -893,16 +893,16 @@ where it is hypothesized to activate decidual macrophages. Likewise,
 \ac{KISS1} (\Sexpr{hum.all.lin.spec["KISS1",`FDR`]},
 FC=\Sexpr{hum.all.lin.spec["KISS1",`Fold Change`]}, Supplemental
 \cref{fig:kiss1_evolution_tree}) also shows increased expression in
-pre-eclamptic placentas
-\cite{Vazquez-Alaniz.ea2011:Comparativeexpressionprofilesfor}, and is
-involved in modulating trophoblast invasion. Two other genes,
+pre-eclamptic placentas, and is
+involved in modulating trophoblast invasion~%
+\cite{Vazquez-Alaniz.ea2011:Comparativeexpressionprofilesfor}. Two other genes,
 \ac{PAPPA} (\Sexpr{hum.all.lin.spec["PAPPA",`FDR`]},
 FC=\Sexpr{hum.all.lin.spec["PAPPA",`Fold Change`]} Supplemental
 \cref{fig:pappa_evolution_tree}) and \ac{ADAM12}
 (\Sexpr{hum.all.lin.spec["ADAM12",`FDR`]},
 FC=\Sexpr{hum.all.lin.spec["ADAM12",`Fold Change`]}, Supplemental
 \cref{fig:adam12_evolution_tree}) are also differentially expressed
-but are negatively correlated with pre-eclampsia
+but are negatively correlated with pre-eclampsia~%
 \cite{Spencer.ea2008:ADAM12sinmaternalserum}.
 
 

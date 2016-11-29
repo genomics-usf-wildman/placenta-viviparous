@@ -246,7 +246,7 @@ mammal \sep  gene expression \sep evolution \sep RNA-seq \sep placenta
 
 Even though the placenta's primary function is conserved among
 mammals, it varies widely in terms of the shape of attachment, degree
-of intimacy between fetal tissues and maternal tissues and degree of
+of intimacy between fetal tissues and maternal tissues, and degree of
 interdigitation of maternal and fetal tissues in different species of
 mammals
 \cite{Mossman.1987:vertebratefetalmembranes} %,Moffett.ea2006:Immunologyofplacentationin}

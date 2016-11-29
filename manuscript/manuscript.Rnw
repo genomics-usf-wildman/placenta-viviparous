@@ -262,8 +262,8 @@ the molecular environment is only beginning to be understood from a
 genetic perspective \cite{Carter2012:Evolutionofplacentalfunction}.
 
 These observations lead to two related questions: 1) what are the
-genes which are responsible for the \emph{core functionality of the
-  placenta} and 2) which genes are associated with \emph{changes in
+genes which are responsible for the \textbf{core functionality of the
+  placenta} and 2) which genes are associated with \textbf{changes in
   placenta morphology}?
 
 Previous studies of some species (i.e., \human, \mouse, \cow, and

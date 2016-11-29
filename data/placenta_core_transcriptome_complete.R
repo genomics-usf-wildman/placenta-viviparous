@@ -48,9 +48,14 @@ combined.fpkm.wide[,all_but_one_expression :=
                        apply(combined.fpkm.wide[,-1,with=FALSE],1,min.but.one)]
 combined.fpkm.wide[,all_expression :=
                         apply(combined.fpkm.wide[,-1,with=FALSE],1,min.na.zero)]
+combined.fpkm.wide[,all_but_metatherian_expression :=
+                        apply(combined.fpkm.wide[,!grepl("^(monodelphis domestica|human_name|.*_expression)$",
+                                                         colnames(combined.fpkm.wide)),
+                                                 with=FALSE],1,min.na.zero)]
 placenta.core.transcriptome.complete <-
     combined.fpkm.wide[,list(human_name,
                              median_expression,
+                             all_but_metatherian_expression,
                              all_expression,
                              all_but_one_expression,
                              all_but_two_expression,

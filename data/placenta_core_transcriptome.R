@@ -48,11 +48,15 @@ combined.fpkm.wide[,all_but_one_expression :=
                        apply(combined.fpkm.wide[,-1,with=FALSE],1,min.but.one)]
 combined.fpkm.wide[,all_expression :=
                        apply(combined.fpkm.wide[,-1,with=FALSE],1,min.na.zero)]
+combined.fpkm.wide[,all_but_metatherian_expression :=
+                        apply(combined.fpkm.wide[,!grepl("^(monodelphis domestica|human_name|.*_expression)$",
+                                                         colnames(combined.fpkm.wide)),
+                                                 with=FALSE],1,min.na.zero)]
 setkey(combined.fpkm.wide,"human_name")
 
 ## all genes which are not housekeeping genes which have minimum 
 core.placenta.transcriptome.long <- 
-    data.table(melt(combined.fpkm.wide[all_expression >= 10,
+    data.table(melt(combined.fpkm.wide[all_but_metatherian_expression >= 10,
                                        ][order(-median_expression)
                                          ],
                     id.vars="human_name",
@@ -71,6 +75,7 @@ core.placenta.transcriptome.long[,human_name:=
 core.placenta.transcriptome.genes.shape <-
     combined.fpkm.wide[,list(human_name,
                              median_expression,
+                             all_but_metatherian_expression,
                              all_expression,
                              all_but_one_expression,
                              all_but_two_expression,
@@ -85,16 +90,17 @@ placenta.transcriptome.genes <-
 pts <- data.table(all.genes=all.genes)
 pts <- pts[,placenta.ts:=all.genes %in% placenta.transcriptome.genes]
 pts <- pts[,placenta.ts.permissive:=all.genes %in%
-                core.placenta.transcriptome.genes.shape[all_but_four_expression > 10 &
+                core.placenta.transcriptome.genes.shape[(all_but_four_expression > 10  |
+                                                         all_but_metatherian_expression > 10 ) &
                                                         ! is.na(human_name),
                                                         unique(human_name)]
            ]
 pts[,placenta.ts.all:=all.genes %in%
-         core.placenta.transcriptome.genes.shape[all_expression > 10 &
+         core.placenta.transcriptome.genes.shape[all_but_metatherian_expression > 10 &
                                                  ! is.na(human_name),
                                                  unique(human_name)]]
 pts[,placenta.ts.one:=all.genes %in%
-         core.placenta.transcriptome.genes.shape[all_expression > 1 &
+         core.placenta.transcriptome.genes.shape[all_but_metatherian_expression > 1 &
                                                  ! is.na(human_name),
                                                  unique(human_name)]]
 expressed.housekeeping.genes <-

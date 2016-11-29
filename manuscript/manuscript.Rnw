@@ -1484,10 +1484,16 @@ to collecting and analyzing such a dataset.
   Partial support for this research came from the \textit{Eunice
     Kennedy Shriver} National Institute of Child Health and Human
   Development (NICHD), National Institutes of Health, U.S. Department
-  of Health and Human Services (N01-HD-3342), and the National Science
-  Foundation BCS-0827546.
+  of Health and Human Services (N01-HD-3342), the National Science
+  Foundation (BCS-0827546 and BCS-0751508), and a seed grant from the
+  Institute for Genomic Biology at the University of Illinois,
+  Urbana-Champaign.
 
 \DEW{Need to cite NWM grants, IGB, etc.}
+
+  \DLA{Unclear what the IGB grant is; Derek: which grant did you want
+    me to cite? Mentioned seed grant.}
+
   
 %  \printaddresses
 

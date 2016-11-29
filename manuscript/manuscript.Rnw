@@ -1248,7 +1248,9 @@ which forms tight junctions in epithelia, the proteglycans \ac{SDC4} and
 We correlated different aspects of placenta morphology, including
 shape, intimacy, and interdigitation with the mRNA transcription
 profiles of all 1:1 human orthologs with \ac{FPKM} greater than 10 in
-one species, and \ac{FPKM} greater than 1 at least two species. 
+one species, and \ac{FPKM} greater than 1 at least two species.
+Supplemental \cref{tab:placental_classification} lists the shape,
+intimacy, and interdigitiation of each species analyzed.
 
 \subsubsection{Placenta Attachment Shape}
 
@@ -1280,6 +1282,10 @@ intimacy should better illuminate the pathways which are responsible
 for these placental morphologies.
 
 \PP{Introduce the characteristics earlier in the introduction}
+
+\DLA{They're in the first paragraph of the introduction, but I've also
+  referred to them now in the first subsection here.}
+
 
 \section{Discussion}
 

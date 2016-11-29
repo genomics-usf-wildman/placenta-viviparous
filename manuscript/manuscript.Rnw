@@ -210,11 +210,11 @@ for (mf.bp in c("mf","bp")) {
   \Sexpr{core.placenta.transcriptome.long[housekeeping==FALSE,length(unique(human_name))]}
   core genes which are expressed (FPKM $\ge 10$) in all placentas, %
   %
-  including genes with immune-modulating properties (\textit{ANXA2},
-  \textit{ANXA1}, \textit{S100A11}, \textit{S100A10}, and \textit{LGALS1}), cell-cell
-  interactions (\textit{LAMC1}, \textit{LUM}, and \textit{LGALS1}),
-  invasion (\textit{GRB2} and \textit{RALB5}) and syncytialization
-  (\textit{ANXA5} and \textit{ANXA1}). %
+  including genes with immune-modulating properties (\ac{ANXA2},
+  \ac{ANXA1}, \ac{S100A11}, \ac{S100A10}, and \ac{LGALS1}), cell-cell
+  interactions (\ac{LAMC1}, \ac{LUM}, and \ac{LGALS1}),
+  invasion (\ac{GRB2} and \ac{RALB}) and syncytialization
+  (\ac{ANXA5} and \ac{ANXA1}). %
   We also identified multiple pre-eclampsia associated genes which are
   differentially expressed in \textit{Homo sapiens} when compared to
   the other %
@@ -225,8 +225,8 @@ for (mf.bp in c("mf","bp")) {
   \Sexpr{core.placenta.transcriptome.long[housekeeping==FALSE,length(unique(human_name))]}
   genes is essential for the proper functioning of the placenta in all
   species analyzed. We also found significantly higher expression of
-  the pre-eclampsia associated genes \textit{KISS1}, \textit{CRH},
-  \textit{PAPPA}, and \textit{ADAM12} on the \human lineage.
+  the pre-eclampsia associated genes \ac{KISS1}, \ac{CRH},
+  \ac{PAPPA}, and \ac{ADAM12} on the \human lineage.
 
   \DEW{The discussion and results seem redundant. Given the title
     shouldn't something about shape be mentioned?}
@@ -238,6 +238,9 @@ mammal \sep  gene expression \sep evolution \sep RNA-seq \sep placenta
 \end{keyword}
 
 \maketitle
+
+% Reset all acronyms
+\acresetall
 
 \section{Introduction}
 
@@ -273,7 +276,7 @@ families with expression patterns that can vary in space and time
 \cite{Green.ea2000:Pregnancy-associatedbovineandovine}. These include
 independent expansions of the prolactins in \mouse, \carmeli, \galili,
 and \cow, \acp{PSG} in \human and \mouse, \acp{PAG} in \cow, genes
-related to the thymus-specific serine protease \textit{PRSS16} in
+related to the thymus-specific serine protease \ac{PRSS16} in
 \elephant (in this work), and the expansion of the growth hormone and
 chorionic gonadotropin beta genes in anthropoid primates
 \cite{Haig2008:Placentalgrowthhormone-relatedproteins,Rawn.ea2008:evolutionregulationandfunction}.
@@ -873,7 +876,7 @@ setkey(hum.all.lin.spec,"Human Symbol")
 \label{tab:human_lineage_specific}
 \end{table}
 
-\DEW{Add gene names}
+% \DEW{Add gene names}
 
 Using a mixed-effects linear model to account for repeated testing of
 \human and \mouse, we identified multiple genes which are
@@ -881,21 +884,21 @@ differentially expressed in the \human lineage in comparison to all
 other lineages (\cref{tab:human_lineage_specific}, Supplemental
 \cref{tab:human_lineage_specific_all}). These genes include multiple
 genes which are thought to be involved in pre-eclampsia. Notably,
-\textit{CRH} (FDR=\Sexpr{hum.all.lin.spec["CRH",`FDR`]},
+\ac{CRH} (FDR=\Sexpr{hum.all.lin.spec["CRH",`FDR`]},
 FC=\Sexpr{hum.all.lin.spec["CRH",`Fold Change`]}, Supplemental
 \cref{fig:crh_evolution_tree}), has been shown to be more highly
 expressed in placentas from pre-eclamptic pregnancies
 \cite{Petsas.ea2012:Aberrantexpressionofcorticotropin-releasing,Paiva.ea2011:MeasurementofmRNAtranscripts},
 where it is hypothesized to activate decidual macrophages. Likewise,
-\textit{KISS1} (\Sexpr{hum.all.lin.spec["KISS1",`FDR`]},
+\ac{KISS1} (\Sexpr{hum.all.lin.spec["KISS1",`FDR`]},
 FC=\Sexpr{hum.all.lin.spec["KISS1",`Fold Change`]}, Supplemental
 \cref{fig:kiss1_evolution_tree}) also shows increased expression in
 pre-eclamptic placentas
 \cite{Vazquez-Alaniz.ea2011:Comparativeexpressionprofilesfor}, and is
 involved in modulating trophoblast invasion. Two other genes,
-\textit{PAPPA} (\Sexpr{hum.all.lin.spec["PAPPA",`FDR`]},
+\ac{PAPPA} (\Sexpr{hum.all.lin.spec["PAPPA",`FDR`]},
 FC=\Sexpr{hum.all.lin.spec["PAPPA",`Fold Change`]} Supplemental
-\cref{fig:pappa_evolution_tree}) and \textit{ADAM12}
+\cref{fig:pappa_evolution_tree}) and \ac{ADAM12}
 (\Sexpr{hum.all.lin.spec["ADAM12",`FDR`]},
 FC=\Sexpr{hum.all.lin.spec["ADAM12",`Fold Change`]}, Supplemental
 \cref{fig:adam12_evolution_tree}) are also differentially expressed
@@ -1143,8 +1146,8 @@ transcriptome.
 \subsubsection{Annexin Complexes}
 
 Multiple components of annexin complexes are included in the core
-transcriptome, including \textit{ANXA2}, \textit{ANXA1},
-\textit{S100A11}, \textit{S100A10}. ANXA1 is involved in the
+transcriptome, including \ac{ANXA2}, \ac{ANXA1},
+\ac{S100A11}, \ac{S100A10}. ANXA1 is involved in the
 resolution of the inflammation response through inhibition of
 phospholipase A2 activity and signaling through the formyl peptide
 receptor family, and has previously been hypothesized to be important
@@ -1155,18 +1158,18 @@ known to interact with S100A10, S100A6, S100A11, and S100A4
 its interaction with S100P as well; it is involved in cell-cell
 interaction as well as vesicle trafficking and von Willibrand Factor
 secretion. The expression regulation of another core gene,
-\textit{TIMP3}, has been implicated in pre-eclampsia
+\ac{TIMP3}, has been implicated in pre-eclampsia
 \cite{Ma.ea2014:Down-regulationofTIMP3leads,Xiang.ea2013:PromoterhypomethylationofTIMP3}.
 
 Another annexin which is highly expressed in all term placentas is
-\textit{ANXA5}, which was originally identified as a an anti-coagulant
+\ac{ANXA5}, which was originally identified as a an anti-coagulant
 protein, but is also involved in syncitium formation, membrane repair,
 and reduction of spontaneous
 abortion~\cite{Ueki.ea2012:Lossofmaternalannexin}. Other notable
-syncytiotrophoblast fusion proteins, Syncytin-1 (\textit{ERVW-1}) and -2
-(\textit{ERVFRD-1}) were not present in the core placenta, as they (or
+syncytiotrophoblast fusion proteins, Syncytin-1 (\ac{ERVW-1}) and -2
+(\ac{ERVFRD-1}) were not present in the core placenta, as they (or
 their homologs) are not highly expressed in \dog, \bonobo, or \sheep,
-nor was \textit{MFSD2A}, the Syncytin-2 receptor (\ac{FPKM} $\ge 10$
+nor was \ac{MFSD2A}, the Syncytin-2 receptor (\ac{FPKM} $\ge 10$
 only in \human, \mouse, and \dog).
 
 \subsubsection{Invasion: EGF and Actin Y in the Core Placenta}
@@ -1188,13 +1191,13 @@ expressed; their activation leads to an increase in migration and
 invasion in response to EGF binding to
 EGFR1~\cite{Gupta.ea2016:CellSignalingPathwaysInvolved}. The Actin
 cytoskeleton pathway is depicted in Supplemental
-\cref{fig:kegg_actin}, which shows that \textit{FN1} and \textit{ITG}
-are highly expressed, which activate Rac, and potentially lead to the
-formation of focal adhesions and lamellipodia formation through their
-inhibition of GSN and HSPC300. Other components of cell-cell
-adhesion, including \textit{F11R} which forms tight junctions in
-epithelia, proteglycans \textit{SDC4} and \textit{LUM}, and the
-laminin \textit{LAMC1}.
+\cref{fig:kegg_actin}, which shows that \ac{ITGB1} and its binding
+protein \ac{ITGB1BP1} as well as \ac{FN1} are highly expressed, which
+activates Rac. This potentially leads to the formation of focal adhesions
+and lamellipodia formation through inhibition of GSN and
+HSPC300. Other components of cell-cell adhesion, including \ac{F11R}
+which forms tight junctions in epithelia, the proteglycans \ac{SDC4} and
+\ac{LUM}, and \ac{LAMC1}.
 
 % SPINT2 -- Serine Peptidase inhibitor
 
@@ -1233,12 +1236,12 @@ Supplemental \cref{tab:shape_genes} shows the 50 genes which are most
 significantly associated with the shape of placenta attachment, as
 well as the shape in which the difference is most significant. The
 most significant genes which were associated with diffuse placenta
-attachment include \textit{EREG}, a ligand of EGFR, \textit{UNC93A}, a
-homolog of \textit{UNC93B1} which is involved in the balancing between
+attachment include \ac{EREG}, a ligand of EGFR, \ac{UNC93A}, a
+homolog of \ac{UNC93B1} which is involved in the balancing between
 Tlr7 and Tlr9 immune response in
 mice~\cite{Brinkmann.ea2007:interactionbetweenERmembrane}, and
-\textit{WNT5A}, which is a member of the Wnt ligand family whose
-singaling pathway has been implicated in motility in human trophoblast
+\ac{WNT5A}, which is a member of the Wnt ligand family whose
+signaling pathway has been implicated in motility in human trophoblast
 cells~\cite{Gupta.ea2016:CellSignalingPathwaysInvolved}.
 
 \subsubsection{Degree of Intimacy and Interdigitation}
@@ -1294,14 +1297,14 @@ Although there are speculative cases of eclampsia in great apes,
 it is exceedingly rare in these species
 \cite{Carter.ea2011:Evolutionofinvasiveplacentation}.
 
-The identification of multiple genes (\textit{CRH}, \textit{ADAM12},
-\textit{KISS1}, \textit{PAPPA}, \textit{IL1RL1}, and \textit{PLAC1};
+The identification of multiple genes (\ac{CRH}, \ac{ADAM12},
+\ac{KISS1}, \ac{PAPPA}, \ac{IL1RL1}, and \ac{PLAC1};
 \cref{tab:human_lineage_specific}) which are associated with
 pre-eclampsia which have increased expression on the \human lineage
 may explain the larger proportion of pre-eclampsia observed in humans.
 However, there are still genes which are associated with pre-eclampsia
 which are also more highly expressed in the \mouse lineage such as
-\textit{Afp} and \textit{Gjb2}. Furthermore, the onset of
+\ac{Afp} and \ac{Gjb2}. Furthermore, the onset of
 pre-eclampsia is well before term; all of our placentas are term
 placentas and provide limited information about the transcriptome
 during the onset of pre-eclampsia.
@@ -1318,7 +1321,7 @@ invasion.
 The transcriptomes from multiple different species enabled us to
 identify the set of expressed genes which are common to all placentas.
 Components of the annexin complexes, including
-\textit{ANXA2}, \textit{ANXA1}, \textit{S100A11}, and \textit{S100A10}
+\ac{ANXA2}, \ac{ANXA1}, \ac{S100A11}, and \ac{S100A10}
 are expressed in all placentas examined, and argue for the evolution
 importance of annexins in placenta function, where they likely
 establish maternal-fetal
@@ -1334,7 +1337,7 @@ placentation.
 While Syncytin-1 and -2 are implicated in the formation of the
 syncytiotrophoblast in
 \human~\cite{Rawn.ea2008:evolutionregulationandfunction} and homologs
-of \textit{ERVFRD-1} and \textit{ERVW-1} are widely expressed in most
+of \ac{ERVFRD-1} and \ac{ERVW-1} are widely expressed in most
 of the placentas analyzed here, they are not expressed in \bonobo,
 \sheep, and \dog, even though these mammals form
 syncytiotrophoblasts~\cite{Mess.ea2006:Evolutionarytransformationsoffetal}.
@@ -1343,13 +1346,13 @@ Eutheria, Afrotheria, Euarchontoglires, and
 Laurasiatheria~\cite{Mess.ea2006:Evolutionarytransformationsoffetal},
 the gene(s) responsible for cytotrophoblast fusion to form
 syncytiotrophoblast is likely to be highly expressed in the core
-placenta. \textit{ANXA5} is known to be expressed at multiple stages
+placenta. \ac{ANXA5} is known to be expressed at multiple stages
 of placentation, and is capable of repairing membrane defects and
 promoting the fusion of
 cells~\cite{Carmeille.ea2015:Annexin-A5promotesmembraneresealing} in
 the presence of Ca$^{2+}$. While there are likely other genes which
 are responsible for the positioning of cytotrophoblast cells in close
-proximity to start the fusion process, \textit{ANXA5} is likely to be
+proximity to start the fusion process, we hypothesize that \ac{ANXA5} is
 essential for the completion of fusion and the maintenance of membrane
 repair during the massive flux of nutrients and waste in the placenta.
 
@@ -1367,13 +1370,13 @@ repair during the massive flux of nutrients and waste in the placenta.
 \DEW{Write out FDR for enrichment described}
 
 The high expression of components of the EGFR signaling pathway in the
-core placenta transcriptome (including \textit{GRB2}, \textit{RALB})
+core placenta transcriptome (including \ac{GRB2}, \ac{RALB})
 as well as annexins which are involved in the location of EGF receptor
-localization (\textit{ANXA1} and \textit{ANXA2}) in the core placenta
+localization (\ac{ANXA1} and \ac{ANXA2}) in the core placenta
 is consistent with previous findings showing that alterations to the
 EGF signaling system change invasion of trophoblast cells into the
 spiral arteries~\cite{Armant.ea2015:Reducedexpressionofepidermal}.
-Another component of the core placenta transcriptome, \textit{CD9},
+Another component of the core placenta transcriptome, \ac{CD9},
 has been shown to suppress \human extravillous trophoblast
 invasion~\cite{Matsumoto.ea2016:CD9suppresseshumanextravillous}, and
 we hypothesize that it is responsible for maintaining the balance
@@ -1397,7 +1400,7 @@ critical for the proper organization and functioning of the placenta.
 
 The core placenta transcriptome contains genes which are involved in
 maternal-fetal tolerance, such as the annexins, and genes responsible
-for cell-cell and cell-matrix interactions, such as \textit{LGALS1}.
+for cell-cell and cell-matrix interactions, such as \ac{LGALS1}.
 These genes were almost certainly present in the placenta of the
 common mammalian ancestor. We hypothesize that modifications to their
 expression or function will compromise the development and
@@ -1405,7 +1408,7 @@ organization of the placenta.
 
 We also identified genes differentially expressed on the \human
 lineage which are implicated in pre-eclampsia, including
-\textit{ADAM12}, \textit{CRH}, and \textit{KISS1}.
+\ac{ADAM12}, \ac{CRH}, and \ac{KISS1}.
 
 This study has identified many tantalizing molecular pathways which
 illuminate the vast diversity of placental morphology and may explain

@@ -347,7 +347,7 @@ use this data, along with existing RNA-Seq data from \mouse
 \cite{Archibald.ea2010:sheepgenomereferencesequence}, and
 \pig \cite{Ahanda.ea2012:Predictionofaltered3-} to: 1)
 identify the non-housekeeping genes which are expressed in the
-placentas of all species analyzed and therefore represent the
+placentas of all eutherian species analyzed and therefore represent the
 \emph{core functionality of the placenta}; 2) identify genes whose
 expression level changes significantly in each of the morphology
 types.
@@ -1173,8 +1173,9 @@ genes comprising the core placenta transcriptome are shown in
 \cref{fig:core_placenta_transcriptome} ordered by their median
 transcription level in \ac{FPKM}. We considered a gene to be core to
 the placenta transcriptome if a 1:1 ortholog of that gene was
-expressed with $\text{FPKM} \ge 10$ in all species studied and was not
-a human housekeeping gene according to
+expressed with $\text{FPKM} \ge 10$ in all eutherian species studied
+(excluding the metatherian, \opossum) the and was not a human housekeeping
+gene according to
 \citet{Eisenberg.ea2013:Humanhousekeepinggenesrevisited}. Genes which
 meet this criteria but are housekeeping genes are depicted in
 Supplemental \cref{fig:core_placenta_transcriptome_housekeeping}.

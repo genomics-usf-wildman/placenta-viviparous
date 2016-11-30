@@ -196,7 +196,7 @@ plac.class[,`species`:=paste0("\\textit{",gsub("^(.)","\\U\\1",`species`,perl=TR
 plac.class[,`interdigitation`:=gsub("^(.)","\\U\\1",`interdigitation`,perl=TRUE)]
 plac.class[,`shape`:=gsub("^(.)","\\U\\1",`shape`,perl=TRUE)]
 plac.class[,`intimacy`:=gsub("^(.)","\\U\\1",`intimacy`,perl=TRUE)]
-setnames(plac.class,colnames(plac.class),gsub("^(.)","\\U\\1",colnames(plac.class)))
+setnames(plac.class,colnames(plac.class),gsub("^(.)","\\U\\1",colnames(plac.class),perl=TRUE))
 
 print(xtable(plac.class,
              display=c("s","s","s","s","s"),

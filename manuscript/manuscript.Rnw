@@ -1334,11 +1334,21 @@ intimacy (Supplemental
 unordered factor approach, but when we used an ordered factor
 analysis, none of these genes were retained (Supplemental
 \cref{tab:intimacy_genes_polr,tab:interdigitation_genes_polr}). We
-suspect this is due to the small number of intermediate
-interdigitation and intimacy placentas that are available. Future
-analyses of additional placentas with intermediate interdigitation and
-intimacy should better illuminate the pathways which are responsible
-for these placental morphologies.
+suspect that this is due to the fact that the ancestral state of all
+eutherians is a labyrinthine, hemochorial
+placenta~\cite{Wildman.ea2006:Evolutionofmammalianplacenta}. This
+implies that the transcriptome of intermediately invasive or
+interdigitated placentas need not be intermediate between the
+transcriptomes of less intimate (folded/lamellar) or interdigitated
+placentas (epitheliochorial) and most intimate (hemochorial) or
+interdigitated placentas (labyrinthine) because these morphologies
+have evolved independently. An alternative is that the limited number
+of species with placentas of intermediate interdigitation and intimacy
+in this study limits the ability to detect genes which whose
+expression correlates with degree of intimacy and interdigitation.
+Future analyses of additional placentas with intermediate
+interdigitation and intimacy should better illuminate the pathways
+which are responsible for these placental morphologies.
 
 \PP{Introduce the characteristics earlier in the introduction}
 

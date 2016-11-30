@@ -285,10 +285,12 @@ mammal \sep  gene expression \sep evolution \sep RNA-seq \sep placenta
 % Reset all acronyms
 \acresetall
 
+\listoffixmes
+
 \section{Introduction}
 
 Even though the placenta's primary function is conserved among
-mammals, it varies widely in terms of the shape of attachment, degree
+mammals, it varies widely in terms of shape, degree
 of intimacy between fetal tissues and maternal tissues, and degree of
 interdigitation of maternal and fetal tissues in different species of
 mammals
@@ -418,7 +420,7 @@ Transcriptomes without a suitable reference genome (\smonkey, \galili,
 \cref{tab:ref_genome_aligned_species}) were assembled using Trinity
 v2014-07-17 \cite{Haas.ea2013:Denovotranscriptsequence} and annotated
 using Diamond \cite{Buchfink.ea2015:Fastandsensitiveprotein} against
-either the \human (for \smonkey) or \mouse (for both Spalacines) transcriptome (Supplemental
+either the \human (\smonkey) or \mouse (\galili and \carmeli) transcriptome (Supplemental
 \cref{tab:ref_genome_aligned_species}), and the
 the match with the highest bitscore was chosen as the annotation.
 Transcripts where the highest scoring match had a bitscore below 40
@@ -1309,15 +1311,15 @@ shape, intimacy, and interdigitation with the mRNA transcription
 profiles of all 1:1 human orthologs with \ac{FPKM} greater than 10 in
 one species, and \ac{FPKM} greater than 1 at least two species.
 Supplemental \cref{tab:placental_classification} lists the shape,
-intimacy, and interdigitiation of each species analyzed.
+intimacy, and interdigitation of each species analyzed.
 
-\subsubsection{Placenta Attachment Shape}
+\subsubsection{Placenta Shape}
 
 Supplemental \cref{tab:shape_genes} shows the 50 genes which are most
-significantly associated with the shape of placenta attachment, as
+significantly associated with the shape of the placenta, as
 well as the shape in which the difference is most significant. The
 most significant genes which were associated with diffuse placenta
-attachment include \ac{EREG}, a ligand of EGFR, \ac{UNC93A}, a
+shape include \ac{EREG}, a ligand of EGFR, \ac{UNC93A}, a
 homolog of \ac{UNC93B1} which is involved in the balancing between
 Tlr7 and Tlr9 immune response in
 mice~\cite{Brinkmann.ea2007:interactionbetweenERmembrane}, and
@@ -1328,7 +1330,7 @@ cells~\cite{Gupta.ea2016:CellSignalingPathwaysInvolved}.
 \subsubsection{Degree of Intimacy and Interdigitation}
 
 For the degree of intimacy and interdigitation, we saw multiple genes
-which were associated with different levels of interdigitiation and
+which were associated with different levels of interdigitation and
 intimacy (Supplemental
 \cref{tab:intimacy_genes,tab:interdigitation_genes}) using an
 unordered factor approach, but when we used an ordered factor

@@ -1429,9 +1429,10 @@ establish maternal-fetal
 tolerance\cite{Liu.ea2015:AnnexinA2complexeswith,Hutchinson.ea2011:Molecularregulatorsofresolution,Aarli.ea1997:Suppressiveeffectonlymphoproliferation}.
 We suggest that further research into molecular role of these annexin
 complexes may illuminate how immune tolerance is maintained during
-placentation.
+placentation because these appear to the the major class of immune
+modulatory transcripts which are expressed in all placentas analyzed.
 
-\DEW{Why?}
+\DEW{Why?} \DLA{Clarified why I think this is important to study.}
 
 \subsubsection{Formation of the syncytiotrophoblast}
 

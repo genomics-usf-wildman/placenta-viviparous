@@ -1275,7 +1275,7 @@ protein \ac{ITGB1BP1} as well as \ac{FN1} are highly expressed, which
 activates Rac. This potentially leads to the formation of focal adhesions
 and lamellipodia formation through inhibition of GSN and
 HSPC300. Other components of cell-cell adhesion, including \ac{F11R}
-which forms tight junctions in epithelia, the proteglycans \ac{SDC4} and
+which forms tight junctions in epithelia, the proteoglycans \ac{SDC4} and
 \ac{LUM}, and \ac{LAMC1}.
 
 % SPINT2 -- Serine Peptidase inhibitor

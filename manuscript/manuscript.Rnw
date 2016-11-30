@@ -64,7 +64,7 @@ opts_chunk$set(cache=TRUE, autodep=TRUE)
 options(device = function(file, width = 8, height = 7, ...) {
   cairo_pdf(tempfile(), width = width, height = height, ...)
 })
-options(scipen = -2, digits = 0)
+options(scipen = -2, digits = 1)
 library("data.table")
 library("ggplot2")
 library("reshape2")

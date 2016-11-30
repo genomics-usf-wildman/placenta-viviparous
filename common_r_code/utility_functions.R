@@ -86,6 +86,16 @@ species <- function(s,join=TRUE) {
     }
 }
 
+number_to_latex <- function(x) {
+    if (is.numeric(x)) {
+        x <- knitr:::format_sci(x, 'latex')
+        i <- grep('[^-0-9.,]', x)
+        x[i] <- sprintf('\\ensuremath{%s}', x[i])
+        x <- sprintf('\\text{%s}', x)
+    }
+    x
+}
+
 english.join <- function(s){
     ret <- c()
     ## everything but the last gets a , appended if there are more than two

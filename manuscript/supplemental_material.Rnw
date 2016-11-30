@@ -901,7 +901,7 @@ print(xtable(combined.placenta.go.results,
 
 
 \begin{figure}[tbh]
-<<core.placenta.transcriptome.housekeeping,fig.width=5,fig.height=10,out.height="0.8\\textheight",echo=FALSE>>=
+<<core.placenta.transcriptome.housekeeping,fig.width=6,fig.height=8,out.height="0.8\\textheight",echo=FALSE>>=
 cptlh <-
     core.placenta.transcriptome.long[!grepl("(min|median|max|all)_expression|all_but_",
                                             Species) & housekeeping==TRUE,]
@@ -909,7 +909,7 @@ cptlh <- cptlh[,Species:=factor(gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",capfirst
                               levels=gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",
                                           capfirst(names(species.names))))]
 
-print(ggplot(cptlh,aes(x=human_name,y=FPKM))+
+print(ggplot(cptlh[FPKM > 0.9,],aes(x=human_name,y=FPKM))+
       geom_boxplot(outlier.shape=NA)+
       scale_y_log10(labels=trans_format("log10", math_format(10^.x)))+
       geom_point(aes(color=Species,shape=Species))+

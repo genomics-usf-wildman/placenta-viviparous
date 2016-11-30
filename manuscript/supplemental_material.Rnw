@@ -949,7 +949,7 @@ print(ggplot(cptlh[FPKM > 0.9,],aes(x=human_name,y=FPKM))+
 
 
 \begin{figure}
-<<housekeeping.placenta.distribution,fig.width=8,fig.height=8,out.height="0.8\\textheight",echo=FALSE,message=FALSE>>=
+<<housekeeping.placenta.distribution,fig.width=5,fig.height=5,out.height="0.8\\textheight",echo=FALSE,message=FALSE>>=
 ## housekeeping set as apposed to non-housekeeping set
 cptg.h <- core.placenta.transcriptome.genes.shape[(human_name %in% housekeeping.genes.superset[,gene_short_name])]
 num.species <- star.logs.wide[,length(unique(species))]
@@ -967,26 +967,34 @@ cpt.h.distribution.shape <-
              "all_but_one_expression",
              "all_but_two_expression",
              "all_but_three_expression",
-             "all_but_four_expression"),
+             "all_but_four_expression",
+             "all_but_metatherian_expression"
+             ),
            function(x){
                calculate.distribution.shape(cptg.h[,x,with=FALSE][[1]])[,`Minimum Expression in`:=x]
            })
 fix.expression.names <- function(x){
-    x <- gsub("^all_expression$",
-              paste0(num.species," of ",num.species," species"),
+    x <- gsub("^all_but_metatherian_expression$",
+              paste0("All ",num.species-1," Eutherians"),
               x
               )
-    nc.levels <- paste0(num.species," of ",num.species," species")
+    x <- gsub("^all_expression$",
+              paste0(num.species," of ",num.species," Species"),
+              x
+              )
+    nc.levels <- c(paste0("All ",num.species-1," Eutherians"),
+                   paste0(num.species," of ",num.species," Species")
+                   )
     ## number coutner
     nc <- c("one"=1,"two"=2,"three"=3,"four"=4)
     for (a in names(nc)) {
         x <- gsub(paste0("^all_but_",a,"_expression$"),
-              paste0(num.species-nc[a]," of ",num.species," species"),
+              paste0(num.species-nc[a]," of ",num.species," Species"),
               x
               )
         nc.levels <-
             c(nc.levels,
-              paste0(num.species-nc[a]," of ",num.species," species"))
+              paste0(num.species-nc[a]," of ",num.species," Species"))
     }
     return(factor(x,levels=nc.levels))
 }
@@ -995,7 +1003,7 @@ cpt.h.distribution.shape <-
     rbindlist(cpt.h.distribution.shape)
 
 cpt.h.distribution.shape <- 
-    cpt.h.distribution.shape[,`Minimum Expression in`:=
+    cpt.h.distribution.shape[,`Min. Exp. in`:=
                                 fix.expression.names(`Minimum Expression in`)]
 
 setnames(cpt.h.distribution.shape,
@@ -1003,33 +1011,79 @@ setnames(cpt.h.distribution.shape,
          "Expression (FPKM)")
 
 print(ggplot(cpt.h.distribution.shape[`Expression (FPKM)` > 0.1,],
-             aes(x=`Expression (FPKM)`,color=`Minimum Expression in`,y=num_genes))
+             aes(x=`Expression (FPKM)`,color=`Min. Exp. in`,y=num_genes))
       + geom_line(lwd=1)
       + xlab("Minimum Expression cutoff (FPKM)")
-      + ylab("Genes with N-th Minimum Expression")
+      + ylab("Number of Genes Meeting FPKM Cutoff")
       + scale_y_log10(breaks = trans_breaks("log10", function(x) 10^x),
                       labels = trans_format("log10", math_format(10^.x)))
       + scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
                       labels = trans_format("log10", math_format(10^.x)))
-      + geom_vline(xintercept=10)
-      + geom_segment(mapping=aes(y=V1,
+      + geom_vline(xintercept=10,linetype="dotted")
+      + geom_segment(mapping=aes(y=V1-ifelse(V1<145,40,0),
                          yend=V1,
                          xend=10,
-                         x=250,
-                         color=`Minimum Expression in`),
+                         x=sapply(V1,
+                                  function(x){
+                                      cpt.h.distribution.shape[num_genes > x,
+                                                             max(`Expression (FPKM)`)*2.5]
+                                  }),
+                         color=`Min. Exp. in`),
                      data=cpt.h.distribution.shape[`Expression (FPKM)` > 10,
-                                              max(num_genes),`Minimum Expression in`],
-                     arrow=arrow(length=unit(0.5,"cm"))
-                   )
-      + geom_text(mapping=aes(x=250,
-                      y=V1,
+                                              max(num_genes),`Min. Exp. in`],
+                     arrow=arrow(length=unit(0.5,"cm")),
+                     show.legend=FALSE
+                     )
+      + geom_text(mapping=aes(x=sapply(V1,
+                                       function(x){
+                                           cpt.h.distribution.shape[num_genes > x,
+                                                                  max(`Expression (FPKM)`)*2.6]
+                                       }),
+                      y=V1-ifelse(V1<145,40,0),
                       label=paste0(V1," genes"),override=TRUE),
                   data=cpt.h.distribution.shape[`Expression (FPKM)` > 10,
-                      max(num_genes),`Minimum Expression in`],
+                      max(num_genes),`Min. Exp. in`],
                   show.legend=FALSE,
-                  hjust=0
+                  hjust=0,
+                  size=8*(5/14)
                   )
-      + guides(color=guide_legend(title="Minimum\nExpression in"))
+      + geom_segment(mapping=aes(yend=V1,
+                         y=100,
+                         xend=1,
+                         x=1,
+                         color=`Min. Exp. in`),
+                     data=cpt.h.distribution.shape[`Expression (FPKM)` > 1 &
+                                                 `Min. Exp. in` == 'All 13 Eutherians',
+                                                 max(num_genes),`Min. Exp. in`],
+                     arrow=arrow(length=unit(0.5,"cm")),
+                     show.legend=FALSE
+                     )
+      + geom_text(mapping=aes(x=1,
+                      y=100,
+                      label=paste0(V1," genes"),
+                      override=TRUE),
+                  angle=90,
+                  data=cpt.h.distribution.shape[`Expression (FPKM)` > 1 &
+                                              `Min. Exp. in` == 'All 13 Eutherians',
+                                              max(num_genes),`Min. Exp. in`],
+                  show.legend=FALSE,
+                  hjust=1,
+                  size=8*(5/14)
+                  )
+      + guides(color=guide_legend(title=paste0("Minimum\nExpression in"),
+                                  keywidth=unit(3,"mm"),
+                                  keyheight=unit(3,"mm"),
+                                  title.hjust=0.5,
+                                  label.position="right",
+                                  label.theme=element_text(size=7,angle=0)
+                                  ))
+      + theme_bw()
+      + theme(text=element_text(size=9),
+              legend.position=c(0.99,0.99),
+              legend.margin=unit(0,"mm"),
+              legend.justification=c(1,1),
+              plot.margin=unit(c(0,0,0,0),"mm")
+              )
       )
 @ 
 \caption{Distribution shape of housekeeping genes in placentas out of
@@ -1038,28 +1092,28 @@ print(ggplot(cpt.h.distribution.shape[`Expression (FPKM)` > 0.1,],
   shows the number of 1:1 orthologous \human housekeeping genes
   expressed in 
   placenta transcriptomes if %
-  \Sexpr{cpt.h.distribution.shape[,levels(`Minimum Expression in`)[1]]}
+  \Sexpr{cpt.h.distribution.shape[,levels(`Min. Exp. in`)[1]]}
   %
   (or %
-  \Sexpr{cpt.h.distribution.shape[,levels(`Minimum Expression in`)[2]]},
+  \Sexpr{cpt.h.distribution.shape[,levels(`Min. Exp. in`)[2]]},
   % 
   etc.) have a minimum expression in FPKM equal to the horizontal axis.
   For example, if the cutoff is set to 10 (vertical black line), 
   % 
   \Sexpr{cpt.h.distribution.shape[`Expression (FPKM)` > 10 
-    & `Minimum Expression in` == '14 of 14 species',max(num_genes)]}
+    & `Min. Exp. in` == '14 of 14 Species',max(num_genes)]}
   %
-  genes would be included if the FPKM of a set of 1:1 orthologs of all 14 species must be at
-  least 10, %
+  genes would be included if the expression of a set of 1:1 orthologs of all 14 species must be at
+  least 10 FPKM, %
   \Sexpr{cpt.h.distribution.shape[`Expression (FPKM)` > 10 
-    & `Minimum Expression in` == "13 of 14 species",max(num_genes)]}
+    & `Min. Exp. in` == "13 of 14 Species",max(num_genes)]}
   %
   1:1 orthologs would be included if 13 of 14 species have an
-   with an FPKM of at least 10, and 
+   expression of at least 10 FPKM, and 
   \Sexpr{cpt.h.distribution.shape[`Expression (FPKM)` > 10 
-    & `Minimum Expression in` == '10 of 14 species',max(num_genes)]}
+    & `Min. Exp. in` == '10 of 14 Species',max(num_genes)]}
   genes would be included if 10 of 14 species
-  must have an FPKM of at least 10.}
+  must have an expression of at least 10 FPKM.}
 \label{fig:core_housekeeping_transcriptome_shape}
 \end{figure}
 

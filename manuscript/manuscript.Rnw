@@ -240,8 +240,9 @@ placpath <- function(pathway,database) {
 \address[affhaifa]{The Institute of Evolution, University of Haifa, Haifa, Israel}
 
 \begin{abstract}
-  \textbf{Introduction} The placenta is arguably the most
-  anatomically variable organ in mammals.
+  \textbf{Introduction} The placenta is arguably the most anatomically
+  variable organ in mammals even though its primary function is
+  conserved.
 
   \textbf{Method} Using RNA-seq, we measured the expression profiles
   of \Sexpr{star.logs[,length(unique(file))]} term placentas of
@@ -251,7 +252,7 @@ placpath <- function(pathway,database) {
   
   \textbf{Results} We identified a set of
   \Sexpr{core.placenta.transcriptome.long[housekeeping==FALSE,length(unique(human_name))]}
-  core genes which are expressed (FPKM $\ge 10$) in all placentas, %
+  core genes which are expressed (FPKM $\ge 10$) in all eutherian placentas, %
   %
   including genes with immune-modulating properties (\ac{ANXA2},
   \ac{ANXA1}, \ac{S100A11}, \ac{S100A10}, and \ac{LGALS1}), cell-cell
@@ -262,17 +263,20 @@ placpath <- function(pathway,database) {
   differentially expressed in \textit{Homo sapiens} when compared to
   the other %
   \Sexpr{star.logs[,length(unique(species))-1]} species. %
+  %
+  Multiple genes are significantly associated with placenta
+  morphology, including \ac{EREG} and \ac{WNT5A} which are both
+  associated with placental shape.
 
   \textbf{Discussion} %
-  Using the strictest filtering strategy we find a core set of only
   \Sexpr{core.placenta.transcriptome.long[housekeeping==FALSE,length(unique(human_name))]}
-  genes is essential for the proper functioning of the placenta in all
-  species analyzed. We also found significantly higher expression of
-  the pre-eclampsia associated genes \ac{KISS1}, \ac{CRH},
-  \ac{PAPPA}, and \ac{ADAM12} on the \human lineage.
+  genes are important for the core functions of the placenta in all
+  eutherian species analyzed. The molecular functions and pathways
+  enriched in the core placenta align with the evolutionarily
+  conserved functionality of the placenta.
 
-  \DEW{The discussion and results seem redundant. Given the title
-    shouldn't something about shape be mentioned?}
+ % \DEW{The discussion and results seem redundant. Given the title
+ %   shouldn't something about shape be mentioned?}
   
 \end{abstract}
 

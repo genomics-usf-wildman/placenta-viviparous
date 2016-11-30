@@ -151,6 +151,49 @@ for (mf.bp in c("mf","bp")) {
 
 @ 
 
+<<placenta_go_results,echo=FALSE,results="hide">>=
+placgo <- function(goid,group="mf") {
+    if (group=="mf") {
+        temp <- placenta_go_results_mf
+    } else {
+        temp <- placenta_go_results_bp
+    }
+    paste0("$\\mathrm{FDR}=",
+           number_to_latex(temp[GO.ID==goid,`FDR`]),
+           "$"
+           )
+}
+@ 
+
+<<pathway_analysis,echo=FALSE,results="asis",cache.extra=file.info(dir("../data","placenta_gsea.*",full.names=TRUE))[,"mtime"]>>=
+pathway <- list()
+for (database in c("kegg","reactome","biocarta","netpath")) {
+    load(paste0("../data/placenta_gsea_",database))
+    eval(parse(text=paste0("gsea.table <- placenta_gsea_",database)))
+    gsea.table[,Database:=gsub("^(.)","\\U\\1",database,perl=TRUE)]
+    pathway[[database]] <-
+        gsea.table
+}
+pathway.analysis <-
+    rbindlist(pathway)[fdr < 0.1,]
+rm(pathway)
+pathway.analysis[,Pathway:=gsub("^(KEGG|BIOCARTA|REACTOME) ","",
+                                gsub("_+"," ",
+                                     Pathway))]
+pathway.analysis[,Pathway:=gsub(".+\\%","",Pathway)]
+
+setnames(pathway.analysis,"p_values","p")
+setorder(pathway.analysis,"p")
+
+placpath <- function(pathway,database) {
+    paste0("$\\mathrm{FDR}=",
+           number_to_latex(pathway.analysis[grepl(pathway,Pathway) & Database==Database,
+                                            fdr]),
+           "$")
+}
+
+@ 
+
 % Acronyms
 \input{acronyms}
 
@@ -1183,26 +1226,40 @@ secretion. The expression regulation of another core gene,
 
 Another annexin which is highly expressed in all term placentas is
 \ac{ANXA5}, which was originally identified as a an anti-coagulant
-protein, but is also involved in syncitium formation, membrane repair,
+protein, but is also involved in syncytium formation, membrane repair,
 and reduction of spontaneous
 abortion~\cite{Ueki.ea2012:Lossofmaternalannexin}. Other notable
 syncytiotrophoblast fusion proteins, Syncytin-1 (\ac{ERVW-1}) and -2
 (\ac{ERVFRD-1}) were not present in the core placenta, as they (or
 their homologs) are not highly expressed in \dog, \bonobo, or \sheep,
-nor was \ac{MFSD2A}, the Syncytin-2 receptor (\ac{FPKM} $\ge 10$
+nor was the Syncytin-2 receptor, \ac{MFSD2A} (\ac{FPKM} $\ge 10$
 only in \human, \mouse, and \dog).
 
 \subsubsection{Invasion: EGF and Actin Y in the Core Placenta}
 
 The core placenta transcriptome is significantly enriched in genes
 which are involved in multiple biological pathways, including multiple
-pathways related to translation (ribosome, translation, signal
-recognition particle targeting to the rough endoplasamic reticulum,
+pathways related to translation (ribosome %
+%
+(\Sexpr{placpath("^RIBOSOME","Kegg")})
+, translation %
+(\Sexpr{placpath("^TRANSLATION","Reactome")})
+%
+, signal
+recognition particle targeting to the rough endoplasmic reticulum %
+(\Sexpr{placpath("^SRP DEPENDENT","Reactome")})
+%
+,
 etc.) (Supplemental \cref{tab:core_placenta_pathway_analysis}). Beyond
 translation, the next most abundant set of significantly enriched
 molecular pathways are related to the migration of the trophoblast
-into the endometrium, including the EGFR1 pathway and the Actin Y
-pathway. Two other significant pathways, the mPR/Progesterone pathway
+into the endometrium, including the EGFR1 pathway %
+(\Sexpr{placpath("^EGFR1","Netpath")})
+%
+and the Actin Y pathway %
+(\Sexpr{placpath("^ACTINY","Biocarta")})
+%
+. Two other significant pathways, the mPR/Progesterone pathway
 and Rho cell motility pathways, feed into the Actin Y pathway as well.
 Supplemental \cref{fig:egf_kegg_pathway} shows the EGF pathway in
 humans with the median expression in FPKM of genes in the pathway
@@ -1393,23 +1450,27 @@ repair during the massive flux of nutrients and waste in the placenta.
 
 \subsubsection{Invasion: EGF and CD9 in the Core Placenta}
 
-\DEW{Write out FDR for enrichment described}
+% \DEW{Write out FDR for enrichment described}
 
-The high expression of components of the EGFR signaling pathway in the
-core placenta transcriptome (including \ac{GRB2}, \ac{RALB})
-as well as annexins which are involved in the location of EGF receptor
-localization (\ac{ANXA1} and \ac{ANXA2}) in the core placenta
-is consistent with previous findings showing that alterations to the
-EGF signaling system change invasion of trophoblast cells into the
-spiral arteries~\cite{Armant.ea2015:Reducedexpressionofepidermal}.
-Another component of the core placenta transcriptome, \ac{CD9},
-has been shown to suppress \human extravillous trophoblast
+The high expression of components of the EGFR signaling pathway %
+(Enrichment \Sexpr{placpath("^EGFR1","Netpath")}) %
+in the
+core placenta transcriptome (including \ac{GRB2}, \ac{RALB}) as well
+as annexins which are involved in the spatio-temporal regulation of
+EGF receptor signal transduction (\ac{ANXA1}, \ac{ANXA2}, and
+\ac{S100A11} \cite{Poeter.ea2013:DisruptionofannexinA1S100A11}) in the
+core placenta is consistent with previous findings showing that
+alterations to the EGF signaling system change invasion of trophoblast
+cells into the spiral
+arteries~\cite{Armant.ea2015:Reducedexpressionofepidermal}. Another
+component of the core placenta transcriptome, \ac{CD9}, has been shown
+to suppress \human extravillous trophoblast
 invasion~\cite{Matsumoto.ea2016:CD9suppresseshumanextravillous}, and
 we hypothesize that it is responsible for maintaining the balance
 between invasion and attachment in the other placentas examined here
 as well.
 
-\PP{EGF interacts with S100 from the core placenta as well}
+% \PP{EGF interacts with S100 from the core placenta as well}
 
 % TAGLN2 -- likely to be produced by the placenta as well; possibly
 % due to the smooth muscle transition?

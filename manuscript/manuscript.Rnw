@@ -1429,29 +1429,36 @@ placentation.
 
 \subsubsection{Formation of the syncytiotrophoblast}
 
-While Syncytin-1 and -2 are implicated in the formation of the
-syncytiotrophoblast in
+While Syncytin-1 and -2 (\ac{ERVW-1} and \ac{ERVFRD-1}, respectively) are implicated
+in the formation of the syncytiotrophoblast in
 \human~\cite{Rawn.ea2008:evolutionregulationandfunction} and homologs
-of \ac{ERVFRD-1} and \ac{ERVW-1} are widely expressed in most
-of the placentas analyzed here, they are not expressed in \bonobo,
-\sheep, and \dog, even though these mammals form
+of \ac{ERVFRD-1} and \ac{ERVW-1} are widely expressed in most of the
+placentas analyzed here, they are not expressed in \bonobo, \sheep,
+and \dog, even though these mammals form
 syncytiotrophoblasts~\cite{Mess.ea2006:Evolutionarytransformationsoffetal}.
 Because the formation of syncytiotrophoblast is the stem state of
 Eutheria, Afrotheria, Euarchontoglires, and
 Laurasiatheria~\cite{Mess.ea2006:Evolutionarytransformationsoffetal},
+and syncytiotrophoblast must be continuously replenished
 the gene(s) responsible for cytotrophoblast fusion to form
-syncytiotrophoblast is likely to be highly expressed in the core
-placenta. \ac{ANXA5} is known to be expressed at multiple stages
-of placentation, and is capable of repairing membrane defects and
+syncytiotrophoblast should be highly expressed in the core
+placenta. \ac{ANXA5} is known to be expressed at multiple stages of
+placentation, and is capable of repairing membrane defects and
 promoting the fusion of
 cells~\cite{Carmeille.ea2015:Annexin-A5promotesmembraneresealing} in
-the presence of Ca$^{2+}$. While there are likely other genes which
+the presence of Ca$^{2+}$. While there may be other genes which
 are responsible for the positioning of cytotrophoblast cells in close
-proximity to start the fusion process, we hypothesize that \ac{ANXA5} is
-essential for the completion of fusion and the maintenance of membrane
-repair during the massive flux of nutrients and waste in the placenta.
+proximity to start the fusion process, \ac{ANXA5} is likely to
+be essential for the completion of fusion and the maintenance of
+membrane repair during the massive flux of nutrients and waste in the
+placenta \cite{Carmeille.ea2015:Annexin-A5promotesmembraneresealing,Ueki.ea2012:Lossofmaternalannexin}.
 
 \PP{Add refs for fusion}
+
+\DLA{Added the Carmeille.ea2015 and Ueki.ea2012 I have other
+  references
+  (\cite{Ota.ea2013:ContributionoffetalANXA5,Bouter.ea2015:ReviewAnnexin-A5andcell})
+  but I'd exceed the limit for placenta (45)}
 
 % \DLA{Possibility of membrane repair due to maternal immune response as
 %   well during this process, as well as repair of membrane due to high

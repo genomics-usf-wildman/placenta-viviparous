@@ -488,6 +488,7 @@ print(pp %>%
 \end{figure}
 
 \subsection{Comparative Analysis of Gene Expression}
+\label{sec:comp-analys-gene}
 
 1:1 orthologs in were determined using
 Ensembl v.80 gene trees via Biomart using the biomaRt R package
@@ -921,8 +922,8 @@ setkey(hum.all.lin.spec,"Human Symbol")
 
 % \DEW{Add gene names}
 
-Using a mixed-effects linear model to account for repeated testing of
-\human and \mouse, we identified multiple genes which are
+Using a type-III ANOVA to account for repeated testing of
+\human and \mouse (see \cref{sec:comp-analys-gene} for details), we identified multiple genes which are
 differentially expressed in the \human lineage in comparison to all
 other lineages (\cref{tab:human_lineage_specific}, Supplemental
 \cref{tab:human_lineage_specific_all}). These genes include multiple

@@ -17,7 +17,7 @@
 %\usepackage{float}
 \usepackage{multirow}
 %\usepackage{setspace}
-\usepackage{acro}
+\usepackage[macros=false]{acro}
 \usepackage{array}
 \usepackage{longtable}
 \usepackage{amsmath}

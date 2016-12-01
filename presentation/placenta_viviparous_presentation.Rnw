@@ -520,27 +520,41 @@ placenta.lineage.specific.table <- function(analysis,output=TRUE) {
 
 \begin{frame}{Core Placenta Transcriptome}
 \begin{figure}
-<<core.placenta.transcriptome,fig.width=8,fig.height=12,out.height="0.8\\textheight",echo=FALSE>>=
-print(ggplot(core.placenta.transcriptome.long[!grepl("(min|median|max)_expression",Species),],
-             aes(y=human_name,x=gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",capfirst(Species))))
-      + geom_raster(aes(fill=log10(FPKM)))
-      + scale_x_discrete(expand=c(0,0))
-      + scale_y_discrete(expand=c(0,0))
-      + scale_fill_gradient(low = grad.def[["low"]],
-                            high = grad.def[["high"]],
-                            space = grad.def[["space"]],
-                            na.value = grad.def[["na.value"]],
-                            limits=c(0,4),
-                            guide=guide_colorbar(title=expression(log[10](FPKM)))
-                            )
-      + ylab("Human Ortholog Name")
-      + xlab("Species")
-      + theme_grey()
-      + theme(legend.position="top",
-              axis.ticks = element_blank(),
-              axis.text.y = element_text(face="italic"),
-              axis.text.x = element_text(angle = 340, hjust = 0.1, vjust=1,face="italic"))
-      )
+<<core.placenta.transcriptome,fig.width=7,fig.height=7*9/16,out.height="0.8\\textheight",echo=FALSE>>=
+cptl <-
+    core.placenta.transcriptome.long[!grepl("(min|median|max|all)_expression|all_but_",
+                                            Species) & housekeeping==FALSE,]
+cptl <- cptl[,Species:=factor(gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",capfirst(Species)),
+                              levels=gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",
+                                          capfirst(names(species.names))))]
+cptl[,human_name:=factor(human_name,rev(levels(as.factor(human_name))))]
+
+print(ggplot(cptl[FPKM > 0.1,],aes(x=human_name,y=FPKM))+
+      geom_boxplot(outlier.shape=NA)+
+      scale_y_log10(labels=trans_format("log10", math_format(10^.x)))+
+      geom_point(aes(color=Species,shape=Species))+
+      scale_shape_manual("Species",
+                         guide=guide_legend(ncol=3,
+                                            keywidth=unit(3,"mm"),
+                                            keyheight=unit(3,"mm"),
+                                            label.theme=element_text(face="italic",
+                                                                     angle=0,
+                                                                     size=7),
+                                            title.position="top"
+                                            ),
+                         values=0:18)+
+      # scale_color_discrete(NULL)+
+      # coord_flip()+
+      xlab("Human Ortholog Name")+
+      ylab("Gene Expression (FPKM)")+
+      theme_bw() +
+      theme(text=element_text(size=9),
+            legend.position=c(0.99,0.99),
+            axis.text.x=element_text(face="italic",size=7,angle=90,hjust=1,vjust=0.5),
+            legend.margin=unit(0,"mm"),
+            legend.justification=c(1,1),
+            plot.margin=unit(c(0,0,0,0),"mm")
+            ))
 @ 
 \end{figure}
 \end{frame}
@@ -564,26 +578,34 @@ cpt.distribution.shape <-
              "all_but_one_expression",
              "all_but_two_expression",
              "all_but_three_expression",
-             "all_but_four_expression"),
+             "all_but_four_expression",
+             "all_but_metatherian_expression"
+             ),
            function(x){
-               calculate.distribution.shape(cptg.nh[,x,with=FALSE][[1]])[,`Minimum Expression in`:=x]
+               calculate.distribution.shape(cptg.nh[,x,with=FALSE][[1]])[,`Min. Exp. in`:=x]
            })
 fix.expression.names <- function(x){
-    x <- gsub("^all_expression$",
-              paste0(num.species," of ",num.species," species"),
+    x <- gsub("^all_but_metatherian_expression$",
+              paste0("All ",num.species-1," Eutherians"),
               x
               )
-    nc.levels <- paste0(num.species," of ",num.species," species")
+    x <- gsub("^all_expression$",
+              paste0(num.species," of ",num.species," Species"),
+              x
+              )
+    nc.levels <- c(paste0("All ",num.species-1," Eutherians"),
+                   paste0(num.species," of ",num.species," Species")
+                   )
     ## number coutner
     nc <- c("one"=1,"two"=2,"three"=3,"four"=4)
     for (a in names(nc)) {
         x <- gsub(paste0("^all_but_",a,"_expression$"),
-              paste0(num.species-nc[a]," of ",num.species," species"),
+              paste0(num.species-nc[a]," of ",num.species," Species"),
               x
               )
         nc.levels <-
             c(nc.levels,
-              paste0(num.species-nc[a]," of ",num.species," species"))
+              paste0(num.species-nc[a]," of ",num.species," Species"))
     }
     return(factor(x,levels=nc.levels))
 }
@@ -592,41 +614,86 @@ cpt.distribution.shape <-
     rbindlist(cpt.distribution.shape)
 
 cpt.distribution.shape <- 
-    cpt.distribution.shape[,`Minimum Expression in`:=
-                                fix.expression.names(`Minimum Expression in`)]
-
+    cpt.distribution.shape[,`Min. Exp. in`:=
+                                fix.expression.names(`Min. Exp. in`)]
 setnames(cpt.distribution.shape,
          "FPKM",
          "Expression (FPKM)")
 
 print(ggplot(cpt.distribution.shape[`Expression (FPKM)` > 0.1,],
-             aes(x=`Expression (FPKM)`,color=`Minimum Expression in`,y=num_genes))
+             aes(x=`Expression (FPKM)`,color=`Min. Exp. in`,y=num_genes))
       + geom_line(lwd=1)
       + xlab("Minimum Expression cutoff (FPKM)")
-      + ylab("Genes with N-th Minimum Expression")
+      + ylab("Number of Genes Meeting FPKM Cutoff")
       + scale_y_log10(breaks = trans_breaks("log10", function(x) 10^x),
                       labels = trans_format("log10", math_format(10^.x)))
       + scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
                       labels = trans_format("log10", math_format(10^.x)))
-      + geom_vline(xintercept=10)
-      + geom_segment(mapping=aes(y=V1,
+      + geom_vline(xintercept=10,linetype="dotted")
+      + geom_segment(mapping=aes(y=V1-ifelse(V1<80,20,0),
                          yend=V1,
                          xend=10,
-                         x=1000,
-                         color=`Minimum Expression in`),
+                         x=sapply(V1,
+                                  function(x){
+                                      cpt.distribution.shape[num_genes > x,
+                                                             max(`Expression (FPKM)`)*4]
+                                  }),
+                         color=`Min. Exp. in`),
                      data=cpt.distribution.shape[`Expression (FPKM)` > 10,
-                                              max(num_genes),`Minimum Expression in`],
-                     arrow=arrow(length=unit(0.5,"cm"))
-                   )
-      + geom_text(mapping=aes(x=1000,
-                      y=V1,
+                                              max(num_genes),`Min. Exp. in`],
+                     arrow=arrow(length=unit(0.5,"cm")),
+                     show.legend=FALSE
+                     )
+      + geom_text(mapping=aes(x=sapply(V1,
+                                       function(x){
+                                           cpt.distribution.shape[num_genes > x,
+                                                                  max(`Expression (FPKM)`)*4.1]
+                                       }),
+                      y=V1-ifelse(V1<80,20,0),
                       label=paste0(V1," genes"),override=TRUE),
                   data=cpt.distribution.shape[`Expression (FPKM)` > 10,
-                      max(num_genes),`Minimum Expression in`],
+                      max(num_genes),`Min. Exp. in`],
                   show.legend=FALSE,
-                  hjust=0
+                  hjust=0,
+                  size=8*(5/14)
                   )
-      + guides(color=guide_legend(title="Minimum\nExpression in"))
+      + geom_segment(mapping=aes(yend=V1,
+                         y=100,
+                         xend=1,
+                         x=1,
+                         color=`Min. Exp. in`),
+                     data=cpt.distribution.shape[`Expression (FPKM)` > 1 &
+                                                 `Min. Exp. in` == 'All 13 Eutherians',
+                                                 max(num_genes),`Min. Exp. in`],
+                     arrow=arrow(length=unit(0.5,"cm")),
+                     show.legend=FALSE
+                     )
+      + geom_text(mapping=aes(x=1,
+                      y=100,
+                      label=paste0(V1," genes"),
+                      override=TRUE),
+                  angle=90,
+                  data=cpt.distribution.shape[`Expression (FPKM)` > 1 &
+                                              `Min. Exp. in` == 'All 13 Eutherians',
+                                              max(num_genes),`Min. Exp. in`],
+                  show.legend=FALSE,
+                  hjust=1,
+                  size=8*(5/14)
+                  )
+      + guides(color=guide_legend(title=paste0("Minimum\nExpression in"),
+                                  keywidth=unit(3,"mm"),
+                                  keyheight=unit(3,"mm"),
+                                  title.hjust=0.5,
+                                  label.position="right",
+                                  label.theme=element_text(size=7,angle=0)
+                                  ))
+      + theme_bw()
+      + theme(text=element_text(size=9),
+              legend.position=c(0.99,0.99),
+              legend.margin=unit(0,"mm"),
+              legend.justification=c(1,1),
+              plot.margin=unit(c(0,0,0,0),"mm")
+              )
       )
 @ 
 \end{figure}

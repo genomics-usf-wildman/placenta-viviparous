@@ -439,7 +439,7 @@ print(ggplot(star.logs.unmapped,
       + theme_bw()
       + coord_flip()
       + theme(legend.position="top",
-              axis.text.x = element_text(face="italic"))
+              axis.text.y = element_text(face="italic"))
       )
 @ 
 \end{figure}

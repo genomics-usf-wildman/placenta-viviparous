@@ -1239,7 +1239,7 @@ and reduction of spontaneous
 abortion~\cite{Ueki.ea2012:Lossofmaternalannexin}. Other notable
 syncytiotrophoblast fusion proteins, Syncytin-1 (\ac{ERVW-1}) and -2
 (\ac{ERVFRD-1}) were not present in the core placenta, as they (or
-their homologs) are not highly expressed in \dog, \bonobo, or \sheep,
+genes similar to them) are not highly expressed in \dog, \bonobo, or \sheep,
 nor was the Syncytin-2 receptor, \ac{MFSD2A} (\ac{FPKM} $\ge 10$
 only in \human, \mouse, and \dog).
 
@@ -1324,7 +1324,7 @@ significantly associated with the shape of the placenta, as
 well as the shape in which the difference is most significant. The
 most significant genes which were associated with diffuse placenta
 shape include \ac{EREG}, a ligand of EGFR, \ac{UNC93A}, a
-homolog of \ac{UNC93B1} which is involved in the balancing between
+gene similar to \ac{UNC93B1} which is involved in the balancing between
 Tlr7 and Tlr9 immune response in
 mice~\cite{Brinkmann.ea2007:interactionbetweenERmembrane}, and
 \ac{WNT5A}, which is a member of the Wnt ligand family whose
@@ -1438,8 +1438,8 @@ modulatory transcripts which are expressed in all placentas analyzed.
 
 While Syncytin-1 and -2 (\ac{ERVW-1} and \ac{ERVFRD-1}, respectively) are implicated
 in the formation of the syncytiotrophoblast in
-\human~\cite{Rawn.ea2008:evolutionregulationandfunction} and homologs
-of \ac{ERVFRD-1} and \ac{ERVW-1} are widely expressed in most of the
+\human~\cite{Rawn.ea2008:evolutionregulationandfunction} and genes which are similar to 
+\ac{ERVFRD-1} and \ac{ERVW-1} are widely expressed in most of the
 placentas analyzed here, they are not expressed in \bonobo, \sheep,
 and \dog, even though these mammals form
 syncytiotrophoblasts~\cite{Mess.ea2006:Evolutionarytransformationsoffetal}.

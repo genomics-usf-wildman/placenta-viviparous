@@ -1177,6 +1177,21 @@ print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="PRLR"
 \label{fig:prolactin_receptor_evolution_tree}
 \end{figure}
 
+\begin{figure}
+<<cgb2.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
+
+print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="CGB2"
+                                                    & species=="homo sapiens"),
+                                genes.to.tree=genes.to.tree,
+                                combined.fpkm=combined.fpkm,
+                                trees=trees
+                                )+
+      geom_tiplab(size=6,color="black",fontface="italic"))
+@ 
+\caption{\genetreeexplanation{\textit{CGB2}}}
+\label{fig:cgb2_evolution_tree}
+\end{figure}
+
 
 \begin{figure}
 <<hoxa11.receptor.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=

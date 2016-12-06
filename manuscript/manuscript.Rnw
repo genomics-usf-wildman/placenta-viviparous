@@ -958,59 +958,7 @@ but are negatively correlated with pre-eclampsia~%
 
 \subsection{Core Placenta Transcriptome}
 
-\begin{figure}[tbh]
-<<core.placenta.transcriptome,fig.width=9/2.5,fig.height=8,out.width="90mm",out.height="0.8\\textheight",echo=FALSE>>=
-cptl <-
-    core.placenta.transcriptome.long[!grepl("(min|median|max|all)_expression|all_but_",
-                                            Species) & housekeeping==FALSE,]
-cptl <- cptl[,Species:=factor(gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",capfirst(Species)),
-                              levels=gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",
-                                          capfirst(names(species.names))))]
-
-print(ggplot(cptl[FPKM > 0.1,],aes(x=human_name,y=FPKM))+
-      geom_boxplot(outlier.shape=NA)+
-      scale_y_log10(labels=trans_format("log10", math_format(10^.x)))+
-      geom_point(aes(color=Species,shape=Species))+
-      scale_shape_manual("Species",
-                         guide=guide_legend(#nrow=1,
-                                            keywidth=unit(3,"mm"),
-                                            keyheight=unit(3,"mm"),
-                                            label.theme=element_text(face="italic",
-                                                                     angle=0,
-                                                                     size=7),
-                                            title.position="top"
-                                            ),
-                         values=0:18)+
-      # scale_color_discrete(NULL)+
-      coord_flip()+
-      xlab("Human Ortholog Name")+
-      ylab("Gene Expression (FPKM)")+
-      theme_bw() +
-      theme(text=element_text(size=9),
-            legend.position=c(0.99,0.41),
-            axis.text.y=element_text(face="italic",size=8),
-            legend.margin=unit(0,"mm"),
-            legend.justification=c(1,1),
-            plot.margin=unit(c(0,0,0,0),"mm")
-            ))
-@ 
-\caption{Core Placenta Transcriptome.
-  \Sexpr{core.placenta.transcriptome.long[housekeeping==FALSE,length(unique(human_name))]}
-  1:1 \human ortholog genes expressed (\ac{FPKM}$ \ge 10$) in the
-  placenta of all 13 Eutherians
-  studied with housekeeping genes
-  \cite{Eisenberg.ea2013:Humanhousekeepinggenesrevisited} removed
-  ordered (from top to bottom) by median expression. Supplemental
-  \cref{fig:core_placenta_transcriptome_shape} shows the shape of the
-  distribution of the number of genes in the core placenta
-  transcriptome if different FPKM and species restriction criteria are
-  utilized.}
-\label{fig:core_placenta_transcriptome}
-\end{figure}
-
-
-\begin{figure}
-<<core.placenta.transcriptome.distribution,fig.width=9/2.5,fig.height=9/2.5,out.width="90mm",out.height="0.8\\textheight",echo=FALSE,message=FALSE>>=
+<<core.placenta.transcriptome.distribution.calc,echo=FALSE,message=FALSE,results="hide">>=
 num.species <- star.logs.wide[,length(unique(species))]
 calculate.distribution.shape <- 
     function(min.vector) {
@@ -1069,7 +1017,65 @@ setnames(cpt.distribution.shape,
          "FPKM",
          "Expression (FPKM)")
 
-print(ggplot(cpt.distribution.shape[`Expression (FPKM)` > 0.1,],
+@ 
+
+\begin{figure}[tbh]
+<<core.placenta.transcriptome,fig.width=9/2.5,fig.height=8,out.width="90mm",out.height="0.8\\textheight",echo=FALSE>>=
+cptl <-
+    core.placenta.transcriptome.long[!grepl("(min|median|max|all)_expression|all_but_",
+                                            Species) & housekeeping==FALSE,]
+cptl <- cptl[,Species:=factor(gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",capfirst(Species)),
+                              levels=gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",
+                                          capfirst(names(species.names))))]
+
+print(ggplot(cptl[FPKM > 0.1,],aes(x=human_name,y=FPKM))+
+      geom_boxplot(outlier.shape=NA)+
+      scale_y_log10(labels=trans_format("log10", math_format(10^.x)))+
+      geom_point(aes(color=Species,shape=Species))+
+      scale_shape_manual("Species",
+                         guide=guide_legend(#nrow=1,
+                                            keywidth=unit(3,"mm"),
+                                            keyheight=unit(3,"mm"),
+                                            label.theme=element_text(face="italic",
+                                                                     angle=0,
+                                                                     size=7),
+                                            title.position="top"
+                                            ),
+                         values=0:18)+
+      # scale_color_discrete(NULL)+
+      coord_flip()+
+      xlab("Human Ortholog Name")+
+      ylab("Gene Expression (FPKM)")+
+      theme_bw() +
+      theme(text=element_text(size=9),
+            legend.position=c(0.99,0.41),
+            axis.text.y=element_text(face="italic",size=8),
+            legend.margin=unit(0,"mm"),
+            legend.justification=c(1,1),
+            plot.margin=unit(c(0,0,0,0),"mm")
+            ))
+@ 
+\caption{Core Placenta Transcriptome.
+  \Sexpr{core.placenta.transcriptome.long[housekeeping==FALSE,length(unique(human_name))]}
+  1:1 \human ortholog genes expressed (\ac{FPKM}$ \ge 10$) in the
+  placenta of all 13 eutherians studied with housekeeping genes
+  \cite{Eisenberg.ea2013:Humanhousekeepinggenesrevisited} removed
+  ordered (from top to bottom) by median expression. If we also require
+  expression (\ac{FPKM}$ \ge 10$) in the marsupial, \opossum, there are 
+  \Sexpr{cpt.distribution.shape[`Expression (FPKM)` > 10 &
+    `Min. Exp. in` == '14 of 14 Species',max(num_genes)]} genes
+  which meet this criteria.
+  \Cref{fig:core_placenta_transcriptome_shape} shows the shape of the
+  distribution of the number of genes in the core placenta
+  transcriptome if different \ac{FPKM} and species restriction criteria are
+  utilized.}
+\label{fig:core_placenta_transcriptome}
+\end{figure}
+
+
+\begin{figure}
+<<core.placenta.transcriptome.distribution,fig.width=9/2.5,fig.height=9/2.5,out.width="90mm",out.height="0.8\\textheight",echo=FALSE,message=FALSE>>=
+  print(ggplot(cpt.distribution.shape[`Expression (FPKM)` > 0.1,],
              aes(x=`Expression (FPKM)`,color=`Min. Exp. in`,y=num_genes))
       + geom_line(lwd=1)
       + xlab("Minimum Expression cutoff (FPKM)")

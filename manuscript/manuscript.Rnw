@@ -254,18 +254,18 @@ placpath <- function(pathway,database) {
   \Sexpr{core.placenta.transcriptome.long[housekeeping==FALSE,length(unique(human_name))]}
   core genes which are expressed (FPKM $\ge 10$) in all eutherian placentas, %
   %
-  including genes with immune-modulating properties (\ac{ANXA2},
-  \ac{ANXA1}, \ac{S100A11}, \ac{S100A10}, and \ac{LGALS1}), cell-cell
-  interactions (\ac{LAMC1}, \ac{LUM}, and \ac{LGALS1}),
-  invasion (\ac{GRB2} and \ac{RALB}) and syncytialization
-  (\ac{ANXA5} and \ac{ANXA1}). %
+  including genes with immune-modulating properties (\acs{ANXA2},
+  \acs{ANXA1}, \acs{S100A11}, \acs{S100A10}, and \acs{LGALS1}), cell-cell
+  interactions (\acs{LAMC1}, \acs{LUM}, and \acs{LGALS1}),
+  invasion (\acs{GRB2} and \acs{RALB}) and syncytialization
+  (\acs{ANXA5} and \acs{ANXA1}). %
   We also identified multiple pre-eclampsia associated genes which are
   differentially expressed in \textit{Homo sapiens} when compared to
   the other %
   \Sexpr{star.logs[,length(unique(species))-1]} species. %
   %
   Multiple genes are significantly associated with placenta
-  morphology, including \ac{EREG} and \ac{WNT5A} which are both
+  morphology, including \acs{EREG} and \acs{WNT5A} which are both
   associated with placental shape.
 
   \textbf{Discussion} %
@@ -1236,7 +1236,7 @@ its interaction with S100P as well; it is involved in cell-cell
 interaction as well as vesicle trafficking and von Willibrand Factor
 secretion. The expression regulation of another core gene,
 \ac{TIMP3}, has been implicated in pre-eclampsia
-\cite{Ma.ea2014:Down-regulationofTIMP3leads,Xiang.ea2013:PromoterhypomethylationofTIMP3}.
+\cite{Ma.ea2014:Down-regulationofTIMP3leads}.
 
 Another annexin which is highly expressed in all term placentas is
 \ac{ANXA5}, which was originally identified as a an anti-coagulant

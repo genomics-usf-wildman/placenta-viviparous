@@ -275,9 +275,6 @@ placpath <- function(pathway,database) {
   enriched in the core placenta align with the evolutionarily
   conserved functionality of the placenta.
 
- % \DEW{The discussion and results seem redundant. Given the title
- %   shouldn't something about shape be mentioned?}
-  
 \end{abstract}
 
 \begin{keyword}
@@ -930,8 +927,6 @@ setkey(hum.all.lin.spec,"Human Symbol")
 \label{tab:human_lineage_specific}
 \end{table}
 
-% \DEW{Add gene names}
-
 Using a type-III ANOVA to account for repeated testing of
 \human and \mouse (see \cref{sec:comp-analys-gene} for details), we identified multiple genes which are
 differentially expressed in the \human lineage in comparison to all
@@ -1367,12 +1362,6 @@ Future analyses of additional placentas with intermediate
 interdigitation and intimacy should better illuminate the pathways
 which are responsible for these placental morphologies.
 
-\PP{Introduce the characteristics earlier in the introduction}
-
-\DLA{They're in the first paragraph of the introduction, but I've also
-  referred to them now in the first subsection here.}
-
-
 \section{Discussion}
 
 
@@ -1443,8 +1432,6 @@ complexes may illuminate how immune tolerance is maintained during
 placentation because these appear to the the major class of immune
 modulatory transcripts which are expressed in all placentas analyzed.
 
-\DEW{Why?} \DLA{Clarified why I think this is important to study.}
-
 \subsubsection{Formation of the syncytiotrophoblast}
 
 While Syncytin-1 and -2 (\ac{ERVW-1} and \ac{ERVFRD-1}, respectively) are implicated
@@ -1471,23 +1458,10 @@ be essential for the completion of fusion and the maintenance of
 membrane repair during the massive flux of nutrients and waste in the
 placenta \cite{Carmeille.ea2015:Annexin-A5promotesmembraneresealing,Ueki.ea2012:Lossofmaternalannexin}.
 
-\PP{Add refs for fusion}
-
-\DLA{Added the Carmeille.ea2015 and Ueki.ea2012 I have other
-  references
-  (\cite{Ota.ea2013:ContributionoffetalANXA5,Bouter.ea2015:ReviewAnnexin-A5andcell})
-  but I'd exceed the limit for placenta (45)}
-
-% \DLA{Possibility of membrane repair due to maternal immune response as
-%   well during this process, as well as repair of membrane due to high
-%   secretion and adsoroption of nutrients/waste in the placenta.}
-
 % Cows have BERV-K1 and -K2, but it's not annotated in the ENSEMBL
 % build of the cow genome that we have
 
 \subsubsection{Invasion: EGF and CD9 in the Core Placenta}
-
-% \DEW{Write out FDR for enrichment described}
 
 The high expression of components of the EGFR signaling pathway %
 (Enrichment \Sexpr{placpath("^EGFR1","Netpath")}) %
@@ -1506,8 +1480,6 @@ invasion~\cite{Matsumoto.ea2016:CD9suppresseshumanextravillous}, and
 we hypothesize that it is responsible for maintaining the balance
 between invasion and attachment in the other placentas examined here
 as well.
-
-% \PP{EGF interacts with S100 from the core placenta as well}
 
 % TAGLN2 -- likely to be produced by the placenta as well; possibly
 % due to the smooth muscle transition?
@@ -1593,12 +1565,6 @@ to collecting and analyzing such a dataset.
   Institute for Genomic Biology at the University of Illinois,
   Urbana-Champaign.
 
-\DEW{Need to cite NWM grants, IGB, etc.}
-
-  \DLA{Unclear what the IGB grant is; Derek: which grant did you want
-    me to cite? Mentioned seed grant.}
-
-  
 %  \printaddresses
 
 %\end{backmatter}

@@ -922,7 +922,7 @@ hum.all.lin.spec <-
                                     )
 setkey(hum.all.lin.spec,"Human Symbol")
 @ 
-\caption{\lineagetableexplanationtypeiii{\human}{all other analyzed species}}
+\caption{\lineagetableexplanationtypeiiishort{\human}{all other analyzed species}}
 \label{tab:human_lineage_specific}
 \end{table}
 

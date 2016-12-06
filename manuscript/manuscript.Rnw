@@ -1370,12 +1370,7 @@ which are responsible for these placental morphologies.
 The \human placenta is distinctive from many other primates in that it
 possesses a deeply invasive trophoblast that penetrates the inner
 myometrium of the uterus
-\cite{Carter.ea2011:Evolutionofinvasiveplacentation}. It is
-hypothesized that this feature is related to the increased demand for
-resources by the developing fetus to feed the expanded size of the
-human brain
-\cite{Carter.ea2011:Evolutionofinvasiveplacentation,Robillard.ea2002:Evolutionaryadaptationstopre-eclampsiaeclampsia}.
-
+\cite{Carter.ea2011:Evolutionofinvasiveplacentation}. %
 The near exclusivity of deep trophoblast invasion in humans has also
 led many to speculate on the origin of various disorders, which are
 almost exclusively symptomatic of human pregnancy. For example,

@@ -770,6 +770,7 @@ placenta.lineage.specific.table <- function(analysis,output=TRUE,lineage.table=p
                      ),
               booktabs=TRUE,
               floating=FALSE,
+              caption.placement="top",
               tabular.environment=ifelse(is.na(members),"longtable","tabular"),
               math.style.exponents=TRUE,
               sanitize.text.function=genes.table.sanitize,
@@ -812,7 +813,7 @@ hum.all.lin.spec <-
     placenta.lineage.specific.table("hum.all",
                                     lineage.table=human.mouse.lineage.specific.analysis,
                                     members=NA,
-                                    caption="\\lineagetableexplanationtypeiii{\\human}{all other species}",
+                                    caption=c("\\lineagetableexplanationtypeiii{\\human}{all other species}","\\human lineage specific genes")
                                     label="tab:human_lineage_specific_all"
                                     )
 setkey(hum.all.lin.spec,"Human Symbol")
@@ -878,7 +879,7 @@ print(xtable(combined.placenta.go.results,
       floating=FALSE
       )
 @ 
-\caption{GO terms most significantly enriched
+\caption[Core placenta GO Enrichment]{GO terms most significantly enriched
   (\Sexpr{placenta.go.results[,sum(Ontology=="MF")]} MF,
   \Sexpr{placenta.go.results[,sum(Ontology=="BP")]} BP) in
   the core placenta transcriptome ($\text{FPKM}>10$ in 14
@@ -1303,11 +1304,11 @@ placenta_class_table <- function(class="shape",analysis.type="aov") {
 \subsection{Attachment Shape}
 
 
-\begin{table}
+\begin{table}[h]
 <<attachment_shape_significant,echo=FALSE,results="asis">>=
 placenta_class_table("shape")
 @ 
-\caption{Top 50 genes which are associated with the shape of placenta attachment}
+\caption[Genes associated with attachment]{Top 50 genes which are associated with the shape of placenta attachment}
 \label{tab:shape_genes}
 \end{table}
 
@@ -1319,7 +1320,7 @@ placenta_class_table("shape")
 <<intimacy_significant,echo=FALSE,results="asis">>=
 placenta_class_table("intimacy")
 @ 
-\caption{Top 50 genes which are associated with the degree of placenta intimacy}
+\caption[Genes associated with intimacy]{Top 50 genes which are associated with the degree of placenta intimacy}
 \label{tab:intimacy_genes}
 \end{table}
 
@@ -1327,7 +1328,7 @@ placenta_class_table("intimacy")
 <<intimacy_significant_polr,echo=FALSE,results="asis">>=
 placenta_class_table("intimacy",analysis.type="polr")
 @ 
-\caption{Top 50 genes which are associated with the degree of placenta intimacy; ordered analysis}
+\caption[Intimacy genes: ordered analysis]{Top 50 genes which are associated with the degree of placenta intimacy; ordered analysis}
 \label{tab:intimacy_genes_polr}
 \end{table}
 
@@ -1338,7 +1339,7 @@ placenta_class_table("intimacy",analysis.type="polr")
 <<interdigitation_significant,echo=FALSE,results="asis">>=
 placenta_class_table("interdigitation")
 @ 
-\caption{Top 50 genes which are associated with the degree of maternal-fetal interdigitation}
+\caption[Genes associated with interdigitation]{Top 50 genes which are associated with the degree of maternal-fetal interdigitation}
 \label{tab:interdigitation_genes}
 \end{table}
 
@@ -1347,7 +1348,7 @@ placenta_class_table("interdigitation")
 <<interdigitation_significant_polr,echo=FALSE,results="asis">>=
 placenta_class_table("interdigitation",analysis.type="polr")
 @ 
-\caption{Top 50 genes which are associated with the degree of maternal-fetal interdigitation; ordered analysis}
+\caption[Interdigitation genes: ordered analysis]{Top 50 genes which are associated with the degree of maternal-fetal interdigitation; ordered analysis}
 \label{tab:interdigitation_genes_polr}
 \end{table}
 

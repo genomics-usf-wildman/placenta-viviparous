@@ -1520,11 +1520,11 @@ critical for the proper organization and functioning of the placenta.
 
 The core placenta transcriptome contains genes which are involved in
 maternal-fetal tolerance, such as the annexins, and genes responsible
-for cell-cell and cell-matrix interactions, such as \ac{LGALS1}.
-These genes were almost certainly present in the placenta of the
-common mammalian ancestor. We hypothesize that modifications to their
-expression or function will compromise the development and
-organization of the placenta.
+for cell-cell and cell-matrix interactions, such as \ac{LGALS1}. These
+genes were almost certainly present in the placenta of the most recent
+common mammalian ancestor included in this study. We hypothesize that
+modifications to their expression or function will compromise the
+development and organization of the placenta.
 
 We also identified genes differentially expressed on the \human
 lineage which are implicated in pre-eclampsia, including

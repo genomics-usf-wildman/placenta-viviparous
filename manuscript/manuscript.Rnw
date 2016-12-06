@@ -1157,7 +1157,8 @@ print(ggplot(cptl[FPKM > 0.1,],aes(x=human_name,y=FPKM))+
   \Sexpr{cpt.distribution.shape[,levels(`Min. Exp. in`)[1]]}
   %
   (or %
-  \Sexpr{cpt.distribution.shape[,levels(`Min. Exp. in`)[2]]},
+  \Sexpr{cpt.distribution.shape[,levels(`Min. Exp. in`)[2]]}, or
+  \Sexpr{cpt.distribution.shape[,levels(`Min. Exp. in`)[3]]},
   % 
   etc.) have a minimum expression in FPKM equal to the horizontal axis.
   For example, if the cutoff is set to 10 (vertical black line), 

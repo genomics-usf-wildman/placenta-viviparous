@@ -189,7 +189,7 @@
 \def\pprinttitle{}
 \let\authorsep\@empty
 \let\sep\@empty
-\newcounter{author}
+%\newcounter{elsauthor}
 \def\author{\@ifnextchar[{\@@author}{\@author}}
 
 \newtoks\@eadauthor

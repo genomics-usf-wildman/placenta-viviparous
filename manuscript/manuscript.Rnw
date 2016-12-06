@@ -1412,10 +1412,10 @@ pre-eclampsia which have increased expression on the \human lineage
 may explain the larger proportion of pre-eclampsia observed in humans.
 However, there are still genes which are associated with pre-eclampsia
 which are also more highly expressed in the \mouse lineage such as
-\ac{Afp} and \ac{Gjb2}. Furthermore, the onset of
-pre-eclampsia is well before term; all of our placentas are term
-placentas and provide limited information about the transcriptome
-during the onset of pre-eclampsia.
+\ac{Afp} and \ac{Gjb2}. Furthermore, the biological processes which
+ultimately result in pre-eclampsia occur well before term; all of our
+placentas are term placentas and provide limited information about the
+transcriptome during the onset of pre-eclampsia.
 
 
 \subsection{Core placenta transcriptome}

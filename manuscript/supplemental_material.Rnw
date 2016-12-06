@@ -669,7 +669,7 @@ print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="CRH" &
                                 )+
       geom_tiplab(size=6,color="black",fontface="italic")+xlim(0,0.37))
 @ 
-\caption{\genetreeexplanation{\textit{CRH}}}
+\caption[Gene tree of \textit{CRH} Expression]{\genetreeexplanation{\textit{CRH}}}
 \label{fig:crh_evolution_tree}
 \end{figure}
 
@@ -686,7 +686,7 @@ print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="KISS1"
                                 )+
       geom_tiplab(size=6,color="black",fontface="italic")+xlim(0,0.7))
 @ 
-\caption{\genetreeexplanation[0.1]{\textit{KISS1}}}
+\caption[Gene tree of \textit{KISS1} Expression]{\genetreeexplanation[0.1]{\textit{KISS1}}}
 \label{fig:kiss1_evolution_tree}
 \end{figure}
 
@@ -702,7 +702,7 @@ print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="PAPPA"
                                 )+
       geom_tiplab(size=6,color="black",fontface="italic")+xlim(0,0.15))
 @ 
-\caption{\genetreeexplanation[0.1]{\textit{PAPPA}}}
+\caption[Gene tree of \textit{PAPPA} Expression]{\genetreeexplanation[0.1]{\textit{PAPPA}}}
 \label{fig:pappa_evolution_tree}
 \end{figure}
 
@@ -718,7 +718,7 @@ print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="ADAM12" &
                                 )+
       geom_tiplab(size=6,color="black",fontface="italic")+xlim(0,0.25))
 @ 
-\caption{\genetreeexplanation{\textit{ADAM12}}}
+\caption[Gene tree of \textit{ADAM12} Expression]{\genetreeexplanation{\textit{ADAM12}}}
 \label{fig:adam12_evolution_tree}
 \end{figure}
 
@@ -813,7 +813,7 @@ hum.all.lin.spec <-
     placenta.lineage.specific.table("hum.all",
                                     lineage.table=human.mouse.lineage.specific.analysis,
                                     members=NA,
-                                    caption=c("\\lineagetableexplanationtypeiii{\\human}{all other species}","\\human lineage specific genes")
+                                    caption=c("\\lineagetableexplanationtypeiii{\\human}{all other species}","\\human lineage specific genes"),
                                     label="tab:human_lineage_specific_all"
                                     )
 setkey(hum.all.lin.spec,"Human Symbol")
@@ -939,7 +939,8 @@ print(ggplot(cptlh[FPKM > 0.9,],aes(x=human_name,y=FPKM))+
             plot.margin=unit(c(0,0,0,0),"mm")
             ))
 @ 
-\caption{Housekeeping genes excluded from the Core Placenta Transcriptome.
+\caption[Housekeeping genes excluded from the Core Placenta Transcriptome]{
+  Housekeeping genes excluded from the Core Placenta Transcriptome.
   \Sexpr{cptlh[,length(unique(human_name))]}
   1:1 \human ortholog genes expressed ($\mathrm{FPKM} \ge 10$) in the
   placenta of all \Sexpr{star.logs[,length(unique(species))]} species
@@ -1090,7 +1091,8 @@ print(ggplot(cpt.h.distribution.shape[`Expression (FPKM)` > 0.1,],
               )
       )
 @ 
-\caption{Distribution shape of housekeeping genes in placentas out of
+\caption[Distribution shape of housekeeping genes in placentas]{
+  Distribution shape of housekeeping genes in placentas out of
   \Sexpr{pts[,sum(expressed.housekeeping)]} \human housekeeping 
   genes which are expressed in any placenta. The vertical axis
   shows the number of 1:1 orthologous \human housekeeping genes

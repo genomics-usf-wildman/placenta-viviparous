@@ -246,6 +246,7 @@ print(xtable(plac.class,
 \end{table}
 
 
+\clearpage
 
 \subsection{Sequence Source}
 
@@ -671,6 +672,8 @@ print(plot.ancestral.state.tree(gene_selector=quote(gene_short_name=="CRH" &
 \caption{\genetreeexplanation{\textit{CRH}}}
 \label{fig:crh_evolution_tree}
 \end{figure}
+
+\clearpage
 
 \begin{figure}
 <<kiss1.evolution.tree,echo=FALSE,fig.width=8,fig.height=8,warning=FALSE,message=FALSE>>=
@@ -1308,6 +1311,8 @@ placenta_class_table("shape")
 \label{tab:shape_genes}
 \end{table}
 
+\clearpage
+
 \subsection{Maternal-Fetal Intimacy}
 
 \begin{table}[h]
@@ -1326,6 +1331,7 @@ placenta_class_table("intimacy",analysis.type="polr")
 \label{tab:intimacy_genes_polr}
 \end{table}
 
+\clearpage
 \subsection{Maternal-Fetal Interdigitation}
 
 \begin{table}[h]

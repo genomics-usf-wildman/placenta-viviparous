@@ -218,8 +218,8 @@ placpath <- function(pathway,database) {
 \ead{suerumbaugh@gmail.com}
 \author[affhaifa]{Eviatar Nevo}
 \ead{nevo@research.haifa.ac.il}
-\author[affnih,affwaynepath]{Chong J Kim}
-\ead{cjkim@med.wayne.edu}
+\author[affnih,affasanpath]{Chong J Kim}
+\ead{ckim@amc.seoul.kr}
 \author[affyale]{Günter P. Wagner}
 \ead{gunter.wagner@yale.edu}
 \author[affnih]{Roberto Romero}
@@ -234,6 +234,7 @@ placpath <- function(pathway,database) {
 \address[affuscd]{Department of Pathology, University of California San Diego, La Jolla, CA, USA}
 \address[affapetrust]{Great Ape Trust/Bonobo Hope Sanctuary, Des Moines, IA, USA}
 \address[affnih]{Perinatology Research Branch, Eunice Kennedy Shriver National Institute of Child Health and Human Development (NICHD), National Institutes of Health (NIH), Detroit, MI, USA}
+\address[affasan]{Department of Pathology, University of Ulsan College of Medicine, Asan Medical Center, Seoul, Korea}
 \address[affwaynepath]{Department of Pathology, Wayne State University School of Medicine, Detroit, MI, USA}
 \address[affyale]{Department of Ecology and Evolutionary Biology and Yale Systems Biology Institute, Yale University, New Haven, CT, USA}
 \address[affmip]{Department of Molecular and Integrative Physiology, University of Illinois at Urbana-Champaign, Urbana, IL, USA}

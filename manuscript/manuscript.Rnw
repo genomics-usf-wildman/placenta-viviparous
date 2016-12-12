@@ -452,8 +452,8 @@ for \bonobo %
 species.tree <- 
     read.tree(text="(Monodelphis_domestica,((Dasypus_novemcinctus,Loxodonta_africana)Atlantogenata,((Canis_familiaris,(Equus_caballus,(Sus_scrofa,(Ovis_aries,Bos_taurus))))Laurasiatheria,(((Spalax_carmeli,Spalax_galili),Mus_Musculus)Rodentia,((Pan_paniscus,Homo_sapiens),Ateles_fuciceps)Primates)Euarchontoglires)Boreoeutheria)Eutheria);")
 pp <- ggtree(species.tree)+
-    geom_text(aes(label=gsub("_"," ",label)),vjust=0.65,hjust=0,size=4,fontface="italic")+
-    geom_text(data=data.frame(x=1,y=1),label="Metatheria",hjust=0,vjust=0,size=4,fontface="italic")+
+    geom_text(aes(label=gsub("_"," ",label)),nudge_x=0.05,vjust=0.65,hjust=0,size=4,fontface="italic")+
+    geom_text(data=data.frame(x=1,y=1),label="Metatheria",nudge_y=0.05,hjust=0,vjust=0,size=4,fontface="italic")+
     scale_x_continuous(limits=c(0,10))+
     theme(legend.margin=unit(0,"mm"),
           plot.margin=unit(c(0,0,0,0),"mm")
@@ -463,9 +463,9 @@ print(pp %>%
       ## monodelphis
       phylopic("91324e57-b3f1-42e0-abe3-43e5bc8aa4c6", color="#86B875",alpha=0.3,node=1,width=0.2)
       ## Armadillo
-      %>% phylopic("5d59b5ce-c1dd-40f6-b295-8d2629b9775e", color="#44EEBB",alpha=0.3,node=2,width=0.15)
+      %>% phylopic("5d59b5ce-c1dd-40f6-b295-8d2629b9775e", color="#44EEBB",alpha=0.3,node=2,width=0.13)
       ## elephant
-      %>% phylopic("80db1004-bc9f-4318-84e7-cdd9639a1f3e",color="#BB1111",alpha=0.3,node=3,width=0.15)
+      %>% phylopic("80db1004-bc9f-4318-84e7-cdd9639a1f3e",color="#BB1111",alpha=0.3,node=3,width=0.13)
       ## dog
       %>% phylopic("4d83a0cd-cf06-4a32-9a5a-0a6b644158c1",color="#FFAACC",alpha=0.3,node=4,width=0.15)
       ## horse
@@ -481,9 +481,9 @@ print(pp %>%
       ## n galili
       %>% phylopic("287c58ad-009b-4878-9a9e-59fd7e0fe66f",color="#888888",alpha=0.3,node=10,width=0.1)
       ## mouse
-      %>% phylopic("6b2b98f6-f879-445f-9ac2-2c2563157025",color="#BB11CC",alpha=0.3,node=11,width=0.18)
+      %>% phylopic("6b2b98f6-f879-445f-9ac2-2c2563157025",color="#BB11CC",alpha=0.3,node=11,width=0.15)
       ## bonobo
-      %>% phylopic("f06b4dd0-094e-4f37-9105-25fdb4eb1b02",color="#1111FF",alpha=0.3,node=12,width=0.15)
+      %>% phylopic("f06b4dd0-094e-4f37-9105-25fdb4eb1b02",color="#1111FF",alpha=0.3,node=12,width=0.13)
       ## spider monkey
       %>% phylopic("aceb287d-84cf-46f1-868c-4797c4ac54a8",color="#FF11FF",alpha=0.3,node=14,width=0.25)
       ## human

@@ -246,7 +246,7 @@ placpath <- function(pathway,database) {
   variable organ in mammals even though its primary function is
   conserved.
 
-  \textbf{Method} Using RNA-seq, we measured the expression profiles
+  \textbf{Method} Using RNA-Seq, we measured the expression profiles
   of \Sexpr{star.logs[,length(unique(file))]} term placentas of
   \Sexpr{star.logs[,length(unique(species))]} species of mammals
   representing all major eutherian superordinal clades and marsupials,
@@ -280,7 +280,7 @@ placpath <- function(pathway,database) {
 \end{abstract}
 
 \begin{keyword}
-mammal \sep  gene expression \sep evolution \sep RNA-seq \sep placenta
+mammal \sep  gene expression \sep evolution \sep RNA-Seq \sep placenta
 \end{keyword}
 
 \maketitle
@@ -554,7 +554,7 @@ all\_species\_per\_sample\_fpkm.txt.xz.
 
 \subsection{Transcriptome Statistics}
 
-Supplemental \cref{fig:transcriptome_statistics} shows the RNAseq read and
+Supplemental \cref{fig:transcriptome_statistics} shows the RNA-Seq read and
 alignment statistics for all species. For transcriptomes sequenced
 with 76 bp %
 %

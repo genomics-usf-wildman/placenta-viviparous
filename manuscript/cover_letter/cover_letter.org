@@ -55,39 +55,43 @@
 
 #+BEGIN_LATEX
 \begin{letter}{%
-Louisa Flintoft \\
-Editor of Genome Biology \\
-BioMed Central \\
-236 Gray's Inn Road \\
-London WC1X 8HB \\
-United Kingdom
+Vicky Clifton \\
+Editor of Placenta \\
+NHMRC Senior Research Fellow \\
+Associate Professor \\
+Lyell McEwin Hospital \\
+Robinson Institute, Haydown Rd \\
+Elizabeth Vale, SA 5112, South Australia, Australia
 }\opening{%
 #+END_LATEX
-Dear Dr. Fintoft,
+Dear Dr. Clifton,
 #+BEGIN_LATEX
 }
 #+END_LATEX
 
 We would appreciate your consideration of our manuscript entitled "The
-evolution of gene expression in the term placenta of viviparous
-mammals" for publication in Genome Biology as a research article.
+core transcriptome of mammalian placentas and the divergence of
+expression with placental shape" for publication in Placenta as a
+full-length paper.
 
-This is the most complete examination of the mammalian placental
-transcriptome yet presented; we include results from 14 different
-mammals (55 placentas total). The breadth of this dataset has enabled
-us to identify a set of genes which are required for placenta
-function; a set which includes genes responsible for immune system
-modulation, nutrient transport, and organ structure. We have also
-identified lineage specific differential expression of genes, some of
-which are implicated in pre-eclampsia in humans. We believe that our
-work will serve as the basis for understanding the molecular basis of
-placental structure and function.
+By utilizing placentas from 14 different mammals (55 placentas total),
+we have identified a core set of genes which are required for placenta
+function. The core transcriptome includes genes responsible for immune
+system modulation, nutrient transport, cell fusion, and membrane
+repair, and likely represents the genes which were initially required
+to form the placenta in the last common ancestor of eutherian mammals.
+
+We have also identified lineage specific differential expression of
+genes, some of which are implicated in pre-eclampsia in humans. We
+believe that our work will serve as the basis for understanding the
+molecular basis of placental structure and function in both ancestral
+and modern placentas.
 
 In the interest of reproducibility, we also will provide all of the
 code utilized to produce the analyses presented in this paper on
-github, along with the raw data (already submitted to SRA) and
-processed data (as supplemental data files in your journal) necessary
-to do so.
+github, along with the raw data (already submitted to SRA to be freely
+available upon publication) and processed data (as supplemental data
+files in Placenta) necessary to do so.
 
 We suggest the following individuals as reviewers:
 
@@ -97,12 +101,14 @@ We suggest the following individuals as reviewers:
    University of Calgary
 3. Ashley Moffett <am485@cam.ac.uk> Professor of Pathology at the
    University Cambridge
-4. Chris Burge <cburge@mit.edu> Professor of Biology and Biological
+4. Jennifer A. Gaddy <jennifer.a.gaddy@vanderbilt.edu> Assistant
+   Professor, Vanderbilt University School of Medicine Division of
+   Infectious Diseases
+5. Chris Burge <cburge@mit.edu> Professor of Biology and Biological
    Engineering at MIT
 
-
 Thank you for your consideration; we look forward to publishing in
-your journal.
+Placenta.
 
 #+BEGIN_LATEX
 \closing{Sincerely,}

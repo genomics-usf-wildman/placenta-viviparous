@@ -326,7 +326,7 @@ families with expression patterns that can vary in space and time
 independent expansions of the prolactins in \mouse, \carmeli, \galili,
 and \cow, \acp{PSG} in \human and \mouse, \acp{PAG} in \cow, genes
 related to the thymus-specific serine protease \ac{PRSS16} in
-\elephant (in this work), and the expansion of the growth hormone and
+\elephant, and the expansion of the growth hormone and
 chorionic gonadotropin beta genes in anthropoid primates
 \cite{Haig2008:Placentalgrowthhormone-relatedproteins,Rawn.ea2008:evolutionregulationandfunction}.
 Expression patterns of specific genes also can vary widely between
@@ -345,7 +345,7 @@ These species represent four major branches of eutherian mammals
 as marsupials. These placentas also represent a wide array of
 placental morphologies as well as traits such as number and size of
 offspring and length of gestation (\cref{tab:gestational_periods}). We
-use this data, along with existing RNA-Seq data from \mouse
+use these data, along with existing RNA-Seq data from \mouse
 \cite{Wang.ea2011:surveyfornovelimprinted}, \human
 \cite{Hughes.ea2015:Evaluatingintra-andinter-individual},
 \horse
@@ -914,7 +914,7 @@ We performed \ac{gsea} on both the top 1\% of transcripts by \ac{FPKM}
 include protein transport and viral transcription/expression
 (Supplemental \cref{tab:go_terms_all_species}).
 
-\subsection{Pre-eclampsia \human Lineage Specific Genes}
+\subsection{\human Lineage Specific Genes and Their Association with Pre-eclampsia}
 
 \begin{table}[tbh]
   \footnotesize
@@ -1053,7 +1053,7 @@ print(ggplot(cptl[FPKM > 0.1,],aes(x=human_name,y=FPKM))+
       theme_bw() +
       theme(text=element_text(size=9),
             legend.position=c(0.99,0.41),
-            axis.text.y=element_text(face="italic",size=8),
+            axis.text.y=element_text(face="italic",size=7),
             legend.margin=unit(0,"mm"),
             legend.justification=c(1,1),
             plot.margin=unit(c(0,0,0,0),"mm")
@@ -1158,11 +1158,11 @@ print(ggplot(cptl[FPKM > 0.1,],aes(x=human_name,y=FPKM))+
 \caption{Distribution shape of placenta core genes. The vertical axis
   shows the number of 1:1 orthologous genes included in the core
   placenta transcriptome if %
-  \Sexpr{cpt.distribution.shape[,levels(`Min. Exp. in`)[1]]}
+  \Sexpr{cpt.distribution.shape[,tolower(levels(`Min. Exp. in`))[1]]}
   %
   (or %
-  \Sexpr{cpt.distribution.shape[,levels(`Min. Exp. in`)[2]]}, or
-  \Sexpr{cpt.distribution.shape[,levels(`Min. Exp. in`)[3]]},
+  \Sexpr{cpt.distribution.shape[,tolower(levels(`Min. Exp. in`))[2]]}, or
+  \Sexpr{cpt.distribution.shape[,tolower(levels(`Min. Exp. in`))[3]]},
   % 
   etc.) have a minimum expression in FPKM equal to the horizontal axis.
   For example, if the cutoff is set to 10 (vertical black line), 
@@ -1192,7 +1192,7 @@ genes comprising the core placenta transcriptome are shown in
 transcription level in \ac{FPKM}. We considered a gene to be core to
 the placenta transcriptome if a 1:1 ortholog of that gene was
 expressed with $\text{FPKM} \ge 10$ in all eutherian species studied
-(excluding the metatherian, \opossum) the and was not a human housekeeping
+(excluding the metatherian, \opossum) and was not a human housekeeping
 gene according to
 \citet{Eisenberg.ea2013:Humanhousekeepinggenesrevisited}. Genes which
 meet this criteria but are housekeeping genes are depicted in
@@ -1319,16 +1319,7 @@ which forms tight junctions in epithelia, the proteoglycans \ac{SDC4} and
 % SERPINH1? with TIMP3 
 % http://www.proteinatlas.org/ENSG00000149257-SERPINH1/tissue/placenta
 
-\subsection{Placenta Morphology and Genetics}
-
-We correlated different aspects of placenta morphology, including
-shape, intimacy, and interdigitation with the mRNA transcription
-profiles of all 1:1 human orthologs with \ac{FPKM} greater than 10 in
-one species, and \ac{FPKM} greater than 1 at least two species.
-Supplemental \cref{tab:placental_classification} lists the shape,
-intimacy, and interdigitation of each species analyzed.
-
-\subsubsection{Placenta Shape}
+\subsection{Placenta Morphology: Shape}
 
 Supplemental \cref{tab:shape_genes} shows the 50 genes which are most
 significantly associated with the shape of the placenta, as
@@ -1342,14 +1333,14 @@ mice~\cite{Brinkmann.ea2007:interactionbetweenERmembrane}, and
 signaling pathway has been implicated in motility in human trophoblast
 cells~\cite{Gupta.ea2016:CellSignalingPathwaysInvolved}.
 
-\subsubsection{Degree of Intimacy and Interdigitation}
+\subsection{Placenta Morphology: Degree of Intimacy and Interdigitation}
 
 For the degree of intimacy and interdigitation, we saw multiple genes
 which were associated with different levels of interdigitation and
 intimacy (Supplemental
-\cref{tab:intimacy_genes,tab:interdigitation_genes}) using an
-unordered factor approach, but when we used an ordered factor
-analysis, none of these genes were retained (Supplemental
+\cref{tab:intimacy_genes,tab:interdigitation_genes}) using ANOVA, but
+when we used an ordered factor analysis (proportional odds logistic
+regression), none of these genes were retained (Supplemental
 \cref{tab:intimacy_genes_polr,tab:interdigitation_genes_polr}). We
 suspect that this is due to the fact that the ancestral state of all
 eutherians is a labyrinthine, hemochorial
@@ -1416,7 +1407,8 @@ transcriptome during the onset of pre-eclampsia.
 The core placenta transcriptome is enriched in multiple genes which
 are critical for the function of the placenta, including vesicular
 transport, immune regulation, cell fusion and membrane repair, and
-invasion.
+invasion (Supplemental
+\cref{tab:core_placenta_go_terms,tab:core_placenta_pathway_analysis}).
 
 \subsubsection{Immune Regulation and Annexins}
 The transcriptomes from multiple different species enabled us to

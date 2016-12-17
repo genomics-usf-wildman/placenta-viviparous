@@ -53,7 +53,7 @@
 #+LATEX_HEADER: \makeatother
 #+LATEX_HEADER: \expandafter\def\expandafter\UrlBreaks\expandafter{\UrlBreaks\do\-}
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{letter}{%
 Vicky Clifton \\
 Editor of Placenta \\
@@ -63,11 +63,11 @@ Lyell McEwin Hospital \\
 Robinson Institute, Haydown Rd \\
 Elizabeth Vale, SA 5112, South Australia, Australia
 }\opening{%
-#+END_LATEX
+#+END_EXPORT
 Dear Dr. Clifton,
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 }
-#+END_LATEX
+#+END_EXPORT
 
 We would appreciate your consideration of our manuscript entitled "The
 core transcriptome of mammalian placentas and the divergence of
@@ -110,7 +110,7 @@ We suggest the following individuals as reviewers:
 Thank you for your consideration; we look forward to publishing in
 Placenta.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \closing{Sincerely,}
 \end{letter}
-#+END_LATEX
+#+END_EXPORT

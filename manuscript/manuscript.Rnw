@@ -229,7 +229,7 @@ placpath <- function(pathway,database) {
 \ead{wildmand@illinois.edu}
 \cortext[cor1]{Corresponding author}
 \fntext[n1]{Equal contributor}
-\address[affigb]{Institute for Genomic Biology, University of Illinois at Urbana-Champaign, Urbana, IL, USA}
+\address[affigb]{Carl R. Woese Institute for Genomic Biology, University of Illinois at Urbana-Champaign, Urbana, IL, USA}
 \address[afflon]{School of Biological and Chemical Sciences, Queen Mary, University of London, London, UK}
 \address[affwayne]{Center for Molecular Medicine and Genetics, Wayne State University School of Medicine, Detroit, MI, USA}
 \address[affmich]{Diagnostic Center for Population and Animal Health, College of Veterinary Medicine, Michigan State University, East Lansing, MI, USA}

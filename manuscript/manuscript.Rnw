@@ -219,7 +219,7 @@ placpath <- function(pathway,database) {
 \ead{suerumbaugh@gmail.com}
 \author[affhaifa]{Eviatar Nevo}
 \ead{nevo@research.haifa.ac.il}
-\author[affnih,affasanpath]{Chong J Kim}
+\author[affnih,affasan]{Chong J. Kim}
 \ead{ckim@amc.seoul.kr}
 \author[affyale]{Günter P. Wagner}
 \ead{gunter.wagner@yale.edu}

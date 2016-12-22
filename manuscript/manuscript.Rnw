@@ -289,7 +289,8 @@ mammal \sep  gene expression \sep evolution \sep RNA-Seq \sep placenta
 % Reset all acronyms
 \acresetall
 
-\listoffixmes
+\clearpage 
+% \listoffixmes
 
 \section{Introduction}
 

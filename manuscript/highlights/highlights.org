@@ -1,0 +1,32 @@
+#+DATE: \today
+#+OPTIONS: ^:nil
+#+OPTIONS: toc:nil
+#+OPTIONS: num:0
+#+TITLE: Highlights for 
+#+AUTHOR: Don Leigh Armstrong
+#+LATEX_CMD: xelatex
+#+LATEX_CLASS: article
+#+LATEX_HEADER: \usepackage[letterpaper,left=1.1in,right=1.1in,top=1.1in,bottom=1.1in]{geometry}
+#+LATEX_HEADER: \usepackage{fancyhdr}
+#+LATEX_HEADER: \usepackage[usenames,dvipsnames]{color}
+#+LATEX_HEADER: \usepackage[x11names,svgnames]{xcolor}
+#+LATEX_HEADER: \hypersetup{colorlinks=true, linkcolor=Black, citecolor=Black, filecolor=Black, urlcolor=Black, unicode=true,breaklinks=true}
+#+LATEX_HEADER: \urlstyle{same}
+#+LATEX_HEADER: \usepackage{enumitem}
+#+LATEX_HEADER: \setlist{noitemsep}
+#+LATEX_HEADER: \setlist{nosep}
+#+LATEX_HEADER: \expandafter\def\expandafter\UrlBreaks\expandafter{\UrlBreaks\do\-}
+
+* Highlights
++ A core set of 89 non-housekeeping genes are expressed in 14
+  mammalian placentas
++ This placenta core transcriptome includes genes which regulate
+  immunity, nutrient transport, and membrane repair
++ The placenta core transcriptome includes the set of genes required
+  to form the placenta in the last common ancestor of eutherian
+  mammals
++ Some genes which are implicated in pre-eclampsia (/KISS1/, /PAPPA/,
+  /ADAM12/) are differentially expressed on the human lineage
++ Multiple genes are differentially expressed in association with
+  placenta morphology, including /EREG/ and /WNT5A/.
+

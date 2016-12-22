@@ -55,16 +55,15 @@
 
 #+BEGIN_EXPORT latex
 \begin{letter}{%
-Vicky Clifton \\
-Editor of Placenta \\
-NHMRC Senior Research Fellow \\
-Associate Professor \\
-Lyell McEwin Hospital \\
-Robinson Institute, Haydown Rd \\
-Elizabeth Vale, SA 5112, South Australia, Australia
+Yoel Sadovsky \\
+Director Magee-Womens Research Institute\\
+Professor of OBGYN, Microbiology and Molecular Genetics \\
+University of Pittsburgh\\
+204 Craft Avenue \\
+Pittsburgh, PA 15213
 }\opening{%
 #+END_EXPORT
-Dear Dr. Clifton,
+Dear Dr. Sadovsky,
 #+BEGIN_EXPORT latex
 }
 #+END_EXPORT

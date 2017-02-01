@@ -255,7 +255,7 @@ placpath <- function(pathway,database) {
   
   \textbf{Results} We identified a set of
   \Sexpr{core.placenta.transcriptome.long[housekeeping==FALSE,length(unique(human_name))]}
-  core genes which are expressed (FPKM $\ge 10$) in all eutherian placentas, %
+  core genes which is expressed (FPKM $\ge 10$) in all eutherian placentas, %
   %
   including genes with immune-modulating properties (\acs{ANXA2},
   \acs{ANXA1}, \acs{S100A11}, \acs{S100A10}, and \acs{LGALS1}), cell-cell

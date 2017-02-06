@@ -1419,13 +1419,13 @@ The transcriptomes from multiple different species enabled us to
 identify the set of expressed genes which are common to all placentas.
 Components of the annexin complexes, including
 \ac{ANXA2}, \ac{ANXA1}, \ac{S100A11}, and \ac{S100A10}
-are expressed in all placentas examined, and argue for the evolution
+are expressed in all placentas examined, and argue for the evolutionary
 importance of annexins in placenta function, where they likely
 establish maternal-fetal
 tolerance\cite{Liu.ea2015:AnnexinA2complexeswith,Hutchinson.ea2011:Molecularregulatorsofresolution,Aarli.ea1997:Suppressiveeffectonlymphoproliferation}.
-We suggest that further research into molecular role of these annexin
+We suggest that further research into the molecular role of these annexin
 complexes may illuminate how immune tolerance is maintained during
-placentation because these appear to the the major class of immune
+placentation, because annexins appear to be the major class of immune
 modulatory transcripts which are expressed in all placentas analyzed.
 
 \subsubsection{Formation of the syncytiotrophoblast}

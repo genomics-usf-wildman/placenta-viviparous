@@ -503,15 +503,15 @@ print(pp %>%
 \subsection{Comparative Analysis of Gene Expression}
 \label{sec:comp-analys-gene}
 
-1:1 orthologs in were determined using
+Single-copy (1-to-1) orthologs in were determined using
 Ensembl v.80 gene trees via Biomart using the biomaRt R package
 \cite{Durinck.ea2009:Mappingidentifiersforintegration}. %
 A total of \Sexpr{combined.fpkm[species!="homo sapiens" & mean_fpkm >=
-  1,length(unique(human_name))]} 1:1 orthologous genes were expressed
+  1,length(unique(human_name))]} single-copy orthologous genes were expressed
 in at least one species.
 
 Significant shifts in expression levels between groups of species were
-calculated using Student's t test on 1:1 orthologs using the mean of
+calculated using Student's t test on single-copy orthologs using the mean of
 each species to avoid large biases towards samples with $n \gg 1$ and
 considered significant if the \ac{FDR} as estimated by the Benjamini
 and Hochberg procedure \cite{Benjamini1995:bh_procedure} was
@@ -1064,7 +1064,7 @@ print(ggplot(cptl[FPKM > 0.1,],aes(x=human_name,y=FPKM))+
 @ 
 \caption{Core Placenta Transcriptome.
   \Sexpr{core.placenta.transcriptome.long[housekeeping==FALSE,length(unique(human_name))]}
-  1:1 \human ortholog genes expressed (\ac{FPKM}$ \ge 10$) in the
+  single-copy \human ortholog genes expressed (\ac{FPKM}$ \ge 10$) in the
   placenta of all 13 eutherians studied with housekeeping genes
   \cite{Eisenberg.ea2013:Humanhousekeepinggenesrevisited} removed
   ordered (from top to bottom) by median expression. If we also require
@@ -1160,7 +1160,7 @@ print(ggplot(cptl[FPKM > 0.1,],aes(x=human_name,y=FPKM))+
 @ 
 \caption{Distribution shape of placenta core genes for all possible
   number of genes. The vertical axis
-  shows the number of 1:1 orthologous genes included in the core
+  shows the number of single-copy orthologous genes included in the core
   placenta transcriptome (for all possible number of genes) if %
   \Sexpr{cpt.distribution.shape[,tolower(levels(`Min. Exp. in`))[1]]}
   %
@@ -1174,12 +1174,12 @@ print(ggplot(cptl[FPKM > 0.1,],aes(x=human_name,y=FPKM))+
   \Sexpr{cpt.distribution.shape[`Expression (FPKM)` > 10 
     & `Min. Exp. in` == 'All 13 Eutherians',max(num_genes)]}
   %
-  genes would be included if the expression of a set of 1:1 orthologs of all 13 Eutherians must be at
+  genes would be included if the expression of a set of single-copy orthologs of all 13 Eutherians must be at
   least 10 FPKM, %
   \Sexpr{cpt.distribution.shape[`Expression (FPKM)` > 10 
     & `Min. Exp. in` == '13 of 14 Species',max(num_genes)]}
   %
-  1:1 orthologs would be included if 13 of 14 species have an
+  single-copy orthologs would be included if 13 of 14 species have an
    expression of at least 10 FPKM, and 
   \Sexpr{cpt.distribution.shape[`Expression (FPKM)` > 10 
     & `Min. Exp. in` == '10 of 14 Species',max(num_genes)]}
@@ -1194,7 +1194,7 @@ The
 genes comprising the core placenta transcriptome are shown in
 \cref{fig:core_placenta_transcriptome} ordered by their median
 transcription level in \ac{FPKM}. We considered a gene to be core to
-the placenta transcriptome if a 1:1 ortholog of that gene was
+the placenta transcriptome if a single-copy ortholog of that gene was
 expressed with $\text{FPKM} \ge 10$ in all eutherian species studied
 (excluding the metatherian, \opossum) and was not a human housekeeping
 gene according to
@@ -1221,7 +1221,7 @@ enrichment of \ac{GO} terms in the core placenta transcriptome;
 notable terms include those involved in cytoskeletal structure,
 protein transport, membrane protein structure, and inflammation
 resolution. Increasing the permissiveness of the core placenta
-transcriptome by only requiring 10 of 14 species to express 1:1
+transcriptome by only requiring 10 of 14 species to express single-copy
 orthologs with FPKM $>10$ and results in the same terms also being
 significantly enriched, along with additional terms (Supplemental
 \cref{tab:core_placenta_go_terms}). Supplemental

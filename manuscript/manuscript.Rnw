@@ -1156,9 +1156,10 @@ print(ggplot(cptl[FPKM > 0.1,],aes(x=human_name,y=FPKM))+
               )
       )
 @ 
-\caption{Distribution shape of placenta core genes. The vertical axis
+\caption{Distribution shape of placenta core genes for all possible
+  number of genes. The vertical axis
   shows the number of 1:1 orthologous genes included in the core
-  placenta transcriptome if %
+  placenta transcriptome (for all possible number of genes) if %
   \Sexpr{cpt.distribution.shape[,tolower(levels(`Min. Exp. in`))[1]]}
   %
   (or %

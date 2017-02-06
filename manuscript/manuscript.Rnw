@@ -321,7 +321,9 @@ Previous studies of some species (i.e., \human, \mouse, \cow, and
 They revealed a stunning divergence in the genetics of the placenta,
 especially in later stages of pregnancy
 \cite{Carter2012:Evolutionofplacentalfunction,Knox.ea2008:Genomicevolutionofplacenta,Su.ea2002:Large-scaleanalysisofhuman,Hou.ea2012:Elephanttranscriptomeprovidesinsights}}.
-For example, each superorder has evolved expansive placenta-specific gene
+For example, each superorder (Euarchontoglires, Laurasiatheria,
+Afrotheria, and Xenartha, \cref{fig:species_tree})
+has evolved expansive placenta-specific gene
 families with expression patterns that can vary in space and time
 \cite{Green.ea2000:Pregnancy-associatedbovineandovine}. These include
 independent expansions of the prolactins in \mouse, \carmeli, \galili,
@@ -452,15 +454,15 @@ for \bonobo %
 \begin{figure}
 <<species.tree,fig.width=8,fig.height=6,out.width="90mm",echo=FALSE,message=FALSE,warning=FALSE>>=
 species.tree <- 
-    read.tree(text="(Monodelphis_domestica,((Dasypus_novemcinctus,Loxodonta_africana)Atlantogenata,((Canis_familiaris,(Equus_caballus,(Sus_scrofa,(Ovis_aries,Bos_taurus))))Laurasiatheria,(((Spalax_carmeli,Spalax_galili),Mus_Musculus)Rodentia,((Pan_paniscus,Homo_sapiens),Ateles_fuciceps)Primates)Euarchontoglires)Boreoeutheria)Eutheria);")
+    read.tree(text="(Monodelphis_domestica:7,((Dasypus_novemcinctus:5,Loxodonta_africana:5)Atlantogenata:1,((Canis_familiaris:4,(Equus_caballus:3,(Sus_scrofa:2,(Ovis_aries:1,Bos_taurus:1):1):1):1)Laurasiatheria:1,(((Spalax_carmeli:1,Spalax_galili:1):1,Mus_Musculus:2)Rodentia:2,((Pan_paniscus:1,Homo_sapiens:1):1,Ateles_fuciceps:2)Primates:2)Euarchontoglires:1)Boreoeutheria:1)Eutheria:1);")
 pp <- ggtree(species.tree)+
     geom_text(aes(label=gsub("_"," ",label)),nudge_x=0.05,vjust=0.65,hjust=0,size=4,fontface="italic")+
     geom_text(data=data.frame(x=1,y=1),label="Metatheria",nudge_y=0.05,hjust=0,vjust=0,size=4,fontface="italic")+
+    geom_text(data=data.frame(x=3.3,y=c(2,3)),label=c("Xenartha","Afrotheria"),nudge_y=0.05,hjust=0,vjust=c(0,0),size=4,fontface="italic")+
     scale_x_continuous(limits=c(0,10))+
-    theme(legend.margin=unit(0,"mm"),
+    theme(legend.spacing=unit(0,"mm"),
           plot.margin=unit(c(0,0,0,0),"mm")
           ) + ggplot2::xlim(0,9)
-
 print(pp %>%
       ## monodelphis
       phylopic("91324e57-b3f1-42e0-abe3-43e5bc8aa4c6", color="#86B875",alpha=0.3,node=1,width=0.2)
@@ -493,8 +495,8 @@ print(pp %>%
       )
 @ 
 \caption{Species tree for organisms studied showing the relationship
-  between species. Silhouettes of species were obtained from
-  \url{http://phylopic.org}. }
+  between species. Branch lengths are not to scale. Silhouettes of
+  species were obtained from \url{http://phylopic.org}. }
 \label{fig:species_tree}
 \end{figure}
 

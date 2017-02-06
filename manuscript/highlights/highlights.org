@@ -22,9 +22,9 @@
   mammalian placentas
 + This placenta core transcriptome includes genes which regulate
   immunity, nutrient transport, and membrane repair
-+ The placenta core transcriptome includes the set of genes required
-  to form the placenta in the last common ancestor of eutherian
-  mammals
++ The genes required to form the placenta in the last common ancestor
+  of eutherian mammals are represented in the placenta core
+  transcriptome
 + Some genes which are implicated in pre-eclampsia (/KISS1/, /PAPPA/,
   /ADAM12/) are differentially expressed on the human lineage
 + Multiple genes are differentially expressed in association with

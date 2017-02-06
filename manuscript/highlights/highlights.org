@@ -18,7 +18,7 @@
 #+LATEX_HEADER: \expandafter\def\expandafter\UrlBreaks\expandafter{\UrlBreaks\do\-}
 
 * Highlights
-+ A core set of 89 non-housekeeping genes are expressed in 14
++ A core set of 89 non-housekeeping genes is expressed in 14
   mammalian placentas
 + This placenta core transcriptome includes genes which regulate
   immunity, nutrient transport, and membrane repair

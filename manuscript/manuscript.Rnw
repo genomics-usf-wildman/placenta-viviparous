@@ -370,8 +370,9 @@ species (\human [human], \bonobo [bonobo], \smonkey [spider monkey], \dog [domes
 [domestic cow], \elephant [African savanna elephant], \opossum [gray
 short-tailed opossum], \galili [blind mole rat from Upper Galilee],
 \carmeli [blind mole rat from northern Israel]
-\cite{Nevo2001:adaptiveradiationofblindsubterraneanmole}). Information
-on specimen ID, and collector is shown for each sample in Supplemental
+\cite{Nevo2001:adaptiveradiationofblindsubterraneanmole};
+n=1 for all collected species). Information
+on specimen ID, number of specimens, and collector is shown for each sample in Supplemental
 \cref{tab:srr_numbers}. In the case of \bonobo, \cow, and \elephant,
 the placenta was collected at term upon expulsion from the mother
 following delivery. Placental tissue from \human was collected upon
@@ -403,9 +404,9 @@ was performed using the Illumina Genome Analyzer II with an insert
 size of 230 base pairs (bp). Read lengths for species are shown in
 Supplemental \cref{tab:ref_genome_aligned_species}.
 
-\subsubsection{Additional Sequences}
+\subsubsection{Additional Placenta Transcriptomes}
 
-For more complete evolutionary comparisons additional sequences of
+For more complete evolutionary comparisons additional transcriptomes of
 placenta in \mouse [mouse]
 (n=\Sexpr{star.logs[grepl("musculus",species),length(unique(file))]})
 \cite{Wang.ea2011:surveyfornovelimprinted}, \human

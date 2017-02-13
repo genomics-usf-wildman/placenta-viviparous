@@ -952,6 +952,122 @@ print(ggplot(cptlh[FPKM > 0.9,],aes(x=human_name,y=FPKM))+
 
 \clearpage
 
+<<tissue_specificity_index_vs_housekeeping,echo=FALSE,message=FALSE>>=
+tissue.specificity.index <- function(expression){
+    expression <- expression[!is.na(expression)]
+    expression <- expression[is.finite(expression)]
+    if (length(expression)==0) {
+        return(0)
+    }
+    if (max(expression)==0) {
+        return(0)
+    }
+    return(sum(1-expression/max(expression))/
+               (length(expression)-1))
+}
+tissue.specific.data <- fread("zcat ../data/rna_tissue.csv.zip")
+tissue.specific.markers <-
+    tissue.specific.data[,list(`Gene name`,
+                               "Tissue Specificity Index"=
+                                   tissue.specificity.index(as.numeric(Value))
+                               ),
+                         by=Gene][!duplicated(Gene),]
+rm(tissue.specific.data)
+
+setkey(tissue.specific.markers,"Gene name")
+core.placenta.genes <-
+    core.placenta.transcriptome.long[!grepl("(min|median|max|all)_expression|all_but_",
+                                            Species),
+                                     list("Median FPKM"=median(FPKM),
+                                          "Gene Type"=ifelse(housekeeping,
+                                                             "Housekeeping","Not Housekeeping"),
+                                          housekeeping=housekeeping[1]
+                                          ),
+                                     by=human_name]
+setkey(core.placenta.genes,"human_name")
+core.placenta.genes.tsi <-
+    tissue.specific.markers[core.placenta.genes[!duplicated(human_name)]]
+rm(tissue.specific.markers,core.placenta.genes)
+@ 
+
+\begin{figure}
+<<tissue_specificity_index_vs_median_fpkm,echo=FALSE,message=FALSE>>=
+grid::pushViewport(grid::viewport(layout=grid::grid.layout(ncol=2,nrow=1,widths=c(1.5,1))))
+print(ggplot(core.placenta.genes.tsi,
+             aes(x=`Median FPKM`,
+                 y=`Tissue Specificity Index`,
+                 color=ifelse(housekeeping,"Housekeeping","Not\nHousekeeping")))
+      + geom_point()
+      + stat_ellipse()
+      + ylab("Tissue Specificity Index")
+      + xlab("Median FPKM")
+      + scale_x_log10(labels=trans_format("log10", math_format(10^.x)))
+      + scale_color_discrete("")
+      + theme(legend.position="top"),
+      vp=grid::viewport(layout.pos.row=1,layout.pos.col=1)
+      )
+print(ggplot(core.placenta.genes.tsi,
+             aes(x=ifelse(housekeeping,"Housekeeping","Not Housekeeping"),
+                 y=`Tissue Specificity Index`,
+                 color=ifelse(housekeeping,"Housekeeping","Not\nHousekeeping")))
+      + geom_boxplot(outlier.color=NA)
+      + geom_jitter()
+      + ylab("Tissue Specificity Index")
+      + xlab("Gene Type")
+      + scale_color_discrete("")
+      + theme(legend.position="top"),
+      vp=grid::viewport(layout.pos.row=1,layout.pos.col=2)
+      )
+grid::popViewport()
+grid::grid.text(c("A","B"),
+                y=unit(1,"npc")-unit(0.1,"cm"),
+                x=unit(c(0,1.5/2.5),"npc")+unit(0.1,"cm"),
+                gp=gpar(fontsize=24),
+                just=c("left","top"))
+
+@ 
+\caption[Tissue specificity index with housekeeping]{Tissue
+  specificity index and housekeeping genes. In general, the set of
+  housekeeping genes identified by
+  \citet{Eisenberg.ea2013:Humanhousekeepinggenesrevisited} has lower
+  tissue specificity
+  index~\cite{Yanai.ea2005:Genome-widemidrangetranscriptionprofiles}
+  than genes which are not tissue specific (calculated based on the
+  Human Protein Atlas version 16.1 RNA-seq data
+  \cite{Uhlén.ea2015:ProteomicsTissue-basedmapof}). Some of the genes
+  with higher tissue specificity (\textit{NPC} and \textit{CISD1} have
+  outlier expression in a single tissue, even though they are
+  moderately expressed in every tissue.)}
+\label{fig:tissue_specificity_index_with_housekeeping}
+\end{figure}
+
+\clearpage
+
+<<tissue_specificity_index_of_placenta_core_genes,echo=FALSE,results="asis">>=
+print(xtable(core.placenta.genes.tsi[order(-`Median FPKM`),
+                                     list(`Gene name`,
+                                          `Tissue Specificity Index`,
+                                          `Median FPKM`,
+                                          `Gene Type`
+                                          )],
+             digits=2,
+             display=c("s","s","f","f","s"),
+             caption=c("Tissue specificity index~\\cite{Yanai.ea2005:Genome-widemidrangetranscriptionprofiles} (calculated based on the Human Protein Atlas version 16.1 RNA-seq data \\cite{Uhlén.ea2015:ProteomicsTissue-basedmapof}) of Placenta Core Genes ordered by median expression with housekeeping status~\\cite{Eisenberg.ea2013:Humanhousekeepinggenesrevisited} indicated.",
+                       "Tissue specificity of Placenta Core Genes"
+                       ),
+             label="tab:tissue_specificity_index_of_plaenta_core_genes"
+             ),
+      include.rownames=FALSE,
+      booktabs=TRUE,
+      math.style.exponents=TRUE,
+      size="\\footnotesize",
+      caption.placement="top",
+      tabular.environment="longtable",
+      floating=FALSE
+      )
+@ 
+  
+
 
 \begin{figure}
 <<housekeeping.placenta.distribution,fig.width=5,fig.height=5,out.height="0.8\\textheight",echo=FALSE,message=FALSE>>=

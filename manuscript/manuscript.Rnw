@@ -1212,9 +1212,15 @@ In contrast to the shape of the number of genes included in the core
 placenta transcriptome, the set of \human housekeeping genes expressed
 all placentas is flatter (Supplemental
 \cref{fig:core_housekeeping_transcriptome_shape}), and includes more
-of the total fraction of genes. However, there is still a large
-difference between the set of housekeeping genes which are expressed
-in \human and those which are expressed in all placentas.
+of the total fraction of genes. An alternative approach to defining
+housekeeping genes is to use the tissue specificity
+index~\cite{Yanai.ea2005:Genome-widemidrangetranscriptionprofiles}.
+Supplemental \cref{tab:tissue_specificity_index_of_plaenta_core_genes}
+lists the tissue specificity index for all housekeeping and
+non-housekeeping genes; housekeeping genes expressed in all placentas
+have a lesser median tissue specificity index than non-housekeeping
+genes (Supplemental
+\cref{fig:tissue_specificity_index_with_housekeeping}).
 
 Supplemental \cref{tab:core_placenta_go_terms} lists the significant
 enrichment of \ac{GO} terms in the core placenta transcriptome;

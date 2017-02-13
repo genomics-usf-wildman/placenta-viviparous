@@ -824,86 +824,6 @@ setkey(hum.all.lin.spec,"Human Symbol")
 
 \section{Core Placenta Transcriptome}
 
-\begin{table}
-\footnotesize
-<<go.analysis,warning=FALSE,message=FALSE,echo=FALSE,results="asis",cache.extra=tools::md5sum(paste0("../data/placenta_go_results_",c("bp","mf","permissive_bp","permissive_mf")))>>=
-load("../data/placenta_go_results_mf")
-load("../data/placenta_go_results_bp")
-load("../data/placenta_go_results_permissive_mf")
-load("../data/placenta_go_results_permissive_bp")
-
-placenta.go.results <- rbindlist(list(head(n=20,placenta_go_results_mf[classic.fdr < 0.05,]),
-                             head(n=20,placenta_go_results_bp[classic.fdr < 0.05,])))
-placenta.go.results <- placenta.go.results[,Annotated:=NULL]
-setnames(placenta.go.results,"Significant","Core")
-setnames(placenta.go.results,"classic","p value")
-setnames(placenta.go.results,"classic.fdr","FDR")
-setnames(placenta.go.results,"GO.ID","GO ID")
-setnames(placenta.go.results,"Term","GO Term")
-
-placenta.go.results.permissive <-
-    rbindlist(list(placenta_go_results_permissive_mf,
-                   placenta_go_results_permissive_bp))
-setnames(placenta.go.results.permissive,"Significant","Core")
-setnames(placenta.go.results.permissive,"classic","p value")
-setnames(placenta.go.results.permissive,"classic.fdr","Permissive FDR")
-setnames(placenta.go.results.permissive,"GO.ID","GO ID")
-setnames(placenta.go.results.permissive,"Term","GO Term")
-setkey(placenta.go.results,"GO ID")
-setkey(placenta.go.results.permissive,"GO ID")
-
-combined.placenta.go.results <-
-    placenta.go.results.permissive[,list(`GO ID`,`Permissive FDR`)
-                                   ][placenta.go.results][order(Ontology,FDR),]
-combined.placenta.go.results <-
-    combined.placenta.go.results[,`p value`:=as.numeric(`p value`)]
-setcolorder(combined.placenta.go.results,
-            c("Ontology",
-              "GO ID",
-              "GO Term",
-              "Core",
-              "Expected",
-              "p value",
-              "FDR",
-              "Permissive FDR"))
-combined.placenta.go.results <-
-    combined.placenta.go.results[,`p value`:=NULL]
-setnames(combined.placenta.go.results,"Ontology","Ont.")
-setnames(combined.placenta.go.results,"Expected","Exp.")
-print(xtable(combined.placenta.go.results,
-             digits=2,
-             display=c("d","s","s","s","d","f","e","e")),
-      include.rownames=FALSE,
-      booktabs=TRUE,
-      math.style.exponents=TRUE,
-      floating=FALSE
-      )
-@ 
-\caption[Core placenta GO Enrichment]{GO terms most significantly enriched
-  (\Sexpr{placenta.go.results[,sum(Ontology=="MF")]} MF,
-  \Sexpr{placenta.go.results[,sum(Ontology=="BP")]} BP) in
-  the core placenta transcriptome ($\text{FPKM}>10$ in 14
-  of 14 species) as compared to all genes with 1:1 human orthologs in
-  all species. “Ont.” is the GO Ontology, where MF is molecular function 
-  and BP is biological process; “Core” is the number of genes in the core
-  transcriptome for each GO term; “Exp.” is the number of genes
-  expected in the core transcriptome for each term; 
-  “FDR” is the false discovery rate as estimated by the
-  Benjamini and Hochberg procedure \cite{Benjamini1995:bh_procedure} based on
-  p values calculated by the Fisher Exact Test; 
-  “Permissive FDR” is the FDR resulting from the equivalent GO
-  analysis using the permissive core placenta transcriptome 
-  (1:1 orthologs with expression of at least 10 FPKM at least 10 of 14 species) 
-  showing that the enriched GO terms are relatively insensitive to the precise
-  set of species included.}
-\label{tab:core_placenta_go_terms}
-\end{table}
-
-
-\clearpage
-
-
-
 \begin{figure}[tbh]
 <<core.placenta.transcriptome.housekeeping,fig.width=6,fig.height=8,out.height="0.8\\textheight",echo=FALSE>>=
 cptlh <-
@@ -1238,6 +1158,85 @@ print(ggplot(cpt.h.distribution.shape[`Expression (FPKM)` > 0.1,],
   must have an expression of at least 10 FPKM.}
 \label{fig:core_housekeeping_transcriptome_shape}
 \end{figure}
+
+
+\begin{table}
+\footnotesize
+<<go.analysis,warning=FALSE,message=FALSE,echo=FALSE,results="asis",cache.extra=tools::md5sum(paste0("../data/placenta_go_results_",c("bp","mf","permissive_bp","permissive_mf")))>>=
+load("../data/placenta_go_results_mf")
+load("../data/placenta_go_results_bp")
+load("../data/placenta_go_results_permissive_mf")
+load("../data/placenta_go_results_permissive_bp")
+
+placenta.go.results <- rbindlist(list(head(n=20,placenta_go_results_mf[classic.fdr < 0.05,]),
+                             head(n=20,placenta_go_results_bp[classic.fdr < 0.05,])))
+placenta.go.results <- placenta.go.results[,Annotated:=NULL]
+setnames(placenta.go.results,"Significant","Core")
+setnames(placenta.go.results,"classic","p value")
+setnames(placenta.go.results,"classic.fdr","FDR")
+setnames(placenta.go.results,"GO.ID","GO ID")
+setnames(placenta.go.results,"Term","GO Term")
+
+placenta.go.results.permissive <-
+    rbindlist(list(placenta_go_results_permissive_mf,
+                   placenta_go_results_permissive_bp))
+setnames(placenta.go.results.permissive,"Significant","Core")
+setnames(placenta.go.results.permissive,"classic","p value")
+setnames(placenta.go.results.permissive,"classic.fdr","Permissive FDR")
+setnames(placenta.go.results.permissive,"GO.ID","GO ID")
+setnames(placenta.go.results.permissive,"Term","GO Term")
+setkey(placenta.go.results,"GO ID")
+setkey(placenta.go.results.permissive,"GO ID")
+
+combined.placenta.go.results <-
+    placenta.go.results.permissive[,list(`GO ID`,`Permissive FDR`)
+                                   ][placenta.go.results][order(Ontology,FDR),]
+combined.placenta.go.results <-
+    combined.placenta.go.results[,`p value`:=as.numeric(`p value`)]
+setcolorder(combined.placenta.go.results,
+            c("Ontology",
+              "GO ID",
+              "GO Term",
+              "Core",
+              "Expected",
+              "p value",
+              "FDR",
+              "Permissive FDR"))
+combined.placenta.go.results <-
+    combined.placenta.go.results[,`p value`:=NULL]
+setnames(combined.placenta.go.results,"Ontology","Ont.")
+setnames(combined.placenta.go.results,"Expected","Exp.")
+print(xtable(combined.placenta.go.results,
+             digits=2,
+             display=c("d","s","s","s","d","f","e","e")),
+      include.rownames=FALSE,
+      booktabs=TRUE,
+      math.style.exponents=TRUE,
+      floating=FALSE
+      )
+@ 
+\caption[Core placenta GO Enrichment]{GO terms most significantly enriched
+  (\Sexpr{placenta.go.results[,sum(Ontology=="MF")]} MF,
+  \Sexpr{placenta.go.results[,sum(Ontology=="BP")]} BP) in
+  the core placenta transcriptome ($\text{FPKM}>10$ in 14
+  of 14 species) as compared to all genes with 1:1 human orthologs in
+  all species. “Ont.” is the GO Ontology, where MF is molecular function 
+  and BP is biological process; “Core” is the number of genes in the core
+  transcriptome for each GO term; “Exp.” is the number of genes
+  expected in the core transcriptome for each term; 
+  “FDR” is the false discovery rate as estimated by the
+  Benjamini and Hochberg procedure \cite{Benjamini1995:bh_procedure} based on
+  p values calculated by the Fisher Exact Test; 
+  “Permissive FDR” is the FDR resulting from the equivalent GO
+  analysis using the permissive core placenta transcriptome 
+  (1:1 orthologs with expression of at least 10 FPKM at least 10 of 14 species) 
+  showing that the enriched GO terms are relatively insensitive to the precise
+  set of species included.}
+\label{tab:core_placenta_go_terms}
+\end{table}
+
+
+\clearpage
 
 \begin{table}
 <<pathway_analysis,echo=FALSE,results="asis",cache.extra=file.info(dir("../data","placenta_gsea.*",full.names=TRUE))[,"mtime"]>>=

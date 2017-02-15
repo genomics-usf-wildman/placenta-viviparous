@@ -8,3 +8,7 @@ decidua basalis
 chorion frondosum	chorion
 vasculogenesis	angiogenesis
 preeclampsia	pre-eclampsia	eclampsia
+IUGR	iugr	intrauterine growth restriction
+placenta previa
+gestational diabetes
+premature birth	premature labor

@@ -542,6 +542,12 @@ using Fisher's exact test and corrected for multiple testing by
 estimating the \ac{FDR} using the Benjamini and Hochberg procedure
 \cite{Benjamini1995:bh_procedure}.
 
+To identify genes which have evidence of association with adverse
+pregnancy outcomes and other placenta-relevant terms of interest, we
+used the “pubmed_to_grid” component of
+Function2Gene~\cite{Armstrong2008:function2gene} which conducts a term
+by gene search of PubMed results.
+
 \subsection{Sequences, FPKMs, and Code}
 
 All of the code used to produce every analysis presented in this paper
@@ -732,6 +738,28 @@ load("../data/placenta_lineage_specific")
 load("../data/human_mouse_lineage_specific")
 source("/home/don/projects/xtable/pkg/R/print.xtable.R")
 
+literature.mining <-
+    data.table(read.table("../literature_mining/human_lineage_vs_terms.txt",
+                          sep="\t",skip=0,stringsAsFactors=FALSE,
+                          check.names=FALSE,header=TRUE),
+               keep.rownames=TRUE)
+setnames(literature.mining,"rn","human_name")
+setkey(literature.mining,"human_name")
+literature.mining[,`Adverse Pregnancy Outcomes`:=`preeclampsia`+
+                       IUGR+`placenta previa`+`gestational diabetes`+
+                       `premature birth`,
+                  by=human_name]
+literature.mining.terms <-
+    paste0("%28%22preeclampsia%22[All%20Fields]%20OR%20",
+           "%22pre-eclampsia%22[All%20Fields]%20OR%20",
+           "%22eclampsia%22[All%20Fields]%20OR%20",
+           "%22IUGR%22[All%20Fields]%20OR%20",
+           "%22iugr%22[All%20Fields]%20OR%20",
+           "%22intrauterine%20growth%20restriction%22[All%20Fields]%20OR%20",
+           "%22placenta%20previa%22[All%20Fields]%20OR%20",
+           "%22gestational%20diabetes%22[All%20Fields]%20OR%20",
+           "%22premature%20birth%22[All%20Fields]%20OR%20",
+           "%22premature%20labor%22[All%20Fields]%29")
 placenta.lineage.specific.table <- function(analysis,output=TRUE,lineage.table=placenta.lineage.specific.analysis,members=5,orderbyfc=FALSE,fdr.cutoff=1) {
     temp.table <- 
         lineage.table[analysis.name==analysis &
@@ -740,11 +768,34 @@ placenta.lineage.specific.table <- function(analysis,output=TRUE,lineage.table=p
                                        list(human_name,p.value,fdr,fc),]
     temp.table <- data.table(temp.table)
     setkey(temp.table,"human_name")
+    temp.table <-
+        literature.mining[,list(human_name,`Adverse Pregnancy Outcomes`)
+                          ][temp.table]
+    temp.table[,
+               `Adv. Preg. Publications`:="0"
+               ]
+    temp.table[`Adverse Pregnancy Outcomes` >= 2,
+               `Adv. Preg. Publications`:="≥ 2"
+               ]
+    temp.table[`Adverse Pregnancy Outcomes` >= 5,
+               `Adv. Preg. Publications`:="≥ 5"
+               ]
+    temp.table[`Adverse Pregnancy Outcomes` >= 20,
+               `Adv. Preg. Publications`:="≥ 20"
+               ]
+    temp.table[`Adverse Pregnancy Outcomes` == 1,
+               `Adv. Preg. Publications`:="1"
+               ]
+    setkey(temp.table,"human_name")
     temp.table <- 
         hugo.nomenclature[temp.table][,list(`Approved Symbol`,
-                                            `Approved Name`,p.value,fdr,fc)]
+                                            `Approved Name`,p.value,fdr,fc,
+                                            `Adv. Preg. Publications`
+                                            )]
     setnames(temp.table,
-              c("Human Symbol","Human Name","p (t-test)","FDR","Fold Change")
+             c("Human Symbol","Human Name","p (t-test)","FDR","Fold Change",
+               "Adv. Preg. Pub."
+               )
               )
     setkey(temp.table,"Human Symbol")
     if (output) {
@@ -755,16 +806,27 @@ placenta.lineage.specific.table <- function(analysis,output=TRUE,lineage.table=p
         display.table <- display.table[1:members,]
 
         display.table <-
-            display.table[,`Human Symbol`:=paste0("\\textit{",xtable.sanitize.text(`Human Symbol`),
-                                                  "}")]
+            display.table[,`Adv. Preg. Pub.`:=
+                               paste0("\\href{https://www.ncbi.nlm.nih.gov/pubmed/?term=%22",
+                                      `Human Symbol`,
+                                      "%22[All%20Fields]%20AND%20",
+                                      literature.mining.terms,"}{",
+                                      `Adv. Preg. Pub.`,"}"
+                                      )]
+        display.table <-
+            display.table[,`Human Symbol`:=
+                               paste0("\\href{http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=",
+                                      `Human Symbol`,"}{",
+                                      "\\textit{",xtable.sanitize.text(`Human Symbol`),
+                                      "}}")]
         display.table[,`Human Name`:=NULL]
-        # setnames(display.table,"Human Symbol","\\multicolumn{1}{p{0.5in}}{Human Symbol}")6
+        # setnames(display.table,"Human Symbol","\\multicolumn{1}{p{0.5in}}{Human Symbol}")
         setnames(display.table,"Fold Change","{$\\text{log}_2$ FC}")
         setnames(display.table,"FDR","{FDR}")
         setnames(display.table,"p (t-test)","{p (t-test)}")
         print(xtable(display.table,
-                     display=c("s","s","e","e","f"),
-                     align=c("c","p{0.5in}","S[table-format=1.2e2]","S[table-format=1.2e2]","S[table-format=2.2]")
+                     display=c("s","s","e","e","f","s"),
+                     align=c("c","p{0.5in}","S[table-format=1.2e2]","S[table-format=1.2e2]","S[table-format=2.2]","p{0.5in}")
                      ),
               booktabs=TRUE,
               floating=FALSE,
@@ -932,7 +994,12 @@ hum.all.lin.spec <-
                                     )
 setkey(hum.all.lin.spec,"Human Symbol")
 @ 
-\caption{\lineagetableexplanationtypeiiishort{\human}{all other analyzed species}}
+\caption{\lineagetableexplanationtypeiiishort{\human}{all other
+    analyzed species} Adv. Preg. Pub. is the approximate number of
+  publications indexed by PubMed mentioning this gene and an adverse
+  pregnancy outcome (pre-eclampsia, premature labor, gestational
+  diabetes, intrauterine growth restriction, or premature birth) and
+  links to the most current PubMed search results.}
 \label{tab:human_lineage_specific}
 \end{table}
 

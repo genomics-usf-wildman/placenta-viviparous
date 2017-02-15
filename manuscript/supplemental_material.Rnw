@@ -470,6 +470,59 @@ grid::popViewport()
 
 \section{Species Expression}
 
+\subsection{Orthology types in each Species}
+
+\begin{table}[h]
+  \footnotesize
+<<orthologs_in_each_species,echo=FALSE,results="asis">>=
+load("../data/orthologs_by_species_ranking")
+orthologs.by.species[,percentage:=ratio*100]
+orthologs.by.species[,orthology_type:=
+                          factor(orthology_type,
+                                 levels=c("one2one",
+                                          "one2many",
+                                          "many2many",
+                                          "novel/unknown"))]
+orthology.wide.table <-
+    data.table(dcast(orthologs.by.species,
+                     type+orthology_type~species,
+                     value.var="percentage"))
+setnames(orthology.wide.table,
+         "type","Cutoff")
+orthology.wide.table[,Cutoff:=xtable.sanitize.text(Cutoff)]
+orthology.wide.table[,orthology_type:=xtable.sanitize.text(orthology_type)]
+setnames(orthology.wide.table,
+         "orthology_type","Orthology Type")
+setnames(orthology.wide.table,
+         colnames(orthology.wide.table)[-(1:2)],
+         paste0("\\textit{",
+                gsub("^(.)","\\U\\1",
+                     colnames(orthology.wide.table)[-(1:2)],
+                     perl=TRUE),
+                "}"))
+print(xtable(orthology.wide.table,
+             digits=0
+             ),
+      rotate.colnames=TRUE,
+      booktabs=TRUE,
+      floating=FALSE,
+      include.rownames=FALSE,
+      sanitize.text.function=genes.table.sanitize
+      )
+@ 
+\caption{Percentage of orthology in the top 100 and top 1\% of
+  placenta transcripts as identified by Ensembl. If a gene has the
+  same orthology in comparison to all sequenced species, it is
+  reported as that orthology; if it had an orthology of many2many in
+  any species, it is reported as many2many; if it had an orthology of
+  one2many in any species, but no many2many, it is reported as
+  one2many. Novel/unknown genes had no reported orthologies to any
+  sequenced species.}
+\label{tab:orthologs_in_each_species}
+\end{table}
+
+\clearpage
+
 <<genes.expression,echo=FALSE,results="hide">>=
 genes.expression.table <- function(species.name,min.fpkm=50) {
     alignment.species <- species.name

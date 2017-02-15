@@ -33,3 +33,6 @@ placenta_classification_go_??_*
 placenta_netpath_results
 ortholog_expression_nexus.nex*
 rna_tissue.csv.zip
+orthologs_by_species_ranking
+ensembl_all_ortholog_types
+ensembl_all_orthologs

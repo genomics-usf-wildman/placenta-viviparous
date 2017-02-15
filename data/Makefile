@@ -76,6 +76,16 @@ ensembl_orthologs: ensembl_orthologs.R
 ensembl_orthologs_long: ensembl_orthologs_long.R
 	$(R) $(ROPTS) -f $< --args $@
 
+ensembl_all_orthologs: ensembl_all_orthologs.R
+	$(R) $(ROPTS) -f $< --args $@
+
+ensembl_all_ortholog_types: ensembl_all_ortholog_types.R ensembl_all_orthologs
+	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
+
+orthologs_by_species_ranking: orthologs_by_species_ranking.R	\
+combined_fpkm ensembl_all_ortholog_types
+	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
+
 Compara.80.protein.nhx.emf.gz:
 	rsync -avP "rsync://ftp.ensembl.org/ensembl/pub/current_emf/ensembl-compara/homologies/$@" $@
 

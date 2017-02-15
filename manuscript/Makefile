@@ -62,6 +62,7 @@ manuscript.tex: manuscript.Rnw ../data/combined_fpkm	\
 supplemental_material.tex: supplemental_material.Rnw	\
 ../data/combined_fpkm ../data/placenta_lineage_specific	\
 ../data/human_mouse_lineage_specific					\
+../data/orthologs_by_species_ranking					\
 ../data/placenta_core_transcriptome $(GO_GSEA_RESULTS)
 
 extended_supplemental_material.tex: extended_supplemental_material.Rnw	\

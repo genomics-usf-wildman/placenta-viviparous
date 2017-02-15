@@ -357,7 +357,7 @@ use these data, along with existing RNA-Seq data from \mouse
 \pig \cite{Ahanda.ea2012:Predictionofaltered3-} to: 1)
 identify the non-housekeeping genes which are expressed in the
 placentas of all eutherian species analyzed and therefore represent the
-\emph{core functionality of the placenta}; 2) identify genes whose
+\textbf{core functionality of the placenta}; 2) identify genes whose
 expression level changes significantly in each of the morphology
 types.
 

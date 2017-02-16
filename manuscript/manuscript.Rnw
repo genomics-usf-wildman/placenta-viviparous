@@ -745,7 +745,7 @@ gene.expression <- function(species.name,gene,complete=FALSE,units=TRUE,mention.
     
 @ 
 
-<<load.placenta.lineage.specific,echo=FALSE,results="hide",cache.extra=tools::md5sum(paste0("../data/",c("placenta_lineage_specific","human_mouse_lineage_specific")))>>=
+<<load.placenta.lineage.specific,echo=FALSE,results="hide",cache.extra=tools::md5sum(c(paste0("../data/",c("placenta_lineage_specific","human_mouse_lineage_specific")),"../literature_mining/human_lineage_vs_terms.txt"))>>=
 load("../data/placenta_lineage_specific")
 load("../data/human_mouse_lineage_specific")
 source("/home/don/projects/xtable/pkg/R/print.xtable.R")
@@ -1016,7 +1016,7 @@ setkey(hum.all.lin.spec,"Human Symbol")
 \end{table}
 
 Using a type-III ANOVA to account for repeated testing of
-\human and \mouse (see \cref{sec:comp-analys-gene} for details), we identified multiple genes which are
+\human (see \cref{sec:comp-analys-gene} for details), we identified multiple genes which are
 differentially expressed in the \human lineage in comparison to all
 other lineages (\cref{tab:human_lineage_specific}, Supplemental
 \cref{tab:human_lineage_specific_all}). These genes include multiple
@@ -1042,6 +1042,23 @@ FC=\Sexpr{hum.all.lin.spec["ADAM12",`Fold Change`]}, Supplemental
 but are negatively correlated with pre-eclampsia~%
 \cite{Spencer.ea2008:ADAM12sinmaternalserum}.
 
+
+\subsection{Other Lineage and Clade Specific Genes}
+
+We also compared differences in the \mouse lineage in comparison to
+all other lineages using a type-III ANOVA as in the \human analysis,
+and found few genes which are highly differentially expressed and are
+also associated with adverse pregnancy outcomes. Comparisons between
+rodentia (\mouse, \galili, and \carmeli) and all other species using
+the mean of each species expression did not indicate any significant
+differences (Supplemental \cref{tab:rodentia_lineage_specific}) nor
+did the equivalent comparisons between laurasiatheria and all other
+species (Supplemental \cref{tab:laurasiatheria_lineage_specific}) and
+laurasiatheria and euarchontoglires (Supplemental
+\cref{tab:laurasiatheria_euarchontoglires_lineage_specific}).
+Additional placenta samples of each species and the collection of the
+placentas of additional laurasiatherians may resolve the lack of
+significance due to insufficient power.
 
 \subsection{Core Placenta Transcriptome}
 

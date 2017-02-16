@@ -784,7 +784,14 @@ load("../data/placenta_lineage_specific")
 load("../data/human_mouse_lineage_specific")
 source("/home/don/projects/xtable/pkg/R/print.xtable.R")
 
-placenta.lineage.specific.table <- function(analysis,output=TRUE,lineage.table=placenta.lineage.specific.analysis,members=40,orderbyfc=FALSE,fdr.cutoff=1,caption=NULL,label=NULL) {
+placenta.lineage.specific.table <- function(analysis,output=TRUE,
+                                            lineage.table=placenta.lineage.specific.analysis,
+                                            lit.mining=NULL,
+                                            lit.mining.terms=NULL,
+                                            members=40,
+                                            orderbyfc=FALSE,
+                                            fdr.cutoff=1,caption=NULL,
+                                            label=NULL) {
     temp.table <- 
         lineage.table[analysis.name==analysis &
                       p.value <= 0.05 &
@@ -792,15 +799,49 @@ placenta.lineage.specific.table <- function(analysis,output=TRUE,lineage.table=p
                                        list(human_name,p.value,fdr,fc),]
     temp.table <- data.table(temp.table)
     setkey(temp.table,"human_name")
+    if (!is.null(lit.mining)) {
+        temp.table <-
+            lit.mining[,list(human_name,`Adverse Pregnancy Outcomes`)
+                       ][temp.table]
+        temp.table[,
+                   `Adv. Preg. Pub.`:="0"
+                   ]
+        temp.table[`Adverse Pregnancy Outcomes` >= 2,
+               `Adv. Preg. Pub.`:="≥ 2"
+               ]
+        temp.table[`Adverse Pregnancy Outcomes` >= 5,
+                   `Adv. Preg. Pub.`:="≥ 5"
+                   ]
+        temp.table[`Adverse Pregnancy Outcomes` >= 20,
+                   `Adv. Preg. Pub.`:="≥ 20"
+               ]
+        temp.table[`Adverse Pregnancy Outcomes` == 1,
+                   `Adv. Preg. Pub.`:="1"
+                   ]
+        temp.table[,`Adverse Pregnancy Outcomes`:=NULL]
+    }
+    keep.cols <-
+        c("Approved Symbol","Approved Name","p.value","fdr","fc")
+    if (!is.null(lit.mining)) {
+        keep.cols <- c(keep.cols,"Adv. Preg. Pub.")
+    }
     temp.table <- 
-        hugo.nomenclature[temp.table][,list(`Approved Symbol`,
-                                            `Approved Name`,p.value,fdr,fc)]
+        hugo.nomenclature[temp.table][,keep.cols,with=FALSE]
     setnames(temp.table,
-              c("Human Symbol","Human Name","p (t-test)","FDR","Fold Change")
-              )
+             c("Approved Symbol","Approved Name","p.value","fdr","fc"),
+             c("Human Symbol","Human Name","p (t-test)","FDR","Fold Change")
+             )
     setkey(temp.table,"Human Symbol")
     if (output) {
         display.table <- temp.table[`FDR`<=fdr.cutoff,][order(`p (t-test)`),]
+        col.disp <-
+            c("s","s","e","g","f")
+        col.align <-
+            c("c",">{\\centering\\arraybackslash}p{1in}","r","r","r")
+        if (!is.null(lit.mining)) {
+            col.disp <- c(col.disp,"s")
+            col.align <- c(col.align,">{\\centering\\arraybackslash}p{0.75in}")
+        }
         if (orderbyfc) {
             display.table <- temp.table[order(-abs(`Fold Change`)),]
         }
@@ -808,18 +849,31 @@ placenta.lineage.specific.table <- function(analysis,output=TRUE,lineage.table=p
             members <- min(c(members,nrow(display.table)))
             display.table <- display.table[1:members,]
         }
+        if (!is.null(lit.mining)) {
+            display.table <-
+                display.table[,`Adv. Preg. Pub.`:=
+                                   paste0("\\href{https://www.ncbi.nlm.nih.gov/pubmed/?term=%22",
+                                          `Human Symbol`,
+                                          "%22[All%20Fields]%20AND%20",
+                                          literature.mining.terms,"}{",
+                                          `Adv. Preg. Pub.`,"}"
+                                          )]
+        }
 
         display.table <-
-            display.table[,`Human Symbol`:=paste0("\\textit{",xtable.sanitize.text(`Human Symbol`),
-                                                  "}")]
+            display.table[,`Human Symbol`:=
+                               paste0("\\href{http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=",
+                                      `Human Symbol`,"}{",
+                                      "\\textit{",xtable.sanitize.text(`Human Symbol`),
+                                      "}}")]
         display.table[,`Human Name`:=NULL]
-        # setnames(display.table,"Human Symbol","\\multicolumn{1}{p{0.5in}}{Human Symbol}")6
+                                        # setnames(display.table,"Human Symbol","\\multicolumn{1}{p{0.5in}}{Human Symbol}")6
         setnames(display.table,"Fold Change","$\\text{log}_2$ FC")
         print(xtable(display.table,
-                     display=c("s","s","e","g","f"),
+                     display=col.disp,
                      caption=caption,
                      label=label,
-                     align=c("c","p{0.7in}","r","r","r")
+                     align=col.align
                      ),
               booktabs=TRUE,
               floating=FALSE,
@@ -832,7 +886,7 @@ placenta.lineage.specific.table <- function(analysis,output=TRUE,lineage.table=p
         
     }
     return(invisible(temp.table[order(`p (t-test)`),]))
-}
+    }
 output.top.genes.table <- function(data,output=TRUE) {
     if (output) {
         table.display <- c("s","s","s","d")
@@ -860,18 +914,110 @@ output.top.genes.table <- function(data,output=TRUE) {
 
 
 
+\subsection{\human specific expression}
 
-<<human.lineage.specific,echo=FALSE,results="asis">>=
+<<human.lineage.specific,echo=FALSE,results="asis",cache.extra=file.info("../literature_mining/human_lineage_vs_terms.txt")[,"mtime"]>>=
+literature.mining <-
+    data.table(read.table("../literature_mining/human_lineage_vs_terms.txt",
+                          sep="\t",skip=0,stringsAsFactors=FALSE,
+                          check.names=FALSE,header=TRUE),
+               keep.rownames=TRUE)
+setnames(literature.mining,"rn","human_name")
+setkey(literature.mining,"human_name")
+literature.mining[,`Adverse Pregnancy Outcomes`:=`preeclampsia`+
+                       IUGR+`placenta previa`+`gestational diabetes`+
+                       `premature birth`,
+                  by=human_name]
+literature.mining.terms <-
+    paste0("%28%22preeclampsia%22[All%20Fields]%20OR%20",
+           "%22pre-eclampsia%22[All%20Fields]%20OR%20",
+           "%22eclampsia%22[All%20Fields]%20OR%20",
+           "%22IUGR%22[All%20Fields]%20OR%20",
+           "%22iugr%22[All%20Fields]%20OR%20",
+           "%22intrauterine%20growth%20restriction%22[All%20Fields]%20OR%20",
+           "%22placenta%20previa%22[All%20Fields]%20OR%20",
+           "%22gestational%20diabetes%22[All%20Fields]%20OR%20",
+           "%22premature%20birth%22[All%20Fields]%20OR%20",
+           "%22premature%20labor%22[All%20Fields]%29")
+
 hum.all.lin.spec <-
     placenta.lineage.specific.table("hum.all",
                                     lineage.table=human.mouse.lineage.specific.analysis,
+                                    lit.mining=literature.mining,
+                                    lit.mining.terms=literature.mining.terms,
                                     members=NA,
+                                    fdr.cutoff=0.05,
+                                    orderbyfc=TRUE,
                                     caption=c("\\lineagetableexplanationtypeiii{\\human}{all other species}","\\human lineage specific genes"),
                                     label="tab:human_lineage_specific_all"
                                     )
 setkey(hum.all.lin.spec,"Human Symbol")
 @ 
 
+\clearpage
+
+\subsection{\mouse specific expression}
+
+<<mouse.lineage.specific,echo=FALSE,results="asis",cache.extra=file.info("../literature_mining/mouse_lineage_vs_terms.txt")[,"mtime"]>>=
+mouse.literature.mining <-
+    data.table(read.table("../literature_mining/mouse_lineage_vs_terms.txt",
+                          sep="\t",skip=0,stringsAsFactors=FALSE,
+                          check.names=FALSE,header=TRUE),
+               keep.rownames=TRUE)
+setnames(mouse.literature.mining,"rn","human_name")
+setkey(mouse.literature.mining,"human_name")
+mouse.literature.mining[,`Adverse Pregnancy Outcomes`:=`preeclampsia`+
+                             IUGR+`placenta previa`+`gestational diabetes`+
+                             `premature birth`,
+                        by=human_name]
+mou.all.lin.spec <-
+    placenta.lineage.specific.table("mou.all",
+                                    lineage.table=human.mouse.lineage.specific.analysis,
+                                    lit.mining=mouse.literature.mining,
+                                    lit.mining.terms=literature.mining.terms,
+                                    fdr.cutoff=0.05,
+                                    members=NA,
+                                    orderbyfc=TRUE,
+                                    caption=c("\\lineagetableexplanationtypeiii{\\mouse}{all other species}","\\mouse lineage specific genes"),
+                                    label="tab:mouse_lineage_specific_all"
+                                    )
+setkey(mou.all.lin.spec,"Human Symbol")
+@ 
+
+\clearpage
+
+\subsection{Rodentia, Laurasiatheria, and Euarchontoglires Comparisons}
+
+\begin{table}[hb]
+  \footnotesize
+<<rodentia.lineage.specific,echo=FALSE,results="asis">>=
+rod.all.lin.spec <- placenta.lineage.specific.table("rod.all",fdr.cutoff=0.5)
+setkey(rod.all.lin.spec,"Human Symbol")
+@ 
+\caption{\lineagetableexplanation{the rodentia order}{all other species}}
+\label{tab:rodentia_lineage_specific}
+\end{table}
+
+\begin{table}[hb]
+  \footnotesize
+<<lau.lineage.specific,echo=FALSE,results="asis">>=
+lau.all.lin.spec <- placenta.lineage.specific.table("lau.all",fdr.cutoff=0.5)
+setkey(lau.all.lin.spec,"Human Symbol")
+@ 
+\caption{\lineagetableexplanation{the laurasiatheria
+    superorder}{all other species}}
+\label{tab:laurasiatheria_lineage_specific}
+\end{table}
+
+\begin{table}[hb]
+  \footnotesize
+<<eua.lau.lineage.specific,echo=FALSE,results="asis">>=
+eua.lau.lin.spec <- placenta.lineage.specific.table("eua.lau",fdr.cutoff=1)
+setkey(eua.lau.lin.spec,"Human Symbol")
+@ 
+\caption{\lineagetableexplanation{ the euarchontoglires superorder}{ the laurasiatherian superorder}}
+\label{tab:laurasiatheria_euarchontoglires_lineage_specific}
+\end{table}
 
 \clearpage
 

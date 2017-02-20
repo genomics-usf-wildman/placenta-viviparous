@@ -1286,6 +1286,13 @@ print(ggplot(cptl[FPKM > 0.1,],aes(x=human_name,y=FPKM))+
 \end{figure}
 
 
+<<load_core_placenta_tree_transcriptome,echo=FALSE,results="hide",cache.extra=file.info("../data/placenta_core_tree_transcriptome")[,"mtime"]>>=
+load("../data/placenta_core_tree_transcriptome")
+cpttl <-
+    core.placenta.tree.transcriptome.long[!grepl("(min|median|max|all)_expression|all_but_",
+                                                 Species) & housekeeping==FALSE,]
+@ 
+
 The
 \Sexpr{core.placenta.transcriptome.long[housekeeping==FALSE,length(unique(human_name))]}
 genes comprising the core placenta transcriptome are shown in
@@ -1331,6 +1338,14 @@ significantly enriched, along with additional terms (Supplemental
 \cref{tab:core_placenta_pathway_analysis} shows the pathways with
 significant and suggestive enrichment in the core placenta
 transcriptome.
+
+If we use gene trees to define the core placenta transcriptome instead
+of single-copy orthologs (where the mean expression for genes in the
+tree which are present must be $\text{FPKM} \ge 10$), we find
+\Sexpr{cpttl[,length(unique(tree_genes))]} unique gene trees which
+include nearly all of the genes present in the core placenta
+transcriptome (Supplemental
+\cref{fig:core_placenta_tree_transcriptome,fig:core_placenta_tree_transcriptome_housekeeping}).
 
 \subsubsection{Annexin Complexes}
 

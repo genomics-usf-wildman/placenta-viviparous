@@ -1053,7 +1053,7 @@ print(ggplot(cptlh[FPKM > 0.9,],aes(x=human_name,y=FPKM))+
       theme_bw() +
       theme(legend.position=c(0.7,0.15),
             axis.text.y=element_text(face="italic",size=5),
-            legend.margin=unit(0,"mm"),
+            legend.spacing=unit(0,"mm"),
             legend.justification="left",
             plot.margin=unit(c(0,0,0,0),"mm")
             ))
@@ -1320,7 +1320,7 @@ print(ggplot(cpt.h.distribution.shape[`Expression (FPKM)` > 0.1,],
       + theme_bw()
       + theme(text=element_text(size=9),
               legend.position=c(0.99,0.99),
-              legend.margin=unit(0,"mm"),
+              legend.spacing=unit(0,"mm"),
               legend.justification=c(1,1),
               plot.margin=unit(c(0,0,0,0),"mm")
               )

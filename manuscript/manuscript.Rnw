@@ -1316,7 +1316,17 @@ In contrast to the shape of the number of genes included in the core
 placenta transcriptome, the set of \human housekeeping genes expressed
 all placentas is flatter (Supplemental
 \cref{fig:core_housekeeping_transcriptome_shape}), and includes more
-of the total fraction of genes. An alternative approach to defining
+of the total fraction of genes (%
+%
+\Sexpr{core.placenta.transcriptome.long[housekeeping==TRUE,length(unique(human_name))]/
+  core.placenta.transcriptome.long[,length(unique(human_name))]} %
+%
+%
+vs %
+\Sexpr{core.placenta.transcriptome.long[housekeeping==FALSE,length(unique(human_name))]/
+  core.placenta.transcriptome.long[,length(unique(human_name))]}%
+%
+). An alternative approach to defining
 housekeeping genes is to use the tissue specificity
 index~\cite{Yanai.ea2005:Genome-widemidrangetranscriptionprofiles}.
 Supplemental \cref{tab:tissue_specificity_index_of_plaenta_core_genes}

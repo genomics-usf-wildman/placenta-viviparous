@@ -114,6 +114,10 @@ human_mouse_lineage_specific.txt: ../common_r_code/array_to_text.R human_mouse_l
 placenta_core_transcriptome: placenta_core_transcriptome.R combined_fpkm housekeeping_genes_superset
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
 
+placenta_core_tree_transcriptome: placenta_core_tree_transcriptome.R	\
+combined_fpkm gene_trees housekeeping_genes_superset
+	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
+
 placenta_core_transcriptome_alignment: placenta_core_transcriptome_alignment.R combined_fpkm housekeeping_genes_superset
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
 

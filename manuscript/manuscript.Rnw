@@ -1605,6 +1605,21 @@ we hypothesize that it is responsible for maintaining the balance
 between invasion and attachment in the other placentas examined here
 as well.
 
+\subsection{Limitations}
+
+This study includes only term placentas, and our conclusions are
+limited to the set of genes which continue to be expressed at term. We
+suspect that many genes which are responsible for establishing shape,
+intimacy, and interdigitation are expressed and function at earlier
+time points where placental morphology is being established.
+Furthermore, while these samples have been dissected to only include
+the fetal interface, they likely include substantial cell and tissue
+heterogeneity. We are therfore not yet able to assign specific genes
+in our core placental transcriptome to specific cell types and
+tissues. We believe that samples of placentas from earlier in
+gestation and from multiple locations within the placenta and at
+multiple will address these limitations.
+
 % TAGLN2 -- likely to be produced by the placenta as well; possibly
 % due to the smooth muscle transition?
 
@@ -1634,7 +1649,7 @@ This study has identified many tantalizing molecular pathways which
 illuminate the vast diversity of placental morphology and may explain
 some placental malfunctions in \human{}. However, the strength of our
 hypotheses are limited by our limited data; more placentas from
-multiple members of diverse clades and different timepoints are still
+multiple members of diverse clades and different time points are still
 needed to come to a more complete understanding of the genomic and
 molecular basis for placenta morphology and function. We look forward
 to collecting and analyzing such a dataset.

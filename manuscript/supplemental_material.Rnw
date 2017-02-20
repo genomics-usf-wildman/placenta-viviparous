@@ -1474,6 +1474,110 @@ print(xtable(pathway.analysis,
 
 \clearpage
 
+\subsection{Tree-based Core Placenta Transcriptome}
+
+<<load_core_placenta_tree_transcriptome,echo=FALSE,results="hide",cache.extra=file.info("../data/placenta_core_tree_transcriptome")[,"mtime"]>>=
+load("../data/placenta_core_tree_transcriptome")
+
+@ 
+
+
+\begin{figure}[tbh]
+<<core_placenta_tree_transcriptome,fig.width=7,fig.height=8,out.height="0.8\\textheight",echo=FALSE>>=
+cpttl <-
+    core.placenta.tree.transcriptome.long[!grepl("(min|median|max|all)_expression|all_but_",
+                                                 Species) & housekeeping==FALSE,]
+cpttl <- cpttl[,Species:=factor(gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",capfirst(Species)),
+                                levels=gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",
+                                            capfirst(names(species.names))))]
+
+print(ggplot(cpttl[FPKM > 0.1,],aes(x=tree_genes,y=FPKM))+
+      geom_boxplot(outlier.shape=NA)+
+      scale_y_log10(labels=trans_format("log10", math_format(10^.x)))+
+      geom_point(aes(color=Species,shape=Species))+
+      scale_shape_manual("Species",
+                         guide=guide_legend(#nrow=1,
+                                            keywidth=unit(3,"mm"),
+                                            keyheight=unit(3,"mm"),
+                                            label.theme=element_text(face="italic",
+                                                                     angle=0,
+                                                                     size=9),
+                                            title.position="top"
+                                            ),
+                         values=0:18)+
+      # scale_color_discrete(NULL)+
+      coord_flip()+
+      xlab("Genes in Tree")+
+      ylab("Gene Expression (FPKM)")+
+      theme_bw() +
+      theme(legend.position=c(0.7,0.15),
+            axis.text.y=element_text(face="italic",size=5),
+            legend.spacing=unit(0,"mm"),
+            legend.justification="left",
+            plot.margin=unit(c(0,0,0,0),"mm")
+            ))
+@ 
+\caption[Tree-based Core Placenta Transcriptome]{
+  Tree-based Core Placenta Transcriptome.
+  \Sexpr{cpttl[,length(unique(tree_genes))]}
+  gene trees with mean expression ($\mathrm{FPKM} \ge 10$) in the
+  placenta of all \Sexpr{star.logs[,length(unique(species))]} species
+  studied which are not housekeeping~%
+  \cite{Eisenberg.ea2013:Humanhousekeepinggenesrevisited}
+  ordered (from top to bottom) by median expression.}
+\label{fig:core_placenta_tree_transcriptome}
+\end{figure}
+
+\begin{figure}
+<<core_placenta_tree_transcriptome_housekeeping,fig.width=9,fig.height=18,out.height="0.8\\textheight",echo=FALSE>>=
+cpttlh <-
+    core.placenta.tree.transcriptome.long[!grepl("(min|median|max|all)_expression|all_but_",
+                                                 Species) & housekeeping==TRUE,]
+cpttlh <- cpttlh[,Species:=factor(gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",capfirst(Species)),
+                                levels=gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",
+                                            capfirst(names(species.names))))]
+
+print(ggplot(cpttlh[FPKM > 0.1,],aes(x=tree_genes,y=FPKM))+
+      geom_boxplot(outlier.shape=NA)+
+      scale_y_log10(labels=trans_format("log10", math_format(10^.x)))+
+      geom_point(aes(color=Species,shape=Species))+
+      scale_shape_manual("Species",
+                         guide=guide_legend(#nrow=1,
+                                            keywidth=unit(3,"mm"),
+                                            keyheight=unit(3,"mm"),
+                                            label.theme=element_text(face="italic",
+                                                                     angle=0,
+                                                                     size=9),
+                                            title.position="top"
+                                            ),
+                         values=0:18)+
+      # scale_color_discrete(NULL)+
+      coord_flip()+
+      xlab("Genes in Tree")+
+      ylab("Gene Expression (FPKM)")+
+      theme_bw() +
+      theme(legend.position=c(0.7,0.15),
+            axis.text.y=element_text(face="italic",size=5),
+            legend.spacing=unit(0,"mm"),
+            legend.justification="left",
+            plot.margin=unit(c(0,0,0,0),"mm")
+            ))
+@ 
+\caption[Tree-based Core Placenta Transcriptome: Housekeeping Genes]{
+  Tree-based Core Placenta Transcriptome: Housekeeping Genes.
+  \Sexpr{cpttlh[,length(unique(tree_genes))]}
+  gene trees with mean expression ($\mathrm{FPKM} \ge 10$) in the
+  placenta of all \Sexpr{star.logs[,length(unique(species))]} species
+  studied which are housekeeping~%
+  \cite{Eisenberg.ea2013:Humanhousekeepinggenesrevisited}
+  ordered (from top to bottom) by median expression.}
+\label{fig:core_placenta_tree_transcriptome_housekeeping}
+\end{figure}
+
+
+\clearpage
+
+
 \section{Placenta Classification Analyses}
 
 <<placenta_pathway_egid,echo=FALSE,results="hide">>=

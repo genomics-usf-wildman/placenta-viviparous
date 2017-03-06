@@ -67,9 +67,6 @@ combined_fpkm: combine_fpkm.R HOM_AllOrganism.rpt oma-groups_long.txt fastq_fpkm
 combined_fpkm_per_sample: combine_fpkm.R HOM_AllOrganism.rpt oma-groups_long.txt fastq_fpkm/combined_fpkms ensembl_orthologs diamond_against_human/gene_to_human_gene.txt gtf_types/gene_id_to_type.txt
 	$(R) $(ROPTS) -f $< --args $@ $(wordlist 2,$(words $^),$^)
 
-homology_table: homology_table.R combined_fpkm
-	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
-
 ensembl_orthologs: ensembl_orthologs.R
 	$(R) $(ROPTS) -f $< --args $@
 
@@ -228,7 +225,7 @@ ALL_TARGETS:=combined_fpkm gene_trees housekeeping_genes_superset		\
 	placenta_core_transcriptome placenta_core_transcriptome_alignment	\
 	placenta_go_results_bp placenta_go_results_mf hugo_nomenclature		\
 	gene_annotation mammal_lifehistories.txt							\
-	placenta_lineage_specific combined_fpkm_per_sample homology_table	\
+	placenta_lineage_specific combined_fpkm_per_sample					\
 	placenta_classification_p $(GSEA_SET_ANALYSES)						\
 	$(PATHWAY_PLAC_CLASS) $(BP_GO_PLAC_CLASS) $(MF_GO_PLAC_CLASS) \
 	gene_trees human_mouse_lineage_specific rna_tissue.csv.zip

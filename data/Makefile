@@ -221,13 +221,16 @@ ortholog_expression_nexus_continuous.nex: ortholog_expression_nexus_continuous.R
 rna_tissue.csv.zip:
 	wget -O $@ "http://www.proteinatlas.org/download/rna_tissue.csv.zip"
 
+housekeeping_genes_superset: housekeeping_genes_superset.R housekeeping_genes_superset.txt
+	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
+
 ALL_TARGETS:=combined_fpkm gene_trees housekeeping_genes_superset		\
 	placenta_core_transcriptome placenta_core_transcriptome_alignment	\
 	placenta_go_results_bp placenta_go_results_mf hugo_nomenclature		\
 	gene_annotation mammal_lifehistories.txt							\
 	placenta_lineage_specific combined_fpkm_per_sample					\
 	placenta_classification_p $(GSEA_SET_ANALYSES)						\
-	$(PATHWAY_PLAC_CLASS) $(BP_GO_PLAC_CLASS) $(MF_GO_PLAC_CLASS) \
+	$(PATHWAY_PLAC_CLASS) $(BP_GO_PLAC_CLASS) $(MF_GO_PLAC_CLASS)		\
 	gene_trees human_mouse_lineage_specific rna_tissue.csv.zip
 
 .PHONY: get_data

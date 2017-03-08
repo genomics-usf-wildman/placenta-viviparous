@@ -1174,7 +1174,7 @@ print(xtable(core.placenta.genes.tsi[order(-`Median FPKM`),
              caption=c("Tissue specificity index~\\cite{Yanai.ea2005:Genome-widemidrangetranscriptionprofiles} (calculated based on the Human Protein Atlas version 16.1 RNA-seq data \\cite{Uhlén.ea2015:ProteomicsTissue-basedmapof}) of Placenta Core Genes ordered by median expression with housekeeping status~\\cite{Eisenberg.ea2013:Humanhousekeepinggenesrevisited} indicated.",
                        "Tissue specificity of Placenta Core Genes"
                        ),
-             label="tab:tissue_specificity_index_of_plaenta_core_genes"
+             label="tab:tissue_specificity_index_of_placenta_core_genes"
              ),
       include.rownames=FALSE,
       booktabs=TRUE,

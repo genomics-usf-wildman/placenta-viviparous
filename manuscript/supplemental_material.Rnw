@@ -3,8 +3,12 @@
 \setmainfont{FreeSerif}
 \setsansfont{FreeSans}
 \setmonofont{FreeMono}
+\setmathrm{FreeSerif}
+\setmathsf{FreeSans}
+\setmathtt{FreeSerif}
 \usepackage[letterpaper,left=1in,right=1in,top=1in,bottom=1in,headheight=15pt]{geometry}
 \usepackage{url}
+\usepackage{siunitx}
 \usepackage{fancyhdr}
 \usepackage{graphicx}
 \usepackage[bf]{caption}
@@ -12,17 +16,14 @@
 \usepackage{wrapfig}
 \usepackage{amsmath}
 \usepackage{booktabs}
-\usepackage{float}
+%\usepackage{float}
 \usepackage{multirow}
 \usepackage{multicol}
-\usepackage{setspace}
-\usepackage{wrapfig}
-% \usepackage{txfonts}
 \usepackage[macros=false]{acro}
 \usepackage{array}
 \usepackage{dcolumn}
-\usepackage{adjustbox}
 \usepackage{longtable}
+\usepackage[export]{adjustbox}[2011/08/13]
 \usepackage{pdflscape}
 \usepackage[backend=biber,natbib=true,hyperref=true,style=nature,citestyle=numeric-comp,autocite=inline]{biblatex}
 \addbibresource{references.bib}
@@ -109,7 +110,7 @@
 
 
 <<load.libraries,echo=FALSE,results="hide",warning=FALSE,message=FALSE,error=FALSE,cache=FALSE>>=
-opts_chunk$set(dev="cairo_pdf",out.width="\\textwidth",out.height="0.6\\textheight",out.extra="keepaspectratio")
+opts_chunk$set(dev="cairo_pdf",out.width="\\textwidth",out.height="0.6\\textheight",out.extra="keepaspectratio,center")
 opts_chunk$set(cache=TRUE, autodep=TRUE,cache.path="supplemental_cache/")
 opts_chunk$set(fig.path="supplemental_figure/")
 options(device = function(file, width = 8, height = 7, ...) {
@@ -1001,7 +1002,7 @@ setkey(rod.all.lin.spec,"Human Symbol")
 \begin{table}[hb]
   \footnotesize
 <<lau.lineage.specific,echo=FALSE,results="asis">>=
-lau.all.lin.spec <- placenta.lineage.specific.table("lau.all",fdr.cutoff=0.5)
+lau.all.lin.spec <- placenta.lineage.specific.table("lau.all",fdr.cutoff=1)
 setkey(lau.all.lin.spec,"Human Symbol")
 @ 
 \caption{\lineagetableexplanation{the laurasiatheria
@@ -1031,32 +1032,42 @@ cptlh <-
 cptlh <- cptlh[,Species:=factor(gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",capfirst(Species)),
                               levels=gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",
                                           capfirst(names(species.names))))]
-
+cptlh <- cptlh[,median_FPKM:=median(FPKM),by=human_name]
+cptlh <- cptlh[,facet:="high"]
+cptlh <- cptlh[median_FPKM < median(median_FPKM),facet:="low"]
 print(ggplot(cptlh[FPKM > 0.9,],aes(x=human_name,y=FPKM))+
       geom_boxplot(outlier.shape=NA)+
-      scale_y_log10(labels=trans_format("log10", math_format(10^.x)))+
+      scale_y_log10(breaks=c(10^1,10^2,10^3,10^4),
+                    labels=trans_format("log10", math_format(10^.x)))+
       geom_point(aes(color=Species,shape=Species))+
-      scale_shape_manual("Species",
+      scale_shape_manual(NULL,##"Species",
                          guide=guide_legend(#nrow=1,
                                             keywidth=unit(3,"mm"),
                                             keyheight=unit(3,"mm"),
                                             label.theme=element_text(face="italic",
                                                                      angle=0,
-                                                                     size=9),
+                                                                     size=7),
                                             title.position="top"
                                             ),
                          values=0:18)+
-      # scale_color_discrete(NULL)+
+      scale_color_discrete(NULL)+
       coord_flip()+
       xlab("Human Ortholog Name")+
       ylab("Gene Expression (FPKM)")+
       theme_bw() +
-      theme(legend.position=c(0.7,0.15),
-            axis.text.y=element_text(face="italic",size=5),
+      expand_limits(y=c(10^4)) + 
+      theme(text=element_text(size=7.5),
+            legend.position=c(0.99,0.01),
+            axis.text.y=element_text(face="italic",size=7.5),
+            legend.margin=margin(0,0,0,0,unit="mm"),
             legend.spacing=unit(0,"mm"),
-            legend.justification="left",
-            plot.margin=unit(c(0,0,0,0),"mm")
-            ))
+            legend.justification=c(1,0),
+            plot.margin=unit(c(0,0,0,0),"mm"),
+            strip.background = element_blank(),
+            strip.text.x = element_blank()
+            )
+      + facet_wrap(~facet,scales="free")
+      )
 @ 
 \caption[Housekeeping genes excluded from the Core Placenta Transcriptome]{
   Housekeeping genes excluded from the Core Placenta Transcriptome.
@@ -1260,7 +1271,7 @@ print(ggplot(cpt.h.distribution.shape[`Expression (FPKM)` > 0.1,],
       + scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
                       labels = trans_format("log10", math_format(10^.x)))
       + geom_vline(xintercept=10,linetype="dotted")
-      + geom_segment(mapping=aes(y=V1-ifelse(V1<160,40,0),
+      + geom_segment(mapping=aes(y=V1-ifelse(V1<170,40,0),
                          yend=V1,
                          xend=10,
                          x=sapply(V1,
@@ -1279,7 +1290,7 @@ print(ggplot(cpt.h.distribution.shape[`Expression (FPKM)` > 0.1,],
                                            cpt.h.distribution.shape[num_genes > x,
                                                                   max(`Expression (FPKM)`)*2.6]
                                        }),
-                      y=V1-ifelse(V1<160,40,0),
+                      y=V1-ifelse(V1<170,40,0),
                       label=paste0(V1," genes")),
                   inherit.aes=FALSE,
                   data=cpt.h.distribution.shape[`Expression (FPKM)` > 10,
@@ -1484,39 +1495,49 @@ load("../data/placenta_core_tree_transcriptome")
 
 
 \begin{figure}[tbh]
-<<core_placenta_tree_transcriptome,fig.width=7,fig.height=8,out.height="0.8\\textheight",echo=FALSE>>=
+<<core_placenta_tree_transcriptome,fig.width=12,fig.height=8,out.width="\\textwidth",out.height="0.8\\textheight",echo=FALSE>>=
 cpttl <-
     core.placenta.tree.transcriptome.long[!grepl("(min|median|max|all)_expression|all_but_",
                                                  Species) & housekeeping==FALSE,]
 cpttl <- cpttl[,Species:=factor(gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",capfirst(Species)),
                                 levels=gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",
                                             capfirst(names(species.names))))]
-
-print(ggplot(cpttl[FPKM > 0.1,],aes(x=tree_genes,y=FPKM))+
+cpttl <- cpttl[,median_FPKM:=median(FPKM,na.rm=TRUE),by=tree_genes]
+cpttl <- cpttl[,facet:="high"]
+cpttl <- cpttl[median_FPKM < median(median_FPKM),facet:="low"]
+print(ggplot(cpttl[FPKM > 0.1,],aes(x=reorder(tree_genes,median_FPKM),y=FPKM))+
       geom_boxplot(outlier.shape=NA)+
-      scale_y_log10(labels=trans_format("log10", math_format(10^.x)))+
+      scale_y_log10(breaks=c(10^1,10^2,10^3,10^4),
+                    labels=trans_format("log10", math_format(10^.x)))+
       geom_point(aes(color=Species,shape=Species))+
-      scale_shape_manual("Species",
+      scale_shape_manual(NULL,##"Species",
                          guide=guide_legend(#nrow=1,
                                             keywidth=unit(3,"mm"),
                                             keyheight=unit(3,"mm"),
                                             label.theme=element_text(face="italic",
                                                                      angle=0,
-                                                                     size=9),
+                                                                     size=7),
                                             title.position="top"
                                             ),
                          values=0:18)+
-      # scale_color_discrete(NULL)+
+      scale_color_discrete(NULL)+
       coord_flip()+
       xlab("Genes in Tree")+
       ylab("Gene Expression (FPKM)")+
       theme_bw() +
-      theme(legend.position=c(0.7,0.15),
-            axis.text.y=element_text(face="italic",size=5),
+      expand_limits(y=c(10^4)) + 
+      theme(text=element_text(size=7.5),
+            legend.position=c(0.99,0.01),
+            axis.text.y=element_text(face="italic",size=7.5),
+            legend.margin=margin(0,0,0,0,unit="mm"),
             legend.spacing=unit(0,"mm"),
-            legend.justification="left",
-            plot.margin=unit(c(0,0,0,0),"mm")
-            ))
+            legend.justification=c(1,0),
+            plot.margin=unit(c(0,0,0,0),"mm"),
+            strip.background = element_blank(),
+            strip.text.x = element_blank()
+            )
+      + facet_wrap(~facet,scales="free")
+      )
 @ 
 \caption[Tree-based Core Placenta Transcriptome]{
   Tree-based Core Placenta Transcriptome.
@@ -1530,7 +1551,7 @@ print(ggplot(cpttl[FPKM > 0.1,],aes(x=tree_genes,y=FPKM))+
 \end{figure}
 
 \begin{figure}
-<<core_placenta_tree_transcriptome_housekeeping,fig.width=9,fig.height=18,out.height="0.8\\textheight",echo=FALSE>>=
+<<core_placenta_tree_transcriptome_housekeeping,fig.width=12,fig.height=12,out.height="0.8\\textheight",echo=FALSE>>=
 cpttlh <-
     core.placenta.tree.transcriptome.long[!grepl("(min|median|max|all)_expression|all_but_",
                                                  Species) & housekeeping==TRUE,]
@@ -1538,31 +1559,42 @@ cpttlh <- cpttlh[,Species:=factor(gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",capfir
                                 levels=gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",
                                             capfirst(names(species.names))))]
 
-print(ggplot(cpttlh[FPKM > 0.1,],aes(x=tree_genes,y=FPKM))+
+cpttlh <- cpttlh[,median_FPKM:=median(FPKM,na.rm=TRUE),by=tree_genes]
+cpttlh <- cpttlh[,facet:="high"]
+cpttlh <- cpttlh[median_FPKM < median(median_FPKM),facet:="low"]
+print(ggplot(cpttlh[FPKM > 0.1,],aes(x=reorder(tree_genes,median_FPKM),y=FPKM))+
       geom_boxplot(outlier.shape=NA)+
-      scale_y_log10(labels=trans_format("log10", math_format(10^.x)))+
+      scale_y_log10(breaks=c(10^1,10^2,10^3,10^4),
+                    labels=trans_format("log10", math_format(10^.x)))+
       geom_point(aes(color=Species,shape=Species))+
-      scale_shape_manual("Species",
+      scale_shape_manual(NULL,##"Species",
                          guide=guide_legend(#nrow=1,
                                             keywidth=unit(3,"mm"),
                                             keyheight=unit(3,"mm"),
                                             label.theme=element_text(face="italic",
                                                                      angle=0,
-                                                                     size=9),
+                                                                     size=7),
                                             title.position="top"
                                             ),
                          values=0:18)+
-      # scale_color_discrete(NULL)+
+      scale_color_discrete(NULL)+
       coord_flip()+
       xlab("Genes in Tree")+
       ylab("Gene Expression (FPKM)")+
       theme_bw() +
-      theme(legend.position=c(0.7,0.15),
-            axis.text.y=element_text(face="italic",size=5),
+      expand_limits(y=c(10^4)) + 
+      theme(text=element_text(size=7.5),
+            legend.position=c(0.99,0.01),
+            axis.text.y=element_text(face="italic",size=7.5),
+            legend.margin=margin(0,0,0,0,unit="mm"),
             legend.spacing=unit(0,"mm"),
-            legend.justification="left",
-            plot.margin=unit(c(0,0,0,0),"mm")
-            ))
+            legend.justification=c(1,0),
+            plot.margin=unit(c(0,0,0,0),"mm"),
+            strip.background = element_blank(),
+            strip.text.x = element_blank()
+            )
+      + facet_wrap(~facet,scales="free")
+      )
 @ 
 \caption[Tree-based Core Placenta Transcriptome: Housekeeping Genes]{
   Tree-based Core Placenta Transcriptome: Housekeeping Genes.
@@ -1672,23 +1704,24 @@ plot_pathway <- function(pathway="hsa04012",pathcolor=quote(median_expression),c
 <<egf_pathway,echo=FALSE,message=FALSE,fig.width=6,fig.height=6,fig.out.width="\\textwidth">>=
 plot_pathway("hsa04012")
 @
-\caption{EGF KEGG pathway}
+\caption{EGF KEGG pathway.}
 \label{fig:egf_kegg_pathway}
 \end{figure}
 
-<<actin_pathway,echo=FALSE,results="hide",message=FALSE>>=
-library("pathview")
-pathview(gene.data=plac_path_egid(quote(as.numeric(median_expression))),
-         pathway.id="hsa04810",
-         both.dirs=list(gene=FALSE,cpd=FALSE),
-         limit=list(gene=200,cpd=29),
-         high=list(gene="blue"),
-         net.signature=FALSE)
+\begin{figure}
+<<actin_pathway,echo=FALSE,results="hide",message=FALSE,warning=FALSE>>=
+plot_pathway("hsa04810",pathcolor=quote(log10(median_expression+1)),cutpoint=0.1)
+#library("pathview")
+# pathview(gene.data=plac_path_egid(quote(as.numeric(median_expression))),
+#          pathway.id="hsa04810",
+#          both.dirs=list(gene=FALSE,cpd=FALSE),
+#          limit=list(gene=200,cpd=29),
+#          high=list(gene="blue"),
+#          net.signature=FALSE)
 @ 
 
-\begin{figure}
-  \includegraphics{hsa04810.pathview.png}
-  \caption{KEGG Actin Cytoskeleton Pathway}
+%  \includegraphics{hsa04810.pathview.png}
+  \caption{KEGG Actin Cytoskeleton Pathway. Expression in $\log_{10}$ FPKM.}
   \label{fig:kegg_actin}
 \end{figure}
 

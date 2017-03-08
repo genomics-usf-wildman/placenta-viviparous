@@ -1017,11 +1017,13 @@ hum.all.lin.spec <-
 setkey(hum.all.lin.spec,"Human Symbol")
 @ 
 \caption{\lineagetableexplanationtypeiiishort{\human}{all other
-    analyzed species} Adv. Preg. Pub. is the approximate number of
-  publications indexed by PubMed mentioning this gene and an adverse
-  pregnancy outcome (pre-eclampsia, premature labor, gestational
-  diabetes, intrauterine growth restriction, or premature birth) and
-  links to the most current PubMed search results.}
+    analyzed species} The human symbol links to a brief explanation of
+  the gene function in Ensembl. Adv. Preg. Pub. is the approximate
+  number of publications indexed by PubMed mentioning this gene and an
+  adverse pregnancy outcome (pre-eclampsia, premature labor,
+  gestational diabetes, intrauterine growth restriction, or premature
+  birth) as of February 2017, and links to the most current PubMed
+  search results.}
 \label{tab:human_lineage_specific}
 \end{table}
 

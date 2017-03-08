@@ -3,7 +3,10 @@ library(data.table)
 
 args <- commandArgs(trailingOnly=TRUE)
 
-human <- useMart("ensembl",dataset="hsapiens_gene_ensembl")
+mart <- useMart("ENSEMBL_MART_ENSEMBL",
+                dataset="hsapiens_gene_ensembl",
+                host="may2015.archive.ensembl.org")
+
 
 ensembl.orthologs.long <- list()
 
@@ -18,7 +21,7 @@ for (species in c("dnovemcinctus",
         data.table(getBM(c("ensembl_gene_id",
                            paste0(species,"_",
                                   "homolog_ensembl_gene")),
-                         values =TRUE, mart = human, bmHeader=FALSE))
+                         values =TRUE, mart = mart, bmHeader=FALSE))
     setnames(ensembl.orthologs.long[[species]],
              paste0(species,"_",
                     "homolog_ensembl_gene"),
@@ -27,12 +30,6 @@ for (species in c("dnovemcinctus",
     ensembl.orthologs.long[[species]] <-
         ensembl.orthologs.long[[species]][homolog_ensembl_gene!="",]
 }
-
-hgnc.symbols <-
-    data.table(getBM(c("ensembl_gene_id",
-                       "hgnc_symbol"),
-                     mart=human))
-
 
 ensembl.orthologs.long <- rbindlist(ensembl.orthologs.long)
 

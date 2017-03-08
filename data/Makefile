@@ -61,14 +61,17 @@ oma-ensembl.txt: oma-ensembl.txt.gz
 oma-groups_long.txt: oma-group-to-long.pl oma-groups.txt oma-ensembl.txt
 	$(PERL) $^ > $@
 
-combined_fpkm: combine_fpkm.R HOM_AllOrganism.rpt oma-groups_long.txt fastq_fpkm/combined_fpkms ensembl_orthologs diamond_against_human/gene_to_human_gene.txt gtf_types/gene_id_to_type.txt
+combined_fpkm: combine_fpkm.R oma-groups_long.txt	\
+fastq_fpkm/combined_fpkms ensembl_all_orthologs		\
+diamond_against_human/gene_to_human_gene.txt		\
+gtf_types/gene_id_to_type.txt
 	$(R) $(ROPTS) -f $< --args $@ $(wordlist 2,$(words $^),$^)
 
-combined_fpkm_per_sample: combine_fpkm.R HOM_AllOrganism.rpt oma-groups_long.txt fastq_fpkm/combined_fpkms ensembl_orthologs diamond_against_human/gene_to_human_gene.txt gtf_types/gene_id_to_type.txt
+combined_fpkm_per_sample: combine_fpkm.R oma-groups_long.txt	\
+fastq_fpkm/combined_fpkms ensembl_all_orthologs					\
+diamond_against_human/gene_to_human_gene.txt					\
+gtf_types/gene_id_to_type.txt
 	$(R) $(ROPTS) -f $< --args $@ $(wordlist 2,$(words $^),$^)
-
-ensembl_orthologs: ensembl_orthologs.R
-	$(R) $(ROPTS) -f $< --args $@
 
 ensembl_orthologs_long: ensembl_orthologs_long.R
 	$(R) $(ROPTS) -f $< --args $@

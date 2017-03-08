@@ -1,6 +1,6 @@
 library("data.table")
 
-args <- c("housekeeping_genes_superset.txt"
+args <- c("housekeeping_genes_superset.txt",
           "housekeeping_genes_superset"
           )
 
@@ -8,7 +8,7 @@ args <- commandArgs(trailingOnly=TRUE)
 
 
 
-housekeeping_genes_superset <-
+housekeeping.genes.superset <-
     data.table(read.table(args[1]))
 
 save(housekeeping.genes.superset,file=args[length(args)])

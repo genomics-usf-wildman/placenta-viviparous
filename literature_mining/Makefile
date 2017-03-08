@@ -3,6 +3,8 @@
 R=R
 ROPTS=-q --no-save --no-restore-data
 
+all: core_vs_terms.txt core_vs_core.txt human_lineage_vs_terms.txt mouse_lineage_vs_terms.txt
+
 placenta_class_genes.txt: placenta_class_specific.R ../data/placenta_classification_p
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
 
@@ -31,6 +33,9 @@ core_vs_terms.txt: pubmed_grid placenta_core_genes.txt placenta_terms.txt
 	./$< --terms $(wordlist 2,2,$^) --terms $(wordlist 3,3,$^) \
 		--pmid-input core_vs_terms_pmids.txt \
 		--pmid-output core_vs_terms_pmids.txt > $@
+
+core_vs_terms.png: grid_to_dot core_vs_terms.txt
+	./grid_to_dot core_vs_terms.txt |neato -Tpng > $@
 
 core_vs_core.txt: pubmed_grid placenta_core_genes.txt
 	touch core_vs_core_pmids.txt

@@ -10,9 +10,9 @@ load(args[1])
 load(args[2])
 
 combined.fpkm.wide <- 
-    data.table(dcast(combined.fpkm,
+    data.table(dcast(combined.fpkm[!is.na(human_name),],
                      human_name~species,
-                     fun.aggregate=sum,
+                     fun.aggregate=max,
                      value.var="mean_fpkm"))
 
 min.na.zero <- function(x){

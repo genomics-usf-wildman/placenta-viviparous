@@ -1441,7 +1441,7 @@ print(xtable(combined.placenta.go.results,
 \begin{table}
 <<pathway_analysis,echo=FALSE,results="asis",cache.extra=file.info(dir("../data","placenta_gsea.*",full.names=TRUE))[,"mtime"]>>=
 pathway <- list()
-for (database in c("kegg","reactome","biocarta","netpath")) {
+for (database in c("kegg","biocarta","netpath")) {
     load(paste0("../data/placenta_gsea_",database))
     eval(parse(text=paste0("gsea.table <- placenta_gsea_",database)))
     gsea.table[,Database:=gsub("^(.)","\\U\\1",database,perl=TRUE)]
@@ -1468,7 +1468,7 @@ print(xtable(pathway.analysis,
 @ 
 \caption[Core Placenta Pathway Enrichment]{Pathways with significant and suggestive enrichment
   ($\text{FDR}\le 0.1$) in the core placenta transcriptome using the
-  biocarta, reactome, and kegg pathway databases}
+  biocarta, netpath, and kegg pathway databases}
 \label{tab:core_placenta_pathway_analysis}
 \end{table}
 

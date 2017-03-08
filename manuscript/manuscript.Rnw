@@ -169,7 +169,7 @@ placgo <- function(goid,group="mf") {
 
 <<pathway_analysis,echo=FALSE,results="asis",cache.extra=file.info(dir("../data","placenta_gsea.*",full.names=TRUE))[,"mtime"]>>=
 pathway <- list()
-for (database in c("kegg","reactome","biocarta","netpath")) {
+for (database in c("kegg","biocarta","netpath")) {
     load(paste0("../data/placenta_gsea_",database))
     eval(parse(text=paste0("gsea.table <- placenta_gsea_",database)))
     gsea.table[,Database:=gsub("^(.)","\\U\\1",database,perl=TRUE)]
@@ -1411,26 +1411,16 @@ only in \human, \mouse, and \dog).
 \subsubsection{Invasion: EGF and Actin Y in the Core Placenta}
 
 The core placenta transcriptome is significantly enriched in genes
-which are involved in multiple biological pathways, including multiple
-pathways related to translation (ribosome %
-%
-(\Sexpr{placpath("^RIBOSOME","Kegg")})
-, translation %
-(\Sexpr{placpath("^TRANSLATION","Reactome")})
-%
-, signal
-recognition particle targeting to the rough endoplasmic reticulum %
-(\Sexpr{placpath("^SRP DEPENDENT","Reactome")})
-%
-,
-etc.) (Supplemental \cref{tab:core_placenta_pathway_analysis}). Beyond
-translation, the next most abundant set of significantly enriched
-molecular pathways are related to the migration of the trophoblast
-into the endometrium, including the EGFR1 pathway %
-(\Sexpr{placpath("^EGFR1","Netpath")})
+which are involved in multiple biological pathways (Supplemental
+\cref{tab:core_placenta_pathway_analysis}). The most abundant set
+of significantly enriched molecular pathways are related to the
+migration of the trophoblast into the endometrium, including the EGFR1
+pathway %
+(\Sexpr{placpath("^EGFR1","Netpath")}), Focal Adhesion pathway
+(\Sexpr{placpath("^EGFR1","Kegg")})
 %
 and the Actin Y pathway %
-(\Sexpr{placpath("^ACTINY","Biocarta")})
+(\Sexpr{placpath("^ACTINY","Biocarta")})%
 %
 . Two other significant pathways, the mPR/Progesterone pathway
 and Rho cell motility pathways, feed into the Actin Y pathway as well.

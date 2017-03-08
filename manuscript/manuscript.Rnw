@@ -321,7 +321,7 @@ Previous studies of some species (i.e., \human, \mouse, \cow, and
 \elephant) have provided some preliminary answers to these questions.
 They revealed a stunning divergence in the genetics of the placenta,
 especially in later stages of pregnancy
-\cite{Carter2012:Evolutionofplacentalfunction,Knox.ea2008:Genomicevolutionofplacenta,Su.ea2002:Large-scaleanalysisofhuman,Hou.ea2012:Elephanttranscriptomeprovidesinsights}}.
+\cite{Carter2012:Evolutionofplacentalfunction,Knox.ea2008:Genomicevolutionofplacenta,Su.ea2002:Large-scaleanalysisofhuman,Hou.ea2012:Elephanttranscriptomeprovidesinsights}.
 For example, each superorder (Euarchontoglires, Laurasiatheria,
 Afrotheria, and Xenartha, \cref{fig:species_tree})
 has evolved expansive placenta-specific gene

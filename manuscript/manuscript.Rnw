@@ -1407,7 +1407,7 @@ secretion. The expression regulation of another core gene,
 \cite{Ma.ea2014:Down-regulationofTIMP3leads}.
 
 Another annexin which is highly expressed in all term placentas is
-\ac{ANXA5}, which was originally identified as a an anti-coagulant
+\ac{ANXA5}, which was originally identified as an anti-coagulant
 protein, but is also involved in syncytium formation, membrane repair,
 and reduction of spontaneous
 abortion~\cite{Ueki.ea2012:Lossofmaternalannexin}. Other notable

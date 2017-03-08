@@ -1210,13 +1210,13 @@ print(ggplot(cptl[FPKM > 0.1,],aes(x=human_name,y=FPKM))+
       + scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
                       labels = trans_format("log10", math_format(10^.x)))
       + geom_vline(xintercept=10,linetype="dotted")
-      + geom_segment(mapping=aes(y=V1-ifelse(V1<80,20,0),
+      + geom_segment(mapping=aes(y=V1-ifelse(V1<100,20,0),
                          yend=V1,
                          xend=10,
                          x=sapply(V1,
                                   function(x){
                                       cpt.distribution.shape[num_genes > x,
-                                                             max(`Expression (FPKM)`)*4]
+                                                             max(`Expression (FPKM)`)*2]
                                   }),
                          color=`Min. Exp. in`),
                      data=cpt.distribution.shape[`Expression (FPKM)` > 10,
@@ -1227,10 +1227,10 @@ print(ggplot(cptl[FPKM > 0.1,],aes(x=human_name,y=FPKM))+
       + geom_text(mapping=aes(x=sapply(V1,
                                        function(x){
                                            cpt.distribution.shape[num_genes > x,
-                                                                  max(`Expression (FPKM)`)*4.1]
+                                                                  max(`Expression (FPKM)`)*2.1]
                                        }),
-                      y=V1-ifelse(V1<80,20,0),
-                      label=paste0(V1," genes"),override=TRUE),
+                      y=V1-ifelse(V1<100,20,0),
+                      label=paste0(V1," genes")),inherit.aes=FALSE,
                   data=cpt.distribution.shape[`Expression (FPKM)` > 10,
                       max(num_genes),`Min. Exp. in`],
                   show.legend=FALSE,
@@ -1238,7 +1238,7 @@ print(ggplot(cptl[FPKM > 0.1,],aes(x=human_name,y=FPKM))+
                   size=8*(5/14)
                   )
       + geom_segment(mapping=aes(yend=V1,
-                         y=100,
+                         y=10^2.5,
                          xend=1,
                          x=1,
                          color=`Min. Exp. in`),
@@ -1249,9 +1249,9 @@ print(ggplot(cptl[FPKM > 0.1,],aes(x=human_name,y=FPKM))+
                      show.legend=FALSE
                      )
       + geom_text(mapping=aes(x=1,
-                      y=100,
-                      label=paste0(V1," genes"),
-                      override=TRUE),
+                      y=10^2.5,
+                      label=paste0(V1," genes")),
+                      inherit.aes=FALSE,
                   angle=90,
                   data=cpt.distribution.shape[`Expression (FPKM)` > 1 &
                                               `Min. Exp. in` == 'All 13 Eutherians',

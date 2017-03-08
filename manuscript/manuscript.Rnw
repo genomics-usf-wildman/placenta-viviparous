@@ -22,6 +22,7 @@
 \usepackage[macros=false,single=true,single-form=long]{acro}
 \usepackage{array}
 \usepackage{longtable}
+\usepackage[export]{adjustbox}[2011/08/13]
 \usepackage{amsmath}
 \usepackage[backend=biber,natbib=true,hyperref=true,citestyle=numeric-comp,style=nature,autocite=inline]{biblatex}
 \addbibresource{references.bib}
@@ -60,7 +61,7 @@
 
 
 <<load.libraries,echo=FALSE,results="hide",warning=FALSE,message=FALSE,error=FALSE,cache=FALSE>>=
-opts_chunk$set(dev="cairo_pdf",out.width="\\columnwidth",out.height="0.7\\textheight",out.extra="keepaspectratio")
+opts_chunk$set(dev="cairo_pdf",out.width="\\columnwidth",out.height="0.7\\textheight",out.extra="keepaspectratio,center")
 opts_chunk$set(cache=TRUE, autodep=TRUE)
 options(device = function(file, width = 8, height = 7, ...) {
   cairo_pdf(tempfile(), width = width, height = height, ...)

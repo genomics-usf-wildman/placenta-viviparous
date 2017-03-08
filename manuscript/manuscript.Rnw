@@ -504,19 +504,28 @@ print(pp %>%
 \subsection{Comparative Analysis of Gene Expression}
 \label{sec:comp-analys-gene}
 
-Single-copy (1-to-1) orthologs in were determined using Ensembl v.80
-gene trees via Biomart using the biomaRt R package
-\cite{Durinck.ea2009:Mappingidentifiersforintegration}. %
-A total of \Sexpr{combined.fpkm[species!="homo sapiens" & mean_fpkm >=
-  1,length(unique(human_name))]} single-copy orthologous genes were
-expressed in at least one species. We also obtained orthology from the
-perspective of each species to all other species using biomaRt package
-and Ensembl v.80 database to determine the percentage of highly
-expressed genes which had an orthology of one-to-one, one-to-many,
-many-to-many, or novel/unknown.
+Orthologous pairs between \human and all other species were identified
+using the \ac{OMA} database
+\cite{Altenhoff.ea2015:OMAorthologydatabasein}. In cases where a gene
+did not have a human ortholog pair identified by \ac{OMA}, Ensembl v.80
+one2one orthologs obtained from Biomart using the biomaRt R package
+\cite{Durinck.ea2009:Mappingidentifiersforintegration} %
+were used to select the appropriate orthologous pair. A total of
+\Sexpr{combined.fpkm[,list(n=length(gene_id),
+  max.fpkm=max(mean_fpkm)),by=human_name][n==14 & max.fpkm >
+  10,length(human_name)]} ortholog pair sets in all 14 species were
+expressed (\ac{FPKM} $\ge 10$) in at least one species. We also
+obtained orthology from the perspective of each species to all other
+species using biomaRt package and Ensembl v.80 database to determine
+the percentage of highly expressed genes which had an orthology of
+one-to-one, one-to-many, many-to-many, or novel/unknown. For future
+analyses by other investigators, we have also provided the human gene
+which most closely aligns to each expressed annotated
+protein-generating sequence of all species analyzed using DIAMOND
+\cite{Buchfink.ea2015:Fastandsensitiveprotein}.
 
 Significant shifts in expression levels between groups of species were
-calculated using Student's t test on single-copy orthologs using the mean of
+calculated using Student's t test on ortholog pairs using the mean of
 each species to avoid large biases towards samples with $n \gg 1$ and
 considered significant if the \ac{FDR} as estimated by the Benjamini
 and Hochberg procedure \cite{Benjamini1995:bh_procedure} was
@@ -635,7 +644,7 @@ significant predictor of unmapped read percentage (Supplemental
 \cref{fig:transcriptome_reads_vs_read_length}). %
 %
 Between 20\% and 40\% of all highly expressed genes in each species
-were single-copy orthologs with all other analyzed species, with the
+were ortholog pairs with all other analyzed species, with the
 remainder being mostly one-to-many or many-to-many in comparison to at
 least one other species (Supplemental
 \cref{tab:orthologs_in_each_species}).
@@ -1161,7 +1170,7 @@ print(ggplot(cptl[FPKM > 0.1,],aes(x=human_name,y=FPKM))+
 @ 
 \caption{Core Placenta Transcriptome.
   \Sexpr{core.placenta.transcriptome.long[housekeeping==FALSE,length(unique(human_name))]}
-  single-copy \human ortholog genes expressed (\ac{FPKM}$ \ge 10$) in the
+  ortholog pairs of \human genes expressed (\ac{FPKM}$ \ge 10$) in the
   placenta of all 13 eutherians studied with housekeeping genes
   \cite{Eisenberg.ea2013:Humanhousekeepinggenesrevisited} removed
   ordered (from top to bottom) by median expression. If we also require
@@ -1248,16 +1257,17 @@ print(ggplot(cptl[FPKM > 0.1,],aes(x=human_name,y=FPKM))+
                                   ))
       + theme_bw()
       + theme(text=element_text(size=9),
-              legend.position=c(0.99,0.99),
-              legend.margin=unit(0,"mm"),
-              legend.justification=c(1,1),
+              legend.position=c(0.01,0.01),
+              legend.margin=margin(0,0,0,0,unit="mm"),
+              legend.spacing=unit(0,"mm"),
+              legend.justification=c(0,0),
               plot.margin=unit(c(0,0,0,0),"mm")
               )
       )
 @ 
 \caption{Distribution shape of placenta core genes for all possible
   number of genes. The vertical axis
-  shows the number of single-copy orthologous genes included in the core
+  shows the number of ortholog pairs included in the core
   placenta transcriptome (for all possible number of genes) if %
   \Sexpr{cpt.distribution.shape[,tolower(levels(`Min. Exp. in`))[1]]}
   %
@@ -1271,12 +1281,12 @@ print(ggplot(cptl[FPKM > 0.1,],aes(x=human_name,y=FPKM))+
   \Sexpr{cpt.distribution.shape[`Expression (FPKM)` > 10 
     & `Min. Exp. in` == 'All 13 Eutherians',max(num_genes)]}
   %
-  genes would be included if the expression of a set of single-copy orthologs of all 13 Eutherians must be at
-  least 10 FPKM, %
+  genes would be included if the expression of a set of ortholog pairs of all 13 Eutherians must be at
+9  least 10 FPKM, %
   \Sexpr{cpt.distribution.shape[`Expression (FPKM)` > 10 
     & `Min. Exp. in` == '13 of 14 Species',max(num_genes)]}
   %
-  single-copy orthologs would be included if 13 of 14 species have an
+  ortholog pairs would be included if 13 of 14 species have an
    expression of at least 10 FPKM, and 
   \Sexpr{cpt.distribution.shape[`Expression (FPKM)` > 10 
     & `Min. Exp. in` == '10 of 14 Species',max(num_genes)]}
@@ -1298,7 +1308,7 @@ The
 genes comprising the core placenta transcriptome are shown in
 \cref{fig:core_placenta_transcriptome} ordered by their median
 transcription level in \ac{FPKM}. We considered a gene to be core to
-the placenta transcriptome if a single-copy ortholog of that gene was
+the placenta transcriptome if an ortholog pair of that gene was
 expressed with $\text{FPKM} \ge 10$ in all eutherian species studied
 (excluding the metatherian, \opossum) and was not a human housekeeping
 gene according to
@@ -1341,8 +1351,8 @@ enrichment of \ac{GO} terms in the core placenta transcriptome;
 notable terms include those involved in cytoskeletal structure,
 protein transport, membrane protein structure, and inflammation
 resolution. Increasing the permissiveness of the core placenta
-transcriptome by only requiring 10 of 14 species to express single-copy
-orthologs with FPKM $>10$ and results in the same terms also being
+transcriptome by only requiring 10 of 14 species to express an
+ortholog pair with FPKM $>10$ and results in the same terms also being
 significantly enriched, along with additional terms (Supplemental
 \cref{tab:core_placenta_go_terms}). Supplemental
 \cref{tab:core_placenta_pathway_analysis} shows the pathways with
@@ -1350,8 +1360,8 @@ significant and suggestive enrichment in the core placenta
 transcriptome.
 
 If we use gene trees to define the core placenta transcriptome instead
-of single-copy orthologs (where the mean expression for genes in the
-tree which are present must be $\text{FPKM} \ge 10$), we find
+of ortholog pairs (where the mean expression for genes in the tree
+which are present must be $\text{FPKM} \ge 10$), we find
 \Sexpr{cpttl[,length(unique(tree_genes))]} unique gene trees which
 include nearly all of the genes present in the core placenta
 transcriptome (Supplemental

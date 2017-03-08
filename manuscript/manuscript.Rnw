@@ -557,7 +557,7 @@ estimating the \ac{FDR} using the Benjamini and Hochberg procedure
 
 To identify genes which have evidence of association with adverse
 pregnancy outcomes and other placenta-relevant terms of interest, we
-used the “pubmed_to_grid” component of
+used the “pubmed\_to\_grid” component of
 Function2Gene~\cite{Armstrong2008:function2gene} which conducts a term
 by gene search of PubMed results.
 

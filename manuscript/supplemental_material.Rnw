@@ -1260,7 +1260,7 @@ print(ggplot(cpt.h.distribution.shape[`Expression (FPKM)` > 0.1,],
       + scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
                       labels = trans_format("log10", math_format(10^.x)))
       + geom_vline(xintercept=10,linetype="dotted")
-      + geom_segment(mapping=aes(y=V1-ifelse(V1<145,40,0),
+      + geom_segment(mapping=aes(y=V1-ifelse(V1<160,40,0),
                          yend=V1,
                          xend=10,
                          x=sapply(V1,
@@ -1279,8 +1279,9 @@ print(ggplot(cpt.h.distribution.shape[`Expression (FPKM)` > 0.1,],
                                            cpt.h.distribution.shape[num_genes > x,
                                                                   max(`Expression (FPKM)`)*2.6]
                                        }),
-                      y=V1-ifelse(V1<145,40,0),
-                      label=paste0(V1," genes"),override=TRUE),
+                      y=V1-ifelse(V1<160,40,0),
+                      label=paste0(V1," genes")),
+                  inherit.aes=FALSE,
                   data=cpt.h.distribution.shape[`Expression (FPKM)` > 10,
                       max(num_genes),`Min. Exp. in`],
                   show.legend=FALSE,
@@ -1288,7 +1289,7 @@ print(ggplot(cpt.h.distribution.shape[`Expression (FPKM)` > 0.1,],
                   size=8*(5/14)
                   )
       + geom_segment(mapping=aes(yend=V1,
-                         y=100,
+                         y=10^2.5,
                          xend=1,
                          x=1,
                          color=`Min. Exp. in`),
@@ -1299,9 +1300,9 @@ print(ggplot(cpt.h.distribution.shape[`Expression (FPKM)` > 0.1,],
                      show.legend=FALSE
                      )
       + geom_text(mapping=aes(x=1,
-                      y=100,
-                      label=paste0(V1," genes"),
-                      override=TRUE),
+                      y=10^2.5,
+                      label=paste0(V1," genes")),
+                  inherit.aes=FALSE,
                   angle=90,
                   data=cpt.h.distribution.shape[`Expression (FPKM)` > 1 &
                                               `Min. Exp. in` == 'All 13 Eutherians',
@@ -1319,9 +1320,9 @@ print(ggplot(cpt.h.distribution.shape[`Expression (FPKM)` > 0.1,],
                                   ))
       + theme_bw()
       + theme(text=element_text(size=9),
-              legend.position=c(0.99,0.99),
+              legend.position=c(0.01,0.01),
               legend.spacing=unit(0,"mm"),
-              legend.justification=c(1,1),
+              legend.justification=c(0,0),
               plot.margin=unit(c(0,0,0,0),"mm")
               )
       )

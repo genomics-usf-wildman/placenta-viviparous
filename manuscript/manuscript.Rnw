@@ -1336,7 +1336,7 @@ which would be included in the core placenta set if the \ac{FPKM}
 cutoff was set differently; for example, choosing an \ac{FPKM} cutoff
 of 1 yields %
 \Sexpr{cpt.distribution.shape[`Expression (FPKM)`>=1 & `Min. Exp. in`
-  == '14 of 14 Species',max(num_genes)]} %
+  == 'All 13 Eutherians',max(num_genes)]} %
 genes in the core transcriptome. %
 In contrast to the shape of the number of genes included in the core
 placenta transcriptome, the set of \human housekeeping genes expressed

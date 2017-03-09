@@ -296,7 +296,7 @@ mammal \sep  gene expression \sep evolution \sep RNA-Seq \sep placenta
 \section{Introduction}
 
 Even though the placenta's primary function is conserved among
-mammals, it varies widely in terms of shape, degree
+mammals, the placenta varies widely in terms of shape, degree
 of intimacy between fetal tissues and maternal tissues, and degree of
 interdigitation of maternal and fetal tissues in different species of
 mammals
@@ -338,28 +338,28 @@ species. For example, the expression of orthologous genes in the
 placenta have been found to vary substantially between \human and
 \mouse \cite{Su.ea2002:Large-scaleanalysisofhuman}.
 
-To address our questions, we 
+To address our questions we
 sequenced and quantified the total RNA of mammalian placentas at term,
-including \human, \bonobo (the sister
-species to \textit{Pan troglodytes}), \smonkey,
-\mouse, \galili, \carmeli, \dog, \cow, \elephant,
-\armadillo, and \opossum.
+including \human [human], \bonobo [bonobo], (the sister
+species to \textit{Pan troglodytes}), \smonkey [spider monkey],
+\mouse [mouse], \galili [blind mole rat from Upper Galilee], \carmeli [blind mole rat from northern Israel], \dog [domestic dog], \cow [domestic cow], \elephant [African savanna elephant],
+\armadillo [nine-banded armadillo], and \opossum [gray short-tailed opossum].
 These species represent four major branches of eutherian mammals
 (Euarchontoglires, Laurasiatheria, Afrotheria, and Xenartha) as well
-as marsupials. These placentas also represent a wide array of
+as marsupials (\cref{fig:species_tree}). These placentas also represent a wide array of
 placental morphologies as well as traits such as number and size of
-offspring and length of gestation (\cref{tab:gestational_periods}). We
-use these data, along with existing RNA-Seq data from \mouse
+offspring and length of gestation (Supplemental \cref{tab:gestational_periods}). We
+use these data, along with existing RNA-Seq data from \mouse 
 \cite{Wang.ea2011:surveyfornovelimprinted}, \human
 \cite{Hughes.ea2015:Evaluatingintra-andinter-individual},
-\horse
-\cite{Coleman.ea2010:Structuralannotationofequine}, \sheep
+\horse [horse]
+\cite{Coleman.ea2010:Structuralannotationofequine}, \sheep 
 \cite{Archibald.ea2010:sheepgenomereferencesequence}, and
-\pig \cite{Ahanda.ea2012:Predictionofaltered3-} to: 1)
+\pig [domestic pig] \cite{Ahanda.ea2012:Predictionofaltered3-} to: 1)
 identify the non-housekeeping genes which are expressed in the
 placentas of all eutherian species analyzed and therefore represent the
 \textbf{core functionality of the placenta}; 2) identify genes whose
-expression level changes significantly in each of the morphology
+expression level changes significantly in each of the placenta morphology
 types.
 
 \section{Methods}
@@ -384,7 +384,7 @@ accident. Placental tissue from \opossum was sampled at fetal stage
 the placenta was sampled at the maternal-fetal interface (i.e. villous
 portion for \human, \bonobo, \dog, and \elephant; cotyledon for \cow;
 diffuse placenta for \opossum). The placenta membranes were separated
-from the fetal villous portion using forceps and a scapel, and the
+from the fetal villous portion by dissection, and the
 resulting fetal villous portion was washed twice in PBS. All tissues
 were collected and stored in RNAlater (Life Technologies, Carlsbad,
 CA) until RNA isolation could be performed. Tissues were homogenized
@@ -525,7 +525,7 @@ the percentage of highly expressed genes which had an orthology of
 one-to-one, one-to-many, many-to-many, or novel/unknown. For future
 analyses by other investigators, we have also provided the human gene
 which most closely aligns to each expressed annotated
-protein-generating sequence of all species analyzed using DIAMOND
+protein-generating sequence of all species analyzed using Diamond
 \cite{Buchfink.ea2015:Fastandsensitiveprotein}.
 
 Significant shifts in expression levels between groups of species were
@@ -537,8 +537,7 @@ $\le 0.05$. For \human and \mouse lineage specific calculations, a
 type-III anova was calculated using
 lme4~\cite{Bates.ea2015:FittingLinearMixed-EffectsModels} with each
 species having separate random effects. Shifts in expression levels
-are reported with $\log_2$ Fold-Change (FC), rounded to the nearest
-integer.
+are reported in $\log_2$ Fold-Change (FC).
 
 Significant shifts in expression levels which correlate with placenta
 morphology (shape, interdigitation, and intimacy) were identified
@@ -568,7 +567,7 @@ by gene search of PubMed results.
 \subsection{Sequences, FPKMs, and Code}
 
 All of the code used to produce every analysis presented in this paper
-is available at
+and the manuscript itself is available at
 \url{https://github.com/uiuc-cgm/placenta-viviparous.git}. All of the
 sequences used are deposited in SRA, and new sequences for this work
 can be obtained under the series
@@ -647,7 +646,7 @@ of reads mapping to the respective reference genome (Supplemental
 significant predictor of unmapped read percentage (Supplemental
 \cref{fig:transcriptome_reads_vs_read_length}). %
 %
-Between 20\% and 40\% of all highly expressed genes in each species
+Between 20\% and 37\% of all highly expressed genes in each species
 were ortholog pairs with all other analyzed species, with the
 remainder being mostly one-to-many or many-to-many in comparison to at
 least one other species (Supplemental
@@ -1658,8 +1657,9 @@ The core placenta transcriptome contains genes which are involved in
 maternal-fetal tolerance, such as the annexins, and genes responsible
 for cell-cell and cell-matrix interactions, such as \ac{LGALS1}. These
 genes were almost certainly present in the placenta of the most recent
-common mammalian ancestor included in this study. We hypothesize that
-modifications to their expression or function will compromise the
+common mammalian ancestor of the species included in this study. We hypothesize that
+modifications to the expression or function of genes in the core placenta transcriptome
+will compromise the
 development and organization of the placenta.
 
 We also identified genes differentially expressed on the \human
@@ -1714,7 +1714,9 @@ to collecting and analyzing such a dataset.
   \section*{Acknowledgements}
   The authors would like to specially acknowledge those groups whose
   publicly available data contributed to the completeness of this
-  work.
+  work, as well as the suggestions of the anonymous reviewers which
+  improved this paper and the advice of Monica Uddin in preparing this
+  manuscript.
 
   \section*{Funding}
   Partial support for this research came from the \textit{Eunice

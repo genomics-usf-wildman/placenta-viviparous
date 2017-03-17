@@ -50,7 +50,7 @@
 \usepackage[capitalize]{cleveref}
 \def\UrlBreaks{\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]%
 \do\)\do\,\do\?\do\&\do\'\do+\do\=\do\#%
-\do\/%
+\do\/\do\-%
 }%
 \input{common_latex}
 \tolerance=5000

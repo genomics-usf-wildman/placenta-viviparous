@@ -314,7 +314,7 @@ the molecular environment is only beginning to be understood from a
 genetic perspective \cite{Carter2012:Evolutionofplacentalfunction}.
 
 These observations lead to two related questions: 1) what are the
-genes which are responsible for the \textbf{core functionality of the
+genes which are responsible for the \textbf{core functions of the
   placenta} and 2) which genes are associated with \textbf{changes in
   placenta morphology}?
 
@@ -324,15 +324,16 @@ They revealed a stunning divergence in the genetics of the placenta,
 especially in later stages of pregnancy
 \cite{Carter2012:Evolutionofplacentalfunction,Knox.ea2008:Genomicevolutionofplacenta,Su.ea2002:Large-scaleanalysisofhuman,Hou.ea2012:Elephanttranscriptomeprovidesinsights}.
 For example, each superorder (Euarchontoglires, Laurasiatheria,
-Afrotheria, and Xenartha, \cref{fig:species_tree})
-has evolved expansive placenta-specific gene
-families with expression patterns that can vary in space and time
+Afrotheria, and Xenartha, \cref{fig:species_tree}) has evolved
+expansive placenta-specific gene families with expression patterns
+that can vary in space and time
 \cite{Green.ea2000:Pregnancy-associatedbovineandovine}. These include
 independent expansions of the prolactins in \mouse, \carmeli, \galili,
-and \cow, \acp{PSG} in \human and \mouse, \acp{PAG} in \cow, genes
-related to the thymus-specific serine protease \ac{PRSS16} in
-\elephant, and the expansion of the growth hormone and
-chorionic gonadotropin beta genes in anthropoid primates
+and \cow, Pregnancy-Specific Glycoproteins in \human and \mouse,
+Pregnancy-Associated Glycoproteins in \cow, genes related to the
+thymus-specific serine protease \ac{PRSS16} in \elephant, and the
+expansion of the growth hormone and chorionic gonadotropin beta gene
+families in anthropoid primates
 \cite{Haig2008:Placentalgrowthhormone-relatedproteins,Rawn.ea2008:evolutionregulationandfunction}.
 Expression patterns of specific genes also can vary widely between
 species. For example, the expression of orthologous genes in the
@@ -381,12 +382,12 @@ following delivery. Placental tissue from \human was collected upon
 delivery via a cesarean section. Near-term placental tissue from \dog
 was collected upon the death of the mother and fetus from a car
 accident. Placental tissue from \opossum was sampled at fetal stage
-32, roughly one day prior to birth. Only the fetal villous portion of
+32, roughly one day prior to birth. Only the fetal portion of
 the placenta was sampled at the maternal-fetal interface (i.e. villous
 portion for \human, \bonobo, \dog, and \elephant; cotyledon for \cow;
 diffuse placenta for \opossum). The placenta membranes were separated
-from the fetal villous portion by dissection, and the
-resulting fetal villous portion was washed twice in PBS. All tissues
+from the fetal portion by dissection, and the
+resulting fetal portion was washed twice in PBS. All tissues
 were collected and stored in RNAlater (Life Technologies, Carlsbad,
 CA) until RNA isolation could be performed. Tissues were homogenized
 in Trizol, and total RNA was isolated following the manufacturer's
@@ -442,7 +443,7 @@ were left un-annotated.
 All transcriptomes were aligned to the reference (or
 assembled) genome using STAR v2.4.2a~%
 \cite{Dobin.ea2013:STARultrafastuniversalRNA-seq} (Supplemental
-\cref{fig:transcriptome_statistics,fig:transcriptome_reads_vs_read_length})
+\cref{fig:transcriptome_statistics,fig:transcriptome_reads_vs_read_length,tab:ref_genome_aligned_species})
 and expression values in \ac{FPKM}
 % \cite{Trapnell.ea2010:Transcriptassemblyandquantification}
 were
@@ -521,8 +522,8 @@ were used to select the appropriate orthologous pair. A total of
   10,length(human_name)]} ortholog pair sets in all 14 species were
 expressed (\ac{FPKM} $\ge 10$) in at least one species. We also
 obtained orthology from the perspective of each species to all other
-species using biomaRt package and Ensembl v.80 database to determine
-the percentage of highly expressed genes which had an orthology of
+species using the biomaRt package and the Ensembl v.80 database to determine
+the percentage of highly expressed genes that had an orthology of
 one-to-one, one-to-many, many-to-many, or novel/unknown. For future
 analyses by other investigators, we have also provided the human gene
 which most closely aligns to each expressed annotated
@@ -570,13 +571,13 @@ by gene search of PubMed results.
 All of the code used to produce every analysis presented in this paper
 and the manuscript itself is available at
 \url{https://github.com/uiuc-cgm/placenta-viviparous.git}. All of the
-sequences used are deposited in SRA, and new sequences for this work
-can be obtained under the series
+sequences and assembled transcriptomes used are deposited in SRA, and
+new sequences for this work can be obtained under the series
 \href{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE79121}{GSE79121}
-(Supplemental \cref{tab:srr_numbers}). The mean \ac{FPKM} for gene in each
-species with ortholog annotations are located in the supplemental data
-file all\_species\_mean\_fpkm.txt.xz and the per-sample \ac{FPKM} values are in
-all\_species\_per\_sample\_fpkm.txt.xz.
+(Supplemental \cref{tab:srr_numbers}). The mean \ac{FPKM} for gene in
+each species with ortholog annotations are located in the supplemental
+data file all\_species\_mean\_fpkm.txt.xz and the per-sample \ac{FPKM}
+values are in all\_species\_per\_sample\_fpkm.txt.xz.
 
 \section{Results}
 
@@ -1400,14 +1401,14 @@ $\text{FPKM} \ge 5$ includes nearly all of the genes
 \subsubsection{Annexin Complexes}
 
 Multiple components of annexin complexes are included in the core
-transcriptome, including \ac{ANXA2}, \ac{ANXA1},
-\ac{S100A11}, \ac{S100A10}. ANXA1 is involved in the
+transcriptome, including \ac{ANXA1}, \ac{ANXA2},
+\ac{S100A10}, \ac{S100A11}. ANXA1 is involved in the
 resolution of the inflammation response through inhibition of
 phospholipase A2 activity and signaling through the formyl peptide
 receptor family, and has previously been hypothesized to be important
 for the maintenance of the anti-inflammatory state during pregnancy
 \cite{Hutchinson.ea2011:Molecularregulatorsofresolution}. ANXA2 is
-known to interact with S100A10, S100A6, S100A11, and S100A4
+known to interact with S100A4, S100A6, S100A10, and S100A11
 \cite{Liu.ea2015:AnnexinA2complexeswith}, and there is evidence for
 its interaction with S100P as well; it is involved in cell-cell
 interaction as well as vesicle trafficking and von Willibrand Factor
@@ -1588,29 +1589,30 @@ modulatory transcripts which are expressed in all placentas analyzed.
 
 \subsubsection{Formation of the syncytiotrophoblast}
 
-While Syncytin-1 and -2 (\ac{ERVW-1} and \ac{ERVFRD-1}, respectively) are implicated
-in the formation of the syncytiotrophoblast in
-\human~\cite{Rawn.ea2008:evolutionregulationandfunction} and genes which are similar to 
-\ac{ERVFRD-1} and \ac{ERVW-1} are widely expressed in most of the
-placentas analyzed here, they are not expressed in \bonobo, \sheep,
-and \dog, even though these mammals form
+The evolutionarily convergent capture of endogenous retroviruses to
+form expressed fusogenic proteins such as Syncytin-1 and -2
+(\ac{ERVW-1} and \ac{ERVFRD-1}, respectively) has been implicated in
+syncytiotrophoblast formation in \human and many other
+species~\cite{Rawn.ea2008:evolutionregulationandfunction}. While genes
+which are similar to \ac{ERVFRD-1} and \ac{ERVW-1} are expressed in
+most of the placentas analyzed here, there are no highly expressed
+genes with sequence similarity in \bonobo and \dog, even though these
+mammals form
 syncytiotrophoblasts~\cite{Mess.ea2006:Evolutionarytransformationsoffetal}.
 Because the formation of syncytiotrophoblast is the stem state of
 Eutheria, Afrotheria, Euarchontoglires, and
 Laurasiatheria~\cite{Mess.ea2006:Evolutionarytransformationsoffetal},
-and syncytiotrophoblast must be continuously replenished
-the gene(s) responsible for cytotrophoblast fusion to form
-syncytiotrophoblast should be highly expressed in the core
-placenta. \ac{ANXA5} is known to be expressed at multiple stages of
+and the syncytiotrophoblast must be continuously replenished, the
+gene(s) responsible for cytotrophoblast fusion to form the
+syncytiotrophoblast should be highly expressed in the core placenta.
+\ac{ANXA5} is known to be expressed at multiple stages of
 placentation, and is capable of repairing membrane defects and
 promoting the fusion of
 cells~\cite{Carmeille.ea2015:Annexin-A5promotesmembraneresealing} in
-the presence of Ca$^{2+}$. While there may be other genes which
-are responsible for the positioning of cytotrophoblast cells in close
-proximity to start the fusion process, \ac{ANXA5} is likely to
-be essential for the completion of fusion and the maintenance of
-membrane repair during the massive flux of nutrients and waste in the
-placenta \cite{Carmeille.ea2015:Annexin-A5promotesmembraneresealing,Ueki.ea2012:Lossofmaternalannexin}.
+the presence of Ca$^{2+}$. We hypothesize that \ac{ANXA5} is essential
+for the completion of fusion and the maintenance of membrane repair
+during the flux of nutrients and waste in the placenta
+\cite{Carmeille.ea2015:Annexin-A5promotesmembraneresealing,Ueki.ea2012:Lossofmaternalannexin}.
 
 % Cows have BERV-K1 and -K2, but it's not annotated in the ENSEMBL
 % build of the cow genome that we have
@@ -1643,7 +1645,7 @@ suspect that many genes which are responsible for establishing shape,
 intimacy, and interdigitation are expressed and function at earlier
 time points where placental morphology is being established.
 Furthermore, while these samples have been dissected to only include
-the fetal interface, they likely include substantial cell and tissue
+the fetal side, they likely include substantial cell and tissue
 heterogeneity. We are therfore not yet able to assign specific genes
 in our core placental transcriptome to specific cell types and
 tissues. We believe that samples of placentas from earlier in
@@ -1664,8 +1666,8 @@ families as well as a set of core, non-housekeeping genes which are
 critical for the proper organization and functioning of the placenta.
 
 The core placenta transcriptome contains genes which are involved in
-maternal-fetal tolerance, such as the annexins, and genes responsible
-for cell-cell and cell-matrix interactions, such as \ac{LGALS1}. These
+maternal-fetal tolerance and genes responsible
+for cell-cell and cell-matrix interactions, such as the annexins and \ac{LGALS1}. These
 genes were almost certainly present in the placenta of the most recent
 common mammalian ancestor of the species included in this study. We hypothesize that
 modifications to the expression or function of genes in the core placenta transcriptome

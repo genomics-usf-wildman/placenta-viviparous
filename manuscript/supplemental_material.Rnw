@@ -1499,7 +1499,7 @@ load("../data/placenta_core_tree_transcriptome")
 cpttl <-
     core.placenta.tree.transcriptome.long[!grepl("(min|median|max|all)_expression|all_but_",
                                                  Species) & housekeeping==FALSE,]
-cpttl <- cpttl[,Species:=factor(gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",capfirst(Species)),
+cpttl <- cpttl[!is.na(tree_genes),Species:=factor(gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",capfirst(Species)),
                                 levels=gsub("^([^ ])[^ ]* +([^ ]*)","\\1. \\2",
                                             capfirst(names(species.names))))]
 cpttl <- cpttl[,median_FPKM:=median(FPKM,na.rm=TRUE),by=tree_genes]

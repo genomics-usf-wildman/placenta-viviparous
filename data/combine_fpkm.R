@@ -123,6 +123,8 @@ if (!is.null(non.1.1.orthologs)) {
                human_name:=NA]
 }
 
+gene.fpkms[species=="homo sapiens",human_name:=gene_short_name]
+
 ### this shouldn't be required, but I've triggered some bug in the
 ### data.table code
 combined.fpkm <- data.table(data.frame(gene.fpkms))

@@ -113,7 +113,7 @@ setkey(combined.fpkm.wide,"tree_genes")
 
 ## all genes which are not housekeeping genes which have minimum 
 core.placenta.tree.transcriptome.long <- 
-    data.table(melt(combined.fpkm.wide[all_but_metatherian_expression >= 10,
+    data.table(melt(combined.fpkm.wide[all_but_metatherian_expression >= 5,
                                        ][order(-median_expression)
                                          ],
                     id.vars=c("tree","tree_genes"),
@@ -138,7 +138,7 @@ core.placenta.tree.transcriptome.long[,tree_genes:=
                                                                       ][core.placenta.tree.transcriptome.long[,as.character(tree_genes)],
                                                                             median_expression])]
 
-core.placenta.tree.human.genes.in.tree <-
+core.placenta.tree.human.genes.in.permissive.tree <-
     combined.fpkm[tree %in% as.character(core.placenta.tree.transcriptome.long[,unique(tree)]),
                   unique(human_name)]
 
@@ -183,10 +183,7 @@ pts <- pts[,housekeeping:=all.trees %in% housekeeping.genes.superset[,gene_short
 pts.tree <- pts[,expressed.housekeeping:=all.trees %in% expressed.housekeeping.genes]
 
 
-save(core.placenta.tree.transcriptome.long,
-     core.placenta.tree.transcriptome.genes.shape,
-     core.placenta.tree.human.genes.in.tree,
-     pts.tree,
+save(core.placenta.tree.human.genes.in.permissive.tree,
      file=args[length(args)])
 
 

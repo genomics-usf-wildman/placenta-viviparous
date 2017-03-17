@@ -1312,8 +1312,9 @@ print(ggplot(cptl[FPKM > 0.1,],aes(x=human_name,y=FPKM))+
 \end{figure}
 
 
-<<load_core_placenta_tree_transcriptome,echo=FALSE,results="hide",cache.extra=file.info("../data/placenta_core_tree_transcriptome")[,"mtime"]>>=
+<<load_core_placenta_tree_transcriptome,echo=FALSE,results="hide",cache.extra=file.info(paste0("../data/placenta_core_tree_transcriptome",c("","_permissive")))[,"mtime"]>>=
 load("../data/placenta_core_tree_transcriptome")
+load("../data/placenta_core_tree_transcriptome_permissive")
 cpttl <-
     core.placenta.tree.transcriptome.long[!grepl("(min|median|max|all)_expression|all_but_",
                                                  Species) & housekeeping==FALSE,]
@@ -1383,9 +1384,17 @@ If we use gene trees to define the core placenta transcriptome instead
 of ortholog pairs (where the mean expression for genes in the tree
 which are present must be $\text{FPKM} \ge 10$), we find
 \Sexpr{cpttl[,length(unique(tree_genes))]} unique gene trees which
-include nearly all of the genes present in the core placenta
-transcriptome (Supplemental
+include most
+(\Sexpr{length(intersect(core.placenta.tree.human.genes.in.tree,
+  core.placenta.transcriptome.long[,as.character(unique(human_name))]))/
+  core.placenta.transcriptome.long[,length(unique(human_name))]*100}\%)
+of the genes present in the core placenta transcriptome (Supplemental
 \cref{fig:core_placenta_tree_transcriptome,fig:core_placenta_tree_transcriptome_housekeeping}).
+Relaxing the mean gene tree expression requirement to
+$\text{FPKM} \ge 5$ includes nearly all of the genes
+(\Sexpr{length(intersect(core.placenta.tree.human.genes.in.permissive.tree,
+  core.placenta.transcriptome.long[,as.character(unique(human_name))]))/
+  core.placenta.transcriptome.long[,length(unique(human_name))]*100}\%).
 
 \subsubsection{Annexin Complexes}
 

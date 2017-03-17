@@ -118,6 +118,11 @@ placenta_core_tree_transcriptome: placenta_core_tree_transcriptome.R	\
 combined_fpkm gene_trees housekeeping_genes_superset
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
 
+placenta_core_tree_transcriptome_permissive:				\
+placenta_core_tree_transcriptome_permissive.R combined_fpkm	\
+gene_trees housekeeping_genes_superset
+	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
+
 placenta_core_transcriptome_alignment: placenta_core_transcriptome_alignment.R combined_fpkm housekeeping_genes_superset
 	$(R) $(ROPTS) -f $< --args $(wordlist 2,$(words $^),$^) $@
 
@@ -229,6 +234,8 @@ housekeeping_genes_superset: housekeeping_genes_superset.R housekeeping_genes_su
 
 ALL_TARGETS:=combined_fpkm gene_trees housekeeping_genes_superset		\
 	placenta_core_transcriptome placenta_core_transcriptome_alignment	\
+	placenta_core_tree_transcriptome									\
+	placenta_core_tree_transcriptome_permissive							\
 	placenta_go_results_bp placenta_go_results_mf hugo_nomenclature		\
 	gene_annotation mammal_lifehistories.txt							\
 	placenta_lineage_specific combined_fpkm_per_sample					\

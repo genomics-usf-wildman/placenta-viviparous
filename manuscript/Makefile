@@ -56,12 +56,17 @@ $(wildcard ../data/placenta_go_results_permissive_??) $(wildcard	\
 
 manuscript.tex: manuscript.Rnw ../data/combined_fpkm	\
 ../data/placenta_core_transcriptome						\
+../data/placenta_core_tree_transcriptome				\
+../data/placenta_core_tree_transcriptome_permissive		\
 ../data/human_mouse_lineage_specific					\
 ../data/placenta_lineage_specific $(GO_GSEA_RESULTS)
 
 supplemental_material.tex: supplemental_material.Rnw	\
 ../data/combined_fpkm ../data/placenta_lineage_specific	\
 ../data/human_mouse_lineage_specific					\
+../data/placenta_core_tree_transcriptome				\
+../data/placenta_core_tree_transcriptome_permissive		\
+../data/placenta_core_transcriptome						\
 ../data/orthologs_by_species_ranking					\
 ../data/placenta_core_transcriptome $(GO_GSEA_RESULTS)
 

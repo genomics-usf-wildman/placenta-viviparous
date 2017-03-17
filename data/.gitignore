@@ -14,6 +14,7 @@ ensembl_orthologs
 hugo_nomenclature
 placenta_core_transcriptome
 placenta_core_tree_transcriptome
+placenta_core_tree_transcriptome_permissive
 placenta_core_transcriptome_complete
 placenta_core_transcriptome_alignment
 placenta_go_results_??

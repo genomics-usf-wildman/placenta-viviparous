@@ -56,6 +56,10 @@
 \tolerance=5000
 \emergencystretch=0.1pt
 
+% Acronyms
+\input{acronyms}
+
+
 \begin{document}
 % \raggedright
 
@@ -195,9 +199,6 @@ placpath <- function(pathway,database) {
 }
 
 @ 
-
-% Acronyms
-\input{acronyms}
 
 \title{The core transcriptome of mammalian placentas and the
   divergence of expression with placental shape}%

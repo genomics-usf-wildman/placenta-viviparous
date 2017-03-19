@@ -2,6 +2,7 @@
 #+OPTIONS: ^:nil
 #+OPTIONS: toc:nil
 #+OPTIONS: num:0
+#+OPTIONS: title:nil
 #+TITLE: Highlights for 
 #+AUTHOR: Don Leigh Armstrong
 #+LATEX_CMD: xelatex

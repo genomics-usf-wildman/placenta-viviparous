@@ -1191,7 +1191,7 @@ print(ggplot(cptl[FPKM > 0.1,],aes(x=human_name,y=FPKM))+
   ortholog pairs of \human genes expressed (\ac{FPKM}$ \ge 10$) in the
   placenta of all 13 eutherians studied with housekeeping genes
   \cite{Eisenberg.ea2013:Humanhousekeepinggenesrevisited} removed
-  ordered (from top to bottom) by median expression. If we also require
+  ordered (from top to bottom, left to right) by median expression. If we also require
   expression (\ac{FPKM}$ \ge 10$) in the marsupial, \opossum, there are 
   \Sexpr{cpt.distribution.shape[`Expression (FPKM)` > 10 &
     `Min. Exp. in` == '14 of 14 Species',max(num_genes)]} genes
@@ -1402,7 +1402,7 @@ $\text{FPKM} \ge 5$ includes nearly all of the genes
 
 Multiple components of annexin complexes are included in the core
 transcriptome, including \ac{ANXA1}, \ac{ANXA2},
-\ac{S100A10}, \ac{S100A11}. ANXA1 is involved in the
+\ac{S100A10}, and \ac{S100A11}. ANXA1 is involved in the
 resolution of the inflammation response through inhibition of
 phospholipase A2 activity and signaling through the formyl peptide
 receptor family, and has previously been hypothesized to be important

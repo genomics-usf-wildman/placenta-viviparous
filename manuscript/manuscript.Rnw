@@ -1332,7 +1332,7 @@ expressed with $\text{FPKM} \ge 10$ in all eutherian species studied
 (excluding the metatherian, \opossum) and was not a human housekeeping
 gene according to
 \citet{Eisenberg.ea2013:Humanhousekeepinggenesrevisited}. Genes which
-meet this criteria but are housekeeping genes are depicted in
+meet the FPKM criterion and are housekeeping genes are depicted in
 Supplemental \cref{fig:core_placenta_transcriptome_housekeeping}.
 \Cref{fig:core_placenta_transcriptome_shape} shows the number of genes
 which would be included in the core placenta set if the \ac{FPKM}

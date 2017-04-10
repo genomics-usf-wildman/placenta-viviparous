@@ -63,4 +63,4 @@ homo_sapiens.dmnd: $(ALIGNMENT_TARGET)
 gene_to_human_gene.txt: gene_to_human_gene.pl protein_id_to_gene_id.txt $(SPECIES_ALIGNMENT_FILES)
 	perl $^ > $@
 
-remote_files: $(SPECIES_ALIGNMENT_FILES)
+remote_files: $(SPECIES_PEP_FASTA)

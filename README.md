@@ -29,4 +29,14 @@ Precomputed Data (Missing Supplemental Material)
   the FPKM per sample across all samples in each species. This file
   was also missing from supplemental material for some reason.
 
+* [placenta_core_transcriptome.txt.xz](https://www.donarmstrong.com/ld/pv2016/placenta_core_transcriptome.txt.xz)
+  contains the FPKM of all genes in the core placenta transcriptome in
+  long format. [One row per gene in each species, including the "all
+  but one", "all", "all but metatherian" minimum FPKM in the set of
+  species as depicted in the graphs included in the paper.]
+* [placenta_classification_shape_p_fdr.txt.xz](https://www.donarmstrong.com/ld/pv2016/placenta_classification_shape_p_fdr.txt.xz)
+  contains the p, fdr, and overall fdr values of the glm of the
+  association of gene expression with placenta shape, interdigitation,
+  and intimacy which are shown in supplemental figures 57,58, and 60.
+  [I have excluded the ordered analysis for clarity.]
   
